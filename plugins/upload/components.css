@@ -1,0 +1,15 @@
+
+/* == Form Uploads == */
+.jFiler-input-dragDrop {
+  width: 100%;
+  background-color: #fafafa;
+}
+.jFiler-theme-default .jFiler-input {
+  width: 100%;
+}
+.jFiler-theme-default .jFiler-input-button {
+  background-color: #64c5b1;
+  background-image: none !important;
+  color: #ffffff;
+  border: 1px solid #64c5b1 !important;
+}
