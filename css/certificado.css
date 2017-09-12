@@ -1,0 +1,145 @@
+*{ 
+	margin: 0;
+	padding: 0;
+	font-family: tahoma, helvetica, verdana, "sans-serif";
+	font-size: 12px;
+}
+
+.wrap{
+	margin: 50px auto;
+	width: 842px;
+	height: 595px;
+	box-shadow: 2px 2px 2px #000;
+}
+
+section{
+	width: 100%;
+	height: 100%;
+	background:url("../img/bg.png") no-repeat center;
+	background-size: 98%;
+}
+
+
+/*Linhas*/
+
+[class*="row-"]{
+	width: 100%;
+}
+
+
+.row-05{
+	height: 5%;
+}
+
+.row-1{
+	height: 10%;
+}
+
+.row-2{
+	height: 20%;
+}
+
+.row-3{
+	height: 30%;
+}
+
+.row-4{
+	height: 40%;
+}
+
+.row-5{
+	height: 50%;
+}
+
+.row-6{
+	height: 60%;
+}
+
+.row-7{
+	height: 70%;
+}
+
+.row-8{
+	height: 80%;
+}
+
+.row-9{
+	height: 90%;
+}
+
+
+/*Colunas*/
+
+[class*="col-"]{
+	height: 100%;
+	float: left;
+}
+
+
+.col-1{
+	width: 10%;
+}
+
+.col-2{
+	width: 20%;
+}
+
+.col-3{
+	width: 30%;
+}
+
+.col-4{
+	width: 40%;
+}
+
+.col-5{
+	width: 50%;
+}
+
+.col-6{
+	width: 60%;
+}
+
+.col-7{
+	width: 70%;
+}
+
+.col-8{
+	width: 80%;
+}
+
+.col-9{
+	width: 90%;
+}
+
+p{
+	margin: 5px 30px;
+}
+
+.assinatura{
+	text-align: center;
+}
+
+.title{
+	font-size: 50px;
+	color: #ee8829;
+	position: relative;
+	top:55px;
+	left: 30px;
+}
+
+.nomeAluno{
+	font-size: 22px !important;
+	color: #0071a5;
+	left: 15px
+}
+
+.dataAluno, .nomeAluno, .title{
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.validacao{
+	font-size: 10px;
+	margin: 33px 0 0 150px  ;
+}
