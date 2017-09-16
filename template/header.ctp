@@ -1,25 +1,19 @@
 <?php
-
-	if(isset($_SESSION)) @session_start();
-
+	@session_start();
 	extract($_SESSION);
-
-	if((isset($_GET['logoff'])) && ($_GET['logoff']=='true')){
-		unset($_SESSION);
-		session_destroy();
-	}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 	<head>
         <meta charset="utf-8">
-        <title><?=$this->getTitle()?></title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta name="description" content="">
         <meta name="author" content="">
+		
+        <title><?=$this->getTitle()?></title>
 
-		<base href=" <?=$_SERVER['REMOTE_ADDR']=='127.0.0.1'?'./':'http://www.didatica.online/'?>" >
+		<base href="<?=HOME_URI?>" >
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
@@ -139,7 +133,7 @@
 												<li><a href="Dashboard/meus cursos">Meus cursos</a></li>
 											<!-- <li><a href="dashboard.php?p=my-courses-enroll">Meus cursos</a></li> -->
 												<li role="separator" class="divider"></li>
-												<li><a href="?logoff=true">Sair</a></li>
+												<li><a class="logoff">Sair</a></li>
 											</ul>
 										</div>
 										';

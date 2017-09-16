@@ -101,7 +101,18 @@ jQuery(document).ready(function($){
 	// author: Rodnei Leal
 
 
-	
+	$(".logoff").on('click', logoff);
+
+	function logoff(){
+		data = {
+			logoff: true
+		}
+		$.post('controllers/user/logout.php', data, logoffCallback);
+	}
+
+	function logoffCallback(){
+		location.href='home';
+	}
 
 
 

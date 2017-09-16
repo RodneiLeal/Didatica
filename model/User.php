@@ -31,9 +31,7 @@
         public function login($pid, $passwd){
 
             $passwd = md5($passwd);
-        
-            $sql    = "SELECT * FROM didatica_online_cursos.usuario WHERE (usuario.usuario_email = '{$pid}' OR usuario.usuario_nome = '{$pid}') AND usuario.usuario_pass = '{$passwd}' LIMIT 1";
-        
+            $sql    = "SELECT * FROM usuario WHERE (usuario.usuario_email = '{$pid}' OR usuario.usuario_nome = '{$pid}') AND usuario.usuario_pass = '{$passwd}' LIMIT 1";
             $stmt   = $this->db->query($sql);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 

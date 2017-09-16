@@ -9,7 +9,7 @@
         <li class="header">MENU</li>
 
           <?php
-            switch($usuario_id){
+            switch($usuario_tipo){
               case 1: # aluno
                 echo get_menu_user();
               break;

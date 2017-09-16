@@ -6,7 +6,7 @@
                     $db;
 
         function __construct(){
-			$this->db 			= new dbc();
+			$this->db = new dbc();
         }
 
         public function getTitle(){

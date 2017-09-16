@@ -7,17 +7,17 @@
       <li class="active">User profile edit</li>
     </ol>
   </section>
+
+
   <section class="content">
-
-
-  <?php
-      $data_user = ExecData($mysqli, 'usuario','consulta_usuario','*',$_SESSION['usuarioID']);
-      $row = mysqli_fetch_assoc($data_user);
-  ?>
-
+      <?php
+          $data_user = ExecData($mysqli, 'usuario','consulta_usuario','*',$_SESSION['usuarioID']);
+          $row = mysqli_fetch_assoc($data_user);
+      ?>
 
     <div class="row">
       <div class="col-md-12">
+
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">Editar perfil</h3>
