@@ -100,35 +100,38 @@
 
 								
 									<?php
-										$retorno = ExecData($mysqli, 'cursos','cursos_lista_frontend','*', 0);
-										while($cursos = mysqli_fetch_array($retorno))
-										{
+                                        $cursos = $this->cursos->getCursos();
+                                        foreach ($cursos as $curso){
+                                            extract($curso);
+
+                                            
+                                            $imagem = empty($imagem)?'img/curso/no-image.png':base64_decode($imagem);
+                                            $media  = number_format($media, 2, '.', ' ');
+
 											echo 
 											'
 												<li class="masonry-item">
 													<article class="entry-item hot-item">
 														<div class="entry-thumb">
-															<a href="curso/'.$cursos['curso_id'].'/'.preparaURL($cursos['curso_categoria_nome']).'/'.preparaURL($cursos['curso_titulo']).'">
+															<a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
 																<div class="mask"></div>
-																<img src="dist/img/courses/'.$cursos['curso_imagem'].'" height="230px">
+																<img src="'.$imagem.'" height="230px">
 															</a>
-															<ul class="kopa-rating clearfix">
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star-o"></i></li>
-															</ul>
 															<!--<span class="entry-hot">Hot</span>-->
-														</div>
+                                                        </div>
+                                                            
+                                                        <div class="avaliacao">
+                                                            <div class="starrr" data-rating="'.$media.'" title="Média entre '.$votantes.' opiniões de alunos"><span>'.$media.'</span></div>
+                                                        </div>
+
 														<div class="entry-content">
 															<div class="course-teacher">
-																<span>'.$cursos['curso_categoria_nome'].'</span><br>
-																<a href="#">'.$cursos['usuario_nome'].'</a>
+																<span>'.$categoria.'</span><br>
+																<a href="instrutor/'.$instrutor_idinstrutor.'/'.Main::preparaURL($instrutor).'">'.$instrutor.'</a>
 															</div>
 															<h6 class="entry-title">
-																<a href="curso/'.$cursos['curso_id'].'/'.preparaURL($cursos['curso_categoria_nome']).'/'.preparaURL($cursos['curso_titulo']).'">
-																	'.$cursos['curso_titulo'].'
+															    <a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
+																	'.$titulo.'
 																</a>
 															</h6>
 														</div>
@@ -143,6 +146,12 @@
 
                                 </ul>
                                 <!-- clearfix -->
+
+                                <script type="text/javascript">
+                                    $(function(){
+                                        $(".starrr").starrr();
+                                    });
+                                </script>
                             </div>
                             <!-- masonry-list-wrapper -->
 	    				</div>
@@ -169,11 +178,8 @@
                     <div class="col-md-12">
 
                         <div class="widget kopa-tagline-1-widget">
-						<?php
-							$total_query = ExecData($mysqli, 'sistema','dashboard_dados_rapidos','*', 0);
-							$total = mysqli_fetch_assoc($total_query);
-						?>
-                            <h3>Veja mais de <?php echo $total['total_curso'];?> cursos, ministrados por instrutores especializados</h3>
+			
+                            <h3>Veja mais de <?=count($cursos)?> cursos, ministrados por instrutores especializados</h3>
 
                             <button class="cd-signin kopa-button kopa-line-button medium-button">entrar agora</button>
                             

@@ -14,7 +14,7 @@
 		}
 
         public function getCategoriaCursos(){
-			$sql = "SELECT * FROM curso_categoria ORDER BY curso_categoria_nome ASC";
+			$sql = "SELECT * FROM categoria ORDER BY categoria ASC";
 			$query = $this->db->query($sql);
 			return $query->fetchAll();
         }

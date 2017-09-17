@@ -67,7 +67,6 @@ jQuery(function ($){
     }
     
     function loginCallback(response){
-      alert(response);
       switch(response){
         case '0__':
           Notificacao('error','Ops!','Combinação de e-mail e senha invalidos'); 

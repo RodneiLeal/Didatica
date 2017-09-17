@@ -1,8 +1,6 @@
 <?php
 	/*confihgurações de sistema*/
 
-	date_default_timezone_set('UTC');
-
 	$home_uri	= "http://didatica.rodneileal.com.br/";
 	$db_user	= "rodneile_didatic";
 	$db_passwd	= "@12345@";
@@ -12,7 +10,7 @@
 	define("UPLOADS", ROOT."/views/_uploads");
 	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'./':$home_uri);
 	define("DB_HOST", "localhost");
-	define("DB_NAME", "didatica_online_cursos");
+	define("DB_NAME", "didatica_online_DB");
 	define("DB_USER", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"root":$db_user);
 	define("DB_PASSWD", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"1234":$db_passwd);
 	define("DB_CHARSET", "utf8");

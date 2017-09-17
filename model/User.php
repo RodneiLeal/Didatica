@@ -4,6 +4,7 @@
 
         protected $get,
                   $id,
+                  $tipo,
                   $nome,
                   $email,
                   $pswd,
@@ -18,6 +19,7 @@
             parent::__construct();
             $this->get = func_num_args()>=1?func_get_args():array();
             $this->id             = NULL;
+            $this->tipo           = NULL;
             $this->nome           = NULL;
             $this->email          = NULL;
             $this->pswd           = NULL;
@@ -28,29 +30,35 @@
             $this->locked         = NULL;
         }
 
+        private function setDataUser($data){
+            extract($data);
+            
+            $this->id             = $idusuario;
+            $this->tipo           = $tipo;
+            $this->nome           = $nome;
+            $this->email          = $email;
+            $this->pswd           = $pswd;
+            $this->foto           = $foto;
+            $this->dataCadastro   = $dataCadastro;
+            $this->rede           = $rede;
+            $this->redeSocialID   = $redeSocialID;
+            $this->locked         = $locked;
+
+        }
+
         public function login($pid, $passwd){
 
-            $passwd = md5($passwd);
-            $sql    = "SELECT * FROM usuario WHERE (usuario.usuario_email = '{$pid}' OR usuario.usuario_nome = '{$pid}') AND usuario.usuario_pass = '{$passwd}' LIMIT 1";
+            $passwd = hash('sha256', $passwd);
+            $sql    = "SELECT * FROM usuario WHERE (usuario.email = '{$pid}' OR usuario.nome = '{$pid}') AND usuario.pswd = '{$passwd}' LIMIT 1";
             $stmt   = $this->db->query($sql);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // extract($result[0]);
-
-            // $this->id             = $id;
-            // $this->nome           = $nome;
-            // $this->email          = $email;
-            // $this->pswd           = $passwd;
-            // $this->foto           = $foto;
-            // $this->dataCadastro   = $dataCadastro;
-            // $this->rede           = $rede;
-            // $this->redeSocialID   = $redeSocialID;
-            // $this->locked         = $locked;
+            self::setDataUser($result[0]);
             
             return $result;
         }
         
-        public function registro($data){
+        public function saveUser($data){
             $result = $this->db->insert('usuario', $data);
             if($result){
                 $result = $this->db->last_id;
@@ -60,21 +68,11 @@
 
         
         public function findUser($email){
-            $sql 	= "SELECT usuario_email FROM usuario WHERE usuario_email = '{$email}' LIMIT 1";
+            $sql 	= "SELECT email FROM usuario WHERE email = '{$email}' LIMIT 1";
             $stmt 	= $this->db->query($sql);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-            // extract($result[0]);
-    
-            // $this->id             = $id;
-            // $this->nome           = $nome;
-            // $this->email          = $email;
-            // $this->pswd           = $passwd;
-            // $this->foto           = $foto;
-            // $this->dataCadastro   = $dataCadastro;
-            // $this->rede           = $rede;
-            // $this->redeSocialID   = $redeSocialID;
-            // $this->locked         = $locked;
+            self::setDataUser($result[0]);
 
             return $result;
         }

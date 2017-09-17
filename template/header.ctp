@@ -35,6 +35,17 @@
         <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
         <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
 
+		<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
+		<script type="text/javascript" src="js/main.js"></script>
+		<script type="text/javascript" src="js/menu/modernizr.custom.js"></script>
+		<script type="text/javascript" src="js/menu/jquery.dlmenu.js"></script>
+		<script type="text/javascript" src="js/vendor/dist/functions.js"></script>
+		<script type="text/javascript" src="js/vendor/dist/js/droply.js"></script>
+		<script type="text/javascript" src="plugins/notification/toastr.min.js"></script>
+		<script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
+
 		<style>
 			.form-wrapper-top-search {
 				background: #fff;
@@ -99,10 +110,10 @@
 											<a>Cursos</a>
 											<ul>
 												<?php
-													foreach($this->getCategoriaCursos() as $categoria){
+													foreach(Main::getCategoriaCursos() as $categoria){
 														echo
 														'
-															<li><a href="cursos/'.$categoria['curso_categoria_nome'].'">'.$categoria['curso_categoria_nome'].'</a></li>
+															<li><a href="cursos/'.Main::preparaURL($categoria['categoria']).'">'.$categoria['categoria'].'</a></li>
 														';
 													}
 												?>
@@ -121,7 +132,7 @@
 							<div class="text-right botoes_topo" >
 								<?php
 
-									if(!empty($usuario_id)){
+									if(!empty($locked) && $locked){
 										echo
 										'
 										<div class="btn-group">
@@ -154,7 +165,7 @@
 									<button class="dl-trigger">Open Menu</button>
 									<ul class="dl-menu">
 										<?php
-											if(!empty($usuario_id)){
+											if(!empty($locked) && $locked){
 												echo
 												'
 												<div class="btn-group">
@@ -184,7 +195,7 @@
 														foreach($this->getCategoriaCursos() as $categoria){
 															echo
 															'
-																<li><a href="cursos/'.$categoria['curso_categoria_nome'].'">'.$categoria['curso_categoria_nome'].'</a></li>
+																<li><a href="cursos/'.Main::preparaURL($categoria['categoria']).'">'.$categoria['categoria'].'</a></li>
 															';
 														}
 													?>

@@ -109,16 +109,6 @@
     </footer>
 
 	
-	
-
-
-
-
-
-
-
-	
-	
 	<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
 		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
 			<ul class="cd-switcher">
@@ -231,21 +221,7 @@
 		</div> <!-- cd-user-modal-container -->
 
 	</div> <!-- cd-user-modal -->
-
-
-	<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
-	<script type="text/javascript" src="js/main.js"></script>
-	<script type="text/javascript" src="js/menu/modernizr.custom.js"></script>
-	<script type="text/javascript" src="js/menu/jquery.dlmenu.js"></script>
-	<script type="text/javascript" src="js/vendor/dist/functions.js"></script>
-	<script type="text/javascript" src="js/vendor/dist/js/droply.js"></script>
-	<script type="text/javascript" src="plugins/notification/toastr.min.js"></script>
-	
 </body> 
-
-
 </html>
 <script>
 	$(function() {

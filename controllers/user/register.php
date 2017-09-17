@@ -19,11 +19,11 @@
 		exit;
 	}
 	
-	$data = array('usuario_nome'=>$name,
-				  'usuario_email'=>$email,
-				  'usuario_pass'=>md5($passwd),
-				  'usuario_data_cadastro'=>$datetime);
-	
+	$data = array('nome'=>$name,
+				  'email'=>$email,
+				  'pswd'=>hash('sha256', $passwd),
+				  'dataCadastro'=>$datetime);
+
 	$registro = $user->saveUser($data);
 	
 	if($registro){

@@ -17,7 +17,7 @@
 
         extract($login[0]);
 
-        if(!$usuario_ativo){
+        if(!$locked){
             echo '1__';
             exit;
         }else{
