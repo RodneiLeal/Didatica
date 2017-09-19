@@ -13,18 +13,19 @@
 		
         <title><?=$this->getTitle()?></title>
 
-		<base href="<?=HOME_URI?>" >
+		<!-- <base href="<?=HOME_URI?>" > -->
+		<base href="http://didatica.rodneileal.com.br/">
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="all">
-        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="css/superfish.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="css/owl.carousel.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="css/owl.theme.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="css/jquery.navgoco.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="css/responsive.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="css/menu/component.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="plugins/notification/toastr.min.css" type="text/css" media="all"/>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/superfish.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/owl.carousel.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/owl.theme.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/jquery.navgoco.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="https://rawgit.com/RodneiLeal/Didatica/Rodnei/css/style.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/responsive.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/menu/component.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/plugins/notification/toastr.min.css" type="text/css" media="all"/>
 
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700italic,700' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800' rel='stylesheet' type='text/css'>
@@ -35,16 +36,7 @@
         <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
         <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
 
-		<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-		<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
-		<script type="text/javascript" src="js/main.js"></script>
-		<script type="text/javascript" src="js/menu/modernizr.custom.js"></script>
-		<script type="text/javascript" src="js/menu/jquery.dlmenu.js"></script>
-		<script type="text/javascript" src="js/vendor/dist/functions.js"></script>
-		<script type="text/javascript" src="js/vendor/dist/js/droply.js"></script>
-		<script type="text/javascript" src="plugins/notification/toastr.min.js"></script>
-		<script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
+		
 
 		<style>
 			.form-wrapper-top-search {
@@ -175,7 +167,7 @@
 													<li><a href="dashboard.php">Meu perfil</a></li>
 													<li><a href="dashboard.php?p=my-courses-enroll">Meus cursos</a></li>
 													<li role="separator" class="divider"></li>
-													<li><a href="?logoff=true">Sair</a></li>
+													<li><a class="logoff">Sair</a></li>
 													</ul>
 												</div>
 												';

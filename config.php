@@ -1,5 +1,6 @@
 <?php
 	/*confihgurações de sistema*/
+	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
 	$home_uri	= "http://didatica.rodneileal.com.br/";
 	$db_user	= "rodneile_didatic";
@@ -46,7 +47,7 @@
 
 	$pgs_library = SANDBOX_ACTIVE ? "https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js": "https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js";
 
-	$_SESSION['compraProduto']						= 'Certificado Curso'; #produto teste
+	// $_SESSION['compraProduto']						= 'Certificado Curso'; #produto teste
 	
 
 	require_once ROOT."loader.php";

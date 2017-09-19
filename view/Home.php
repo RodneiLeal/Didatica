@@ -8,7 +8,7 @@
 			parent::__construct();
 			$parameters	  = func_num_args()>=1?func_get_args():array();
 			$this->title  = SYS_NAME." - Home";
-			$this->cursos = new Curso; 
+			$this->cursos = new CursoModel; 
 
 		}
 

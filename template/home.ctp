@@ -103,8 +103,6 @@
                                         $cursos = $this->cursos->getCursos();
                                         foreach ($cursos as $curso){
                                             extract($curso);
-
-                                            
                                             $imagem = empty($imagem)?'img/curso/no-image.png':base64_decode($imagem);
                                             $media  = number_format($media, 2, '.', ' ');
 
@@ -113,7 +111,7 @@
 												<li class="masonry-item">
 													<article class="entry-item hot-item">
 														<div class="entry-thumb">
-															<a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
+															<a href="Curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
 																<div class="mask"></div>
 																<img src="'.$imagem.'" height="230px">
 															</a>
@@ -130,7 +128,7 @@
 																<a href="instrutor/'.$instrutor_idinstrutor.'/'.Main::preparaURL($instrutor).'">'.$instrutor.'</a>
 															</div>
 															<h6 class="entry-title">
-															    <a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
+															    <a href="Curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
 																	'.$titulo.'
 																</a>
 															</h6>
@@ -147,11 +145,7 @@
                                 </ul>
                                 <!-- clearfix -->
 
-                                <script type="text/javascript">
-                                    $(function(){
-                                        $(".starrr").starrr();
-                                    });
-                                </script>
+                  
                             </div>
                             <!-- masonry-list-wrapper -->
 	    				</div>

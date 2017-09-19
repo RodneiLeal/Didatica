@@ -16,9 +16,9 @@ jQuery(document).ready(function($){
 	});
 
 	//open sign-up form
-	$('.cd-signup').on('click', signup_selected);
+	$('.cd-signup').on('click', signup_selected());
 	//open login-form form
-	$('.cd-signin, .course_start').on('click', login_selected);
+	$('.cd-signin, .course_start').on('click', login_selected());
 
 	//close modal
 	formModal.on('click', function(event){
@@ -107,10 +107,12 @@ jQuery(document).ready(function($){
 		data = {
 			logoff: true
 		}
+
 		$.post('controllers/user/logout.php', data, logoffCallback);
 	}
 
-	function logoffCallback(){
+	function logoffCallback(response){
+		alert(response);
 		location.href='home';
 	}
 
