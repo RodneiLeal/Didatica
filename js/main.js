@@ -16,9 +16,9 @@ jQuery(document).ready(function($){
 	});
 
 	//open sign-up form
-	$('.cd-signup').on('click', signup_selected());
+	$('.cd-signup').on('click', signup_selected);
 	//open login-form form
-	$('.cd-signin, .course_start').on('click', login_selected());
+	$('.cd-signin, .course_start').on('click', login_selected);
 
 	//close modal
 	formModal.on('click', function(event){
@@ -36,7 +36,7 @@ jQuery(document).ready(function($){
 	//switch from a tab to another
 	formModalTab.on('click', function(event) {
 		event.preventDefault();
-		( $(event.target).is( tabLogin ) ) ? login_selected() : signup_selected();
+		( $(event.target).is( tabLogin ) ) ? login_selected : signup_selected;
 	});
 
 	//hide or show password
@@ -93,39 +93,6 @@ jQuery(document).ready(function($){
 		event.preventDefault();
 		formSignup.find('input[type="email"]').toggleClass('has-error').next('span').toggleClass('is-visible');
 	});
-
-
-
-
-	// 12/09/2017
-	// author: Rodnei Leal
-
-
-	$(".logoff").on('click', logoff);
-
-	function logoff(){
-		data = {
-			logoff: true
-		}
-
-		$.post('controllers/user/logout.php', data, logoffCallback);
-	}
-
-	function logoffCallback(response){
-		alert(response);
-		location.href='home';
-	}
-
-
-
-
-
-
-
-
-
- 
-
 });
 
 

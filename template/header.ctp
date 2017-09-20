@@ -1,9 +1,10 @@
 <?php
+	header('Content-Type: text/html; charset=UTF-8');
 	@session_start();
 	extract($_SESSION);
 ?>
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br" >
 
 	<head>
         <meta charset="utf-8">
@@ -13,19 +14,19 @@
 		
         <title><?=$this->getTitle()?></title>
 
-		<!-- <base href="<?=HOME_URI?>" > -->
-		<base href="http://didatica.rodneileal.com.br/">
+		<base href="<?=HOME_URI?>" >
+		<!-- <base href="http://didatica.rodneileal.com.br/"> -->
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="all">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/superfish.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/owl.carousel.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/owl.theme.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/jquery.navgoco.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="https://rawgit.com/RodneiLeal/Didatica/Rodnei/css/style.css" type="text/css" media="all" />
-        <link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/responsive.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/css/menu/component.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="https://cdn.rawgit.com/RodneiLeal/Didatica/Rodnei/plugins/notification/toastr.min.css" type="text/css" media="all"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="css/superfish.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="css/owl.carousel.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="css/owl.theme.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="css/jquery.navgoco.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
+        <link rel="stylesheet" href="css/responsive.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="css/menu/component.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="plugins/notification/toastr.min.css" type="text/css" media="all"/>
 
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700italic,700' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800' rel='stylesheet' type='text/css'>
@@ -105,7 +106,7 @@
 													foreach(Main::getCategoriaCursos() as $categoria){
 														echo
 														'
-															<li><a href="cursos/'.Main::preparaURL($categoria['categoria']).'">'.$categoria['categoria'].'</a></li>
+															<li><a href="cursos/'.$categoria['categoria'].'">'.$categoria['categoria'].'</a></li>
 														';
 													}
 												?>
@@ -115,7 +116,7 @@
 								</li>
 								<li >
 									<form class="form-wrapper-top-search" action="cursos" method="GET">
-										<input type="text" name="busca" placeholder="Buscar curso..." required>
+										<input type="text" name="search" placeholder="Buscar curso..." required>
 										<button type="submit"><i class="fa fa-search"></i></button>
 									</form>
 								</li>

@@ -165,7 +165,7 @@
 
                     	<div class="widget kopa-course-search-2-widget">
 						<?php
-							$imagem = empty($imagem)?'img/users/sem-foto.png':base64_decode($imagem);
+							$imagem = empty($imagem)?'img/curso/no-image.png':base64_decode($imagem);
 						?>
 
 							<img src="<?=$imagem?>" height="218px">
@@ -177,13 +177,12 @@
 
 
 									<?php
-									var_dump($_SESSION);
 										if(!empty($_SESSION)){
 											$inscricao = $this->curso->getInscricao($_SESSION['idusuario'], $idcurso)[0];
 											if(empty($inscricao)){
 												echo '<a href="javascript:void()" id="course_start" course="'.$idcurso.'" class="kopa-button green-button medium-button kopa-button-icon">Iniciar Curso</a>';
 											}else{
-												echo '<a class="kopa-button green-button medium-button kopa-button-icon" href="dashboard.php?p=course&enroll='.$inscricao['idinscricao'].'&act=read">Acessar Curso</a>';
+												echo '<a href="dashboard.php?p=course&enroll='.$inscricao['idinscricao'].'&act=read" class="kopa-button green-button medium-button kopa-button-icon">Acessar Curso</a>';
 											}
 										}else{
 											echo '<a href="javascript:void()" id="course_start" course="'.$idcurso.'" class="kopa-button green-button medium-button kopa-button-icon course_start">Iniciar Curso</a>';

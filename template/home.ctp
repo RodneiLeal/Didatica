@@ -111,7 +111,7 @@
 												<li class="masonry-item">
 													<article class="entry-item hot-item">
 														<div class="entry-thumb">
-															<a href="Curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
+															<a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
 																<div class="mask"></div>
 																<img src="'.$imagem.'" height="230px">
 															</a>
@@ -128,7 +128,7 @@
 																<a href="instrutor/'.$instrutor_idinstrutor.'/'.Main::preparaURL($instrutor).'">'.$instrutor.'</a>
 															</div>
 															<h6 class="entry-title">
-															    <a href="Curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
+															    <a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
 																	'.$titulo.'
 																</a>
 															</h6>
@@ -138,14 +138,8 @@
 											';
 										}
 									?>
-
-
-
-
                                 </ul>
                                 <!-- clearfix -->
-
-                  
                             </div>
                             <!-- masonry-list-wrapper -->
 	    				</div>

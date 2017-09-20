@@ -29,6 +29,7 @@
             $this->horas_minima 						= NULL;
         }
 
+
         public function getCursos(){
             $sql     = "SELECT t1.*, t2.categoria, t3.nome AS instrutor, ";
             $sql    .= "(SELECT COUNT(*) FROM avaliacao WHERE curso_idcurso = t1.idcurso) AS votantes, ";
@@ -54,6 +55,29 @@
             $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
+
+        public function searchCursos(){
+			$data	 = array($this->search);
+
+			$sql	 = "select t1.*, t2.nome from curso as t1, instrutor as t3 ";
+			$sql 	.= "left join usuario as t2 on t2.idusuario = t3.usuario_idusuario ";
+			$sql 	.= "where t1.titulo like '%?%'";
+
+			$query	= $this->db->query($sql, $data);
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
+
+        public function getCursosPorCategoria(){
+			$data	 = array($this->action);
+
+			$sql 	 = "select t1.*, t2.nome from curso as t1, instrutor as t3 ";
+			$sql	.= "left join usuario as t2 on t2.idusuario = t3.usuario_idusuario ";
+			$sql 	.= "where t1.categoria_idcategoria = (select categoria.idcategoria ";
+			$sql 	.= "from categoria where categoria.categoria = '?')";
+
+			$query	= $this->db->query($sql, $data);
+			return $query->fetchAll(PDO::FETCH_ASSOC);
+		}
 
         public function getCursoComentarios($idcurso){
             $sql     = "SELECT t1.*, t2.nome FROM avaliacao AS t1 ";

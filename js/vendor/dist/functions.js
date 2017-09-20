@@ -85,6 +85,21 @@ jQuery(function ($){
     $.post("controllers/user/login.php", data, loginCallback);
   });
 
+
+  ////LOGOUT USUÁRIO
+  $(".logoff").on('click', function(){
+    data = {
+      logoff: true
+    }
+    
+    function logoffCallback(response){
+      alert(response);
+      location.href='home';
+    }
+
+    $.post('controllers/user/logout.php', data, logoffCallback);
+  });
+
   ////VALIDA CERTIFICADO
   $('#certified-validate').on('click', function(){
 

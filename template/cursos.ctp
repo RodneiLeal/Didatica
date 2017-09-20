@@ -14,13 +14,13 @@
                     <div class="row">
                         <div class="col-md-12">
                             <h1 class="page-title clearfix pull-left">
-                                <?php echo $curso_categoria_nome;?>
+                                <?=$curso_categoria_nome;?>
                             </h1>
                         </div>
                         <div class="col-md-12">
 							<h5 class=" clearfix pull-left" style="color:#fff">
 								Os maiores especialistas em
-								<?php echo $curso_categoria_nome;?>
+								<?=$curso_categoria_nome?>
 							</h5>
                         </div>
 
@@ -41,7 +41,7 @@
 	    			<div class="col-md-12 col-sm-12 col-xs-12">
 	    				<div class="widget kopa-masonry-list-2-widget">
 	    					<div class="widget-title widget-title-s5 text-left">
- 	                            <h4>Cursos para: <?php echo $curso_categoria_nome;?></h4>
+ 	                            <h4>Cursos para: <?=$curso_categoria_nome;?></h4>
  	                        </div>
 
 	    					<div class="masonry-list-wrapper">
