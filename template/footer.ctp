@@ -162,12 +162,6 @@
 						<span class="cd-error-message">Informe seu Nome!</span>
  					</p>
 					
-					<!-- <p class="fieldset">
-						<label class="image-replace cd-username" for="register_cpf">Seu CPF</label>
-						<input class="full-width has-padding has-border" id="register_cpf" type="text" placeholder="CPF">
-						<span class="cd-error-message">Informe seu CPF!</span>
-					</p> -->
-					
 					<p class="fieldset">
 						<label class="image-replace cd-email" for="register_email">E-mail</label>
 						<input class="full-width has-padding has-border" id="register_email" type="email" placeholder="E-mail">
@@ -231,7 +225,7 @@
 <script type="text/javascript" src="js/main.js"></script>
 <script type="text/javascript" src="js/menu/modernizr.custom.js"></script>
 <script type="text/javascript" src="js/menu/jquery.dlmenu.js"></script>
-<script type="text/javascript" src="js/vendor/dist/functions.js"></script>
+<script type="text/javascript" src="js/functions.js"></script>
 <script type="text/javascript" src="js/vendor/dist/js/droply.js"></script>
 <script type="text/javascript" src="js/vendor/plugins/notification/toastr.min.js"></script>
 <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>

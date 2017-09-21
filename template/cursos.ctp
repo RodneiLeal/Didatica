@@ -1,8 +1,7 @@
 <?php
 	$curso_categoria_nome = $this->action;
-	$cursos = $this->getCursos();
+	$cursos = $this->cursos->getCursosPorCategoria($curso_categoria_nome);
 ?>
-
     <div id="main-content">
 
         <header class="page-header">
@@ -47,36 +46,36 @@
 	    					<div class="masonry-list-wrapper">
                                 <ul class="clearfix">
 								
-									<?php
+								<?php
+                                        foreach ($cursos as $curso){
+                                            extract($curso);
+                                            $imagem = empty($imagem)?'img/curso/no-image.png':base64_decode($imagem);
+                                            $media  = number_format($media, 2, '.', ' ');
 
-										foreach($cursos as $curso){
-											extract($curso);
 											echo 
 											'
 												<li class="masonry-item">
 													<article class="entry-item hot-item">
 														<div class="entry-thumb">
-															<a href="curso/'.$curso_id.'/'.$this->preparaURL($curso_titulo).'">
+															<a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
 																<div class="mask"></div>
-																<img src="dist/img/courses/'.$curso_imagem.'" height="230px">
+																<img src="'.$imagem.'" height="230px">
 															</a>
-															<ul class="kopa-rating clearfix">
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star"></i></li>
-																<li><i class="fa fa-star-o"></i></li>
-															</ul>
 															<!--<span class="entry-hot">Hot</span>-->
-														</div>
+                                                        </div>
+                                                            
+                                                        <div class="avaliacao">
+                                                            <div class="starrr" data-rating="'.$media.'" title="Média entre '.$votantes.' opiniões de alunos"><span>'.$media.'</span></div>
+                                                        </div>
+
 														<div class="entry-content">
 															<div class="course-teacher">
-																<span>'.$curso_categoria_nome.'</span><br>
-																<a href="#">'.$usuario_nome.'</a>
+																<span>'.$categoria.'</span><br>
+																<a href="instrutor/'.$instrutor_idinstrutor.'/'.Main::preparaURL($instrutor).'">'.$instrutor.'</a>
 															</div>
 															<h6 class="entry-title">
-																<a href="curso/'.$curso_id.'/'.$this->preparaURL($curso_categoria_nome).'/'.$this->preparaURL($curso['curso_titulo']).'">
-																	'.$curso_titulo.'
+															    <a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
+																	'.$titulo.'
 																</a>
 															</h6>
 														</div>

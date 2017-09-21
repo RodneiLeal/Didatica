@@ -4,21 +4,21 @@ jQuery(function ($){
   ////CADASTRO USUÁRIO
   $('#register-bt').on('click',function(){
 
-    if (isEmpty($("#register_name").val())){ 
-      Notificacao('error','Informe seu nome de cadastro','Nome obrigatório'); 
-      $('#register_name').focus(); 
+    if (isEmpty($("#register_name").val())){
+      Notificacao('error','Informe seu nome de cadastro','Nome obrigatório');
+      $('#register_name').focus();
       return 1;
     }
 
-    if (isEmpty($("#register_email").val())){ 
-      Notificacao('error','Informe seu e-amail de cadastro','E-mail obrigatório'); 
-      $('#register_email').focus(); 
+    if (isEmpty($("#register_email").val())){
+      Notificacao('error','Informe seu e-amail de cadastro','E-mail obrigatório');
+      $('#register_email').focus();
       return 1;
     }
 
-    if (isEmpty($("#register_pass").val())){ 
-      Notificacao('error','Informe sua senha de cadastro','Senha obrigatório'); 
-      $('#register_pass').focus(); 
+    if (isEmpty($("#register_pass").val())){
+      Notificacao('error','Informe sua senha de cadastro','Senha obrigatório');
+      $('#register_pass').focus();
       return 1;
     }
 
@@ -29,51 +29,54 @@ jQuery(function ($){
     };
 
     function registerCallback(response){
+      alert(response)
       switch(response){
         case '0__':
-          Notificacao('error','E-mail inválido','E-mail obrigatório'); 
+          Notificacao('error','E-mail inválido','E-mail obrigatório');
           $('#register_email').focus();
         break;
         case '1__':
-          Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório'); 
+          Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
           $('#register_email').focus();
         break;
         case '2__':
+          // mensagem usada qaundo a confirmação por email esta configurada
+          // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
           Notificacao('success','Login realizado com sucesso','Redirecionando...');
           redireciona('dashboard');
         break;
       }
     }
-    
+
     $.post("controllers/user/register.php", data, registerCallback);
   });
-      
+
   ////LOGIN USUÁRIO
-  $('#login-bt').on('click',function(){ 
-    
-    if (isEmpty($("#user_email").val())){ 
+  $('#login-bt').on('click',function(){
+
+    if (isEmpty($("#user_email").val())){
       Notificacao('error','Informe seu e-mail de cadastro','E-mail obrigatório');
       $('#user_email').focus(); return 1;
     }
 
     if (isEmpty($("#user_pass").val())){
-      Notificacao('error','Informe sua senha de cadastro','Senha obrigatório'); 
+      Notificacao('error','Informe sua senha de cadastro','Senha obrigatório');
       $('#user_pass').focus(); return 1;
     }
-    
+
     var data = {
       pid: $("#user_email").val(),
       passwd: $("#user_pass").val()
     }
-    
+
     function loginCallback(response){
       switch(response){
         case '0__':
-          Notificacao('error','Ops!','Combinação de e-mail e senha invalidos'); 
+          Notificacao('error','Ops!','Combinação de e-mail e senha invalidos');
           $('#LoginFormEmail').focus();
         break;
         case '1__':
-          Notificacao('error','Usuário Bloquado!','Entre em contato com os administradores.'); 
+          Notificacao('error','Usuário Bloquado!','Entre em contato com os administradores.');
         break;
         case '2__':
           Notificacao('success','Redirecionando...','Login realizado com sucesso');
@@ -81,7 +84,7 @@ jQuery(function ($){
         break;
       }
     }
-      
+
     $.post("controllers/user/login.php", data, loginCallback);
   });
 
@@ -91,7 +94,7 @@ jQuery(function ($){
     data = {
       logoff: true
     }
-    
+
     function logoffCallback(response){
       alert(response);
       location.href='home';
@@ -100,6 +103,7 @@ jQuery(function ($){
     $.post('controllers/user/logout.php', data, logoffCallback);
   });
 
+  
   ////VALIDA CERTIFICADO
   $('#certified-validate').on('click', function(){
 
@@ -119,7 +123,7 @@ jQuery(function ($){
 
       // switch(response){
       //   case '0__':
-      //     Notificacao('error','Dados não localizados','Não localizamos este registro'); 
+      //     Notificacao('error','Dados não localizados','Não localizamos este registro');
       //     $('.certified-return').html("<img src='dist/img/checkout/erro.png'> <BR> O Certificado informado não é válido <hr>");
       //   break;
       //   case '1__':
@@ -170,8 +174,8 @@ jQuery(function ($){
       }, function(data)
       {
           var retorno = data.replace(/^\s+|\s+$/g,"");
-          setTimeout(function(){ 
-              
+          setTimeout(function(){
+
 
               if(retorno==1)
               {
@@ -184,14 +188,14 @@ jQuery(function ($){
                 $(".course_box").show(50);
                 $(".course_load").html("");
 
-                Notificacao('error','Ops, houve algo de errado, tente novamente mais tarde','Ops!'); 
+                Notificacao('error','Ops, houve algo de errado, tente novamente mais tarde','Ops!');
               }
               else if(retorno==2)
               {
                 $(".course_box").show(50);
                 $(".course_load").html("");
 
-                Notificacao('error','Ops, faça login antes de iniciar um curso','Ops!'); 
+                Notificacao('error','Ops, faça login antes de iniciar um curso','Ops!');
               }
           }, 3000);
       });
@@ -208,7 +212,7 @@ jQuery(function ($){
         $(".course-content-item-docs-"+course_item).removeClass("hidden");
 
         $(".course-content-item-"+course_item).html("<img src='dist/img/loader.gif'>");
- 
+
         var operation  = 'show-content';
         $.post("views/content/course/course-content-item-show.php",
         {
@@ -221,11 +225,11 @@ jQuery(function ($){
             var content_descrition = content[0];
             var content_docs       = content[1];
 
-            setTimeout(function(){ 
-               
+            setTimeout(function(){
+
                   $(".course-content-item-"+course_item).html(content_descrition);
                   $(".course-content-item-docs-"+course_item).html(content_docs);
-                
+
             }, 2000);
             //alert(retorno);
         });
@@ -241,7 +245,7 @@ jQuery(function ($){
         var form_evento       = $form.attr('event'); //O que ocorrerá se sucesso
         var form_evento_tipo  = $form.attr('event_type'); //O que ocorrerá se sucesso
 
-            var form = $("#"+form_id);  
+            var form = $("#"+form_id);
             var dados = $("#"+form_id).serialize();
 
 
@@ -257,7 +261,7 @@ jQuery(function ($){
 
                   if ( (obrigatorio != undefined) && (input_id.val()=="" ) )
                   {
-                      Notificacao('error',mensagem,'Campo obrigatório'); 
+                      Notificacao('error',mensagem,'Campo obrigatório');
                       input_id.focus();
 
                       erros = 1;
@@ -282,7 +286,7 @@ jQuery(function ($){
 
                         if(tipo_retorno=='erro')
                         {
-                          Notificacao('error',mensagem_retorno,'Houve algo de errado'); 
+                          Notificacao('error',mensagem_retorno,'Houve algo de errado');
                         }
                         else
                         {
@@ -306,23 +310,23 @@ jQuery(function ($){
                     }
                   });
               }
- 
+
     });
 
 
 
 
 
- 
 
-      //function validaarquivo(campo) 
+
+      //function validaarquivo(campo)
       $("#product_file_image_1").on("change", function()
       {
 
          var file = this.files[0].name;
          //var object_file  = jQuery(this).attr("data-preview");
-         //var object_close = jQuery(this).attr("data-close");  
- 
+         //var object_close = jQuery(this).attr("data-close");
+
          TamanhoString = file.length;
          extensao   = file.substr(TamanhoString - 4,TamanhoString);
          if (TamanhoString == 0 )
@@ -335,13 +339,13 @@ jQuery(function ($){
             Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
             return false;
           }
-         else 
+         else
          {
           //var ext = new Array('.asp','.htm','html','.php','.cgi');
           var ext = new Array('.jpg','.png','.bmp');
 
-          for(var i = 0; i < ext.length; i++) 
-          { 
+          for(var i = 0; i < ext.length; i++)
+          {
             if (extensao == ext[i])
             {
               flag = "ok";
@@ -360,7 +364,7 @@ jQuery(function ($){
             }
          }
 
-           // var file_data = file.prop('files')[0];   
+           // var file_data = file.prop('files')[0];
 
           var form_data = new FormData();
           form_data.append('file', this.files[0]);
@@ -368,9 +372,9 @@ jQuery(function ($){
           var curso = $("#course_register").val();
 
             //form_data.append('file', file_data);
-            //alert(form_data);                             
+            //alert(form_data);
             $.ajax({
-                url: 'controller/course.php?course='+curso+'&operation='+operation, // point to server-side PHP script 
+                url: 'controller/course.php?course='+curso+'&operation='+operation, // point to server-side PHP script
                 dataType: 'text',  // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,
@@ -382,7 +386,7 @@ jQuery(function ($){
                 {
                   if(resultado==0)
                   {
-                    Notificacao('error','Houve algo de errado no envio','Tente novamente'); 
+                    Notificacao('error','Houve algo de errado no envio','Tente novamente');
                     return false;
                   }
               else
@@ -394,7 +398,7 @@ jQuery(function ($){
                 $("#preview").fadeOut(50);
                 $(".preview_block").html("<img src='dist/img/loader.gif'>");
 
-                setTimeout(function(){ 
+                setTimeout(function(){
                   var preview = document.getElementById('preview');
                   var input = document.getElementById('product_file_image_1');
 
@@ -412,18 +416,18 @@ jQuery(function ($){
                     $(".preview_block").html("");
                     $("#preview").fadeIn(500);
 
-                }, 2000); 
+                }, 2000);
                 return false;
               }
             }
-              
+
              });
 
          //$("#formulario").submit();
          return true;
-         
+
       });
- 
+
 
 
 
@@ -431,10 +435,10 @@ jQuery(function ($){
     $('#inputCourseContentAdd').on('click',function()
     {
  		var formData = new FormData($("#FormeditCourseEditContentSave")[0]);
- 		
+
         $(".cd-main-content-load").html("<img src='dist/img/loader.gif'>");
 		$("#inputCourseContentAdd").hide(100);
-		
+
 		$.ajax({
 			url: 'controller/course.php',
 			type: 'POST',
@@ -447,11 +451,11 @@ jQuery(function ($){
 
 				Notificacao('success','Excelente, seu conteúdo foi adicionado com sucesso','Tudo certo');
 
-				setTimeout(function(){ 
+				setTimeout(function(){
  					$('#file_input_files').val("");
 
 					$(".cd-main-content-load").html("");
- 
+
 						  $('#box_content_add_button').removeClass("btn-danger").addClass("btn-primary");
 						  $('#box_content_add_button').html("<i class='fa fa-plus'></i> Adicionar conteúdo");
 						  $('.box_content_add').hide(400);
@@ -464,8 +468,8 @@ jQuery(function ($){
 						  var course_register_content  = $("#course_register_content").val();
 						  load_content_data("courselistcontent","views/content/course/course-content-item-show-edit.php?course="+course_register_content);
 				}, 2000);
-			} 
- 
+			}
+
 		});
     });
 
@@ -530,15 +534,15 @@ jQuery(function ($){
         }, function(data)
         {
             var retorno = data.replace(/^\s+|\s+$/g,"");
-            
-               
+
+
                 var resultado        = data.split('___');
                 var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
                 var mensagem_retorno = resultado[1];
- 
+
                   if(tipo_retorno=='erro')
                   {
-                    Notificacao('error',mensagem_retorno,'Houve algo de errado'); 
+                    Notificacao('error',mensagem_retorno,'Houve algo de errado');
                   }
                   else
                   {
@@ -546,10 +550,10 @@ jQuery(function ($){
 
                       $("#inputCourseQuestionAnswer_div").fadeOut(400);
                   }
-				  
+
 					$('#box_question_add_button').trigger("click");
 					load_content_data("courselistcontentquestion","views/content/course/course-question-item-show-edit.php?course="+course_register_content);
-            
+
             //alert(retorno);
         });
     });
@@ -573,12 +577,12 @@ jQuery(function ($){
             Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
             return false;
           }
-         else 
+         else
          {
            var ext = new Array('.jpg','.png','.bmp');
 
-          for(var i = 0; i < ext.length; i++) 
-          { 
+          for(var i = 0; i < ext.length; i++)
+          {
             if (extensao == ext[i])
             {
               flag = "ok";
@@ -592,21 +596,21 @@ jQuery(function ($){
             if (flag=="erro")
             {
               Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
- 
+
               return false;
             }
          }
 
-           // var file_data = file.prop('files')[0];   
+           // var file_data = file.prop('files')[0];
           $("#preview").fadeOut(500);
           $(".preview_block").html("<img src='dist/img/loader.gif'>");
 
           var form_data = new FormData();
           form_data.append('file', this.files[0]);
           var operation = 'ProfileImage';
-       
+
             $.ajax({
-                url: 'controller/user.php?operation='+operation, // point to server-side PHP script 
+                url: 'controller/user.php?operation='+operation, // point to server-side PHP script
                 dataType: 'text',  // what to expect back from the PHP script, if anything
                 cache: false,
                 contentType: false,
@@ -618,19 +622,19 @@ jQuery(function ($){
                 {
                   if(resultado==0)
                   {
-                    Notificacao('error','Houve algo de errado no envio','Tente novamente'); 
+                    Notificacao('error','Houve algo de errado no envio','Tente novamente');
                     return false;
                   }
                   else
                   {
                     Notificacao('success','Arquivo enviado e salvo','Sucesso');
- 
 
 
-                    setTimeout(function(){ 
+
+                    setTimeout(function(){
                       var preview = document.getElementById('preview');
                       var input = document.getElementById('upload_logo');
-     
+
                       if (input.files && input.files[0])
                       {
                         var reader = new FileReader();
@@ -645,16 +649,16 @@ jQuery(function ($){
                         $(".preview_block").html("");
                         $("#preview").fadeIn(500);
 
-                    }, 2000); 
+                    }, 2000);
                     return false;
                   }
                 }
-              
+
              });
 
          //$("#formulario").submit();
          return true;
-         
+
       });
 
 
@@ -666,7 +670,7 @@ jQuery(function ($){
 
         var questao_pergunta_1              = $(".1:checked").attr("name");
         var questao_resposta_1              = $(".1:checked").val();
- 
+
         var questao_pergunta_2              = $(".2:checked").attr("name");
         var questao_resposta_2              = $(".2:checked").val();
 
@@ -755,12 +759,12 @@ jQuery(function ($){
             setTimeout(function(){
               $('#modal_exam_wait').html('');
               $('#modal_exam_title').html('Verificado');
-            
+
               if(tipo_retorno=='erro'){
-                Notificacao('error',mensagem_retorno,'Ops!'); 
-              } 
+                Notificacao('error',mensagem_retorno,'Ops!');
+              }
               else if(tipo_retorno=='reproved') {
-                  Notificacao('error',mensagem_retorno,'Ops!'); 
+                  Notificacao('error',mensagem_retorno,'Ops!');
                   $('#modal_exam_loading').attr('src', 'dist/img/checkout/erro.png');
                   $('#modal_exam_result').html('Você não foi aprovado, não desanime, pode tentar novamente');
               }
@@ -773,7 +777,7 @@ jQuery(function ($){
               }
             }, 3000);
         });
-        
+
     });
 
   ////Solicitar Certificado
@@ -803,7 +807,7 @@ jQuery(function ($){
   });
 
   ////Tornar-se Instrutor
-  $("#instructor_new_bt").click(function(){	
+  $("#instructor_new_bt").click(function(){
     $(".instructor_new_action").fadeOut(400);
     $(".instructor_new_load").html("<img src='dist/img/loader.gif'>");
 
@@ -820,15 +824,15 @@ jQuery(function ($){
           switch(retorno[0]){
 
             case '0':
-              Notificacao('warning',retorno[1],'Completar dados profissionais.'); 
+              Notificacao('warning',retorno[1],'Completar dados profissionais.');
               setTimeout(function(){
                 location.assign("?p=user-edit#tab_profissional");
               }, 5000);
-            
+
             break;
 
             case '1':
-              Notificacao('success',retorno[1],'Excelente'); 
+              Notificacao('success',retorno[1],'Excelente');
 
               $(".instructor_new_load").html("");
               $(".instructor_new_action").fadeOut(400);
@@ -838,7 +842,7 @@ jQuery(function ($){
             break;
 
             default:
-              Notificacao('error',retorno[1],' Houve algo de errado'); 
+              Notificacao('error',retorno[1],' Houve algo de errado');
               $(".instructor_new_action").fadeIn(400);
               $(".instructor_new_load").html("");
 
@@ -853,114 +857,114 @@ jQuery(function ($){
 
 	function load_content_data(div, file)
 	{
-		setTimeout(function(){ 
+		setTimeout(function(){
 		  $("#"+div).html("<img src='dist/img/loader.gif'>");
 		  $("#"+div).load(file);
 		}, 3000);
 	}
-		  
-		  
+
+
 
 
 
 	function lembrar_senha()
 	{
 		var email = $("#user_email").val();
-		 
+
 		if(email = "")
 		{
 			$("#user_email").focus();
-			Notificacao('error','Por favor, informe seu e-mail','Ops'); 
+			Notificacao('error','Por favor, informe seu e-mail','Ops');
 		}
 		else
 		{
-						
+
 			 $.post('controller/user.php',{user_email: $("#user_email").val(),ResetPass:'recover_access' },function(data)
 			 {
 				if(data==0)
 				{
 					$("#user_email").focus();
-					Notificacao('error','Por favor, informe um e-mail válido','Ops'); 
+					Notificacao('error','Por favor, informe um e-mail válido','Ops');
 				}
 				else if(data==1)
 				{
 					$("#user_email").focus();
-					Notificacao('error','não encontramos seu cadastro','Ops'); 
+					Notificacao('error','não encontramos seu cadastro','Ops');
 				}
 				else
 				{
- 				
+
 					$("#user_email").focus();
-					Notificacao('success','Sua nova senha foi enviada por e-mail','Sucesso'); 
+					Notificacao('success','Sua nova senha foi enviada por e-mail','Sucesso');
 				}
-				
+
 			 })
 		}
 	}
 
-	
+
 
 	function lembrar_senha_site()
 	{
 		var email = $("#reset-email").val();
-		 
+
 		if(email = "")
 		{
 			$("#reset-email").focus();
-			Notificacao('error','Por favor, informe seu e-mail','Ops'); 
+			Notificacao('error','Por favor, informe seu e-mail','Ops');
 		}
 		else
 		{
-						
+
 			 $.post('controller/user.php',{user_email: $("#reset-email").val(),ResetPass:'recover_access' },function(data)
 			 {
 				if(data==0)
 				{
 					$("#reset-email").focus();
-					Notificacao('error','Por favor, informe um e-mail válido','Ops'); 
+					Notificacao('error','Por favor, informe um e-mail válido','Ops');
 				}
 				else if(data==1)
 				{
 					$("#reset-email").focus();
-					Notificacao('error','não encontramos seu cadastro','Ops'); 
+					Notificacao('error','não encontramos seu cadastro','Ops');
 				}
 				else
 				{
- 				
+
 					$("#reset-email").focus();
-					Notificacao('success','Sua nova senha foi enviada por e-mail','Sucesso'); 
+					Notificacao('success','Sua nova senha foi enviada por e-mail','Sucesso');
 				}
-				
+
 			 })
 		}
 	}
-	
-	
+
+
 	$(document).ready(function(){
 		$('.user_messages_received').on('click',function()
 		{
 			var mensagem_id 			= $(this).attr("mensagem_id");
 			var mensagem_conteudo 		= $(this).attr("mensagem");
 			var mensagem_conteudo_data 	= $(this).attr("data");
-				
+
 				$("#user_messages_read_data").html("");
 				$("#user_messages_read_mensagem").html("<div style='margin:0 auto;text-align:center;width:100%'><img src='dist/img/loader.gif'></div>");
-				
+
 				setTimeout(function()
-				{ 
+				{
 					$.post('controller/user.php',{mensagem_id: mensagem_id,MensagemLer:'MensagemLer' },function(data)
 					{
 						$("#user_messages_read_mensagem").html(mensagem_conteudo);
 						$("#user_messages_read_data").html(mensagem_conteudo_data);
-						
+
 						$("#block_user_messages_"+mensagem_id).css({"font-weight":"normal"});
 					})
 				}, 1000);
-			
-			
+
+
 		});
 	});
-	
+
 
 
     ///COURSE
@@ -970,10 +974,10 @@ jQuery(function ($){
 		$('#courses_list_search').on('click',function()
 		{
 			$("#courses_list").html("<div style='margin:0 auto;text-align:center;width:100%'>'<img src='dist/img/loader.gif'></div>");
-			
+
 			var busca_texto 	= $("#search_form_title").val();
 			var busca_categoria = $("#search_form_category").val();
-			
+
 			var operation  = 'search_form';
 			$.post("views/content/course/courses_search_result.php",
 			{
@@ -984,15 +988,15 @@ jQuery(function ($){
 			}, function(data)
 			{
 				setTimeout(function()
-				{ 
+				{
 					$("#courses_list").html(data);
 				}, 2000);
 				//alert(retorno);
 			});
 		});
 	});
-	
-	
+
+
   $('.finaceiro_saque_solicita').on('click',function(){
 
       $("#modal_solicita_saque").modal("show");
@@ -1005,8 +1009,8 @@ jQuery(function ($){
       }, function(data)
       {
           var retorno = data.replace(/^\s+|\s+$/g,"");
-          setTimeout(function(){ 
-             
+          setTimeout(function(){
+
           var content = retorno.split('___');
           var content_descrition = content[0];
           var mensagem_retorno   = content[1];
@@ -1014,7 +1018,7 @@ jQuery(function ($){
 
               if(content_descrition=='erro')
               {
-                Notificacao('error',mensagem_retorno,'Houve algo de errado'); 
+                Notificacao('error',mensagem_retorno,'Houve algo de errado');
                 $("#modal_solicita_saque").modal("hide");
               }
               else
@@ -1023,7 +1027,7 @@ jQuery(function ($){
                 $("#modal_solicita_saque_wait").html("");
                 $("#modal_solicita_saque_resultado").html("Solicitação encaminhada<BR> Agora é só aguardar a transferência");
 
-                Notificacao('success',mensagem_retorno,'Excelente'); 
+                Notificacao('success',mensagem_retorno,'Excelente');
               }
           }, 2000);
           //alert(retorno);
@@ -1037,8 +1041,8 @@ jQuery(function ($){
         $("#adm-withdrawal-modal-data-bank").html("<img src='dist/img/loader.gif'>");
         var data_bank = $(this).attr("data_bank");
         var data_register_id = $(this).attr("data_register");
-        
-          setTimeout(function(){ 
+
+          setTimeout(function(){
               $("#adm-withdrawal-modal-data-bank").html(data_bank);
 
               $(".adm-withdrawal-modal-confirm-withdrawal-bt").attr("data_register_id", data_register_id);
@@ -1059,8 +1063,8 @@ jQuery(function ($){
       }, function(data)
       {
           var retorno = data.replace(/^\s+|\s+$/g,"");
-          
-              
+
+
           var content = retorno.split('___');
           var content_descrition = content[0];
           var mensagem_retorno   = content[1];
@@ -1068,14 +1072,14 @@ jQuery(function ($){
 
               if(content_descrition=='erro')
               {
-                Notificacao('error',mensagem_retorno,'Houve algo de errado'); 
+                Notificacao('error',mensagem_retorno,'Houve algo de errado');
               }
               else
               {
                 $("#adm-withdrawal-modal").modal("hide");
-                Notificacao('success',mensagem_retorno,'Excelente'); 
+                Notificacao('success',mensagem_retorno,'Excelente');
               }
-          
+
       });
   });
 
@@ -1175,31 +1179,31 @@ jQuery(function ($){
       "showMethod": "fadeIn",
       "hideMethod": "fadeOut"
     }
-    
+
     toastr[tipo](mensagem, titulo);
-    
+
   }
 
-  
-  
-  
 
 
 
 
 
 
-  
-  
-  
-  
+
+
+
+
+
+
+
 jQuery(document).ready(function()
 {
-	
+
   	var theme = 'default';
-  	
-  	jQuery("#mas").empty(); 
-	
+
+  	jQuery("#mas").empty();
+
   	jQuery("#mas").droply(
   	{
 		multi:true,
@@ -1213,14 +1217,14 @@ jQuery(document).ready(function()
 		theme: theme,
 		backgroundColor: '0391ce',
 			dropBox:{
-			title:'envie seus arquivos', 
-			height:80, 
+			title:'envie seus arquivos',
+			height:80,
 			fontSize:26
 		},
 		stableUploadLbl: 'Enviado com sucesso!',
 		deleteConfirmLbl:'Quer realmente deletar este arquivo?',
   	});
-  	
+
 
 });
 

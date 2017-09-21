@@ -14,8 +14,8 @@
 		
         <title><?=$this->getTitle()?></title>
 
-		<base href="<?=HOME_URI?>" >
-		<!-- <base href="http://didatica.rodneileal.com.br/"> -->
+		<!-- <base href="<?=HOME_URI?>" > -->
+		<base href="http://didatica.rodneileal.com.br/">
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />

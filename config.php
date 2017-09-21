@@ -2,14 +2,18 @@
 	/*confihgurações de sistema*/
 	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-	$home_uri	= "http://didatica.rodneileal.com.br/";
-	$db_user	= "rodneile_didatic";
-	$db_passwd	= "@12345@";
+	$home_uri			= "http://didatica.rodneileal.com.br/";
+	$db_user			= "rodneile_didatic";
+	$db_passwd			= "@12345@";
+	$confirme_path_file	= "/controllers/users/confirme.php";
+	$master_email		= "exemplo@teste.com.br";
 
 	define("SYS_NAME", "Didática Online");
+	define('MASTER_MAIL', $master_email);
 	define("ROOT", __DIR__.DIRECTORY_SEPARATOR);
 	define("UPLOADS", ROOT."/views/_uploads");
 	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'./':$home_uri);
+	define("CONFIRME_URI", HOME_URI.$confirme_path_file);
 	define("DB_HOST", "localhost");
 	define("DB_NAME", "didatica_online_DB");
 	define("DB_USER", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"root":$db_user);

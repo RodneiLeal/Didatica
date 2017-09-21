@@ -24,11 +24,24 @@
 				  'pswd'=>hash('sha256', $passwd),
 				  'dataCadastro'=>$datetime);
 
-	$registro = $user->saveUser($data);
+	// alterar a coluna locked no banco de dados para que esta opção funcione corretamente.
+
+	// $subject  = 'Comfirmação de cadastro';
+	// $message  = 'Olá '.$nome;
+	// $message .= ', recebemos o seu com sucesso.'; 
+	// $message .= 'Para utilizar os nossos serviços, ';
+	// $message .= 'precisamos que ative a sua conta clicando no link abaixo:';
+	// $message .= '<a href="'.CONFIRME_URI.'">Clique aqui para ativar o seu cadastro</a>';
+	// $headers  = 'From: '.MASTER_MAIL.'\r\n';
+	// $headers .= 'Reply-To: '.MASTER_MAIL.'\r\n';
+
+	// if($user->saveUser($data)){
+	// 	if(mail($to, $subject, $message, $headers)){
+	// 		echo '2__';
+	// 	}
+	// }
 	
-	if($registro){
-		session_start();
-		$_SESSION = $registro;
+	if($user->saveUser($data)){
 		echo '2__';
 	}	
 	

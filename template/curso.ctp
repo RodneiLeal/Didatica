@@ -193,7 +193,7 @@
 		                        </form>
 								<hr>
 									<div class="comment-avatar  ">
-										<img alt="foto do instrutor" src="" width="50px">
+										<img alt="foto do instrutor" src="<?=$foto?>" width="50px">
 									</div>
 									<h6><?=$instrutor?></h6>
 									<?php 
