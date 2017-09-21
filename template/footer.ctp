@@ -120,8 +120,8 @@
 			<div id="cd-login"> <!-- log in form -->
 				<form class="cd-form login_box">
 					<p class="fieldset">
-						<label class="image-replace cd-email" for="signin-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="user_email" type="email" placeholder="E-mail">
+						<label class="image-replace cd-email" for="signin-email">E-mail ou usuário</label>
+						<input class="full-width has-padding has-border" id="user_email" type="email" placeholder="Nome de usuário ou e-mail">
 						<span class="cd-error-message">Informe seu e-mail!</span>
 					</p>
 
@@ -158,7 +158,7 @@
 
 					<p class="fieldset">
 						<label class="image-replace cd-username" for="register_name">Seu nome</label>
-						<input class="full-width has-padding has-border" id="register_name" type="text" placeholder="Seu nome">
+						<input class="full-width has-padding has-border" id="register_name" type="text" placeholder="Nome de usuário">
 						<span class="cd-error-message">Informe seu Nome!</span>
  					</p>
 					

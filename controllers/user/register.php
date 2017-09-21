@@ -40,9 +40,16 @@
 	// 		echo '2__';
 	// 	}
 	// }
+
+	$user = $user->saveUser($data)[0];
 	
-	if($user->saveUser($data)){
+	if($user){
+		@session_start();
+		$_SESSION = $user;
 		echo '2__';
-	}	
-	
-	exit;
+		exit;
+	}
+	else{
+		echo '3__';
+		exit;
+	}

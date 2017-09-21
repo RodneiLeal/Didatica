@@ -1,5 +1,4 @@
 <?php
-	header('Content-Type: text/html; charset=UTF-8');
 	@session_start();
 	extract($_SESSION);
 ?>
@@ -14,8 +13,8 @@
 		
         <title><?=$this->getTitle()?></title>
 
-		<!-- <base href="<?=HOME_URI?>" > -->
-		<base href="http://didatica.rodneileal.com.br/">
+		<base href="<?=HOME_URI?>" >
+		<!-- <base href="http://didatica.rodneileal.com.br/"> -->
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
@@ -26,7 +25,8 @@
         <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
         <link rel="stylesheet" href="css/responsive.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="css/menu/component.css" type="text/css" media="all" />
-		<link rel="stylesheet" href="plugins/notification/toastr.min.css" type="text/css" media="all"/>
+
+		<link rel="stylesheet" href="css/vendor/plugins/notification/toastr.min.css" type="text/css" media="all"/>
 
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700italic,700' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800' rel='stylesheet' type='text/css'>

@@ -178,11 +178,13 @@
 
 									<?php
 										if(!empty($_SESSION)){
-											$inscricao = $this->curso->getInscricao($_SESSION['idusuario'], $idcurso)[0];
-											if(empty($inscricao)){
+
+											$inscricao = $this->curso->getInscricao($idusuario, $idcurso);
+
+											if(!$inscricao){
 												echo '<a href="javascript:void()" id="course_start" course="'.$idcurso.'" class="kopa-button green-button medium-button kopa-button-icon">Iniciar Curso</a>';
 											}else{
-												echo '<a href="dashboard.php?p=course&enroll='.$inscricao['idinscricao'].'&act=read" class="kopa-button green-button medium-button kopa-button-icon">Acessar Curso</a>';
+												echo '<a href="dashboard.php?p=course&enroll='.$inscricao[0]['idinscricao'].'&act=read" class="kopa-button green-button medium-button kopa-button-icon">Acessar Curso</a>';
 											}
 										}else{
 											echo '<a href="javascript:void()" id="course_start" course="'.$idcurso.'" class="kopa-button green-button medium-button kopa-button-icon course_start">Iniciar Curso</a>';

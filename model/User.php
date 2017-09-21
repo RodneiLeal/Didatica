@@ -13,21 +13,22 @@
             $passwd = hash('sha256', $passwd);
             $sql    = "SELECT * FROM usuario WHERE (usuario.email = '{$pid}' OR usuario.nome = '{$pid}') AND usuario.pswd = '{$passwd}' LIMIT 1";
             $stmt   = $this->db->query($sql);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $result;
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
         
         public function saveUser($data){
-            $result = $this->db->insert('usuario', $data);
-            return $result;
+            if($this->db->insert('usuario', $data)){
+                $data = array($this->db->last_id);
+                $sql = "SELECT * FROM usuario WHERE idusuario = ?";
+                $stmt = $this->db->query($sql, $data);
+                return $stmt->fetchALL(PDO::FETCH_ASSOC);
+            }
+            return false;
         }
 
         public function findUser($email){
             $sql 	= "SELECT email FROM usuario WHERE email = '{$email}' LIMIT 1";
             $stmt 	= $this->db->query($sql);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-            return $result;
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
     }

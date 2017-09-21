@@ -5,19 +5,19 @@ jQuery(function ($){
   $('#register-bt').on('click',function(){
 
     if (isEmpty($("#register_name").val())){
-      Notificacao('error','Informe seu nome de cadastro','Nome obrigatório');
+      Notificacao('error','Informe um nome de usuário','Nome obrigatório');
       $('#register_name').focus();
       return 1;
     }
 
     if (isEmpty($("#register_email").val())){
-      Notificacao('error','Informe seu e-amail de cadastro','E-mail obrigatório');
+      Notificacao('error','Informe seu e-amail para cadastro','E-mail obrigatório');
       $('#register_email').focus();
       return 1;
     }
 
     if (isEmpty($("#register_pass").val())){
-      Notificacao('error','Informe sua senha de cadastro','Senha obrigatório');
+      Notificacao('error','Informe sua senha para cadastro','Senha obrigatório');
       $('#register_pass').focus();
       return 1;
     }
@@ -44,6 +44,10 @@ jQuery(function ($){
           // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
           Notificacao('success','Login realizado com sucesso','Redirecionando...');
           redireciona('dashboard');
+        break;
+        case '3__':
+          Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
+          redireciona('home');
         break;
       }
     }
@@ -88,7 +92,6 @@ jQuery(function ($){
     $.post("controllers/user/login.php", data, loginCallback);
   });
 
-
   ////LOGOUT USUÁRIO
   $(".logoff").on('click', function(){
     data = {
@@ -102,7 +105,6 @@ jQuery(function ($){
 
     $.post('controllers/user/logout.php', data, logoffCallback);
   });
-
   
   ////VALIDA CERTIFICADO
   $('#certified-validate').on('click', function(){
@@ -136,29 +138,7 @@ jQuery(function ($){
     $.post("controller/certified-validate.php", data, validateCertificateCallback);
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  ///COURSE
+  ////COURSE
   $('#course_start').on('click',function(){
 
       $(".course_box").hide(50);
@@ -201,584 +181,537 @@ jQuery(function ($){
       });
   });
 
+  $('.course-title-item-show-content').on('click',function(){
+      var course_item = $(this).attr("course-item");
 
-    $('.course-title-item-show-content').on('click',function(){
-        var course_item = $(this).attr("course-item");
+      $(".course-content-item").addClass("hidden");
+      $(".course-content-item-docs").addClass("hidden");
 
-        $(".course-content-item").addClass("hidden");
-        $(".course-content-item-docs").addClass("hidden");
+      $(".course-content-item-"+course_item).removeClass("hidden");
+      $(".course-content-item-docs-"+course_item).removeClass("hidden");
 
-        $(".course-content-item-"+course_item).removeClass("hidden");
-        $(".course-content-item-docs-"+course_item).removeClass("hidden");
+      $(".course-content-item-"+course_item).html("<img src='dist/img/loader.gif'>");
 
-        $(".course-content-item-"+course_item).html("<img src='dist/img/loader.gif'>");
-
-        var operation  = 'show-content';
-        $.post("views/content/course/course-content-item-show.php",
-        {
-            course_item: course_item,
-            operation: operation
-
-        }, function(data)
-        {
-            var content = data.split('{separate_content_files}');
-            var content_descrition = content[0];
-            var content_docs       = content[1];
-
-            setTimeout(function(){
-
-                  $(".course-content-item-"+course_item).html(content_descrition);
-                  $(".course-content-item-docs-"+course_item).html(content_docs);
-
-            }, 2000);
-            //alert(retorno);
-        });
-    });
-
-
-    ////////////////////// USER PROFILE
-    $('.form_send_information_bt').on('click',function(){
-
-        var $form     = $(this).closest('form');
-        var form_id   = $form.attr('id');
-        var form_url  = $form.attr('action');
-        var form_evento       = $form.attr('event'); //O que ocorrerá se sucesso
-        var form_evento_tipo  = $form.attr('event_type'); //O que ocorrerá se sucesso
-
-            var form = $("#"+form_id);
-            var dados = $("#"+form_id).serialize();
-
-
-              var erros = 0;
-              $.each(dados.split('&'), function (index, elem)
-              {
-                  var vals          = elem.split('=');
-                  var input_id      = $("#"+vals[0]);
-                  var conteudo      = vals[1];
-                  var form_id       = input_id.attr('id');
-                  var obrigatorio   = input_id.attr('required');
-                  var mensagem      = input_id.attr('required_message');
-
-                  if ( (obrigatorio != undefined) && (input_id.val()=="" ) )
-                  {
-                      Notificacao('error',mensagem,'Campo obrigatório');
-                      input_id.focus();
-
-                      erros = 1;
-                  }
-                  //alert(obrigatorio);
-              });
-
-              if(erros == 0)
-              {
-                  $.ajax({
-                    type: "POST",
-                    url: form_url,
-                    data: dados,
-                    success: function( data )
-
-                    {
-                      //alert(data);
-                      var resultado        = data.split('___');
-                      var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
-                      var mensagem_retorno = resultado[1];
-                      var registro_id      = resultado[2];
-
-                        if(tipo_retorno=='erro')
-                        {
-                          Notificacao('error',mensagem_retorno,'Houve algo de errado');
-                        }
-                        else
-                        {
-                          Notificacao('success',mensagem_retorno,'Tudo certo');
-
-                            if ((form_evento != undefined) && (form_evento != "" ))
-                            {
-
-                              if(form_evento_tipo=='redireciona')
-                              {
-                                var novo_registro = form_evento.replace("Registro",registro_id);
-                                redireciona(novo_registro);
-                              }
-                              else if(form_evento_tipo=='transfer_new_id_for_input')
-                              {
-                                var event_transfer_id  = $form.attr('event_transfer_id');
-                                $("#"+event_transfer_id).val(registro_id);
-                              }
-                            }
-                        }
-                    }
-                  });
-              }
-
-    });
-
-
-
-
-
-
-
-      //function validaarquivo(campo)
-      $("#product_file_image_1").on("change", function()
+      var operation  = 'show-content';
+      $.post("views/content/course/course-content-item-show.php",
       {
+          course_item: course_item,
+          operation: operation
 
-         var file = this.files[0].name;
-         //var object_file  = jQuery(this).attr("data-preview");
-         //var object_close = jQuery(this).attr("data-close");
+      }, function(data)
+      {
+          var content = data.split('{separate_content_files}');
+          var content_descrition = content[0];
+          var content_docs       = content[1];
 
-         TamanhoString = file.length;
-         extensao   = file.substr(TamanhoString - 4,TamanhoString);
-         if (TamanhoString == 0 )
-         {
-            Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
-            return false;
-         }
-          else if(file.size > 100000)
-          {
-            Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
-            return false;
-          }
-         else
-         {
-          //var ext = new Array('.asp','.htm','html','.php','.cgi');
-          var ext = new Array('.jpg','.png','.bmp');
+          setTimeout(function(){
 
-          for(var i = 0; i < ext.length; i++)
-          {
-            if (extensao == ext[i])
+                $(".course-content-item-"+course_item).html(content_descrition);
+                $(".course-content-item-docs-"+course_item).html(content_docs);
+
+          }, 2000);
+          //alert(retorno);
+      });
+  });
+
+  //// USER PROFILE
+  $('.form_send_information_bt').on('click',function(){
+
+      var $form     = $(this).closest('form');
+      var form_id   = $form.attr('id');
+      var form_url  = $form.attr('action');
+      var form_evento       = $form.attr('event'); //O que ocorrerá se sucesso
+      var form_evento_tipo  = $form.attr('event_type'); //O que ocorrerá se sucesso
+
+          var form = $("#"+form_id);
+          var dados = $("#"+form_id).serialize();
+
+
+            var erros = 0;
+            $.each(dados.split('&'), function (index, elem)
             {
-              flag = "ok";
-              break;
-            }
-            else
-            {
-              flag = "erro";
-            }
-          }
-            if (flag=="erro")
-            {
-              Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
-              //$("#product_file_image_1").val("Nenhum arquivo");
-              return false;
-            }
-         }
+                var vals          = elem.split('=');
+                var input_id      = $("#"+vals[0]);
+                var conteudo      = vals[1];
+                var form_id       = input_id.attr('id');
+                var obrigatorio   = input_id.attr('required');
+                var mensagem      = input_id.attr('required_message');
 
-           // var file_data = file.prop('files')[0];
-
-          var form_data = new FormData();
-          form_data.append('file', this.files[0]);
-          var operation = 'course_creator_2';
-          var curso = $("#course_register").val();
-
-            //form_data.append('file', file_data);
-            //alert(form_data);
-            $.ajax({
-                url: 'controller/course.php?course='+curso+'&operation='+operation, // point to server-side PHP script
-                dataType: 'text',  // what to expect back from the PHP script, if anything
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                 //data: form_data,
-                type: 'post',
-                success: function(resultado)
+                if ( (obrigatorio != undefined) && (input_id.val()=="" ) )
                 {
-                  if(resultado==0)
+                    Notificacao('error',mensagem,'Campo obrigatório');
+                    input_id.focus();
+
+                    erros = 1;
+                }
+                //alert(obrigatorio);
+            });
+
+            if(erros == 0)
+            {
+                $.ajax({
+                  type: "POST",
+                  url: form_url,
+                  data: dados,
+                  success: function( data )
+
                   {
-                    Notificacao('error','Houve algo de errado no envio','Tente novamente');
-                    return false;
+                    //alert(data);
+                    var resultado        = data.split('___');
+                    var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
+                    var mensagem_retorno = resultado[1];
+                    var registro_id      = resultado[2];
+
+                      if(tipo_retorno=='erro')
+                      {
+                        Notificacao('error',mensagem_retorno,'Houve algo de errado');
+                      }
+                      else
+                      {
+                        Notificacao('success',mensagem_retorno,'Tudo certo');
+
+                          if ((form_evento != undefined) && (form_evento != "" ))
+                          {
+
+                            if(form_evento_tipo=='redireciona')
+                            {
+                              var novo_registro = form_evento.replace("Registro",registro_id);
+                              redireciona(novo_registro);
+                            }
+                            else if(form_evento_tipo=='transfer_new_id_for_input')
+                            {
+                              var event_transfer_id  = $form.attr('event_transfer_id');
+                              $("#"+event_transfer_id).val(registro_id);
+                            }
+                          }
+                      }
                   }
-              else
+                });
+            }
+
+  });
+
+  ////FUNCTION VALIDAARQUIVO(CAMPO)
+  $("#product_file_image_1").on("change", function(){
+
+      var file = this.files[0].name;
+      //var object_file  = jQuery(this).attr("data-preview");
+      //var object_close = jQuery(this).attr("data-close");
+
+      TamanhoString = file.length;
+      extensao   = file.substr(TamanhoString - 4,TamanhoString);
+      if (TamanhoString == 0 )
+      {
+        Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
+        return false;
+      }
+      else if(file.size > 100000)
+      {
+        Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
+        return false;
+      }
+      else
+      {
+      //var ext = new Array('.asp','.htm','html','.php','.cgi');
+      var ext = new Array('.jpg','.png','.bmp');
+
+      for(var i = 0; i < ext.length; i++)
+      {
+        if (extensao == ext[i])
+        {
+          flag = "ok";
+          break;
+        }
+        else
+        {
+          flag = "erro";
+        }
+      }
+        if (flag=="erro")
+        {
+          Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
+          //$("#product_file_image_1").val("Nenhum arquivo");
+          return false;
+        }
+      }
+
+        // var file_data = file.prop('files')[0];
+
+      var form_data = new FormData();
+      form_data.append('file', this.files[0]);
+      var operation = 'course_creator_2';
+      var curso = $("#course_register").val();
+
+        //form_data.append('file', file_data);
+        //alert(form_data);
+        $.ajax({
+            url: 'controller/course.php?course='+curso+'&operation='+operation, // point to server-side PHP script
+            dataType: 'text',  // what to expect back from the PHP script, if anything
+            cache: false,
+            contentType: false,
+            processData: false,
+            data: form_data,
+              //data: form_data,
+            type: 'post',
+            success: function(resultado)
+            {
+              if(resultado==0)
               {
-                Notificacao('success','Arquivo enviado e salvo','Sucesso');
-
-
-
-                $("#preview").fadeOut(50);
-                $(".preview_block").html("<img src='dist/img/loader.gif'>");
-
-                setTimeout(function(){
-                  var preview = document.getElementById('preview');
-                  var input = document.getElementById('product_file_image_1');
-
-                  if (input.files && input.files[0])
-                  {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                      preview.setAttribute('src', e.target.result);
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                  } else {
-                    preview.setAttribute('src', '');
-                  }
-
-                    $(".preview_block").html("");
-                    $("#preview").fadeIn(500);
-
-                }, 2000);
+                Notificacao('error','Houve algo de errado no envio','Tente novamente');
                 return false;
               }
-            }
-
-             });
-
-         //$("#formulario").submit();
-         return true;
-
-      });
+          else
+          {
+            Notificacao('success','Arquivo enviado e salvo','Sucesso');
 
 
 
+            $("#preview").fadeOut(50);
+            $(".preview_block").html("<img src='dist/img/loader.gif'>");
 
-    ///COURSE add content
-    $('#inputCourseContentAdd').on('click',function()
-    {
- 		var formData = new FormData($("#FormeditCourseEditContentSave")[0]);
+            setTimeout(function(){
+              var preview = document.getElementById('preview');
+              var input = document.getElementById('product_file_image_1');
 
-        $(".cd-main-content-load").html("<img src='dist/img/loader.gif'>");
-		$("#inputCourseContentAdd").hide(100);
+              if (input.files && input.files[0])
+              {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                  preview.setAttribute('src', e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+              } else {
+                preview.setAttribute('src', '');
+              }
 
-		$.ajax({
-			url: 'controller/course.php',
-			type: 'POST',
-			data: formData,
-			async: false,
-			cache: false,
-			contentType: false,
-			processData: false,
-			success: function (returndata) {
+                $(".preview_block").html("");
+                $("#preview").fadeIn(500);
 
-				Notificacao('success','Excelente, seu conteúdo foi adicionado com sucesso','Tudo certo');
+            }, 2000);
+            return false;
+          }
+        }
 
-				setTimeout(function(){
- 					$('#file_input_files').val("");
+          });
 
-					$(".cd-main-content-load").html("");
+      //$("#formulario").submit();
+      return true;
 
-						  $('#box_content_add_button').removeClass("btn-danger").addClass("btn-primary");
-						  $('#box_content_add_button').html("<i class='fa fa-plus'></i> Adicionar conteúdo");
-						  $('.box_content_add').hide(400);
+  });
 
- 						  $("#inputCourseContentAdd").show(100);
+  ////COURSE ADD CONTENT
+  $('#inputCourseContentAdd').on('click',function(){
+     var formData = new FormData($("#FormeditCourseEditContentSave")[0]);
 
-						  $("#inputCourseContentTitle").val("");
-						  $("#inputCourseContentResume").val("");
+    $(".cd-main-content-load").html("<img src='dist/img/loader.gif'>");
+    $("#inputCourseContentAdd").hide(100);
 
-						  var course_register_content  = $("#course_register_content").val();
-						  load_content_data("courselistcontent","views/content/course/course-content-item-show-edit.php?course="+course_register_content);
-				}, 2000);
-			}
+    $.ajax({
+      url: 'controller/course.php',
+      type: 'POST',
+      data: formData,
+      async: false,
+      cache: false,
+      contentType: false,
+      processData: false,
+      success: function (returndata) {
 
-		});
-    });
+        Notificacao('success','Excelente, seu conteúdo foi adicionado com sucesso','Tudo certo');
 
-      $('#inputCourseContentNewAdd').on('click',function()
-      {
+        setTimeout(function(){
+          $('#file_input_files').val("");
+          $(".cd-main-content-load").html("");
           $('#box_content_add_button').removeClass("btn-danger").addClass("btn-primary");
           $('#box_content_add_button').html("<i class='fa fa-plus'></i> Adicionar conteúdo");
           $('.box_content_add').hide(400);
-
-          $(".cd-main-content").fadeOut(400);
-          $("#inputCourseContentNewAdd").addClass("hidden");
           $("#inputCourseContentAdd").show(100);
-
           $("#inputCourseContentTitle").val("");
           $("#inputCourseContentResume").val("");
-
           var course_register_content  = $("#course_register_content").val();
           load_content_data("courselistcontent","views/content/course/course-content-item-show-edit.php?course="+course_register_content);
-      });
-
-
-
-
-    $('#inputCourseQuestionAnswer_bt').on('click',function()
-    {
-        var course_register_content     = $(this).attr("course");
-
-        var answer_correct              = $(".inputCourseQuestionAnswer_correct:checked").val();
-
-        var inputCourseQuestionTitle    = $("#inputCourseQuestionTitle").val();
-
-        var inputCourseQuestionAnswer1  = $("#inputCourseQuestionAnswer1").val();
-        var inputCourseQuestionAnswer2  = $("#inputCourseQuestionAnswer2").val();
-        var inputCourseQuestionAnswer3  = $("#inputCourseQuestionAnswer3").val();
-        var inputCourseQuestionAnswer4  = $("#inputCourseQuestionAnswer4").val();
-        var inputCourseQuestionAnswer5  = $("#inputCourseQuestionAnswer5").val();
-
-        if (inputCourseQuestionTitle == null || inputCourseQuestionTitle == ''){ Notificacao('error','Informe a pergunta da questão','Campo obrigatório'); $('#inputCourseQuestionTitle').focus(); return 1;}
-
-        if (inputCourseQuestionAnswer1 == null || inputCourseQuestionAnswer1 == ''){ Notificacao('error','Informe a opção de resposta 1','Campo obrigatório'); $('#inputCourseQuestionAnswer1').focus(); return 1;}
-        if (inputCourseQuestionAnswer2 == null || inputCourseQuestionAnswer2 == ''){ Notificacao('error','Informe a opção de resposta 2','Campo obrigatório'); $('#inputCourseQuestionAnswer2').focus(); return 1;}
-        if (inputCourseQuestionAnswer3 == null || inputCourseQuestionAnswer3 == ''){ Notificacao('error','Informe a opção de resposta 3','Campo obrigatório'); $('#inputCourseQuestionAnswer3').focus(); return 1;}
-        if (inputCourseQuestionAnswer4 == null || inputCourseQuestionAnswer4 == ''){ Notificacao('error','Informe a opção de resposta 4','Campo obrigatório'); $('#inputCourseQuestionAnswer4').focus(); return 1;}
-        if (inputCourseQuestionAnswer5 == null || inputCourseQuestionAnswer5 == ''){ Notificacao('error','Informe a opção de resposta 5','Campo obrigatório'); $('#inputCourseQuestionAnswer5').focus(); return 1;}
-
-        if (answer_correct == null || answer_correct == ''){ Notificacao('error','É necessário selecionar a pergunta correta','Campo obrigatório'); return 1;}
-
-
-        var operation  = 'course_creator_add_question';
-        $.post("controller/course.php",
-        {
-            course_register_content: course_register_content,
-            answer_correct: answer_correct,
-            inputCourseQuestionTitle: inputCourseQuestionTitle,
-            inputCourseQuestionAnswer1: inputCourseQuestionAnswer1,
-            inputCourseQuestionAnswer2: inputCourseQuestionAnswer2,
-            inputCourseQuestionAnswer3: inputCourseQuestionAnswer3,
-            inputCourseQuestionAnswer4: inputCourseQuestionAnswer4,
-            inputCourseQuestionAnswer5: inputCourseQuestionAnswer5,
-            operation: operation
-
-        }, function(data)
-        {
-            var retorno = data.replace(/^\s+|\s+$/g,"");
-
-
-                var resultado        = data.split('___');
-                var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
-                var mensagem_retorno = resultado[1];
-
-                  if(tipo_retorno=='erro')
-                  {
-                    Notificacao('error',mensagem_retorno,'Houve algo de errado');
-                  }
-                  else
-                  {
-                    Notificacao('success',mensagem_retorno,'Tudo certo');
-
-                      $("#inputCourseQuestionAnswer_div").fadeOut(400);
-                  }
-
-					$('#box_question_add_button').trigger("click");
-					load_content_data("courselistcontentquestion","views/content/course/course-question-item-show-edit.php?course="+course_register_content);
-
-            //alert(retorno);
-        });
+        }, 2000);
+      }
     });
+  });
+
+  $('#inputCourseContentNewAdd').on('click',function(){
+      $('#box_content_add_button').removeClass("btn-danger").addClass("btn-primary");
+      $('#box_content_add_button').html("<i class='fa fa-plus'></i> Adicionar conteúdo");
+      $('.box_content_add').hide(400);
+
+      $(".cd-main-content").fadeOut(400);
+      $("#inputCourseContentNewAdd").addClass("hidden");
+      $("#inputCourseContentAdd").show(100);
+
+      $("#inputCourseContentTitle").val("");
+      $("#inputCourseContentResume").val("");
+
+      var course_register_content  = $("#course_register_content").val();
+      load_content_data("courselistcontent","views/content/course/course-content-item-show-edit.php?course="+course_register_content);
+  });
+
+  $('#inputCourseQuestionAnswer_bt').on('click',function(){
+      var course_register_content     = $(this).attr("course");
+
+      var answer_correct              = $(".inputCourseQuestionAnswer_correct:checked").val();
+
+      var inputCourseQuestionTitle    = $("#inputCourseQuestionTitle").val();
+
+      var inputCourseQuestionAnswer1  = $("#inputCourseQuestionAnswer1").val();
+      var inputCourseQuestionAnswer2  = $("#inputCourseQuestionAnswer2").val();
+      var inputCourseQuestionAnswer3  = $("#inputCourseQuestionAnswer3").val();
+      var inputCourseQuestionAnswer4  = $("#inputCourseQuestionAnswer4").val();
+      var inputCourseQuestionAnswer5  = $("#inputCourseQuestionAnswer5").val();
+
+      if (inputCourseQuestionTitle == null || inputCourseQuestionTitle == ''){ Notificacao('error','Informe a pergunta da questão','Campo obrigatório'); $('#inputCourseQuestionTitle').focus(); return 1;}
+
+      if (inputCourseQuestionAnswer1 == null || inputCourseQuestionAnswer1 == ''){ Notificacao('error','Informe a opção de resposta 1','Campo obrigatório'); $('#inputCourseQuestionAnswer1').focus(); return 1;}
+      if (inputCourseQuestionAnswer2 == null || inputCourseQuestionAnswer2 == ''){ Notificacao('error','Informe a opção de resposta 2','Campo obrigatório'); $('#inputCourseQuestionAnswer2').focus(); return 1;}
+      if (inputCourseQuestionAnswer3 == null || inputCourseQuestionAnswer3 == ''){ Notificacao('error','Informe a opção de resposta 3','Campo obrigatório'); $('#inputCourseQuestionAnswer3').focus(); return 1;}
+      if (inputCourseQuestionAnswer4 == null || inputCourseQuestionAnswer4 == ''){ Notificacao('error','Informe a opção de resposta 4','Campo obrigatório'); $('#inputCourseQuestionAnswer4').focus(); return 1;}
+      if (inputCourseQuestionAnswer5 == null || inputCourseQuestionAnswer5 == ''){ Notificacao('error','Informe a opção de resposta 5','Campo obrigatório'); $('#inputCourseQuestionAnswer5').focus(); return 1;}
+
+      if (answer_correct == null || answer_correct == ''){ Notificacao('error','É necessário selecionar a pergunta correta','Campo obrigatório'); return 1;}
 
 
-
-       //Adiciona imagem usuário (perfil)
-      $(".ProfileUpdateImage").on("change", function()
+      var operation  = 'course_creator_add_question';
+      $.post("controller/course.php",
       {
-         var file = this.files[0].name;
+          course_register_content: course_register_content,
+          answer_correct: answer_correct,
+          inputCourseQuestionTitle: inputCourseQuestionTitle,
+          inputCourseQuestionAnswer1: inputCourseQuestionAnswer1,
+          inputCourseQuestionAnswer2: inputCourseQuestionAnswer2,
+          inputCourseQuestionAnswer3: inputCourseQuestionAnswer3,
+          inputCourseQuestionAnswer4: inputCourseQuestionAnswer4,
+          inputCourseQuestionAnswer5: inputCourseQuestionAnswer5,
+          operation: operation
 
-         TamanhoString = file.length;
-         extensao   = file.substr(TamanhoString - 4,TamanhoString);
-         if (TamanhoString == 0 )
-         {
-            Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
-            return false;
-         }
-          else if(file.size > 100000)
-          {
-            Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
-            return false;
-          }
-         else
-         {
-           var ext = new Array('.jpg','.png','.bmp');
+      }, function(data)
+      {
+          var retorno = data.replace(/^\s+|\s+$/g,"");
 
-          for(var i = 0; i < ext.length; i++)
+
+              var resultado        = data.split('___');
+              var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
+              var mensagem_retorno = resultado[1];
+
+                if(tipo_retorno=='erro')
+                {
+                  Notificacao('error',mensagem_retorno,'Houve algo de errado');
+                }
+                else
+                {
+                  Notificacao('success',mensagem_retorno,'Tudo certo');
+
+                    $("#inputCourseQuestionAnswer_div").fadeOut(400);
+                }
+
+        $('#box_question_add_button').trigger("click");
+        load_content_data("courselistcontentquestion","views/content/course/course-question-item-show-edit.php?course="+course_register_content);
+
+          //alert(retorno);
+      });
+  });
+
+  ////ADICIONA IMAGEM USUÁRIO (PERFIL)
+  $(".ProfileUpdateImage").on("change", function(){
+    var file = this.files[0].name;
+    
+    TamanhoString = file.length;
+    extensao   = file.substr(TamanhoString - 4,TamanhoString);
+    if (TamanhoString == 0 ){
+        Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
+        return false;
+    }else if(file.size > 100000){
+      Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
+      return false;
+    }else{
+      var ext = new Array('.jpg','.png','.bmp');
+      for(var i = 0; i < ext.length; i++){
+        if (extensao == ext[i]){
+          flag = "ok";
+          break;
+        }else{
+          flag = "erro";
+        }
+      }
+      if (flag=="erro"){
+        Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
+        return false;
+      }
+    }
+  
+    // var file_data = file.prop('files')[0];
+    $("#preview").fadeOut(500);
+    $(".preview_block").html("<img src='dist/img/loader.gif'>");
+  
+    var form_data = new FormData();
+    form_data.append('file', this.files[0]);
+    var operation = 'ProfileImage';
+  
+      $.ajax({
+          url: 'controller/user.php?operation='+operation, // point to server-side PHP script
+          dataType: 'text',  // what to expect back from the PHP script, if anything
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          //data: form_data,
+          type: 'post',
+          success: function(resultado)
           {
-            if (extensao == ext[i])
+            if(resultado==0)
             {
-              flag = "ok";
-              break;
+              Notificacao('error','Houve algo de errado no envio','Tente novamente');
+              return false;
             }
             else
             {
-              flag = "erro";
-            }
-          }
-            if (flag=="erro")
-            {
-              Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
-
+              Notificacao('success','Arquivo enviado e salvo','Sucesso');
+  
+  
+  
+              setTimeout(function(){
+                var preview = document.getElementById('preview');
+                var input = document.getElementById('upload_logo');
+  
+                if (input.files && input.files[0])
+                {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                    preview.setAttribute('src', e.target.result);
+                  }
+                  reader.readAsDataURL(input.files[0]);
+                } else {
+                  preview.setAttribute('src', '');
+                }
+  
+                  $(".preview_block").html("");
+                  $("#preview").fadeIn(500);
+  
+              }, 2000);
               return false;
             }
-         }
-
-           // var file_data = file.prop('files')[0];
-          $("#preview").fadeOut(500);
-          $(".preview_block").html("<img src='dist/img/loader.gif'>");
-
-          var form_data = new FormData();
-          form_data.append('file', this.files[0]);
-          var operation = 'ProfileImage';
-
-            $.ajax({
-                url: 'controller/user.php?operation='+operation, // point to server-side PHP script
-                dataType: 'text',  // what to expect back from the PHP script, if anything
-                cache: false,
-                contentType: false,
-                processData: false,
-                data: form_data,
-                 //data: form_data,
-                type: 'post',
-                success: function(resultado)
-                {
-                  if(resultado==0)
-                  {
-                    Notificacao('error','Houve algo de errado no envio','Tente novamente');
-                    return false;
-                  }
-                  else
-                  {
-                    Notificacao('success','Arquivo enviado e salvo','Sucesso');
-
-
-
-                    setTimeout(function(){
-                      var preview = document.getElementById('preview');
-                      var input = document.getElementById('upload_logo');
-
-                      if (input.files && input.files[0])
-                      {
-                        var reader = new FileReader();
-                        reader.onload = function (e) {
-                          preview.setAttribute('src', e.target.result);
-                        }
-                        reader.readAsDataURL(input.files[0]);
-                      } else {
-                        preview.setAttribute('src', '');
-                      }
-
-                        $(".preview_block").html("");
-                        $("#preview").fadeIn(500);
-
-                    }, 2000);
-                    return false;
-                  }
-                }
-
-             });
-
-         //$("#formulario").submit();
-         return true;
-
+          }
+  
       });
+    //$("#formulario").submit();
+    return true;
+  });
 
 
+  $('#exam_finish').on('click', function(){
+    var course_register_content     = $(this).attr("course");
+    var questao_pergunta_1              = $(".1:checked").attr("name");
+    var questao_resposta_1              = $(".1:checked").val();
 
+    var questao_pergunta_2              = $(".2:checked").attr("name");
+    var questao_resposta_2              = $(".2:checked").val();
 
-    $('#exam_finish').on('click',function()
-    {
-        var course_register_content     = $(this).attr("course");
+    var questao_pergunta_3              = $(".3:checked").attr("name");
+    var questao_resposta_3              = $(".3:checked").val();
 
-        var questao_pergunta_1              = $(".1:checked").attr("name");
-        var questao_resposta_1              = $(".1:checked").val();
+    var questao_pergunta_4              = $(".4:checked").attr("name");
+    var questao_resposta_4              = $(".4:checked").val();
 
-        var questao_pergunta_2              = $(".2:checked").attr("name");
-        var questao_resposta_2              = $(".2:checked").val();
+    var questao_pergunta_5              = $(".5:checked").attr("name");
+    var questao_resposta_5              = $(".5:checked").val();
 
-        var questao_pergunta_3              = $(".3:checked").attr("name");
-        var questao_resposta_3              = $(".3:checked").val();
+    var questao_pergunta_6              = $(".6:checked").attr("name");
+    var questao_resposta_6              = $(".6:checked").val();
 
-        var questao_pergunta_4              = $(".4:checked").attr("name");
-        var questao_resposta_4              = $(".4:checked").val();
+    var questao_pergunta_7              = $(".7:checked").attr("name");
+    var questao_resposta_7              = $(".7:checked").val();
 
-        var questao_pergunta_5              = $(".5:checked").attr("name");
-        var questao_resposta_5              = $(".5:checked").val();
+    var questao_pergunta_8              = $(".8:checked").attr("name");
+    var questao_resposta_8              = $(".8:checked").val();
 
-        var questao_pergunta_6              = $(".6:checked").attr("name");
-        var questao_resposta_6              = $(".6:checked").val();
+    var questao_pergunta_9              = $(".9:checked").attr("name");
+    var questao_resposta_9              = $(".9:checked").val();
 
-        var questao_pergunta_7              = $(".7:checked").attr("name");
-        var questao_resposta_7              = $(".7:checked").val();
+    var questao_pergunta_10              = $(".10:checked").attr("name");
+    var questao_resposta_10              = $(".10:checked").val();
 
-        var questao_pergunta_8              = $(".8:checked").attr("name");
-        var questao_resposta_8              = $(".8:checked").val();
+    /*
+    if (questao_resposta_1 == null || questao_resposta_1 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".1").focus(); return 1;}
+    if (questao_resposta_2 == null || questao_resposta_2 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".2").focus(); return 1;}
+    if (questao_resposta_3 == null || questao_resposta_3 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".3").focus(); return 1;}
+    if (questao_resposta_4 == null || questao_resposta_4 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".4").focus(); return 1;}
+    if (questao_resposta_5 == null || questao_resposta_5 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".5").focus(); return 1;}
+    if (questao_resposta_6 == null || questao_resposta_6 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".6").focus(); return 1;}
+    if (questao_resposta_7 == null || questao_resposta_7 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".7").focus(); return 1;}
+    if (questao_resposta_8 == null || questao_resposta_8 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".8").focus(); return 1;}
+    if (questao_resposta_9 == null || questao_resposta_9 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".9").focus(); return 1;}
+    if (questao_resposta_10 == null || questao_resposta_10 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".10").focus(); return 1;}
+    */
 
-        var questao_pergunta_9              = $(".9:checked").attr("name");
-        var questao_resposta_9              = $(".9:checked").val();
+    $('#modal_exam_finish').modal("show");
 
-        var questao_pergunta_10              = $(".10:checked").attr("name");
-        var questao_resposta_10              = $(".10:checked").val();
+    var operation  = 'course_exam_finish';
 
+    $.post("controller/exam.php", {
+      course_register_content: course_register_content,
 
- /*
-          if (questao_resposta_1 == null || questao_resposta_1 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".1").focus(); return 1;}
-          if (questao_resposta_2 == null || questao_resposta_2 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".2").focus(); return 1;}
-          if (questao_resposta_3 == null || questao_resposta_3 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".3").focus(); return 1;}
-          if (questao_resposta_4 == null || questao_resposta_4 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".4").focus(); return 1;}
-          if (questao_resposta_5 == null || questao_resposta_5 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".5").focus(); return 1;}
-          if (questao_resposta_6 == null || questao_resposta_6 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".6").focus(); return 1;}
-          if (questao_resposta_7 == null || questao_resposta_7 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".7").focus(); return 1;}
-          if (questao_resposta_8 == null || questao_resposta_8 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".8").focus(); return 1;}
-          if (questao_resposta_9 == null || questao_resposta_9 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".9").focus(); return 1;}
-          if (questao_resposta_10 == null || questao_resposta_10 == ''){ Notificacao('error','Responda todas as questões','Campo obrigatório'); $(".10").focus(); return 1;}
-*/
-        $('#modal_exam_finish').modal("show");
+      questao_pergunta_1: questao_pergunta_1,
+      questao_resposta_1: questao_resposta_1,
 
-        var operation  = 'course_exam_finish';
-        $.post("controller/exam.php",
-        {
-            course_register_content: course_register_content,
+      questao_pergunta_2: questao_pergunta_2,
+      questao_resposta_2: questao_resposta_2,
 
-            questao_pergunta_1: questao_pergunta_1,
-            questao_resposta_1: questao_resposta_1,
+      questao_pergunta_3: questao_pergunta_3,
+      questao_resposta_3: questao_resposta_4,
 
-            questao_pergunta_2: questao_pergunta_2,
-            questao_resposta_2: questao_resposta_2,
+      questao_pergunta_4: questao_pergunta_4,
+      questao_resposta_4: questao_resposta_4,
 
-            questao_pergunta_3: questao_pergunta_3,
-            questao_resposta_3: questao_resposta_4,
+      questao_pergunta_5: questao_pergunta_5,
+      questao_resposta_5: questao_resposta_5,
 
-            questao_pergunta_4: questao_pergunta_4,
-            questao_resposta_4: questao_resposta_4,
+      questao_pergunta_6: questao_pergunta_6,
+      questao_resposta_6: questao_resposta_6,
 
-            questao_pergunta_5: questao_pergunta_5,
-            questao_resposta_5: questao_resposta_5,
+      questao_pergunta_7: questao_pergunta_7,
+      questao_resposta_7: questao_resposta_7,
 
-            questao_pergunta_6: questao_pergunta_6,
-            questao_resposta_6: questao_resposta_6,
+      questao_pergunta_8: questao_pergunta_8,
+      questao_resposta_8: questao_resposta_8,
 
-            questao_pergunta_7: questao_pergunta_7,
-            questao_resposta_7: questao_resposta_7,
+      questao_pergunta_9: questao_pergunta_9,
+      questao_resposta_9: questao_resposta_9,
 
-            questao_pergunta_8: questao_pergunta_8,
-            questao_resposta_8: questao_resposta_8,
+      questao_pergunta_10: questao_pergunta_10,
+      questao_resposta_10: questao_resposta_10,
 
-            questao_pergunta_9: questao_pergunta_9,
-            questao_resposta_9: questao_resposta_9,
+      operation: operation
 
-            questao_pergunta_10: questao_pergunta_10,
-            questao_resposta_10: questao_resposta_10,
+    }, function(data){
+      var retorno = data.replace(/^\s+|\s+$/g,"");
+      var resultado        = data.split('___');
+      var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
+      var mensagem_retorno = resultado[1];
 
-            operation: operation
+      setTimeout(function(){
+        $('#modal_exam_wait').html('');
+        $('#modal_exam_title').html('Verificado');
 
-        }, function(data){
-            var retorno = data.replace(/^\s+|\s+$/g,"");
-            var resultado        = data.split('___');
-            var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
-            var mensagem_retorno = resultado[1];
-
-            setTimeout(function(){
-              $('#modal_exam_wait').html('');
-              $('#modal_exam_title').html('Verificado');
-
-              if(tipo_retorno=='erro'){
-                Notificacao('error',mensagem_retorno,'Ops!');
-              }
-              else if(tipo_retorno=='reproved') {
-                  Notificacao('error',mensagem_retorno,'Ops!');
-                  $('#modal_exam_loading').attr('src', 'dist/img/checkout/erro.png');
-                  $('#modal_exam_result').html('Você não foi aprovado, não desanime, pode tentar novamente');
-              }
-              else{
-                $('#modal_exam_view_certified').fadeIn(500);
-                $('#modal_exam_loading').attr('src', 'dist/img/checkout/sucesso.png');
-                $('#modal_exam_result').html('Você já pode acessar seu curso e solicitar seu certificado');
-                Notificacao('success',mensagem_retorno,'Tudo certo');
-                //location.href="index-.php?p=course&curso_id="+course_register_content+"&enroll=1&act=read";
-              }
-            }, 3000);
-        });
-
+        if(tipo_retorno=='erro'){
+          Notificacao('error',mensagem_retorno,'Ops!');
+        }else if(tipo_retorno=='reproved') {
+            Notificacao('error',mensagem_retorno,'Ops!');
+            $('#modal_exam_loading').attr('src', 'dist/img/checkout/erro.png');
+            $('#modal_exam_result').html('Você não foi aprovado, não desanime, pode tentar novamente');
+        }else{
+          $('#modal_exam_view_certified').fadeIn(500);
+          $('#modal_exam_loading').attr('src', 'dist/img/checkout/sucesso.png');
+          $('#modal_exam_result').html('Você já pode acessar seu curso e solicitar seu certificado');
+          Notificacao('success',mensagem_retorno,'Tudo certo');
+          //location.href="index-.php?p=course&curso_id="+course_register_content+"&enroll=1&act=read";
+        }
+      }, 3000);
     });
+  });
+
 
   ////Solicitar Certificado
   $(".course_get_certified").click(function(){
@@ -798,12 +731,11 @@ jQuery(function ($){
   });
 
   ////Avaliar Curso
-  $(".course_get_rate").click(function()
-  {
-      var course = $(this).attr("course");
+  $(".course_get_rate").click(function(){
+    var course = $(this).attr("course");
 
-      $("#modal_avaliar").modal("show");
-      $("#FormEnrollRate_matricula").val(course);
+    $("#modal_avaliar").modal("show");
+    $("#FormEnrollRate_matricula").val(course);
   });
 
   ////Tornar-se Instrutor
@@ -813,44 +745,50 @@ jQuery(function ($){
 
     instructor_new = 'instructor_new';
 
-    $.post("controller/user.php",{
+    $.post("controller/user.php",
+      {
         instructor_new: instructor_new
-      }, function(data){
+      },
+      
+      function(data){
+      
+      var retorno = data.replace(/^\s+|\s+$/g,"");
+      var retorno = retorno.split("__");
 
-        var retorno = data.replace(/^\s+|\s+$/g,"");
-        var retorno = retorno.split("__");
+      setTimeout(function(){
+        switch(retorno[0]){
 
-        setTimeout(function(){
-          switch(retorno[0]){
+          case '0':
+            Notificacao('warning',retorno[1],'Completar dados profissionais.');
+            setTimeout(function(){
+              location.assign("?p=user-edit#tab_profissional");
+            }, 5000);
 
-            case '0':
-              Notificacao('warning',retorno[1],'Completar dados profissionais.');
-              setTimeout(function(){
-                location.assign("?p=user-edit#tab_profissional");
-              }, 5000);
+          break;
 
-            break;
+          case '1':
+            Notificacao('success',retorno[1],'Excelente');
 
-            case '1':
-              Notificacao('success',retorno[1],'Excelente');
+            $(".instructor_new_load").html("");
+            $(".instructor_new_action").fadeOut(400);
+            setTimeout(function(){
+              location.reload();
+            }, 3000);
+          break;
 
-              $(".instructor_new_load").html("");
-              $(".instructor_new_action").fadeOut(400);
-              setTimeout(function(){
-                location.reload();
-              }, 3000);
-            break;
+          default:
+            Notificacao('error',retorno[1],' Houve algo de errado');
+            $(".instructor_new_action").fadeIn(400);
+            $(".instructor_new_load").html("");
 
-            default:
-              Notificacao('error',retorno[1],' Houve algo de errado');
-              $(".instructor_new_action").fadeIn(400);
-              $(".instructor_new_load").html("");
+        }
+      }, 3000);
 
-          }
-        }, 3000);
-      }
-    );
+    });
   });
+
+
+
 
 });
 
@@ -862,9 +800,6 @@ jQuery(function ($){
 		  $("#"+div).load(file);
 		}, 3000);
 	}
-
-
-
 
 
 	function lembrar_senha()
@@ -941,8 +876,8 @@ jQuery(function ($){
 
 
 	$(document).ready(function(){
-		$('.user_messages_received').on('click',function()
-		{
+    
+		$('.user_messages_received').on('click',function(){
 			var mensagem_id 			= $(this).attr("mensagem_id");
 			var mensagem_conteudo 		= $(this).attr("mensagem");
 			var mensagem_conteudo_data 	= $(this).attr("data");
@@ -960,19 +895,11 @@ jQuery(function ($){
 						$("#block_user_messages_"+mensagem_id).css({"font-weight":"normal"});
 					})
 				}, 1000);
-
-
 		});
-	});
-
-
 
     ///COURSE
-
     ///Busca por filtro
-	$(document).ready(function(){
-		$('#courses_list_search').on('click',function()
-		{
+		$('#courses_list_search').on('click',function(){
 			$("#courses_list").html("<div style='margin:0 auto;text-align:center;width:100%'>'<img src='dist/img/loader.gif'></div>");
 
 			var busca_texto 	= $("#search_form_title").val();
@@ -985,16 +912,21 @@ jQuery(function ($){
 				busca_categoria: busca_categoria,
 				operation: operation
 
-			}, function(data)
-			{
-				setTimeout(function()
-				{
+			}, function(data){
+				setTimeout(function(){
 					$("#courses_list").html(data);
 				}, 2000);
 				//alert(retorno);
 			});
-		});
-	});
+    });
+    
+  });
+  
+
+
+  // // // // // // parcialmente revizado até este ponto
+
+
 
 
   $('.finaceiro_saque_solicita').on('click',function(){
