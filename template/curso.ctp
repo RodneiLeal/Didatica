@@ -1,5 +1,5 @@
 <?php
-	extract($this->curso->getCurso($this->action)[0]);
+	extract($this->curso->getCursos($this->action)[0]);
 ?>
     <div id="main-content">
         <header class="page-header">

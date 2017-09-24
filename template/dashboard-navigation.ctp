@@ -9,22 +9,11 @@
         <li class="header">MENU</li>
 
           <?php
-            switch($usuario_tipo){
-              case 1: # aluno
-                echo get_menu_user();
-              break;
-              
-              case 2: #instrutor
-                echo get_menu_instructor();
-              break;
-              
-              case 3: #admin
-                echo get_menu_admin();
-              break;
-
-              default: #em situaçõe de erro ou qaundo não for possivel identificar tipo de usuario, este será conciderado como aluno
-                echo get_menu_user();
-            }
+            if($tipo){
+				echo get_menu_instructor();
+			}else{
+				echo get_menu_user();
+			}
           ?>
 
           

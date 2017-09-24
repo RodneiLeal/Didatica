@@ -1,6 +1,8 @@
 
 jQuery(function ($){
 
+  var content = $('.content-wrapper');
+
   ////CADASTRO USUÁRIO
   $('#register-bt').on('click',function(){
 
@@ -29,7 +31,6 @@ jQuery(function ($){
     };
 
     function registerCallback(response){
-      alert(response)
       switch(response){
         case '0__':
           Notificacao('error','E-mail inválido','E-mail obrigatório');
@@ -99,11 +100,23 @@ jQuery(function ($){
     }
 
     function logoffCallback(response){
-      alert(response);
       location.href='home';
     }
 
     $.post('controllers/user/logout.php', data, logoffCallback);
+  });
+
+  ////PERFIL DE USUARIO
+  $('.profile').on('click', function(){
+    data = {
+      idusuario: $(this).attr('data-value')
+    };
+
+    function perfilCallback(response){
+      content.html(response);
+    }
+
+    $.post('controllers/user/perfil.php', data, perfilCallback);
   });
   
   ////VALIDA CERTIFICADO
@@ -121,7 +134,7 @@ jQuery(function ($){
     }
 
     function validateCertificateCallback(response){
-      alert(response);
+      // alert(response);
 
       // switch(response){
       //   case '0__':

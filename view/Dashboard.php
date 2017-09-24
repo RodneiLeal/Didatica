@@ -3,7 +3,8 @@
 	class Dashboard extends Main implements interfaceController{
 
 		private $action,
-				$parameters;
+				$parameters,
+				$instructor;
 
 		function __construct(){
 			parent::__construct();
@@ -11,18 +12,11 @@
 			$this->action = $get[0];
 			$this->parameters = $get[1];
 			$this->title = SYS_NAME." - Dashboard";
+			$this->instructor = new Instructor;
+
 		}
 
 		public function index(){
-			
-			// include_once ROOT.'controller/_db.php';        
-			// include_once ROOT.'model/global.php';
-			// include_once ROOT."template/dashboard-header.ctp";
-			// include_once ROOT."template/dashboard-navigation.ctp";
-			// include_once ROOT."views/dataTables.php";
-			// include_once ROOT."template/dashboard-body.ctp";
-			// include_once ROOT."template/dashboard-footer.ctp";
-
 			include_once ROOT."template/dashboard.ctp";
 		}
 

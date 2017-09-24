@@ -1,38 +1,30 @@
 <?php
     class Instructor extends User {
 
-        protected   $idInstrutor,
-                    $usuario_idUsuario,
-                    $sobre,
-                    $titulacao,
-                    $formacao,
-                    $instituicao,
-                    $lates;
-
         function __construct(){
             parent::__construct();
-            $this->idInstrutor       = NULL;
-            $this->usuario_idUsuario = NULL;
-            $this->sobre             = NULL;
-            $this->titulacao         = NULL;
-            $this->formacao          = NULL;
-            $this->instituicao       = NULL;
-            $this->lates             = NULL;
         }
-
         
-        public function getInstrutor(){
-            return $instrutor;
-        }
-
-        public function getIinstrutores(){
-            $instrutores  = array();
-            return $instrutores;
-        }
-
-        public function saveInstrutor(){
+        public function getInstrutor($idusuario){
+            $data   = array($idusuario);
+            $sql    = "SELECT * FROM instrutor WHERE usuario_idusuario = ?";
+            $stmt   = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
             return $result;
         }
 
+        public function perfil($idusuario){
+            $data = array($idusuario);
+            $sql = 'SELECT * FROM usuario AS t1 LEFT JOIN instrutor AS t2 ON t1.idusuario = t2.usuario_idusuario WHERE t1.idusuario = ?';
+            $stmt = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
     }
     
