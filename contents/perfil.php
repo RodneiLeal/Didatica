@@ -1,10 +1,12 @@
 <?php
-    require "../../loader.php";
-
+    require "loader.php";
     extract($_REQUEST);
 
-    $instrutor = new Instructor;
-    $perfil = $instrutor->perfil($idusuario)[0];
+    $cursos     = new CursoModel;
+    $instrutor  = new Instructor;
+    $inscricao  = new Inscricao;
+    $perfil     = $instrutor->perfil($idusuario)[0];
+
     extract($perfil);
     
     $foto = empty($foto)?'img/users/sem-foto.png':base64_decode($foto);
@@ -39,14 +41,14 @@
                         <li class="list-group-item">
                             <b>Publicações</b>
                             <a class="pull-right">
-                                {total de cursos}
+                                <?=count($cursos->getCursosInstrutor($idinstrutor))?>
                             </a>
                         </li>
 
                         <li class="list-group-item">
                             <b>Inscritos</b>
                             <a class="pull-right">
-                                {total de inscrito em todos os cursos deste usuario}
+                                <?=count($inscricao->getInscricaoPorUsuario($idinstrutor))?>
                             </a>
                         </li>
                     </ul>

@@ -179,7 +179,8 @@
 									<?php
 										if(!empty($_SESSION)){
 
-											$inscricao = $this->curso->getInscricao($idusuario, $idcurso);
+											$inscricao = new Inscricao;
+											$inscricao = $inscricao->getInscricaoPorCursoUsuario($idusuario, $idcurso);
 
 											if(!$inscricao){
 												echo '<a href="javascript:void()" id="course_start" course="'.$idcurso.'" class="kopa-button green-button medium-button kopa-button-icon">Iniciar Curso</a>';

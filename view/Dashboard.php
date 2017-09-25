@@ -17,7 +17,9 @@
 		}
 
 		public function index(){
+			include_once ROOT."template/dashboard-header.ctp";
 			include_once ROOT."template/dashboard.ctp";
+			include_once ROOT."template/dashboard-footer.ctp";
 		}
 
 
