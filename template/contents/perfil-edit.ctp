@@ -10,11 +10,6 @@
 
 
   <section class="content">
-      <?php
-          $data_user = ExecData($mysqli, 'usuario','consulta_usuario','*',$_SESSION['usuarioID']);
-          $row = mysqli_fetch_assoc($data_user);
-      ?>
-
     <div class="row">
       <div class="col-md-12">
 
@@ -37,25 +32,22 @@
                   <form class="form-horizontal" id="FormeditProfileSave" action="controller/user.php">
 
                     <div class="form-group">
-                        <label for="inputName" class="col-sm-2 control-label">Foto do perfil</label>
-
-                       <div class="col-md-10 text-left">
-
-                          <div class="preview_block"></div>
-                          <img id="preview" src="<?php echo mostra_imagem('user',$row['usuario_foto']);?>" height="100px" width="100px" />
-                          <br>
-                          <input type="file" name="file-3[]" class="inputfile inputfile-3 ProfileUpdateImage" image_type="logotipo" preview="minha_loja_logo_preview" id="upload_logo" />
-                          <label for="upload_logo"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="17" viewBox="0 0 20 17"><path d="M10 0l-5.2 4.9h3.3v5.1h3.8v-5.1h3.3l-5.2-4.9zm9.3 11.5l-3.2-2.1h-2l3.4 2.6h-3.5c-.1 0-.2.1-.2.1l-.8 2.3h-6l-.8-2.2c-.1-.1-.1-.2-.2-.2h-3.6l3.4-2.6h-2l-3.2 2.1c-.4.3-.7 1-.6 1.5l.6 3.1c.1.5.7.9 1.2.9h16.3c.6 0 1.1-.4 1.3-.9l.6-3.1c.1-.5-.2-1.2-.7-1.5z"/></svg> <span>alterar foto&hellip;</span></label>
-                      
-                       </div>
+                      <div class="col-md-10 text-left">
+                      <label for="my-picture" class="picture-label ">
+                      <img id="preview" src="<?=$foto?>" height="100px" width="100px" />
+                      </label>
+                      <br>
+                      <span class="picture-path">alterar foto ...</span>
+                      <div class="preview_block"></div>
+                      <input type="file" name="myPicture" id="my-picture" style="display:none"/>
+                      </div>
                     </div>
 
                     <div class="form-group">
                       <label for="inputName" class="col-sm-2 control-label">Usuário</label>
                       <div class="col-sm-10">
                         <input class="form-control" id="inputName" name="inputName" placeholder="Name" required="true" required_message="Ops, por favor, informe seu nome" type="text"
-                          value="<?php echo $row['usuario_nome'];?>"
-                        >
+                          value="<?=$nome?>">
                       </div>
                     </div>
 
@@ -63,7 +55,7 @@
                       <label for="inputEmail" class="col-sm-2 control-label">Email</label>
                       <div class="col-sm-10">
                         <input class="form-control" id="inputEmail" name="inputEmail" placeholder="Email" required required_message="Wow, precisamos de seu e-mail" type="text"
-                          value="<?php echo $row['usuario_email'];?>"
+                          value="<?=$email?>"
                         >
                       </div>
                     </div>
@@ -106,7 +98,7 @@
                       <label for="formacao" class="col-sm-2 control-label">Formação</label>
                       <div class="col-sm-10">
                         <input class="form-control" id="inputFormacao" name="inputFormacao" required required_message="Por favor, nos informe sua formação" placeholder="Formação" type="text"
-                          value="<?php echo $row['usuario_formacao'];?>"
+                          value="<?=$formacao?>"
                         >
                       </div>
                     </div>
@@ -115,7 +107,7 @@
                       <label for="titulo" class="col-sm-2 control-label">Titulo</label>
                       <div class="col-sm-10">
                         <input class="form-control" id="inputTitulo" name="inputTitulo" required required_message="Por favor, informe um bom título sobre você"  placeholder="Titulo" type="text"
-                           value="<?php echo $row['usuario_titulo'];?>"
+                           value="<?=$titulacao?>"
                         >
                       </div>
                     </div>
@@ -123,22 +115,14 @@
                     <div class="form-group">
                       <label for="resumo" class="col-sm-2 control-label">Resumo</label>
                       <div class="col-sm-10">
-                        <textarea class="form-control" id="inputResumo" name="inputResumo" placeholder="Resumo"><?php echo $row['usuario_sobre'];?></textarea>
+                        <textarea class="form-control" id="inputResumo" name="inputResumo" placeholder="Resumo"><?=$sobre?></textarea>
                       </div>
                     </div>
 
                     <div class="form-group">
-                      <label for="abilidades" class="col-sm-2 control-label">Habilidades</label>
+                      <label for="abilidades" class="col-sm-2 control-label">Curriculum Lates</label>
                       <div class="col-sm-10">
-                          <?php
-                              $habilidades_usuario = '';
-                              $data_user = ExecData($mysqli, 'usuario','consulta_usuario_habilidades','*',$_SESSION['usuarioID']);
-                              while($row_habilidades = mysqli_fetch_array($data_user))
-                              {
-                                $habilidades_usuario .= $row_habilidades['usuario_habilidade_habilidade'].', ';
-                              }
-                          ?>
-                        <input class="form-control" placeholder="Habilidades" name="inputHabilidades" value="<?php echo $habilidades_usuario;?>" data-role="tagsinput" id="tags" type="text">
+                        <input class="form-control" placeholder="Lates" name="lates" type="text" value="<?=$lates?>">
                       </div>
                     </div>
 

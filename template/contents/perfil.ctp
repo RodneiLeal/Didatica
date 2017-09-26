@@ -1,18 +1,3 @@
-<?php
-    require "loader.php";
-    extract($_REQUEST);
-
-    $cursos     = new CursoModel;
-    $instrutor  = new Instructor;
-    $inscricao  = new Inscricao;
-    $perfil     = $instrutor->perfil($idusuario)[0];
-
-    extract($perfil);
-    
-    $foto = empty($foto)?'img/users/sem-foto.png':base64_decode($foto);
-    
-?>
-
 <!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>Perfil</h1>
@@ -32,23 +17,22 @@
         <div class="col-md-3">
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="<?=$foto?>" alt="<?=$nome?>.' - '.<?=$formacao?>">
+                    <img class="profile-user-img img-responsive img-circle" src="<?=$foto?>" alt="<?=$nome?>.' - '.<?=$titulacao?>">
                     <h3 class="profile-username text-center"><?=$nome?></h3>
-                    <p class="text-muted text-center"><?=$formacao?></p>
+                    <p class="text-muted text-center"><?=$titulacao?></p>
 
                     <!-- se o usuario for instrutor	-->
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
                             <b>Publicações</b>
                             <a class="pull-right">
-                                <?=count($cursos->getCursosInstrutor($idinstrutor))?>
+                                <?=count($this->cursos->getCursosInstrutor($idinstrutor))?>
                             </a>
                         </li>
-
                         <li class="list-group-item">
                             <b>Inscritos</b>
                             <a class="pull-right">
-                                <?=count($inscricao->getInscricaoPorUsuario($idinstrutor))?>
+                                <?=count($this->inscricoes->getInscricaoPorUsuario($idinstrutor))?>
                             </a>
                         </li>
                     </ul>
@@ -58,6 +42,10 @@
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
+
+        <?php
+            if($tipo): // se tipo de perfil igual a instrutor, então deverá exibir o quadro sobre mim
+        ?>
 
         <!-- About Me Box -->
         <div class="col-md-9">
@@ -77,5 +65,8 @@
                 </div><!-- /.box-body -->
             </div><!-- /.box -->
         </div><!-- /.col -->
+
+        <?php endif;?>
+
     </div><!-- /.row -->
 </section><!-- /.content -->

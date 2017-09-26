@@ -4,21 +4,25 @@
 
 		private $action,
 				$parameters,
-				$instructor;
+				$instrutor,
+				$cursos,
+				$inscricoes;
 
 		function __construct(){
 			parent::__construct();
 			$get = func_num_args()>=1? func_get_args():array();
-			$this->action = $get[0];
+			$this->action 	  = $get[0];
 			$this->parameters = $get[1];
-			$this->title = SYS_NAME." - Dashboard";
-			$this->instructor = new Instructor;
+			$this->title	  = SYS_NAME." - Dashboard";
+			$this->instrutor  = new Instructor;
+			$this->cursos     = new CursoModel;
+			$this->inscricoes = new Inscricao;
 
 		}
 
 		public function index(){
 			include_once ROOT."template/dashboard-header.ctp";
-			include_once ROOT."template/dashboard.ctp";
+			include_once ROOT."template/dashboard-content.ctp";
 			include_once ROOT."template/dashboard-footer.ctp";
 		}
 

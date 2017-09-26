@@ -60,7 +60,7 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
-          <a href="" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+          <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
@@ -271,19 +271,17 @@
 
                         <img src="<?=$foto?>" class="img-circle" alt="<?=$usuario_nome?>">
                         <p>
-                            <a class="profile" data-value="<?=$idusuario?>">
-                                <font color="#fff">
-                                    <?php 
-                                        if($tipo){
-                                          extract($this->instructor->getInstrutor($idusuario)[0]);
-                                          echo $nome.' - '.substr_replace($formacao, (strlen($formacao) > 10 ? '...' : ''), 10);
-                                        }else{
-                                          echo $nome;
-                                        }
-
-
-                                    ?>
-                                </font>
+                            <a href="Dashboard?p=perfil" class="profile">
+                              <font color="#fff">
+                                  <?php 
+                                      if($tipo){
+                                        extract($this->instrutor->getInstrutor($idusuario)[0]);
+                                        echo $nome.' - '.substr_replace($formacao, (strlen($formacao) > 10 ? '...' : ''), 10);
+                                      }else{
+                                        echo $nome;
+                                      }
+                                  ?>
+                              </font>
                             </a>
                             <small>Usuario desde <?php echo date('M/Y', strtotime($dataCadastro));?></small>
                             <small>Ultimo acesso: <span>31/12/1999 23:59</span></small>
@@ -291,7 +289,7 @@
                     </li>
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="dashboard?user-edit" class="btn btn-default btn-flat">Editar</a>
+                            <a href="Dashboard?p=perfil-edit" class="btn btn-default btn-flat">Editar</a>
                         </div>
                         <div class="pull-right">
                             <a class="logoff btn btn-default btn-flat">Sair</a>
