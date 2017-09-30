@@ -77,7 +77,7 @@
                                         <!-- social-box -->
 
 										<?php
-											$foto = empty($foto)?'img/users/sem-foto.png':base64_decode($foto);
+											$foto = empty($foto)?'img/users/sem-foto.png':$foto;
 										?>
 
                                         <div class="about-author">
@@ -137,7 +137,7 @@
 
 														<footer class="clearfix">
 															<div class="pull-left">
-																<h6>'.$nome.'</h6>
+																<h6>'.$username.'</h6>
 															</div>
 															<div class="pull-right clearfix">
 																<span class="entry-date pull-left">
@@ -165,7 +165,7 @@
 
                     	<div class="widget kopa-course-search-2-widget">
 						<?php
-							$imagem = empty($imagem)?'img/curso/no-image.png':base64_decode($imagem);
+							$imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
 						?>
 
 							<img src="<?=$imagem?>" height="218px">

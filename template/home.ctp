@@ -103,7 +103,7 @@
                                         $cursos = $this->cursos->getCursos();
                                         foreach ($cursos as $curso){
                                             extract($curso);
-                                            $imagem = empty($imagem)?'img/curso/no-image.png':base64_decode($imagem);
+                                            $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
                                             $media  = number_format($media, 2, '.', ' ');
 
 											echo 
@@ -193,12 +193,10 @@
                         <div class="widget kopa-ads-2-widget">
                             <div class="widget-title widget-title-s5 text-center">
                                 <span></span>
-                                <h2>Faça parte do Didática Online</h2>
+                                <h2>Faça parte da Didática Online</h2>
                                 <p>Comece a ensinar ou a aprender</p>
 								<BR><BR><BR>
                              </div>
-							 
- 
 							 
 							<div class="col-md-12 col-sm-12 col-xs-12">
 								<div class="col-md-6 col-sm-6 col-xs-12 text-center">

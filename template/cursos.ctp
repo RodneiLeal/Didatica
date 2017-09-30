@@ -49,7 +49,7 @@
 								<?php
                                         foreach ($cursos as $curso){
                                             extract($curso);
-                                            $imagem = empty($imagem)?'img/curso/no-image.png':base64_decode($imagem);
+                                            $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
                                             $media  = number_format($media, 2, '.', ' ');
 
 											echo 

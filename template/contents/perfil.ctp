@@ -5,7 +5,7 @@
         <li><a ><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a >Usuário</a></li>
         <li class="active">
-            <?=$nome?>
+            <?=$username?>
         </li>
     </ol>
 </section>
@@ -17,11 +17,15 @@
         <div class="col-md-3">
             <div class="box box-primary">
                 <div class="box-body box-profile">
-                    <img class="profile-user-img img-responsive img-circle" src="<?=$foto?>" alt="<?=$nome?>.' - '.<?=$titulacao?>">
-                    <h3 class="profile-username text-center"><?=$nome?></h3>
-                    <p class="text-muted text-center"><?=$titulacao?></p>
+                    <img class="profile-user-img img-responsive img-circle" src="<?=$foto?>" alt="<?=$username?>">
+                    <h3 class="profile-username text-center"><?=$username?></h3>
+                    <p class="text-muted text-center"><?=$tipo?$titulacao:''?></p>
+
 
                     <!-- se o usuario for instrutor	-->
+                    <?php
+                    if($tipo):
+                    ?>
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
                             <b>Publicações</b>
@@ -37,6 +41,7 @@
                         </li>
                     </ul>
                     <!-- fim do se usuario for instrutor -->
+                    <?php endif;?>
 
 
                 </div><!-- /.box-body -->

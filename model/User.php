@@ -11,7 +11,7 @@
 
         public function login($pid, $passwd){
             $passwd = hash('sha256', $passwd);
-            $sql    = "SELECT * FROM usuario WHERE (usuario.email = '{$pid}' OR usuario.nome = '{$pid}') AND usuario.pswd = '{$passwd}' LIMIT 1";
+            $sql    = "SELECT * FROM usuario WHERE (usuario.email = '{$pid}' OR usuario.username = '{$pid}') AND usuario.pswd = '{$passwd}' LIMIT 1";
             $stmt   = $this->db->query($sql);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){

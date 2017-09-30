@@ -2,11 +2,11 @@
 	/*confihgurações de sistema*/
 	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-	$home_uri			= "http://didatica.rodneileal.com.br/";
-	$db_user			= "rodneile_didatic";
-	$db_passwd			= "@12345@";
+	$home_uri			= "http://didatica.online/";
+	$db_user			= "app_didatica";
+	$db_passwd			= "D1d@71c4";
 	$confirme_path_file	= "/controllers/users/confirme.php";
-	$master_email		= "exemplo@teste.com.br";
+	$master_email		= "rodnei.leal@rodneileal.com.br";
 
 	define("SYS_NAME", "Didática Online");
 	define('MASTER_MAIL', $master_email);

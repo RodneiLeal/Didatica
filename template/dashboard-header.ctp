@@ -1,4 +1,6 @@
 <?php
+              // header('Content-Type: image/jpeg');
+              
     @session_start();
     if(empty($_SESSION)){
       header('location: ./');
@@ -51,9 +53,9 @@
         <!-- Logo -->
         <a href="" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><img src="img/didatica-inline-logotipo-mini.png" width="25px"></span>
+          <span class="logo-mini"><img src="img/logo-mini.png" width="20px"></span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><img src="img/didatica-inline-logotipo.png" width="100px"></span>
+          <span class="logo-lg"><img src="img/logo.png" width="100px"></span>
         </a>
 
         
@@ -258,8 +260,9 @@
               </li>
 
 
-              <?php $foto = empty($foto)?'img/users/sem-foto.png':base64_decode($foto); ?>
-
+              <?php 
+              $foto = empty($foto)?'img/users/sem-foto.png':$foto ?>
+                
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -269,16 +272,16 @@
                 <ul class="dropdown-menu">
                     <li class="user-header">
 
-                        <img src="<?=$foto?>" class="img-circle" alt="<?=$usuario_nome?>">
+                        <img src="<?=$foto?>" class="img-circle" alt="<?=$username?>">
                         <p>
                             <a href="Dashboard?p=perfil" class="profile">
                               <font color="#fff">
                                   <?php 
                                       if($tipo){
                                         extract($this->instrutor->getInstrutor($idusuario)[0]);
-                                        echo $nome.' - '.substr_replace($formacao, (strlen($formacao) > 10 ? '...' : ''), 10);
+                                        echo $username.' - '.substr_replace($formacao, (strlen($formacao) > 10 ? '...' : ''), 10);
                                       }else{
-                                        echo $nome;
+                                        echo $username;
                                       }
                                   ?>
                               </font>

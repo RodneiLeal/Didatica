@@ -37,6 +37,7 @@
 		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
 
     <script src="js/functions.js"></script>
+    <script src="js/main.js"></script>
 
     <!-- page script -->
     <script>

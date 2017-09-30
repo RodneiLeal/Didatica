@@ -20,56 +20,43 @@
           <div class="box-body table-responsive no-padding">
             <table class="table table-hover">
               <tr>
-                <th>Curso</th>
-                <th>Horas Curso</th>
-                <th>Certificado</th>
+                <th>Curso</th> <!--titulo-->
+                <th>Horas Curso</th><!--horas_minima-->
+                <th>Certificado</th> <!--botão para visializar certificado -->
                 <th>Status</th>
               </tr>
               <?php 
                 $all_enroll = ExecData($mysqli, 'cursos','cursos_certificados_lista_todos','*', 0);
-                while($row = mysqli_fetch_array($all_enroll))
-                {
-					$link='Indisponível';
-					if($row['matricula_certificado_ativo']==0)
-					{
-						$status_cor = 'warning';
-						$status 	= 'Cancelado';
-					}
-					elseif($row['matricula_certificado_ativo']==1)
-					{
-						$status_cor = 'success';
-						$status 	= 'Pago';
-						
-						$link = '<a href="my-certificates-view.php?certificate='.$row['matricula_certificado_certificado_code'].'" target="_blank"> Visualizar</a>';
-					}
-					elseif($row['matricula_certificado_ativo']==2)
-					{
-						$status_cor = 'primary';
-						$status 	= 'Pendente Pagamento';
-					}
-					elseif($row['matricula_certificado_ativo']==3)
-					{
-						$status_cor = 'danger';
-						$status 	= 'Disputa/Reclamação';
-					}
-					
-					
-					echo 
-					'
-					  <tr>
-						<td><a href="?p=6">'.$row['curso_titulo'].'</a></td>
-						<td>'.$row['curso_horas_total'].'</td>
-						<td>'.$link.'</td>
-						<td><span class="label label-'.$status_cor.'">'.$status.'</span></td>
-					  </tr>
-					';
+                while($row = mysqli_fetch_array($all_enroll)){
+                  $link='Indisponível';
+                  if($row['matricula_certificado_ativo']==0){
+                    $status_cor = 'warning';
+                    $status 	= 'Cancelado';
+                  }elseif($row['matricula_certificado_ativo']==1){
+                    $status_cor = 'success';
+                    $status 	= 'Pago';
+                    $link = '<a href="my-certificates-view.php?certificate='.$row['matricula_certificado_certificado_code'].'" target="_blank"> Visualizar</a>';
+                  }elseif($row['matricula_certificado_ativo']==2){
+                    $status_cor = 'primary';
+                    $status 	= 'Pendente Pagamento';
+                  }elseif($row['matricula_certificado_ativo']==3){
+                    $status_cor = 'danger';
+                    $status 	= 'Disputa/Reclamação';
+                  }
+                  
+                  echo 
+                  '
+                    <tr>
+                    <td><a href="?p=6">'.$row['curso_titulo'].'</a></td>
+                    <td>'.$row['curso_horas_total'].'</td>
+                    <td>'.$link.'</td>
+                    <td><span class="label label-'.$status_cor.'">'.$status.'</span></td>
+                    </tr>
+                  ';
                 }
               ?>
             </table>
           </div><!-- /.box-body -->
-
-
-
         </div><!-- /.box -->
       </div>
     </div>

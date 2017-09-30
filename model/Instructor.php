@@ -7,7 +7,7 @@
         
         public function getInstrutor($idusuario){
             $data   = array($idusuario);
-            $sql    = "SELECT * FROM instrutor WHERE usuario_idusuario = ?";
+            $sql    = "SELECT * FROM view_instrutor WHERE usuario_idusuario = ?";
             $stmt   = $this->db->query($sql, $data);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
