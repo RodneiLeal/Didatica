@@ -35,7 +35,7 @@
         // SELECIONA CURSOS POR CATEGORIA
         public function getCursosPorCategoria($categoria){
             $data	 = array($categoria);
-            $sql     = "SELECT * FROM wiew_cursos WHERE categoria = ?";
+            $sql     = "SELECT * FROM view_cursos WHERE categoria = ?";
 			$stmt	 = $this->db->query($sql, $data);
 			$result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){

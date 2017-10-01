@@ -19,7 +19,7 @@
 		exit;
 	}
 	
-	$data = array('nome'=>$name,
+	$data = array('username'=>$name,
 				  'email'=>$email,
 				  'pswd'=>hash('sha256', $passwd),
 				  'dataCadastro'=>$datetime);
