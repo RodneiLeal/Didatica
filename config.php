@@ -3,6 +3,8 @@
 	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
 	$home_uri			= "http://didatica.online/";
+	$db_host			= "didatica-db.mysql.uhserver.com";
+	$db_name			= "didatica_db";
 	$db_user			= "app_didatica";
 	$db_passwd			= "D1d@71c4";
 	$confirme_path_file	= "/controllers/users/confirme.php";
@@ -14,8 +16,8 @@
 	define("UPLOADS", ROOT."/views/_uploads");
 	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'./':$home_uri);
 	define("CONFIRME_URI", HOME_URI.$confirme_path_file);
-	define("DB_HOST", "localhost");
-	define("DB_NAME", "didatica_online_DB");
+	define("DB_HOST", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'localhost':$db_host);
+	define("DB_NAME", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'didatica_db':$db_name);
 	define("DB_USER", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"root":$db_user);
 	define("DB_PASSWD", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"1234":$db_passwd);
 	define("DB_CHARSET", "utf8");
