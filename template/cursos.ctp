@@ -18,8 +18,15 @@
                         </div>
                         <div class="col-md-12">
 							<h5 class=" clearfix pull-left" style="color:#fff">
-								Os maiores especialistas em
-								<?=$curso_categoria_nome?>
+							
+							<?php
+								if($cursos):
+									echo "Os maiores especialistas em $curso_categoria_nome";
+								else:
+									echo "Não encontramos nenhum curso para $curso_categoria_nome";
+								endif;
+							?>
+
 							</h5>
                         </div>
 
@@ -47,43 +54,46 @@
                                 <ul class="clearfix">
 								
 								<?php
-                                        foreach ($cursos as $curso){
-                                            extract($curso);
+									if($cursos):
+										foreach ($cursos as $curso):
+											extract($curso);
                                             $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
                                             $media  = number_format($media, 2, '.', ' ');
-
-											echo 
-											'
-												<li class="masonry-item">
-													<article class="entry-item hot-item">
-														<div class="entry-thumb">
-															<a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
-																<div class="mask"></div>
-																<img src="'.$imagem.'" height="230px">
-															</a>
-															<!--<span class="entry-hot">Hot</span>-->
-                                                        </div>
-                                                            
-                                                        <div class="avaliacao">
-                                                            <div class="starrr" data-rating="'.$media.'" title="Média entre '.$votantes.' opiniões de alunos"><span>'.$media.'</span></div>
-                                                        </div>
-
-														<div class="entry-content">
-															<div class="course-teacher">
-																<span>'.$categoria.'</span><br>
-																<a href="instrutor/'.$instrutor_idinstrutor.'/'.Main::preparaURL($instrutor).'">'.$instrutor.'</a>
-															</div>
-															<h6 class="entry-title">
-															    <a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
-																	'.$titulo.'
-																</a>
-															</h6>
+								?>
+											<li class="masonry-item">
+												<article class="entry-item hot-item">
+													<div class="entry-thumb">
+														<a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">
+															<div class="mask"></div>
+															<img src="<?=$imagem?>" height="230px">
+														</a>
+														<!--<span class="entry-hot">New</span> se curso inserido a menos de 30 dias -->
+													</div>
+														
+													<div class="avaliacao">
+														<div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$votantes?> opiniões de alunos">
+															<span><?=$media?></span>
 														</div>
-													</article>
-												</li>
-											';
-										}
-									?>
+													</div>
+
+													<div class="entry-content">
+														<div class="course-teacher">
+															<span><?=$categoria?></span><br>
+															<a href="instrutor/<?=$instrutor_idinstrutor?>/<?=Main::preparaURL($instrutor)?>"><?=$instrutor?></a>
+														</div>
+														<h6 class="entry-title">
+															<a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">                                                            
+															<?=$titulo?>
+															</a>
+														</h6>
+													</div>
+												</article>
+											</li>
+
+								<?php
+										endforeach;
+									endif;
+								?>
 
                                 </ul>
                                 <!-- clearfix -->
@@ -113,8 +123,9 @@
                     <div class="col-md-12">
 
                         <div class="widget kopa-tagline-1-widget">
+						<?php if($cursos):?>
                             <h3>Veja mais de <?=count($cursos)?> cursos, ministrados por instrutores especializados</h3>
-
+						<?php endif?>
                             <a class="kopa-button kopa-line-button medium-button" href="#">entrar agora</a>
                             
                         </div>

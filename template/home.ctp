@@ -99,45 +99,46 @@
                                 <ul class="clearfix">
 
 								
-									<?php
-                                        $cursos = $this->cursos->getCursos();
-                                        foreach ($cursos as $curso){
-                                            extract($curso);
-                                            $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
-                                            $media  = number_format($media, 2, '.', ' ');
+                                <?php
+                                    $cursos = $this->cursos->getCursos();
+                                    foreach ($cursos as $curso):
+                                        extract($curso);
+                                        $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
+                                        $media  = number_format($media, 2, '.', ' ');
+                                ?>
 
-											echo 
-											'
-												<li class="masonry-item">
-													<article class="entry-item hot-item">
-														<div class="entry-thumb">
-															<a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">
-																<div class="mask"></div>
-																<img src="'.$imagem.'" height="230px">
-															</a>
-															<!--<span class="entry-hot">Hot</span>-->
-                                                        </div>
-                                                            
-                                                        <div class="avaliacao">
-                                                            <div class="starrr" data-rating="'.$media.'" title="Média entre '.$votantes.' opiniões de alunos"><span>'.$media.'</span></div>
-                                                        </div>
+                                    <li class="masonry-item">
+                                        <article class="entry-item hot-item">
+                                            <div class="entry-thumb">
+                                                <a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">
+                                                    <div class="mask"></div>
+                                                    <img src="<?=$imagem?>" height="230px">
+                                                </a>
+                                                <!--<span class="entry-hot">Hot</span>-->
+                                            </div>
+                                                
+                                            <div class="avaliacao">
+                                                <div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$votantes?> opiniões de alunos"><span><?=$media?></span></div>
+                                            </div>
 
-														<div class="entry-content">
-															<div class="course-teacher">
-																<span>'.$categoria.'</span><br>
-																<a href="instrutor/'.$instrutor_idinstrutor.'/'.Main::preparaURL($instrutor).'">'.$instrutor.'</a>
-															</div>
-															<h6 class="entry-title">
-															    <a href="curso/'.$idcurso.'/'.Main::preparaURL($categoria).'/'.Main::preparaURL($titulo).'">                                                            
-																	'.$titulo.'
-																</a>
-															</h6>
-														</div>
-													</article>
-												</li>
-											';
-										}
-									?>
+                                            <div class="entry-content">
+                                                <div class="course-teacher">
+                                                    <span><?=$categoria?></span><br>
+                                                    <a href="instrutor/<?=$instrutor_idinstrutor?>/<?=Main::preparaURL($instrutor)?>"><?=$instrutor?></a>
+                                                </div>
+                                                <h6 class="entry-title">
+                                                    <a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">                                                            
+                                                        <?=$titulo?>
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                        </article>
+                                    </li>
+
+                                <?php
+                                    endforeach;
+                                ?>
+						
                                 </ul>
                                 <!-- clearfix -->
                             </div>

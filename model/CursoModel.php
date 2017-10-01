@@ -71,7 +71,7 @@
         // SELECIONA TODOS OS COMENTARIOS DE UM CURSO
         public function getCursoComentarios($idcurso){
             $data    = array($idcurso);
-            $sql     = "SELECT t1.*, t2.nome FROM avaliacao AS t1 ";
+            $sql     = "SELECT t1.*, t2.nome, t2.foto AS avatar FROM avaliacao AS t1 ";
             $sql    .= "LEFT JOIN usuario AS t2 ON t2.idusuario = t1.usuario_idusuario "; 
             $sql    .= "WHERE curso_idcurso = ?";
             $stmt    =  $this->db->query($sql, $data);

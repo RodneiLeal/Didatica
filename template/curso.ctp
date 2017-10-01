@@ -58,7 +58,7 @@
 
                                             <span>Categoria:</span>
 
-                                            <a href="#"><?=$categoria?></a>
+                                            <a href="cursos/<?=$categoria?>"><?=$categoria?></a>
                                         </div>
                                         <!-- tag-box -->
 
@@ -111,45 +111,48 @@
                                 <h4>Comentários</h4>
                                 <ol class="comments-list clearfix">
 								<?php
-
-									foreach($this->curso->getCursoComentarios($idcurso) as $comentario) {
+									foreach($this->curso->getCursoComentarios($idcurso) as $comentario) :
 										extract($comentario);
-										echo
-										'
-											<li class="comment clearfix">
-												<article class="comment-wrap clearfix">
+										$avatar = empty($avatar)?'img/users/sem-foto.png':$avatar;
+								?>
 
-													<div class="comment-avatar pull-left">
-														<img alt="subistituir foto por estrelas" src="">
+									<li class="comment clearfix">
+										<article class="comment-wrap clearfix">
+
+											<div class="comment-avatar pull-left">
+												<img alt="<?=$nome?>" src="<?=$avatar?>">
+												<h6><?=$nome?></h6>
+											</div>
+
+											<div class="comment-body">
+												<div class="comment-content">
+													<p>
+														<?=$comentario?>
+													</p>
+												</div>
+												<div>
+													<p>
+														<?=$justificativa?>
+													</p>
+												</div>
+
+												<div class="avaliacao">
+                                                	<div class="starrr" data-rating="<?=$estrelas?>"></div>
+                                            	</div>
+
+												<footer class="clearfix">
+													
+													<div class="pull-right clearfix">
+														<span class="entry-date pull-left">
+															<?=strftime('%A, %d de %B de %Y', strtotime($data_avaliacao))?>
+														</span>
 													</div>
-
-													<div class="comment-body">
-														<div class="comment-content">
-															<p>
-																'.$comentario.'
-															</p>
-														</div>
-														<div>
-															<p>
-																'.$justificativa.'
-															</p>
-														</div>
-
-														<footer class="clearfix">
-															<div class="pull-left">
-																<h6>'.$username.'</h6>
-															</div>
-															<div class="pull-right clearfix">
-																<span class="entry-date pull-left">
-																	'.strftime('%A, %d de %B de %Y', strtotime($data_avaliacao)).'
-																</span>
-															</div>
-														</footer>
-													</div><!--comment-body -->
-												</article>
-											</li>
-										';
-									}
+												</footer>
+											</div><!--comment-body -->
+										</article>
+									</li>
+								<?php
+									endforeach;
 								?>
                                 </ol><!--comments-list-->
                             </div>
