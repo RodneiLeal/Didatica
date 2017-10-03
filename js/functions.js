@@ -90,7 +90,7 @@ jQuery(function ($){
   });
 
   ////LOGIN USUÁRIO
-  $('#login-bt').on('click',function(){
+  $('.login-bt').on('click',function(){
 
     if (isEmpty($("#user_email").val())){
       Notificacao('error','Informe seu e-mail de cadastro','E-mail obrigatório');
