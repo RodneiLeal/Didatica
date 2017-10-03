@@ -19,6 +19,55 @@
             }
             return $result;
         }
+
+        public function getUserSocial($rede){
+            $urlCallback = 'https://didatica.online/controllers/user/login.php?rede=';
+            
+            switch($rede){
+                case 'facebook':
+                    $config =  [
+                        'callback' => $urlCallback.$rede,
+                        'keys'     => [ 'key' => '159280651284190', 'secret' => 'd4043ce62d63f634064d32b0a967ca97' ]
+                    ];
+                    $adapter = new Hybridauth\Provider\Facebook($config);
+                break;
+                case 'google':
+                    $config = [
+                        'callback' => $urlCallback.$rede,
+                        'keys'     => [ 'key' => '540948825743-n8vqmgotkgl7cfetgkhh1911411mhcsc.apps.googleusercontent.com', 'secret' => 'izUV01B0E4Pkrrhs8o6EWgqM' ]
+                    ];
+                    $adapter = new Hybridauth\Provider\Google($config);
+                break;
+                case 'linkedin':
+                    $config = [
+                        'callback' => $urlCallback.$rede,
+                        'keys'     => [ 'key' => '772eq6xy5cqbub', 'secret' => 'YI9PeFJtODF4E2Zc' ]
+                    ];
+                    $adapter = new Hybridauth\Provider\LinkedIn($config);
+                break;
+            }
+            
+            try{
+                $adapter->authenticate();
+                $isConnected = $adapter->isConnected();
+                $userProfile = $adapter->getUserProfile();
+                $adapter->disconnect();
+            }catch(\Exception $e){
+                echo 'Oops, we ran into an issue! ' . $e->getMessage();
+            }
+
+            $dataUser = array(
+                'identifier'=> $userProfile->identifier,
+                'email'     => $userProfile->email,
+                'foto'      => $userProfile->photoUrl,
+                'nome'      => $userProfile->firstName,
+                'sobrenome' => $userProfile->lastName,
+                'username'  => $userProfile->displayName
+            );
+    
+            return $dataUser;
+        }
+
         
         public function saveUser($data){
             if($this->db->insert('usuario', $data)){

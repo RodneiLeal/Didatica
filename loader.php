@@ -3,6 +3,8 @@
 		include 'config.php';
 	}
 
+	include "classes/Hybrid/autoload.php";
+
 	if(!defined("DEBUG") || DEBUG === true){
 		error_reporting(1); 			/*não esquecer de modificar este parametro para 0*/
 		ini_set("display_errors", 1);	/*não esquecer de modificar este parametro para 0*/
