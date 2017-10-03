@@ -1,22 +1,21 @@
 <?php
     session_start();
-            
     require "../../loader.php";
-            
-    extract($_REQUEST);
-            
     $user  =  new User();
-            
-    $login = $user->login($pid, $passwd);
+    extract($_REQUEST);
 
+    if(isset($rede)){
+        extract($user->getUserSocial($rede));
+        $passwd = $identifier.$email;
+    }
+
+    $login = $user->login($pid, $passwd);
 
     if(empty($login[0])){
         echo '0__';
         exit;
     }else{
-
         extract($login[0]);
-
         if(!$locked){
             echo '1__';
             exit;

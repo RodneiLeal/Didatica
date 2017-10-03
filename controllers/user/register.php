@@ -1,9 +1,22 @@
 <?php
 	include '../../loader.php';
-
 	extract($_REQUEST);
-	
 	$user = new User();
+
+	if(isset($rede)){
+		$result = $user->getUserSocial($rede);
+
+
+        extract($result);
+		$passwd = $identifier.$email;
+		$dataUserRede = array(
+			'foto'=>empty($foto)?NULL:$foto,
+			'redeSocialID'=>$identifier,
+			'nome'=>$nome,
+			'sobrenome'=>$sobrenome
+		);
+    }
+
 	$datetime = date("Y-m-d H:i:s");
 	$email = filter_var($email, FILTER_SANITIZE_EMAIL);
 	
@@ -12,17 +25,21 @@
 		exit;
 	}
 
-	$registro = $user->findUser($email);
-	
-	if(!empty($registro[0])){
+	if(!empty($user->findUser($email)[0])){
 		echo '1__';
 		exit;
 	}
 	
-	$data = array('username'=>$name,
-				  'email'=>$email,
-				  'pswd'=>hash('sha256', $passwd),
-				  'dataCadastro'=>$datetime);
+	$data = array(
+		'username'=>$username,
+		'email'=>$email,
+		'pswd'=>hash('sha256', $passwd),
+		'dataCadastro'=>$datetime
+	);
+
+	if(isset($dataUserRede) && is_array($dataUserRede)){
+		$data = array_merge($data, $dataUserRede);
+	}
 
 	// alterar a coluna locked no banco de dados para que esta opção funcione corretamente.
 

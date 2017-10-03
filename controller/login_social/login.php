@@ -1,6 +1,6 @@
 <?php
-session_start();
-include 'register.php';
+	session_start();
+	include 'register.php';
 
 	// include hybridauth lib
 	$base_url_callback = 'http://www.didatica.online/controller/login_social/login.php?login='.$_GET["login"];
@@ -10,15 +10,15 @@ include 'register.php';
 		'keys' => [ 'key' => '159280651284190', 'secret' => 'd4043ce62d63f634064d32b0a967ca97' ]
 	];
 
-		$config_google = [
-			'callback' => $base_url_callback,
-			'keys' => [ 'key' => '540948825743-n8vqmgotkgl7cfetgkhh1911411mhcsc.apps.googleusercontent.com', 'secret' => 'izUV01B0E4Pkrrhs8o6EWgqM' ]
-		];
-	
-			$config_linkedin = [
-				'callback' => $base_url_callback,
-				'keys' => [ 'key' => '772eq6xy5cqbub', 'secret' => 'YI9PeFJtODF4E2Zc' ]
-			];
+	$config_google = [
+		'callback' => $base_url_callback,
+		'keys' => [ 'key' => '540948825743-n8vqmgotkgl7cfetgkhh1911411mhcsc.apps.googleusercontent.com', 'secret' => 'izUV01B0E4Pkrrhs8o6EWgqM' ]
+	];
+
+	$config_linkedin = [
+		'callback' => $base_url_callback,
+		'keys' => [ 'key' => '772eq6xy5cqbub', 'secret' => 'YI9PeFJtODF4E2Zc' ]
+	];
 		
 	require_once( "Hybrid/autoload.php" );
 
@@ -37,16 +37,17 @@ include 'register.php';
 		{
 			$adapter = new Hybridauth\Provider\LinkedIn($config_linkedin);
 		}
-			try {
- 				$adapter->authenticate();
-				$isConnected = $adapter->isConnected();
-				$userProfile = $adapter->getUserProfile();
+		
+		try {
+			$adapter->authenticate();
+			$isConnected = $adapter->isConnected();
+			$userProfile = $adapter->getUserProfile();
 
-				$adapter->disconnect();
+			$adapter->disconnect();
+		}
+			catch(\Exception $e){
+				echo 'Oops, we ran into an issue! ' . $e->getMessage();
 			}
-				catch(\Exception $e){
-					echo 'Oops, we ran into an issue! ' . $e->getMessage();
-				}
 	}
 
 	// logged in ?

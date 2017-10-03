@@ -307,11 +307,14 @@
 				<div class="social-auth-links text-center">
 					<p>- OU -</p>
 
-					<a href="controller/login_social/login.php?login=facebook" class="btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</a>
+					<button data-target="facebook" class="social-signin btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
+					<!-- <a href="controller/login_social/login.php?login=facebook" class="btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</a> -->
 
-					<a href="controller/login_social/login.php?login=google" class="btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a>
+					<button data-target="google" class="social-signin btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
+					<!-- <a href="controller/login_social/login.php?login=google" class="btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a> -->
 
-					<a href="controller/login_social/login.php?login=linkedin" class="btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> Linkedin</a>
+					<button data-target="linkedin" class="social-signin btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
+					<!-- <a href="controller/login_social/login.php?login=linkedin" class="btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> Linkedin</a> -->
 
 				</div><!-- /.social-auth-links -->
 				<BR><BR>
@@ -352,11 +355,16 @@
 
 				<div class="social-auth-links text-center">
 					<p>- OU -</p>
-				 
-					<a href="controller/login_social/login.php?login=facebook" class="btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</a>
-					<a href="controller/login_social/login.php?login=google" class="btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a>
-					<a href="controller/login_social/login.php?login=linkedin" class="btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> Linkedin</a>
-					<p>- OU -</p>
+
+					<button data-target="facebook" id="" class="social-signup btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
+					<!-- <a href="controller/login_social/login.php?login=facebook" class="btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</a> -->
+
+					<button data-target="google" class="social-signup btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
+					<!-- <a href="controller/login_social/login.php?login=google" class="btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a> -->
+
+					<button data-target="linkedin" class="social-signup btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
+					<!-- <a href="controller/login_social/login.php?login=linkedin" class="btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> Linkedin</a> -->
+
 				</div><!-- /.social-auth-links -->
 				<!-- <a href="#0" class="cd-close-form">Close</a> -->
 			</div> <!-- cd-signup -->
