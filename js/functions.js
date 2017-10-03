@@ -64,33 +64,33 @@ jQuery(function ($){
 
     function loginCallback(response){
       console.log(response);
-      // switch(response){
-      //   case '0__':
-      //     Notificacao('error','E-mail inválido','E-mail obrigatório');
-      //     $('#register_email').focus();
-      //   break;
-      //   case '1__':
-      //     Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
-      //     $('#register_email').focus();
-      //   break;
-      //   case '2__':
-      //     // mensagem usada qaundo a confirmação por email esta configurada
-      //     // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
-      //     Notificacao('success','Login realizado com sucesso','Redirecionando...');
-      //     redireciona('dashboard');
-      //   break;
-      //   case '3__':
-      //     Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
-      //     redireciona('home');
-      //   break;
-      // }
+      switch(response){
+        case '0__':
+          Notificacao('error','E-mail inválido','E-mail obrigatório');
+          $('#register_email').focus();
+        break;
+        case '1__':
+          Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
+          $('#register_email').focus();
+        break;
+        case '2__':
+          // mensagem usada qaundo a confirmação por email esta configurada
+          // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
+          Notificacao('success','Login realizado com sucesso','Redirecionando...');
+          redireciona('dashboard');
+        break;
+        case '3__':
+          Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
+          redireciona('home');
+        break;
+      }
     }
 
     $.post("controllers/user/register.php", data, loginCallback);
   });
 
   ////LOGIN USUÁRIO
-  $('#login-bt').on('click',function(){
+  $('.login-bt').on('click',function(){
 
     if (isEmpty($("#user_email").val())){
       Notificacao('error','Informe seu e-mail de cadastro','E-mail obrigatório');

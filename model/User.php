@@ -21,7 +21,7 @@
         }
 
         public function getUserSocial($rede){
-            $urlCallback = 'https://didatica.online/controllers/user/login.php?rede=';
+            $urlCallback = 'http://didatica.online/controllers/user/login.php?rede=';
             
             switch($rede){
                 case 'facebook':
@@ -29,27 +29,25 @@
                         'callback' => $urlCallback.$rede,
                         'keys'     => [ 'key' => '159280651284190', 'secret' => 'd4043ce62d63f634064d32b0a967ca97' ]
                     ];
-                    $adapter = new Hybridauth\Provider\Facebook($config);
                 break;
                 case 'google':
                     $config = [
                         'callback' => $urlCallback.$rede,
                         'keys'     => [ 'key' => '540948825743-n8vqmgotkgl7cfetgkhh1911411mhcsc.apps.googleusercontent.com', 'secret' => 'izUV01B0E4Pkrrhs8o6EWgqM' ]
                     ];
-                    $adapter = new Hybridauth\Provider\Google($config);
                 break;
                 case 'linkedin':
                     $config = [
                         'callback' => $urlCallback.$rede,
                         'keys'     => [ 'key' => '772eq6xy5cqbub', 'secret' => 'YI9PeFJtODF4E2Zc' ]
                     ];
-                    $adapter = new Hybridauth\Provider\LinkedIn($config);
                 break;
             }
             
             try{
-                $adapter->authenticate();
-                $isConnected = $adapter->isConnected();
+                $hybridauth = new Hybridauth( $config );
+                
+                $adapter = $hybridauth->authenticate($rede);
                 $userProfile = $adapter->getUserProfile();
                 $adapter->disconnect();
             }catch(\Exception $e){
@@ -65,7 +63,7 @@
                 'username'  => $userProfile->displayName
             );
     
-            return $dataUser;
+            return $config;
         }
 
         
