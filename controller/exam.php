@@ -92,7 +92,7 @@
 						{
 							if($resultado == 0)
 							{
-								echo 'reproved___Lamentamos muito, mas, você não acertou os 60% necessários";
+								echo 'reproved___Lamentamos muito, mas, você não acertou os 60% necessários';
 							}
 							else
 							{
@@ -100,10 +100,6 @@
 							}
 							 
 						}
-
-
- 
-
  
 		}
 	}

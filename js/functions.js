@@ -55,40 +55,6 @@ jQuery(function ($){
     $.post("controllers/user/register.php", data, registerCallback);
   });
 
-  ////CADASTRO USUÁRIO VIA REDE SOCIAL
-  $('.social-signup').on('click',function(){
-    
-    var data = {
-      rede : $(this).attr('data-target')
-    }
-
-    function loginCallback(response){
-      console.log(response);
-      switch(response){
-        case '0__':
-          Notificacao('error','E-mail inválido','E-mail obrigatório');
-          $('#register_email').focus();
-        break;
-        case '1__':
-          Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
-          $('#register_email').focus();
-        break;
-        case '2__':
-          // mensagem usada qaundo a confirmação por email esta configurada
-          // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
-          Notificacao('success','Login realizado com sucesso','Redirecionando...');
-          redireciona('dashboard');
-        break;
-        case '3__':
-          Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
-          redireciona('home');
-        break;
-      }
-    }
-
-    $.post("controllers/user/register.php", data, loginCallback);
-  });
-
   ////LOGIN USUÁRIO
   $('#login-bt').on('click',function(){
 
@@ -126,6 +92,41 @@ jQuery(function ($){
     $.post("controllers/user/login.php", data, loginCallback);
   });
 
+  ////CADASTRO USUÁRIO VIA REDE SOCIAL
+  $('.social-signup').on('click',function(){
+    
+    var data = {
+      rede : $(this).attr('data-target')
+    }
+
+    function socialRegisterCallback(response){
+      console.log(response);
+      switch(response){
+        case '0__':
+          Notificacao('error','E-mail inválido','E-mail obrigatório');
+          $('#register_email').focus();
+        break;
+        case '1__':
+          Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
+          $('#register_email').focus();
+        break;
+        case '2__':
+          // mensagem usada qaundo a confirmação por email esta configurada
+          // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
+          Notificacao('success','Login realizado com sucesso','Redirecionando...');
+          redireciona('dashboard');
+        break;
+        case '3__':
+          Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
+          redireciona('home');
+        break;
+      }
+    }
+
+    $.post("controllers/user/register.php", data, socialRegisterCallback);
+
+  });
+
   ////LOGIN USUÁRIO VIA REDE SOCIAL
   $('.social-signin').on('click',function(){
 
@@ -133,7 +134,7 @@ jQuery(function ($){
       rede : $(this).attr('data-taget')
     }
 
-    function loginCallback(response){
+    function socialLoginCallback(response){
       switch(response){
         case '0__':
           Notificacao('error','Ops!','Combinação de e-mail e senha invalidos'); //Alterar esta mensagem de notificação para uma mensagem mais adequada
@@ -149,7 +150,7 @@ jQuery(function ($){
       }
     }
 
-    $.post("controllers/user/login.php", data, loginCallback);
+    $.post("controllers/user/login.php", data, socialLoginCallback);
   });
 
   ////LOGOUT USUÁRIO
