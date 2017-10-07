@@ -40,6 +40,9 @@
 		
 
 		<style>
+			ul{
+				list-style:none;
+			}
 			.form-wrapper-top-search {
 				background: #fff;
 				-webkit-border-radius: 4px;
