@@ -32,17 +32,15 @@
     <!-- AdminLTE for demo purposes -->
     <script src="js/vendor/dist/js/demo.js"></script>
 
-    <script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-animate.js"></script>
-		<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-sanitize.js"></script>
-
-    <script src="js/functions.js"></script>
-    <script src="js/main.js"></script>
+    <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
+    <script type="text/javascript" src="js/functions.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
 
     <!-- page script -->
-    <script>
-      $(function () {
-        $("#example1").DataTable();
+
+    <script type="text/javascript">
+      $(function() {
+        $(".starrr").starrr();
       });
     </script>
   </body>

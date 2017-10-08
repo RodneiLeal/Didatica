@@ -18,6 +18,18 @@
 			$query = $this->db->query($sql);
 			return $query->fetchAll();
         }
+
+        public function formataData($data, $mode){
+            $data = new DateTime($data);
+            switch($mode){
+                case 'dh':
+                    return $data->format('d/m/Y H:i:s');
+                case 'd':
+                    return $data->format('d/m/Y');
+                default:
+                    return $data->format('d/m/Y');
+            }
+        }
         
         public function preparaURL($string){
             $table = array(

@@ -1,6 +1,4 @@
 <?php
-              // header('Content-Type: image/jpeg');
-              
     @session_start();
     if(empty($_SESSION)){
       header('location: ./');

@@ -17,62 +17,6 @@
 
 <?php
 
-	function get_menu_admin(){
-			$menu_admin =
-			'
-				<li>
-					<a href="Dashboard">
-						<i class="fa fa-home"></i><span>Home</span>
-					</a>
-				</li>
-
-				<li class="treeview">
-					<a href="#">
-						<i class="fa fa-users"></i><span>Usuarios</span><i class="fa fa-angle-left pull-right"></i>
-					</a>
-						<ul class="treeview-menu">
-							<li><a href="Dashboard?p=instructors" title="Lista todos os instrutores">Usuários</a></li>
-							<li><a href="Dashboard?p=instructors&view=pending" title="Lista todos os instrutores">Pendente Aprovação</a></li>
-							<li><a href="Dashboard?p=instructors-messages" title="Lista todos os instrutores">Enviar Mensagem</a></li>
-						</ul>
-				</li>
-
-				<li class="treeview">
-				<a href="#">
-					<i class="fa fa-book"></i><span>Cursos</span><i class="fa fa-angle-left pull-right"></i>
-				</a>
-					<ul class="treeview-menu">
-						<li><a href="Dashboard?p=courses-list&view=available" title="Lista todos os cursos"></i>Aprovados</a></li>
-						<li><a href="Dashboard?p=courses-list&view=pending" title="Lista todos os cursos para avaliação">Pendente Aprovação</a></li>
-						<li><a href="Dashboard?p=courses-list&view=disabled" title="Lista todos os cursos para avaliação">Reprovados</a></li>
-					</ul>
-				</li>
-
-				<li class="treeview">
-				<a href="#">
-					<i class="fa fa-money"></i><span>Financeiro</span><i class="fa fa-angle-left pull-right"></i>
-				</a>
-					<ul class="treeview-menu">
-						<li><a href="Dashboard?p=adm-withdrawal" title=""></i>Saques solicitados</a></li>
-						<li><a href="Dashboard?p=adm-balance" title=""></i>Balanço</a></li>
-						<li><a href="Dashboard/relatorio" title=""></i>Relatório</a></li>
-					</ul>
-				</li>
-		
-				<li class="treeview">
-				<a href="#">
-					<i class="fa fa-gear"></i><span>Configurações</span><i class="fa fa-angle-left pull-right"></i>
-				</a>
-					<ul class="treeview-menu">
-						<li><a href="Dashboard?p=adm-ratings" title=""></i>Avaliações de Cursos</a></li>
-						<li><a href="Dashboard?p=adm-config" title=""></i>Configurações</a></li>
-					</ul>
-				</li>
-			';
-
-			return $menu_admin;
-	}
-	
 	function get_menu_instructor(){
 			$menu_user =
 			'
@@ -83,11 +27,11 @@
 				</li>
 
 				<li class="treeview">
-				<a href="#">
-					<i class="fa fa-university"></i><span>Instrutor</span><i class="fa fa-angle-left pull-right"></i>
-				</a>
+					<a><i class="fa fa-university"></i><span>Instrutor</span><i class="fa fa-angle-left pull-right"></i></a>
 					<ul class="treeview-menu">
-						<li><a href="Dashboard?p=my-courses-list" title="Lista todos os cursos"></i>Meus cursos</a></li>
+						<li><a href="Dashboard?p=novo-curso" title="Novo curso"></i>Novo curso</a></li>
+						<li><a href="Dashboard?p=meus-cursos" title="Meus cursos"></i>Meus cursos</a></li>
+						<li><a href="Dashboard?p=minhas-inscricoes" title="Minhas Inscrições"></i>Minhas Inscrições</a></li>
 					</ul>
 				</li>
 
@@ -106,7 +50,6 @@
 				</a>
 					<ul class="treeview-menu">
 						<li><a href="Dashboard?p=my-certificates" title="Lista todos os cursos"></i>Ver meus Certificados</a></li>
-						<li><a href="Dashboard?p=certificado-model" title="Lista todos os cursos"></i>Certificado Modelo</a></li>
 					</ul>
 				</li>
 

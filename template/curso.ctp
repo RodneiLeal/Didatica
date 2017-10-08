@@ -1,5 +1,5 @@
 <?php
-	extract($this->curso->getCursos($this->action)[0]);
+	extract($this->curso->getCursoId($this->action)[0]);
 ?>
     <div id="main-content">
         <header class="page-header">
@@ -111,9 +111,10 @@
                                 <h4>Comentários</h4>
                                 <ol class="comments-list clearfix">
 								<?php
-									foreach($this->curso->getCursoComentarios($idcurso) as $comentario) :
-										extract($comentario);
-										$avatar = empty($avatar)?'img/users/sem-foto.png':$avatar;
+									if($comentarios = $this->curso->getCursoComentarios($idcurso)):
+										foreach($comentarios as $comentario) :
+											extract($comentario);
+											$avatar = empty($avatar)?'img/users/sem-foto.png':$avatar;
 								?>
 
 									<li class="comment clearfix">
@@ -152,7 +153,8 @@
 										</article>
 									</li>
 								<?php
-									endforeach;
+										endforeach;
+									endif;
 								?>
                                 </ol><!--comments-list-->
                             </div>
