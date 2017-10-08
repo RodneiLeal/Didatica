@@ -1,4 +1,15 @@
 <link rel="stylesheet" type="text/css" href="css/certificado.css">
+<style>
+	.certificado-body{
+		width: 100%;
+		height: 100%;
+		background:url("img/bg.png"), url('img/bg-band-model.png');
+		background-repeat: no-repeat;
+		background-position: center;
+		background-blend-mode: multiply, normal;
+		background-size: 98%;
+	}
+</style>
  
   <!-- Content Header (Page header) -->
   <section class="content-header">
@@ -31,7 +42,7 @@
 										</div>
 									</div>
 									<div class="row-3">
-										<div class="col-1"></div>
+										<div class="col-1-5"></div>
 										<div class="col-8">
 											<div class="row">
 												<p>A Didática Online certifica que,</p>
