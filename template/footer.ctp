@@ -244,10 +244,6 @@
 						Nosso Certificado é válido em todo o Brasil.
 					</p>
 
-					<p>
-						Nossa missão é buscar a interação entre aluno e o instrutor independente do local que esteja, buscando assim aprimoramento quanto para o instrutor tal como para o aluno.
-					</p>
-
 					<dl>
 						<dt>
 							Missão

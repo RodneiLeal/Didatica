@@ -20,7 +20,6 @@
     </ol>
   </section>
 
-
   <section class="content">
     <div class="row">
       <div class="col-md-12">
@@ -80,11 +79,34 @@
     </div>
   </section>
 
+	<div class="modal modal-info fade" role="dialog" id="modal-certificado-modelo">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button class="close" type="button" data-dismiss="modal">&times;</button>
+					<h4>Parabens!</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12">
+								<p>
+									É com enorme satisfação que o parabenizamos por ter concluído este curso.
+									Para que possamos permanecer oferecendo materiais de qualidade como este que você acabou de utilizar e mantermos este site no ar,  precisamos de sua ajuda.
+									<br>
+									O valor monetário é de <strong>R$ 39,99</strong> podendo ser em <strong>9x de R$ 5,14</strong> pelo PagSeguro, é respectivo a certificação do aluno(a).
+								</p>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+						<p>
+							Grato pela atenção e colaboração.
+							<br>
+							<br>
+							Equipe Didática.
+						</p>
+				</div>
+			</div>
+		</div>
+	</div>
 
-
-
-
-
-
-
- 

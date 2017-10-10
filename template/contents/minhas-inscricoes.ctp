@@ -6,8 +6,6 @@
     </ol>
   </section>
   <section class="content">
-
-
     <div class="row">
       <div class="col-xs-12">
         <div class="box">
@@ -44,7 +42,7 @@
                     ?>
                     <!-- este botão irá exibir um certificado modelo com dados parciais do usuário, enquanto não for concluido o curso e não for efetuado o pagamento do certificado. Após o pagamento será exibido o numero do certificado e o status de curso concluido. -->
                     
-                    <td><a class="btn btn-xs btn-info certificado-modelo" href="Dashboard?p=certificado-model">Certificado</a></td>
+                    <td><a class="btn btn-xs btn-info certificado-modelo" href="Dashboard?p=certificado-model">Certificado modelo</a></td>
                   </tr>
               <?php
                   endforeach;
@@ -57,8 +55,4 @@
         </div><!-- /.box -->
       </div>
     </div>
-
-      
-
-      
   </section>

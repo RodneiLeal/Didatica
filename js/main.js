@@ -9,6 +9,9 @@ jQuery(document).ready(function($){
 		forgotPasswordLink = formLogin.find('.cd-form-bottom-message a'),
 		backToLoginLink = formForgotPassword.find('.cd-form-bottom-message a'),
 		mainNav = $('.botoes_topo');
+	
+	// ABRE MODAL CERTIFICADO MODELO
+	$('#modal-certificado-modelo').modal('show');
 
 	//open modal
 	mainNav.on('click', function(event){

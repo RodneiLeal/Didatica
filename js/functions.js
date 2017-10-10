@@ -1092,10 +1092,6 @@ jQuery(function ($){
     $.get('./my-certificates-view.php');
   });
 
-  $('.certificado-modelo').on('click', function(){
-    alert('Certificado modelo');
-  });
-
   function isEmpty(value){
     return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
   }
