@@ -79,7 +79,7 @@
     </div>
   </section>
 
-	<div class="modal modal-info fade" role="dialog" id="modal-certificado-modelo">
+	<div class="modal fade" role="dialog" id="modal-certificado-modelo">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

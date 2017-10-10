@@ -136,9 +136,7 @@
 											<i class="fa fa-user"></i> Minha Conta<span class="caret"></span></button>
 											<ul class="dropdown-menu">
 												<li><a href="Dashboard">Painel de Controle</a></li>
-												<li><a href="Dashboard/perfil">Meu perfil</a></li>
-												<li><a href="Dashboard/meus cursos">Meus cursos</a></li>
-											<!-- <li><a href="dashboard.php?p=my-courses-enroll">Meus cursos</a></li> -->
+												<li><a href="Dashboard?p=minhas-inscricoes">Meus cursos</a></li>
 												<li role="separator" class="divider"></li>
 												<li><a class="logoff">Sair</a></li>
 											</ul>
@@ -168,10 +166,10 @@
 												<button type="button" class="botoes_topo_light btn-lg dropdown-toggle" data-toggle="dropdown">
 												<i class="fa fa-user"></i> Minha Conta<span class="caret"></span></button>
 												<ul class="dropdown-menu">
-													<li><a href="dashboard.php">Meu perfil</a></li>
-													<li><a href="dashboard.php?p=my-courses-enroll">Meus cursos</a></li>
-													<li role="separator" class="divider"></li>
-													<li><a class="logoff">Sair</a></li>
+												<li><a href="Dashboard">Painel de Controle</a></li>
+												<li><a href="Dashboard?p=minhas-inscricoes">Meus cursos</a></li>
+												<li role="separator" class="divider"></li>
+												<li><a class="logoff">Sair</a></li>
 													</ul>
 												</div>
 												';
