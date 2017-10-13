@@ -2,7 +2,6 @@
 	/*confihgurações de sistema*/
 	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-	$home_uri			= "http://didatica.online/";
 	$db_host			= "didatica-db.mysql.uhserver.com";
 	$db_name			= "didatica_db";
 	$db_user			= "app_didatica";
@@ -14,7 +13,7 @@
 	define('MASTER_MAIL', $master_email);
 	define("ROOT", __DIR__.DIRECTORY_SEPARATOR);
 	define("UPLOADS", ROOT."/views/_uploads");
-	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'./':$home_uri);
+	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'./':$_SERVER['SERVER_NAME']);
 	define("CONFIRME_URI", HOME_URI.$confirme_path_file);
 	define("DB_HOST", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'localhost':$db_host);
 	define("DB_NAME", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'didatica_db':$db_name);
