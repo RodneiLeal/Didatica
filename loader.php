@@ -1,6 +1,6 @@
 <?php
 	if(!defined("ROOT")){
-		include 'config.php';
+		include 'app.php';
 	}
 
 	include "classes/Hybrid/autoload.php";

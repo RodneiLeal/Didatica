@@ -2,13 +2,8 @@
 	/*confihgurações de sistema*/
 	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-	$db_host			= "didatica-db.mysql.uhserver.com";
-	$db_name			= "didatica_db";
-	$db_user			= "app_didatica";
-	$db_passwd			= "D1d@71c4";
-	$confirme_path_file	= "/controllers/users/confirme.php";
-	$master_email		= "rodnei.leal@rodneileal.com.br";
-
+	$ini_app = parse_ini_file('config.ini', true);
+	extract($ini_app['sistema']);
 	define("SYS_NAME", "Didática Online");
 	define('MASTER_MAIL', $master_email);
 	define("ROOT", __DIR__.DIRECTORY_SEPARATOR);
@@ -30,25 +25,14 @@
 									  "view",
 									  "template")));
 									  
-	/*produção*/
-	
-	// define('PSG_TOKEN', '988E476CFFB34113B27BCB59D1A077B1');
-	// define('PSG_EMAIL', 'leonardo.nihilo@outlook.com');
-	// define('PSG_EMAIL_SANDBOX', 'v29218027482493566605@sandbox.pagseguro.com.br');
-	// define('PSG_URL', 'https://ws.pagseguro.uol.com.br/v2/checkout');
-	// define('PSG_URL_LIGHTBOX', 'https://pagseguro.uol.com.br/v2/checkout/payment.html');
-	// define('PSG_URL_NOTIFICACAO', 'http://www.didatica.online/controller/course_payment_notification_pagseguro.php');
-	// define('SANDBOX_ACTIVE', false);
-
-	/*testes*/
-
-	define('PSG_TOKEN', '9B93B563D7DC4255B93A37C5D3AAA871');
-	define('PSG_EMAIL', 'rodnei.leal@hotmail.com');
-	define('PSG_EMAIL_SANDBOX', 'v38218955758021744159@sandbox.pagseguro.com.br');
-	define('PSG_URL', 'https://ws.sandbox.pagseguro.uol.com.br/v2/checkout');
-	define('PSG_URL_LIGHTBOX', 'https://sandbox.pagseguro.uol.com.br/v2/checkout/payment.html');
-	define('PSG_URL_NOTIFICACAO', 'http://www.didatica.online/controller/course_payment_notification_pagseguro.php');
-	define('SANDBOX_ACTIVE', true);
+	extract($ini_app['pagseguro']);
+	define('PSG_TOKEN', $psg_token);
+	define('PSG_EMAIL', $psg_email);
+	define('PSG_EMAIL_SANDBOX', $psg_email_sandbox);
+	define('PSG_URL', $psg_url);
+	define('PSG_URL_LIGHTBOX', $psg_url_lightbox);
+	define('PSG_URL_NOTIFICACAO', $psg_url_notificacao);
+	define('SANDBOX_ACTIVE', $sandbox_active);
 
 	$pgs_library = SANDBOX_ACTIVE ? "https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js": "https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js";
 
