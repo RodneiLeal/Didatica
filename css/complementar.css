@@ -1,3 +1,7 @@
 a{
     cursor: pointer !important;
 }
+
+p.recuo{
+    text-indent: 2em;
+}
