@@ -17,6 +17,7 @@
 			<div class="table-responsive mailbox-messages">
 				<div class="col-md-5">
 					<table class="table table-hover table-striped">
+						
 						<tr>
 							<th>Título</th>
 							<th>Data</th>

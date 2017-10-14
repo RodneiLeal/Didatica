@@ -37,7 +37,7 @@
             $data	 = array($categoria);
             $sql     = "SELECT * FROM view_cursos WHERE categoria = ?";
 			$stmt	 = $this->db->query($sql, $data);
-			$result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
                 return false;
             }
@@ -61,7 +61,7 @@
 			$data	 = array($this->search);
             $sql	 = "SELECT * from view_cursos WHERE titulo LIKE '%?%'";
 			$stmt	 = $this->db->query($sql, $data);
-			$result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+			$result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
                 return false;
             }
@@ -75,7 +75,17 @@
             $sql    .= "LEFT JOIN usuario AS t2 ON t2.idusuario = t1.usuario_idusuario "; 
             $sql    .= "WHERE curso_idcurso = ?";
             $stmt    =  $this->db->query($sql, $data);
-            $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
+
+        public function getCategorias(){
+            $sql =  "SELECT * FROM categoria";
+            $stmt    =  $this->db->query($sql);
+            $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
                 return false;
             }

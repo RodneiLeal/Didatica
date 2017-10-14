@@ -32,16 +32,12 @@
     <!-- AdminLTE for demo purposes -->
     <script src="js/vendor/dist/js/demo.js"></script>
 
+    <script src="//cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
+
     <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 
     <!-- page script -->
-
-    <script type="text/javascript">
-      $(function() {
-        $(".starrr").starrr();
-      });
-    </script>
   </body>
 </html>

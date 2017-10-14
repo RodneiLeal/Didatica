@@ -1,5 +1,13 @@
 jQuery(function ($){
 
+  $(".starrr").starrr();
+  
+  $('.editor').each(function(){
+    CKEDITOR.replace($(this).attr('id'), {
+      height: '165'
+    })
+  });
+
   var content = $('.content-wrapper');
 
   ////CADASTRO USUÁRIO
@@ -1212,8 +1220,10 @@ jQuery(document).ready(function()
 		textColor: 'white',
 		labelColor: 'white',
 		borderColor: 'white',
-		backgroundIcon: 'dist/img/icon-droply.png',
-		url: "controller/course/processMultipleUploads.php",
+    backgroundIcon: 'dist/img/icon-droply.png',
+    
+    url: "controller/course/processMultipleUploads.php",
+    
 		label:'Arquivos permitidos: gif, jpg, png, avi, mp3, wav, mp4, doc, docx, pdf, txt, zip e rar',
 		theme: theme,
 		backgroundColor: '0391ce',
