@@ -1,17 +1,208 @@
 jQuery(function ($){
 
+  var content = $('.content-wrapper');
+
+  // TORNAR-SE INSTRUTOR
+  $("#instructor_new_bt").click(function(){
+    $(".instructor_new_action").fadeOut(400);
+    $(".instructor_new_load").html("<img src='dist/img/loader.gif'>");
+
+    instructor_new = 'instructor_new';
+
+    $.post("controller/user.php",
+      {
+        instructor_new: instructor_new
+      },
+      
+      function(response){
+      
+      var retorno = response.replace(/^\s+|\s+$/g,"");
+      var retorno = retorno.split("__");
+
+      setTimeout(function(){
+        switch(retorno[0]){
+
+          case '0':
+            Notificacao('warning',retorno[1],'Completar dados profissionais.');
+            setTimeout(function(){
+              location.assign("?p=user-edit#tab_profissional");
+            }, 5000);
+          break;
+
+          case '1':
+            Notificacao('success',retorno[1],'Excelente');
+
+            $(".instructor_new_load").html("");
+            $(".instructor_new_action").fadeOut(400);
+            setTimeout(function(){
+              location.reload();
+            }, 3000);
+          break;
+
+          default:
+            Notificacao('error',retorno[1],' Houve algo de errado');
+            $(".instructor_new_action").fadeIn(400);
+            $(".instructor_new_load").html("");
+
+        }
+      }, 3000);
+
+    });
+  });
+
+  // ATUALIZAR INFORMAÇÕES DE USUARIO
+  $('#updateUserProfile').on('click', function(){
+
+    data = new Object();
+
+    data.idusuario = $('#id').val();
+
+    /*****VERIFICAR COMO ENVIAR OS DADOS DE IMAGEM PARA O DOCUMENTO DE PROCESSO*****/
+    // if(!isEmpty($('#imageFile').val()))
+    //   data.img        = getFileImge;
+
+    if(!isEmpty($('#username').val()))
+      data.username  = $('#username').val();
+    
+    if(!isEmpty($('#nome').val()))
+      data.nome      = $('#nome').val();
+
+    if(!isEmpty($('#sobrenome').val()))
+      data.sobrenome = $('#sobrenome').val();
+
+    if(!isEmpty($('#email').val()))
+      data.email     = $('#email').val();
+    
+    if(!isEmpty($('#passwd').val()))
+      data.pswd       = $('#passwd').val();
+
+    function getFileImge(){
+      var img =  new FormData();
+      img.append($('#imageFile').attr('name'), $('#imageFile')[0].files[0]);
+      return img;
+    }
+    
+    function userUpdateCallback(response){
+      Notificacao('success', 'Ok!!', response);
+      console.log(response);
+      // redireciona('Dashboard');
+    }
+
+    $.post('controllers/user/update.php', data, userUpdateCallback);
+
+  })
+
+  // IMAGEM PREVIEW
+  $(".imageFile").change(function(){
+    var imageFile = this;
+    if (imageFile.files && imageFile.files[0]){
+      var reader = new FileReader();
+      reader.onload = function (e) {
+          $('.imagePreview').attr('src', e.target.result);
+          $('.imageName').html(imageFile.files[0].name);
+      }
+      reader.readAsDataURL(this.files[0]);
+    }
+  });
+
+  // ADICIONA IMAGEM USUÁRIO (PERFIL)
+  $(".ProfileUpdateImage").on("change", function(){
+    var file = this.files[0].name;
+    
+    TamanhoString = file.length;
+    extensao   = file.substr(TamanhoString - 4,TamanhoString);
+    if (TamanhoString == 0 ){
+        Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
+        return false;
+    }else if(file.size > 100000){
+      Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
+      return false;
+    }else{
+      var ext = new Array('.jpg','.png','.bmp');
+      for(var i = 0; i < ext.length; i++){
+        if (extensao == ext[i]){
+          flag = "ok";
+          break;
+        }else{
+          flag = "erro";
+        }
+      }
+      if (flag=="erro"){
+        Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
+        return false;
+      }
+    }
+  
+    // var file_data = file.prop('files')[0];
+    $("#preview").fadeOut(500);
+    $(".preview_block").html("<img src='dist/img/loader.gif'>");
+  
+    var form_data = new FormData();
+    form_data.append('file', this.files[0]);
+    var operation = 'ProfileImage';
+  
+      $.ajax({
+          url: 'controller/user.php?operation='+operation, // point to server-side PHP script
+          dataType: 'text',  // what to expect back from the PHP script, if anything
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          //data: form_data,
+          type: 'post',
+          success: function(resultado)
+          {
+            if(resultado==0)
+            {
+              Notificacao('error','Houve algo de errado no envio','Tente novamente');
+              return false;
+            }
+            else
+            {
+              Notificacao('success','Arquivo enviado e salvo','Sucesso');
+  
+  
+  
+              setTimeout(function(){
+                var preview = document.getElementById('preview');
+                var input = document.getElementById('upload_logo');
+  
+                if (input.files && input.files[0])
+                {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                    preview.setAttribute('src', e.target.result);
+                  }
+                  reader.readAsDataURL(input.files[0]);
+                } else {
+                  preview.setAttribute('src', '');
+                }
+  
+                  $(".preview_block").html("");
+                  $("#preview").fadeIn(500);
+  
+              }, 2000);
+              return false;
+            }
+          }
+  
+      });
+    //$("#formulario").submit();
+    return true;
+  });
+  
+  // ESTRELAS DE OPINIÕES
   $(".starrr").starrr();
   
+  // EDITOR DE TEXTO
   $('.editor').each(function(){
     CKEDITOR.replace($(this).attr('id'), {
       height: '165'
     })
   });
 
-  var content = $('.content-wrapper');
-
-  ////CADASTRO USUÁRIO
-  $('#register-bt').on('click',function(){
+  // CADASTRO USUÁRIO
+  $('#register-bt').on('click', function(){
 
     if (isEmpty($("#register_name").val())){
       Notificacao('error','Informe um nome de usuário','Nome obrigatório');
@@ -44,16 +235,20 @@ jQuery(function ($){
           $('#register_email').focus();
         break;
         case '1__':
+          Notificacao('error','Este usuário já existe', 'Nome de usuário ja cadastrado, por favor escolha ouro nome de usuário!');
+          $('#register_name').focus();
+        break;
+        case '2__':
           Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
           $('#register_email').focus();
         break;
-        case '2__':
+        case '3__':
           // mensagem usada qaundo a confirmação por email esta configurada
           // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
           Notificacao('success','Login realizado com sucesso','Redirecionando...');
           redireciona('dashboard');
         break;
-        case '3__':
+        case '4__':
           Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
           redireciona('home');
         break;
@@ -63,7 +258,7 @@ jQuery(function ($){
     $.post("controllers/user/register.php", data, registerCallback);
   });
 
-  ////LOGIN USUÁRIO
+  // LOGIN USUÁRIO
   $('#login-bt').on('click',function(){
 
     if (isEmpty($("#user_email").val())){
@@ -100,7 +295,7 @@ jQuery(function ($){
     $.post("controllers/user/login.php", data, loginCallback);
   });
 
-  ////CADASTRO USUÁRIO VIA REDE SOCIAL
+  // CADASTRO USUÁRIO VIA REDE SOCIAL
   $('.social-signup').on('click',function(){
     
     var data = {
@@ -135,7 +330,7 @@ jQuery(function ($){
 
   });
 
-  ////LOGIN USUÁRIO VIA REDE SOCIAL
+  // LOGIN USUÁRIO VIA REDE SOCIAL
   $('.social-signin').on('click',function(){
 
     var data = {
@@ -161,7 +356,7 @@ jQuery(function ($){
     $.post("controllers/user/login.php", data, socialLoginCallback);
   });
 
-  ////LOGOUT USUÁRIO
+  // LOGOUT USUÁRIO
   $(".logoff").on('click', function(){
     data = {
       logoff: true
@@ -174,7 +369,7 @@ jQuery(function ($){
     $.post('controllers/user/logout.php', data, logoffCallback);
   });
 
-  ////PERFIL DE USUARIO
+  // PERFIL DE USUARIO
   $('.profile').on('click', function(){
     data = {
       idusuario: $(this).attr('data-value')
@@ -187,7 +382,7 @@ jQuery(function ($){
     $.post('controllers/user/perfil.php', data, perfilCallback);
   });
   
-  ////VALIDA CERTIFICADO
+  // VALIDA CERTIFICADO
   $('#certified-validate').on('click', function(){
 
     if (isEmpty($("#certified-validate-code").val())){
@@ -219,7 +414,7 @@ jQuery(function ($){
     $.post("controller/certified-validate.php", data, validateCertificateCallback);
   });
 
-  ////COURSE
+  // COURSE
   $('#course_start').on('click',function(){
 
       $(".course_box").hide(50);
@@ -295,7 +490,7 @@ jQuery(function ($){
       });
   });
 
-  //// USER PROFILE
+  // USER PROFILE
   $('.form_send_information_bt').on('click',function(){
 
       var $form     = $(this).closest('form');
@@ -372,7 +567,7 @@ jQuery(function ($){
 
   });
 
-  ////FUNCTION VALIDAARQUIVO(CAMPO)
+  // FUNCTION VALIDAARQUIVO(CAMPO)
   $("#product_file_image_1").on("change", function(){
 
       var file = this.files[0].name;
@@ -480,7 +675,7 @@ jQuery(function ($){
 
   });
 
-  ////COURSE ADD CONTENT
+  // COURSE ADD CONTENT
   $('#inputCourseContentAdd').on('click',function(){
      var formData = new FormData($("#FormeditCourseEditContentSave")[0]);
 
@@ -595,91 +790,7 @@ jQuery(function ($){
       });
   });
 
-  ////ADICIONA IMAGEM USUÁRIO (PERFIL)
-  $(".ProfileUpdateImage").on("change", function(){
-    var file = this.files[0].name;
-    
-    TamanhoString = file.length;
-    extensao   = file.substr(TamanhoString - 4,TamanhoString);
-    if (TamanhoString == 0 ){
-        Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
-        return false;
-    }else if(file.size > 100000){
-      Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
-      return false;
-    }else{
-      var ext = new Array('.jpg','.png','.bmp');
-      for(var i = 0; i < ext.length; i++){
-        if (extensao == ext[i]){
-          flag = "ok";
-          break;
-        }else{
-          flag = "erro";
-        }
-      }
-      if (flag=="erro"){
-        Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
-        return false;
-      }
-    }
   
-    // var file_data = file.prop('files')[0];
-    $("#preview").fadeOut(500);
-    $(".preview_block").html("<img src='dist/img/loader.gif'>");
-  
-    var form_data = new FormData();
-    form_data.append('file', this.files[0]);
-    var operation = 'ProfileImage';
-  
-      $.ajax({
-          url: 'controller/user.php?operation='+operation, // point to server-side PHP script
-          dataType: 'text',  // what to expect back from the PHP script, if anything
-          cache: false,
-          contentType: false,
-          processData: false,
-          data: form_data,
-          //data: form_data,
-          type: 'post',
-          success: function(resultado)
-          {
-            if(resultado==0)
-            {
-              Notificacao('error','Houve algo de errado no envio','Tente novamente');
-              return false;
-            }
-            else
-            {
-              Notificacao('success','Arquivo enviado e salvo','Sucesso');
-  
-  
-  
-              setTimeout(function(){
-                var preview = document.getElementById('preview');
-                var input = document.getElementById('upload_logo');
-  
-                if (input.files && input.files[0])
-                {
-                  var reader = new FileReader();
-                  reader.onload = function (e) {
-                    preview.setAttribute('src', e.target.result);
-                  }
-                  reader.readAsDataURL(input.files[0]);
-                } else {
-                  preview.setAttribute('src', '');
-                }
-  
-                  $(".preview_block").html("");
-                  $("#preview").fadeIn(500);
-  
-              }, 2000);
-              return false;
-            }
-          }
-  
-      });
-    //$("#formulario").submit();
-    return true;
-  });
 
 
   $('#exam_finish').on('click', function(){
@@ -794,7 +905,7 @@ jQuery(function ($){
   });
 
 
-  ////Solicitar Certificado
+  // Solicitar Certificado
   $(".course_get_certified").click(function(){
     var course = $(this).attr("course");
 
@@ -811,7 +922,7 @@ jQuery(function ($){
     });
   });
 
-  ////Avaliar Curso
+  // Avaliar Curso
   $(".course_get_rate").click(function(){
     var course = $(this).attr("course");
 
@@ -819,54 +930,7 @@ jQuery(function ($){
     $("#FormEnrollRate_matricula").val(course);
   });
 
-  ////Tornar-se Instrutor
-  $("#instructor_new_bt").click(function(){
-    $(".instructor_new_action").fadeOut(400);
-    $(".instructor_new_load").html("<img src='dist/img/loader.gif'>");
 
-    instructor_new = 'instructor_new';
-
-    $.post("controller/user.php",
-      {
-        instructor_new: instructor_new
-      },
-      
-      function(data){
-      
-      var retorno = data.replace(/^\s+|\s+$/g,"");
-      var retorno = retorno.split("__");
-
-      setTimeout(function(){
-        switch(retorno[0]){
-
-          case '0':
-            Notificacao('warning',retorno[1],'Completar dados profissionais.');
-            setTimeout(function(){
-              location.assign("?p=user-edit#tab_profissional");
-            }, 5000);
-
-          break;
-
-          case '1':
-            Notificacao('success',retorno[1],'Excelente');
-
-            $(".instructor_new_load").html("");
-            $(".instructor_new_action").fadeOut(400);
-            setTimeout(function(){
-              location.reload();
-            }, 3000);
-          break;
-
-          default:
-            Notificacao('error',retorno[1],' Houve algo de errado');
-            $(".instructor_new_action").fadeIn(400);
-            $(".instructor_new_load").html("");
-
-        }
-      }, 3000);
-
-    });
-  });
 
 
 
@@ -1213,28 +1277,28 @@ jQuery(document).ready(function()
 
   	jQuery("#mas").empty();
 
-  	jQuery("#mas").droply(
-  	{
-		multi:true,
-		logoColor: 'white',
-		textColor: 'white',
-		labelColor: 'white',
-		borderColor: 'white',
-    backgroundIcon: 'dist/img/icon-droply.png',
+  	// jQuery("#mas").droply(
+  	// {
+		// multi:true,
+		// logoColor: 'white',
+		// textColor: 'white',
+		// labelColor: 'white',
+		// borderColor: 'white',
+    // backgroundIcon: 'dist/img/icon-droply.png',
     
-    url: "controller/course/processMultipleUploads.php",
+    // url: "controller/course/processMultipleUploads.php",
     
-		label:'Arquivos permitidos: gif, jpg, png, avi, mp3, wav, mp4, doc, docx, pdf, txt, zip e rar',
-		theme: theme,
-		backgroundColor: '0391ce',
-			dropBox:{
-			title:'envie seus arquivos',
-			height:80,
-			fontSize:26
-		},
-		stableUploadLbl: 'Enviado com sucesso!',
-		deleteConfirmLbl:'Quer realmente deletar este arquivo?',
-  	});
+		// label:'Arquivos permitidos: gif, jpg, png, avi, mp3, wav, mp4, doc, docx, pdf, txt, zip e rar',
+		// theme: theme,
+		// backgroundColor: '0391ce',
+		// 	dropBox:{
+		// 	title:'envie seus arquivos',
+		// 	height:80,
+		// 	fontSize:26
+		// },
+		// stableUploadLbl: 'Enviado com sucesso!',
+		// deleteConfirmLbl:'Quer realmente deletar este arquivo?',
+  	// });
 
 
 });

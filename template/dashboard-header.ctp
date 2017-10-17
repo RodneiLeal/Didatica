@@ -27,8 +27,10 @@
     <!-- AdminLTE Skins. Choose a skin from the css/skins
     folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="js/vendor/dist/css/skins/_all-skins.min.css">
-
+    
+    <link rel="stylesheet" href="css/vendor/plugins/notification/toastr.min.css">
     <link rel="stylesheet" href="css/complementar.css">
+    
 
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -264,8 +266,8 @@
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                    <img src="<?=$foto?>" class="user-image" alt="<?=$nome?>">
-                    <span class="hidden-xs"> <?=$nome?></span>
+                    <img src="<?=$foto?>" class="user-image" alt="<?=$username?>">
+                    <span class="hidden-xs"> <?=$username?></span>
                 </a>
                 <ul class="dropdown-menu">
                     <li class="user-header">

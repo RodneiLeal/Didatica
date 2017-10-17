@@ -34,6 +34,7 @@
 
     <script src="//cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
 
+    <script type="text/javascript" src="js/vendor/plugins/notification/toastr.min.js"></script>
     <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/main.js"></script>

@@ -9,7 +9,7 @@
 
   <?php
     if(true):
-      ?>
+  ?>
   <!-- Informações do curso -->
   <section class="content" id="my-courses-add-step-1">
     <div class="row">
@@ -111,8 +111,8 @@
     if(true):
   ?>
  
- <!-- nesta etapa o instrutor poderá criar varias seções.
- cada seção comum titulo, descrição ou resumo e material de apoio que deverá ser arquivo .pdf -->
+  <!-- nesta etapa o instrutor poderá criar varias seções.
+  cada seção comum titulo, descrição ou resumo e material de apoio que deverá ser arquivo .pdf -->
   
   <!-- arquivos do curso -->
   <section class="content" id="my-courses-add-step-3">
@@ -135,15 +135,15 @@
                       <a href="#aula-1" data-parent="#accordion" data-toggle="collapse" aria-expanded="true">Aula 1</a>
                     </h4>
                   </div>
-                  <div class="colapse in colapse-panel" aria-expanded="true" id="aula-1">
+                  <div class="collapse in panel-collapse" aria-expanded="true" id="aula-1">
                     <div class="box-body">
 
                       <div class="row">
                         <div class="col-md-12">
-                          <label>Titulo da Aula</label>
+                          <label>Titulo</label>
                           <input type="text" class="form-control" require placeholder="Titulo da Aula">
                           <br>
-                          <label>Resumo</label>
+                          <label>Objetivos</label>
                           <textarea class="editor" name="" id="editor3" cols="30" ></textarea>
                           <br>
                           <input type="file" name="aula[]">
@@ -155,20 +155,22 @@
                 </div>
 
                 <div class="box box-primary panel">
+                
                   <div class="box-header">
                     <h4 class="box-title">
                       <a href="#aula-2" data-parent="#accordion" data-toggle="collapse" aria-expanded="true">Aula 2</a>
                     </h4>
                   </div>
-                  <div class="colapse in colapse-panel" aria-expanded="true" id="aula-2">
+
+                  <div class="collapse in panel-collapse" aria-expanded="false" id="aula-2">
                     <div class="box-body">
 
                       <div class="row">
                         <div class="col-md-12">
-                          <label>Titulo da Aula</label>
+                          <label>Titulo</label>
                           <input type="text" class="form-control" require placeholder="Titulo da Aula">
                           <br>
-                          <label>Resumo</label>
+                          <label>Objetivos</label>
                           <textarea class="editor" name="" id="editor4" cols="30" ></textarea>
                           <br>
                           <input type="file" name="aula[]">

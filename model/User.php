@@ -65,7 +65,6 @@
     
             return $config;
         }
-
         
         public function saveUser($data){
             if($this->db->insert('usuario', $data)){
@@ -81,13 +80,38 @@
             return false;
         }
 
-        public function findUser($email){
-            $sql 	= "SELECT email FROM usuario WHERE email = '{$email}' LIMIT 1";
-            $stmt 	= $this->db->query($sql);
+        public function getUser($values, $limit = false){
+            $set = array();
+            $sql = "SELECT * FROM usuario ";
+            
+            if(!empty($values)  && is_array($values)){
+                
+                foreach($values as $column=>$value){
+                    $set[] = " `$column` = ? ";
+                }
+                $where  = "WHERE ";
+                $where .= implode(" AND ", $set);
+                
+                $data   =  array_values($values);
+                $sql   .= $where;
+            }
+    
+            if( $limit >= 1){
+                $limit = "LIMIT $limit";
+                $sql .= $limit;
+            }
+
+            $stmt 	= $this->db->query($sql, $data);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
                 return false;
             }
+            return $result;
+        }
+
+        public function updateUser($table, $where_field, $where_field_value, $values){
+            $stmt   = $this->db->update($table, $where_field, $where_field_value, $values);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
             return $result;
         }
 

@@ -23,8 +23,13 @@
 		exit;
 	}
 
-	if(!empty($user->findUser($email)[0])){
+	if(!empty($user->getUser(array('username'=>$username))[0])){
 		echo '1__';
+		exit;
+	}
+	
+	if(!empty($user->getUser(array('email'=>$email))[0])){
+		echo '2__';
 		exit;
 	}
 	
@@ -61,10 +66,10 @@
 	if($user){
 		@session_start();
 		$_SESSION = $user;
-		echo '2__';
+		echo '3__';
 		exit;
 	}
 	else{
-		echo '3__';
+		echo '4__';
 		exit;
 	}

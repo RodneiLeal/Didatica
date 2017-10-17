@@ -5,3 +5,7 @@ a{
 p.recuo{
     text-indent: 2em;
 }
+
+.circle{
+    border-radius: 100%;
+}

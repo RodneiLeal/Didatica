@@ -81,7 +81,7 @@
 					<i class="fa fa-book"></i><span>Cursos</span><i class="fa fa-angle-left pull-right"></i>
 				</a>
 					<ul class="treeview-menu">
-					<li><a href="Dashboard?p=my-courses-enroll" title="Lista todos os cursos"></i>Matriculas</a></li>
+					<li><a href="Dashboard?p=minhas-inscricoes" title="Minhas Inscrições"></i>Minhas Inscrições</a></li>
 					</ul>
 			</li>
 
