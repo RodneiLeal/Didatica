@@ -438,7 +438,7 @@ body {
 .kopa-area-16 {
   position: relative;
   padding: 75px 0 60px;
-  background-image: url(images/background/bg-5.jpg); }
+  background-image: url(../img/sys/bg/bg-8.jpg); }
   .kopa-area-16 .mask {
     background-color: rgba(6, 26, 53, 0.6); }
 
@@ -7116,7 +7116,7 @@ Kopa professor list 2 widget
     background-position: center;
     z-index: 0; }
     .page-header .page-header-bg.page-header-bg-1 {
-      background-image: url(images/background/bg-1.jpg); }
+      background-image: url(../img/sys/bg/bg-1.jpg); }
 
 .kopa-breadcrumb {
   background-color: #ececec;
