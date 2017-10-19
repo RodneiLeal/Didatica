@@ -14,7 +14,6 @@
         <title><?=$this->getTitle()?></title>
 
 		<base href="<?=HOME_URI?>" >
-		<!-- <base href="http://didatica.rodneileal.com.br/"> -->
 
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type="text/css" media="all">
         <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css" media="all" />
@@ -36,8 +35,6 @@
         <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
         <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
         <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
-
-		
 
 		<style>
 			ul{
@@ -81,6 +78,7 @@
 				-webkit-appearance: none;
 			}
 		</style>
+
     </head>
 
 <body class="kopa-home-2">
@@ -105,14 +103,9 @@
 										<li>
 											<a>Cursos</a>
 											<ul>
-												<?php
-													foreach(Main::getCategoriaCursos() as $categoria){
-														echo
-														'
-															<li><a href="cursos/'.$categoria['categoria'].'">'.$categoria['categoria'].'</a></li>
-														';
-													}
-												?>
+												<?php foreach(Main::getCategoriaCursos() as $categoria):?>
+													<li><a href="cursos/<?=$categoria['categoria']?>"><?=$categoria['categoria']?></a></li>
+												<?php endforeach ?>
 											</ul>
 										</li>
 									</ul>
@@ -126,31 +119,22 @@
 							</ul>
 
 							<div class="text-right botoes_topo" >
-								<?php
-
-									if(!empty($locked) && $locked){
-										echo
-										'
-										<div class="btn-group">
-											<button type="button" class="botoes_topo_light btn-lg dropdown-toggle" data-toggle="dropdown">
-											<i class="fa fa-user"></i> Minha Conta<span class="caret"></span></button>
-											<ul class="dropdown-menu">
-												<li><a href="Dashboard">Painel de Controle</a></li>
-												<li><a href="Dashboard?p=minhas-inscricoes">Meus cursos</a></li>
-												<li role="separator" class="divider"></li>
-												<li><a class="logoff">Sair</a></li>
-											</ul>
-										</div>
-										';
-									}
-									else
-									{
-										echo
-										'
-											<a href="javascript:void()" class="cd-signin botoes_topo_light">entrar</a>
-										';
-									}
-								?>
+								<?php if(!empty($locked) && $locked) : ?>
+								<div class="dropdown">
+									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+										Ola, <?=$username?>!
+									</a>
+									<ul class="dropdown-menu">
+										<li><a href="Dashboard">Painel de Controle</a></li>
+										<li><a href="Dashboard?p=minhas-inscricoes">Meus cursos</a></li>
+										<li><a href="Dashboard?p=minhas-mensagens">Mensagens</a></li>
+										<li role="separator" class="divider"></li>
+										<li><a class="logoff">Sair</a></li>
+									</ul>
+								</div>
+								<?php else : ?>
+										<a class="cd-signin"><i class="fa fa-sign-in"></i> Entrar</a>
+								<?php endif ?>
 							</div>
 							<!-- main-menu -->
 
@@ -158,41 +142,33 @@
 								<div id="dl-menu" class="dl-menuwrapper">
 									<button class="dl-trigger">Open Menu</button>
 									<ul class="dl-menu">
-										<?php
-											if(!empty($locked) && $locked){
-												echo
-												'
-												<div class="btn-group">
-												<button type="button" class="botoes_topo_light btn-lg dropdown-toggle" data-toggle="dropdown">
-												<i class="fa fa-user"></i> Minha Conta<span class="caret"></span></button>
-												<ul class="dropdown-menu">
+										<?php if(!empty($locked) && $locked):?>
+
+										<li>
+											<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+												Ola, <?=$username?>!
+											</a>
+											<ul class="dl-submenu">
 												<li><a href="Dashboard">Painel de Controle</a></li>
 												<li><a href="Dashboard?p=minhas-inscricoes">Meus cursos</a></li>
+												<li><a href="Dashboard?p=minhas-mensagens">Mensagens</a></li>
 												<li role="separator" class="divider"></li>
 												<li><a class="logoff">Sair</a></li>
-													</ul>
-												</div>
-												';
-											} else {
-												echo
-												'
-													<li>
-														<a href="#0" class="cd-signin">Entrar</a>
-													</li>
-												';
-											}
-										?>
+											</ul>
+										</li>
+										<?php else :?>
 										<li>
-											<a href="#">Cursos</a>
+											<a class="cd-signin"><i class="fa fa-sign-in"></i> Entrar</a>
+										</li>
+										<?php endif ?>
+										<li>
+											<a>Cursos</a>
 											<ul class="dl-submenu">
-													<?php
-														foreach($this->getCategoriaCursos() as $categoria){
-															echo
-															'
-																<li><a href="cursos/'.Main::preparaURL($categoria['categoria']).'">'.$categoria['categoria'].'</a></li>
-															';
-														}
-													?>
+												<?php foreach($this->getCategoriaCursos() as $categoria):?>
+												<li>
+													<a href="cursos/<?=Main::preparaURL($categoria['categoria'])?>"><?=$categoria['categoria']?></a>
+												</li>
+												<?php endforeach ?>
 											</ul>
 										</li>
 									</ul>

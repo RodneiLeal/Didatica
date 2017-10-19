@@ -13,6 +13,40 @@
       <div class="control-sidebar-bg"></div>
     </div><!-- ./wrapper -->
 
+
+    <?php if(!$tipo): ?>
+
+      <div class="modal fade" id="novo-instrutor">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <h4 class="modal-title">Título</h4>
+            </div>
+
+            <div class="modal-body">
+
+              Aqui vai uma mensagem de boas vindas
+            
+            </div>
+
+            <div class="modal-footer">
+              <button class="btn btn-success btn-lg pull-left" >Prosseguir <i class="fa fa-angle-double-right"></i></button>
+              <img src="img/logo.png" class="pull-right">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+    <?php endif ?>
+
+
+
+
+
     <!-- jQuery -->
     <script
 			  src="https://code.jquery.com/jquery-3.2.1.min.js"
@@ -33,9 +67,10 @@
     <script src="js/vendor/dist/js/demo.js"></script>
 
     <script src="//cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
-
     <script type="text/javascript" src="js/vendor/plugins/notification/toastr.min.js"></script>
     <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
+    <script type="text/javascript" src="js/vendor/menu/modernizr.custom.js"></script>
+    <script type="text/javascript" src="js/vendor/menu/jquery.dlmenu.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 

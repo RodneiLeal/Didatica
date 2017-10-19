@@ -276,25 +276,19 @@
 
 <script>
 	$(function() {
-		$( '#dl-menu' ).dlmenu({
-			animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
+		var jElement = $('.kopa-course-search-2-widget');
+		$(window).scroll(function(){
+			if ( $(this).scrollTop() > 300 ){
+				jElement.css({
+					'position':'fixed',
+					'top':'10px'
+				});
+			}else{
+				jElement.css({
+					'top':'100px'
+				});
+			}
 		});
-
-
-			var jElement = $('.kopa-course-search-2-widget');
-			$(window).scroll(function(){
-				if ( $(this).scrollTop() > 300 ){
-					jElement.css({
-						'position':'fixed',
-						'top':'10px'
-					});
-				}else{
-					jElement.css({
- 						'top':'100px'
-					});
-				}
-			});
 	});
-
 </script>
 

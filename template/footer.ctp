@@ -861,23 +861,14 @@
 
 <script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/main.js"></script>
-<script type="text/javascript" src="js/menu/modernizr.custom.js"></script>
-<script type="text/javascript" src="js/menu/jquery.dlmenu.js"></script>
-<script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript" src="js/vendor/menu/modernizr.custom.js"></script>
+<script type="text/javascript" src="js/vendor/menu/jquery.dlmenu.js"></script>
 <script type="text/javascript" src="js/vendor/dist/js/droply.js"></script>
 <script type="text/javascript" src="js/vendor/plugins/notification/toastr.min.js"></script>
 <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
+<script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
+<script type="text/javascript" src="js/functions.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
 
-<script type="text/javascript">
-	$(function() {
-		$(".starrr").starrr();
-		$( '#dl-menu' ).dlmenu({
-			animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
-		});
-	});
-</script>
-	
 	
 	

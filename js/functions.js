@@ -2,6 +2,11 @@ jQuery(function ($){
 
   var content = $('.content-wrapper');
 
+  // MENU MOBILE DA PAGINA INICIAL
+  $( '#dl-menu' ).dlmenu({
+    animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
+  });
+
   // TORNAR-SE INSTRUTOR
   $("#instructor_new_bt").click(function(){
     $(".instructor_new_action").fadeOut(400);
@@ -83,9 +88,8 @@ jQuery(function ($){
     }
     
     function userUpdateCallback(response){
-      Notificacao('success', 'Ok!!', response);
-      console.log(response);
-      // redireciona('Dashboard');
+      Notificacao('success', 'Perfil Atualizado', 'Seu perfil atualizado com sucesso!');
+      redireciona('Dashboard');
     }
 
     $.post('controllers/user/update.php', data, userUpdateCallback);

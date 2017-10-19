@@ -110,9 +110,16 @@
         }
 
         public function updateUser($table, $where_field, $where_field_value, $values){
-            $stmt   = $this->db->update($table, $where_field, $where_field_value, $values);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-            return $result;
+            if(is_string($this->db->update($table, $where_field, $where_field_value, $values))){
+                return true;
+            }
+            return false;
+
+            /********forma correta de funcionamento ----- ANALISAR ----******/
+            
+            // $stmt = $this->db->update($table, $where_field, $where_field_value, $values);
+            // $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            // return $result;
         }
 
     }
