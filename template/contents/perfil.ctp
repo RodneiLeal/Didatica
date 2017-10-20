@@ -1,4 +1,3 @@
-<!-- Content Header (Page header) -->
 <section class="content-header">
     <h1>Perfil</h1>
     <ol class="breadcrumb">
@@ -10,22 +9,22 @@
     </ol>
 </section>
 
-<!-- Main content -->
 <section class="content">
     <div class="row">
-        <!-- Profile Image -->
         <div class="col-md-3">
             <div class="box box-primary">
+                <div class="box-header">
+                    <div class="box-tools pull-left">
+                        <a href="Dashboard?p=perfil-edit" class="btn btn-box-tool"><i class="fa fa-pencil"></i></a>
+                    </div>
+                </div>
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive img-circle" src="<?=$foto?>" alt="<?=$username?>">
                     <h3 class="profile-username text-center"><?=$username?></h3>
                     <p class="text-muted text-center"><?=$tipo?$titulacao:''?></p>
 
+                    <?php if($tipo): ?>
 
-                    <!-- se o usuario for instrutor	-->
-                    <?php
-                    if($tipo):
-                    ?>
                     <ul class="list-group list-group-unbordered">
                         <li class="list-group-item">
                             <b>Publicações</b>
@@ -40,38 +39,41 @@
                             </a>
                         </li>
                     </ul>
-                    <!-- fim do se usuario for instrutor -->
+                    
                     <?php endif;?>
 
+                </div>
+            </div>
+        </div>
 
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div><!-- /.col -->
+        <?php if($tipo): ?>
 
-        <?php
-            if($tipo): // se tipo de perfil igual a instrutor, então deverá exibir o quadro sobre mim
-        ?>
-
-        <!-- About Me Box -->
         <div class="col-md-9">
             <div class="box box-primary">
                 <div class="box-header with-border">
                     <h3 class="box-title">Sobre mim</h3>
-                </div><!-- /.box-header -->
+                    <div class="box-tools pull-left">
+                        <a href="Dashboard?p=perfil-edit" class="btn btn-box-tool"><i class="fa fa-pencil"></i></a>
+                    </div>
+                </div>
                 <div class="box-body">
                     <strong><i class="fa fa-graduation-cap margin-r-5"></i> Formação</strong>
                     <p class="text-muted"><?=$formacao?></p>
                     <hr>
-                    <strong><i class="fa fa-book margin-r-5"></i> Resumo</strong>
-                    <p>
-                        <?=$sobre?>
-                    </p>
+                    <strong><i class="fa fa-university margin-r-5"></i> Instituição</strong>
+                    <p class="text-muted"><?=$instituicao?></p>
                     <hr>
-                </div><!-- /.box-body -->
-            </div><!-- /.box -->
-        </div><!-- /.col -->
+                    <strong><i class="fa fa-book margin-r-5"></i> Resumo</strong>
+                    <p class="text-muted"><?=$resumo?></p>
+                    <hr>
+                    <strong><i class="fa fa-address-card margin-r-5"></i> Lattes</strong>
+                    <p class="text-muted"><a href="<?=$lattes?>" target="_blank"><?=$lattes?></a></p>
+
+                </div>
+            </div>
+        </div>
 
         <?php endif;?>
 
-    </div><!-- /.row -->
-</section><!-- /.content -->
+    </div>
+</section>

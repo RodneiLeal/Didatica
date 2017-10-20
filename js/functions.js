@@ -55,7 +55,7 @@ jQuery(function ($){
     });
   });
 
-  // ATUALIZAR INFORMAÇÕES DE USUARIO
+  // ATUALIZAR INFORMAÇÕES DE PERFIL DO USUARIO
   $('#updateUserProfile').on('click', function(){
 
     data = new Object();
@@ -109,90 +109,98 @@ jQuery(function ($){
     }
   });
 
-  // ADICIONA IMAGEM USUÁRIO (PERFIL)
-  $(".ProfileUpdateImage").on("change", function(){
-    var file = this.files[0].name;
+  // USER PROFILE
+  $('.form_send_information_bt').on('click',function(){
     
-    TamanhoString = file.length;
-    extensao   = file.substr(TamanhoString - 4,TamanhoString);
-    if (TamanhoString == 0 ){
-        Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
-        return false;
-    }else if(file.size > 100000){
-      Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
-      return false;
-    }else{
-      var ext = new Array('.jpg','.png','.bmp');
-      for(var i = 0; i < ext.length; i++){
-        if (extensao == ext[i]){
-          flag = "ok";
-          break;
-        }else{
-          flag = "erro";
-        }
+    var $form     = $(this).closest('form');
+    var form_id   = $form.attr('id');
+    var form_url  = $form.attr('action');
+    var form_evento       = $form.attr('event'); //O que ocorrerá se sucesso
+    var form_evento_tipo  = $form.attr('event_type'); //O que ocorrerá se sucesso
+    var form = $("#"+form_id);
+    var dados = $("#"+form_id).serialize();
+    var erros = 0;
+
+    $.each(dados.split('&'), function (index, elem){
+      var vals          = elem.split('=');
+      var input_id      = $("#"+vals[0]);
+      var conteudo      = vals[1];
+      var form_id       = input_id.attr('id');
+      var obrigatorio   = input_id.attr('required');
+      var mensagem      = input_id.attr('required_message');
+
+      if ( (obrigatorio != undefined) && (input_id.val()=="" ) ){
+        Notificacao('error',mensagem,'Campo obrigatório');
+        input_id.focus();
+        erros = 1;
       }
-      if (flag=="erro"){
-        Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
-        return false;
-      }
-    }
-  
-    // var file_data = file.prop('files')[0];
-    $("#preview").fadeOut(500);
-    $(".preview_block").html("<img src='dist/img/loader.gif'>");
-  
-    var form_data = new FormData();
-    form_data.append('file', this.files[0]);
-    var operation = 'ProfileImage';
-  
+    });
+
+    if(erros == 0){
       $.ajax({
-          url: 'controller/user.php?operation='+operation, // point to server-side PHP script
-          dataType: 'text',  // what to expect back from the PHP script, if anything
-          cache: false,
-          contentType: false,
-          processData: false,
-          data: form_data,
-          //data: form_data,
-          type: 'post',
-          success: function(resultado)
-          {
-            if(resultado==0)
-            {
-              Notificacao('error','Houve algo de errado no envio','Tente novamente');
-              return false;
-            }
-            else
-            {
-              Notificacao('success','Arquivo enviado e salvo','Sucesso');
-  
-  
-  
-              setTimeout(function(){
-                var preview = document.getElementById('preview');
-                var input = document.getElementById('upload_logo');
-  
-                if (input.files && input.files[0])
-                {
-                  var reader = new FileReader();
-                  reader.onload = function (e) {
-                    preview.setAttribute('src', e.target.result);
-                  }
-                  reader.readAsDataURL(input.files[0]);
-                } else {
-                  preview.setAttribute('src', '');
-                }
-  
-                  $(".preview_block").html("");
-                  $("#preview").fadeIn(500);
-  
-              }, 2000);
-              return false;
+        type: "POST",
+        url: form_url,
+        data: dados,
+        success: function( data ){
+          var resultado        = data.split('___');
+          var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
+          var mensagem_retorno = resultado[1];
+          var registro_id      = resultado[2];
+
+          if(tipo_retorno=='erro'){
+            Notificacao('error',mensagem_retorno,'Houve algo de errado');
+          }else{
+            Notificacao('success',mensagem_retorno,'Tudo certo');
+
+            if ((form_evento != undefined) && (form_evento != "" )){
+              if(form_evento_tipo=='redireciona'){
+                var novo_registro = form_evento.replace("Registro",registro_id);
+                redireciona(novo_registro);
+              }else if(form_evento_tipo=='transfer_new_id_for_input'){
+                var event_transfer_id  = $form.attr('event_transfer_id');
+                $("#"+event_transfer_id).val(registro_id);
+              }
             }
           }
-  
+        }
       });
-    //$("#formulario").submit();
-    return true;
+    }
+  });
+
+  // ATUALIZAR CURRICULO DO INSTRUTOR
+  $('.updateCurriculo').on('click', function(){
+
+    var data = new Object();
+
+    if(!isEmpty($('#id').val()))
+      data.idinstrutor = $('#idinstrutor').val();
+
+      if(!isEmpty($('#resumo').val()))
+        data.resumo = CKEDITOR.instances['resumo'].getData();
+
+    if(!isEmpty($('#titulo').val()))
+      data.titulacao = $('#titulo').val();
+      
+    if(!isEmpty($('#formacao').val()))
+      data.formacao = $('#formacao').val();
+
+    if(!isEmpty($('#instituicao').val()))
+      data.instituicao = $('#instituicao').val();
+
+    if(!isEmpty($('#lattes').val()))
+      data.lattes = $('#lattes').val();
+
+    function curriculoCallback(response){
+      // console.log(response);
+      // switch(response){
+      //   case '1__':
+          Notificacao('success', 'Currículo Atualizado', 'Seu currículo foi atualizado com sucesso!');
+          redireciona('Dashboard');
+      //   break;
+      // }
+    }
+
+    $.post('controllers/instrutor/updateCurriculo.php', data, curriculoCallback);
   });
   
   // ESTRELAS DE OPINIÕES
@@ -296,8 +304,24 @@ jQuery(function ($){
       }
     }
 
-    $.post("controllers/user/login.php", data, loginCallback);
+    $.post("controllers/login.php", data, loginCallback);
   });
+
+  // LOGOUT USUÁRIO
+  $(".logoff").on('click', function(){
+    data = {
+      logoff: true
+    }
+
+    function logoffCallback(response){
+      location.href='home';
+    }
+
+    $.post('controllers/logout.php', data, logoffCallback);
+  });
+
+
+  /****************************************** REVISAR CADATRO E LOGIN VIA REDE SOCIAL******************************************/
 
   // CADASTRO USUÁRIO VIA REDE SOCIAL
   $('.social-signup').on('click',function(){
@@ -357,33 +381,97 @@ jQuery(function ($){
       }
     }
 
-    $.post("controllers/user/login.php", data, socialLoginCallback);
+    $.post("controllers/login.php", data, socialLoginCallback);
   });
 
-  // LOGOUT USUÁRIO
-  $(".logoff").on('click', function(){
-    data = {
-      logoff: true
+
+  /********************************************FIM CADASTRO E LOGIM VIA REDES SOCIAIS********************************************/
+
+
+  // ADICIONA IMAGEM USUÁRIO (PERFIL) /***************verificar utilidade*******************/
+  $(".ProfileUpdateImage").on("change", function(){
+    var file = this.files[0].name;
+    
+    TamanhoString = file.length;
+    extensao   = file.substr(TamanhoString - 4,TamanhoString);
+    if (TamanhoString == 0 ){
+        Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
+        return false;
+    }else if(file.size > 100000){
+      Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
+      return false;
+    }else{
+      var ext = new Array('.jpg','.png','.bmp');
+      for(var i = 0; i < ext.length; i++){
+        if (extensao == ext[i]){
+          flag = "ok";
+          break;
+        }else{
+          flag = "erro";
+        }
+      }
+      if (flag=="erro"){
+        Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
+        return false;
+      }
     }
-
-    function logoffCallback(response){
-      location.href='home';
-    }
-
-    $.post('controllers/user/logout.php', data, logoffCallback);
-  });
-
-  // PERFIL DE USUARIO
-  $('.profile').on('click', function(){
-    data = {
-      idusuario: $(this).attr('data-value')
-    };
-
-    function perfilCallback(response){
-      content.html(response);
-    }
-
-    $.post('controllers/user/perfil.php', data, perfilCallback);
+  
+    // var file_data = file.prop('files')[0];
+    $("#preview").fadeOut(500);
+    $(".preview_block").html("<img src='dist/img/loader.gif'>");
+  
+    var form_data = new FormData();
+    form_data.append('file', this.files[0]);
+    var operation = 'ProfileImage';
+  
+      $.ajax({
+          url: 'controller/user.php?operation='+operation, // point to server-side PHP script
+          dataType: 'text',  // what to expect back from the PHP script, if anything
+          cache: false,
+          contentType: false,
+          processData: false,
+          data: form_data,
+          //data: form_data,
+          type: 'post',
+          success: function(resultado)
+          {
+            if(resultado==0)
+            {
+              Notificacao('error','Houve algo de errado no envio','Tente novamente');
+              return false;
+            }
+            else
+            {
+              Notificacao('success','Arquivo enviado e salvo','Sucesso');
+  
+  
+  
+              setTimeout(function(){
+                var preview = document.getElementById('preview');
+                var input = document.getElementById('upload_logo');
+  
+                if (input.files && input.files[0])
+                {
+                  var reader = new FileReader();
+                  reader.onload = function (e) {
+                    preview.setAttribute('src', e.target.result);
+                  }
+                  reader.readAsDataURL(input.files[0]);
+                } else {
+                  preview.setAttribute('src', '');
+                }
+  
+                  $(".preview_block").html("");
+                  $("#preview").fadeIn(500);
+  
+              }, 2000);
+              return false;
+            }
+          }
+  
+      });
+    //$("#formulario").submit();
+    return true;
   });
   
   // VALIDA CERTIFICADO
@@ -494,82 +582,7 @@ jQuery(function ($){
       });
   });
 
-  // USER PROFILE
-  $('.form_send_information_bt').on('click',function(){
 
-      var $form     = $(this).closest('form');
-      var form_id   = $form.attr('id');
-      var form_url  = $form.attr('action');
-      var form_evento       = $form.attr('event'); //O que ocorrerá se sucesso
-      var form_evento_tipo  = $form.attr('event_type'); //O que ocorrerá se sucesso
-
-          var form = $("#"+form_id);
-          var dados = $("#"+form_id).serialize();
-
-
-            var erros = 0;
-            $.each(dados.split('&'), function (index, elem)
-            {
-                var vals          = elem.split('=');
-                var input_id      = $("#"+vals[0]);
-                var conteudo      = vals[1];
-                var form_id       = input_id.attr('id');
-                var obrigatorio   = input_id.attr('required');
-                var mensagem      = input_id.attr('required_message');
-
-                if ( (obrigatorio != undefined) && (input_id.val()=="" ) )
-                {
-                    Notificacao('error',mensagem,'Campo obrigatório');
-                    input_id.focus();
-
-                    erros = 1;
-                }
-                //alert(obrigatorio);
-            });
-
-            if(erros == 0)
-            {
-                $.ajax({
-                  type: "POST",
-                  url: form_url,
-                  data: dados,
-                  success: function( data )
-
-                  {
-                    //alert(data);
-                    var resultado        = data.split('___');
-                    var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
-                    var mensagem_retorno = resultado[1];
-                    var registro_id      = resultado[2];
-
-                      if(tipo_retorno=='erro')
-                      {
-                        Notificacao('error',mensagem_retorno,'Houve algo de errado');
-                      }
-                      else
-                      {
-                        Notificacao('success',mensagem_retorno,'Tudo certo');
-
-                          if ((form_evento != undefined) && (form_evento != "" ))
-                          {
-
-                            if(form_evento_tipo=='redireciona')
-                            {
-                              var novo_registro = form_evento.replace("Registro",registro_id);
-                              redireciona(novo_registro);
-                            }
-                            else if(form_evento_tipo=='transfer_new_id_for_input')
-                            {
-                              var event_transfer_id  = $form.attr('event_transfer_id');
-                              $("#"+event_transfer_id).val(registro_id);
-                            }
-                          }
-                      }
-                  }
-                });
-            }
-
-  });
 
   // FUNCTION VALIDAARQUIVO(CAMPO)
   $("#product_file_image_1").on("change", function(){

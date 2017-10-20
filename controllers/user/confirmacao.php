@@ -1,3 +1,0 @@
-<?php
-
-    // implementar esta função

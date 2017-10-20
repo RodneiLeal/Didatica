@@ -26,5 +26,22 @@
             }
             return $result;
         }
+
+        public function updateCurriculo($table, $where_field, $where_field_value, $values){
+            // if(is_string(
+                
+               $stmt = $this->db->update($table, $where_field, $where_field_value, $values); //)){
+                
+                
+            //         return true;
+            // }
+            // return false;
+
+            /********forma correta de funcionamento ----- ANALISAR ----******/
+            
+            $stmt = $this->db->update($table, $where_field, $where_field_value, $values);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
+            return $result;
+        }
     }
     

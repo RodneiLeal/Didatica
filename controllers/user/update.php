@@ -4,7 +4,7 @@
     // session_destroy();
 
 	extract($_POST);
-    $user  = new User();
+    $user  = new User;
     $email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
