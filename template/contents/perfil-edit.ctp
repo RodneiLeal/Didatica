@@ -187,30 +187,32 @@
                       <div class="row">
                         <div class="col-md-12">
 
+                          <input id="idconta" type="hidden" value="<?=$idconta?>">
+
                           <div class="form-group row">
                             <div class="col-md-1">
                               <label>CPF</label>
                             </div>
                             <div class="col-md-11">
-                              <input class="form-control" name="operacao" type="text" value="<?=$cpf?>">
+                              <input id="cpf" class="form-control" name="operacao" type="text" value="<?=$cpf?>">
                             </div>
                           </div>
-      
+
                           <div class="form-group row">
                             <div class="col-md-1">
                               <label>Banco</label>
                             </div>
                             <div class="col-md-11">
-                              <input class="form-control" id="banco" name="banco" required placeholder="Banco numero" type="text" value="<?=$banco?>">
-                            </div>
-                          </div>
-      
-                          <div class="form-group row">
-                            <div class="col-md-1">
-                              <label>Site</label>
-                            </div>
-                            <div class="col-md-11">
-                              <input class="form-control" placeholder="Operação" name="operacao" type="text" value="<?=$site?>">
+                              <select id="banco" class="form-control">
+
+                                <?php foreach(Main::getBancos() as $banco):
+                                  $selected =  $banco['idbancos'] == $banco_idbanco ? 'selected' : '';
+                                ?>
+
+                                <option <?=$selected?> value="<?=$banco['idbancos']?>"><?=$banco['codigo']?> <?=$banco['instituicao']?> - <?=$banco['site']?></option>
+
+                                <?php endforeach ?>
+                              </select>
                             </div>
                           </div>
       
@@ -219,7 +221,7 @@
                               <label>Agência</label>
                             </div>
                             <div class="col-md-11">
-                              <input type="text" class="form-control" id="agencia" name="Agência" placeholder="Agência" value="<?=$agencia?>" required>
+                              <input type="text" id="agencia" class="form-control" name="Agência" placeholder="Agência" value="<?=$agencia?>" required>
                             </div>
                           </div>
       
@@ -228,7 +230,7 @@
                               <label>Conta</label>
                             </div>
                             <div class="col-md-11">
-                              <input class="form-control" placeholder="Conta" name="conta" type="text" value="<?=$conta?>" required>
+                              <input id="conta" class="form-control" placeholder="Conta" name="conta" type="text" value="<?=$conta?>" required>
                             </div>
                           </div>
       
@@ -237,13 +239,13 @@
                               <label>Operação</label>
                             </div>
                             <div class="col-md-11">
-                              <input class="form-control" placeholder="Operação" name="operacao" type="text" value="<?=$operacao?>">
+                              <input id="operacao" class="form-control" placeholder="Operação" name="operacao" type="text" value="<?=$operacao?>">
                             </div>
                           </div>
       
                           <div class="form-group row">
                             <div class="col-md-12">
-                              <button type="button"  data-toggle="modal" data-target="#conta-bancaria"  class="closed-modal btn btn-danger form_send_information_bt">Salvar</button>
+                              <button type="button" class="btn btn-danger updateBanckInformation">Salvar</button>
                             </div>
                           </div>
         

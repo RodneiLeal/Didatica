@@ -19,6 +19,20 @@
 			return $query->fetchAll();
         }
 
+        public function getBancos($idbanco = false){
+            $sql   = "SELECT * FROM bancos ";
+            $whare = "WHARE idbancos = {$idbanco} ";
+            $order = "ORDER BY codigo ASC";
+
+            if($idbanco){
+                $sql .= $whare;
+            }
+
+            $sql .= $order;
+			$query = $this->db->query($sql);
+			return $query->fetchAll();
+        }
+
         public function formataData($data, $mode){
             $data = new DateTime($data);
             switch($mode){

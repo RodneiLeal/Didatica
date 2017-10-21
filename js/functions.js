@@ -2,12 +2,55 @@ jQuery(function ($){
 
   var content = $('.content-wrapper');
 
+  // INICIAR CURSO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PARA HOJE
+  $('#course_start').on('click',function(){
+    
+      $(".course_box").hide(50);
+      $(".course_load").html("<img src='dist/img/loader.gif'>");
+
+      var course = $(this).attr("course");
+      var operation  = 'start';
+      $.post("controller/course.php",
+      {
+          course: course,
+          operation: operation
+
+      }, function(data)
+      {
+          var retorno = data.replace(/^\s+|\s+$/g,"");
+          setTimeout(function(){
+
+
+              if(retorno==1)
+              {
+                Notificacao('success','Inscrição realizada com sucesso','Já pode acessar seu curso');
+                $(".course_load").html("");
+                location.href = "dashboard.php?p=course&curso_id="+course+"&enroll=1&act=read";
+              }
+              else if(retorno==0)
+              {
+                $(".course_box").show(50);
+                $(".course_load").html("");
+
+                Notificacao('error','Ops, houve algo de errado, tente novamente mais tarde','Ops!');
+              }
+              else if(retorno==2)
+              {
+                $(".course_box").show(50);
+                $(".course_load").html("");
+
+                Notificacao('error','Ops, faça login antes de iniciar um curso','Ops!');
+              }
+          }, 3000);
+      });
+  });
+
   // MENU MOBILE DA PAGINA INICIAL
   $( '#dl-menu' ).dlmenu({
     animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
   });
 
-  // TORNAR-SE INSTRUTOR
+  // TORNAR-SE INSTRUTOR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PARA HOJE
   $("#instructor_new_bt").click(function(){
     $(".instructor_new_action").fadeOut(400);
     $(".instructor_new_load").html("<img src='dist/img/loader.gif'>");
@@ -58,7 +101,7 @@ jQuery(function ($){
   // ATUALIZAR INFORMAÇÕES DE PERFIL DO USUARIO
   $('#updateUserProfile').on('click', function(){
 
-    data = new Object();
+    var data = new Object();
 
     data.idusuario = $('#id').val();
 
@@ -94,7 +137,7 @@ jQuery(function ($){
 
     $.post('controllers/user/update.php', data, userUpdateCallback);
 
-  })
+  });
 
   // IMAGEM PREVIEW
   $(".imageFile").change(function(){
@@ -167,7 +210,7 @@ jQuery(function ($){
     }
   });
 
-  // ATUALIZAR CURRICULO DO INSTRUTOR
+  // ATUALIZAR CURRICULO DO INSTRUTOR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PARA HOJE
   $('.updateCurriculo').on('click', function(){
 
     var data = new Object();
@@ -175,7 +218,7 @@ jQuery(function ($){
     if(!isEmpty($('#id').val()))
       data.idinstrutor = $('#idinstrutor').val();
 
-      if(!isEmpty($('#resumo').val()))
+      if(!isEmpty(CKEDITOR.instances['resumo'].getData()))
         data.resumo = CKEDITOR.instances['resumo'].getData();
 
     if(!isEmpty($('#titulo').val()))
@@ -189,18 +232,51 @@ jQuery(function ($){
 
     if(!isEmpty($('#lattes').val()))
       data.lattes = $('#lattes').val();
-
+      
     function curriculoCallback(response){
-      // console.log(response);
-      // switch(response){
-      //   case '1__':
+      console.log(response);
+      switch(response){
+        case '1__':
           Notificacao('success', 'Currículo Atualizado', 'Seu currículo foi atualizado com sucesso!');
           redireciona('Dashboard');
-      //   break;
-      // }
+        break;
+      }
     }
 
     $.post('controllers/instrutor/updateCurriculo.php', data, curriculoCallback);
+  });
+
+  // ATUALIZAR DADOS BANCARIOS DO INSTRUTOR
+  $('.updateBanckInformation').on('click', function(){
+
+    var data = new Object();
+
+    data.idconta           = $('#idconta').val();
+    data.usuario_idusuario = $('#id').val();
+    data.bancos_idbancos   = $('#banco').val();
+
+    if(!isEmpty($('#agencia').val()))
+      data.agencia = $('#agencia').val();
+
+    if(!isEmpty($('#conta').val()))
+      data.conta = $('#conta').val();
+
+    if(!isEmpty($('#operacao').val()))
+      data.operacao = $('#operacao').val();
+
+    if(!isEmpty($('#cpf').val()))
+      data.cpf = $('#cpf').val();
+
+    function banckInformationCallback(response){
+      switch(response){
+        case '1__':
+          Notificacao('success', 'Dados Bancarios Atualizado', 'Seus dados bancarios forma atualizados com sucesso!');
+          redireciona('Dashboard');
+        break;
+      }
+    }
+
+    $.post('controllers/instrutor/updateBanckInformation.php', data, banckInformationCallback);
   });
   
   // ESTRELAS DE OPINIÕES
@@ -506,48 +582,7 @@ jQuery(function ($){
     $.post("controller/certified-validate.php", data, validateCertificateCallback);
   });
 
-  // COURSE
-  $('#course_start').on('click',function(){
 
-      $(".course_box").hide(50);
-      $(".course_load").html("<img src='dist/img/loader.gif'>");
-
-      var course = $(this).attr("course");
-      var operation  = 'start';
-      $.post("controller/course.php",
-      {
-          course: course,
-          operation: operation
-
-      }, function(data)
-      {
-          var retorno = data.replace(/^\s+|\s+$/g,"");
-          setTimeout(function(){
-
-
-              if(retorno==1)
-              {
-                Notificacao('success','Inscrição realizada com sucesso','Já pode acessar seu curso');
-                $(".course_load").html("");
-                location.href = "dashboard.php?p=course&curso_id="+course+"&enroll=1&act=read";
-              }
-              else if(retorno==0)
-              {
-                $(".course_box").show(50);
-                $(".course_load").html("");
-
-                Notificacao('error','Ops, houve algo de errado, tente novamente mais tarde','Ops!');
-              }
-              else if(retorno==2)
-              {
-                $(".course_box").show(50);
-                $(".course_load").html("");
-
-                Notificacao('error','Ops, faça login antes de iniciar um curso','Ops!');
-              }
-          }, 3000);
-      });
-  });
 
   $('.course-title-item-show-content').on('click',function(){
       var course_item = $(this).attr("course-item");
