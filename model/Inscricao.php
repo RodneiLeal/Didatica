@@ -6,10 +6,22 @@
             $get = func_num_args()>=1?func_get_args():array();
         }
 
+        // SELECIONA INSCRIÇÃO POR UMA IDENTIFICAÇÃO
+        public function getInscricaoId($idinscr){
+            $data    = array($idinscr);
+            $sql     = "SELECT * FROM view_inscricao WHERE idinscricao = ?";
+            $stmt    = $this->db->query($sql, $data);
+            $result  = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
+
         // SELECIONA TODAS AS INSCRIÇÕES EM UM DETEMINADO CURSO E PARA UM DETERMINADO USUARIO
         public function getInscricaoPorCursoUsuario($idusuario, $idcurso){
             $data    = array($idcurso, $idusuario);
-            $sql     = "SELECT * FROM view_inscricao WHERE curso_idcurso = ? AND usuario_idusuario = ?";
+            $sql     = "SELECT * FROM view_inscricao WHERE idcurso = ? AND usuario_idusuario = ?";
             $stmt    = $this->db->query($sql, $data);
             $result  = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
@@ -52,6 +64,13 @@
                 return false;
             }
             return $result;
+        }
+
+        public function inscreverUsuario($data){
+            if($this->db->insert('inscricao', $data)){
+                return $this->db->last_id;
+            }
+            return false;
         }
     }
     

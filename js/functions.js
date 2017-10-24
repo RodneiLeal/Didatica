@@ -1,53 +1,45 @@
 jQuery(function ($){
 
   var content = $('.content-wrapper');
+  var jElement = $('.kopa-course-search-2-widget');
 
-  // INICIAR CURSO <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PARA HOJE
-  $('#course_start').on('click',function(){
-    
-      $(".course_box").hide(50);
-      $(".course_load").html("<img src='dist/img/loader.gif'>");
-
-      var course = $(this).attr("course");
-      var operation  = 'start';
-      $.post("controller/course.php",
-      {
-          course: course,
-          operation: operation
-
-      }, function(data)
-      {
-          var retorno = data.replace(/^\s+|\s+$/g,"");
-          setTimeout(function(){
-
-
-              if(retorno==1)
-              {
-                Notificacao('success','Inscrição realizada com sucesso','Já pode acessar seu curso');
-                $(".course_load").html("");
-                location.href = "dashboard.php?p=course&curso_id="+course+"&enroll=1&act=read";
-              }
-              else if(retorno==0)
-              {
-                $(".course_box").show(50);
-                $(".course_load").html("");
-
-                Notificacao('error','Ops, houve algo de errado, tente novamente mais tarde','Ops!');
-              }
-              else if(retorno==2)
-              {
-                $(".course_box").show(50);
-                $(".course_load").html("");
-
-                Notificacao('error','Ops, faça login antes de iniciar um curso','Ops!');
-              }
-          }, 3000);
+  // REMOVE A IMAGEM QUANDO ROLAR A PAGINAPARA CIMA
+  $(window).scroll(function(){
+    if ( $(this).scrollTop() > 300 ){
+      jElement.css({
+        'position':'fixed',
+        'top':'10px'
       });
+    }else{
+      jElement.css({
+        'top':'100px'
+      });
+    }
   });
 
-  // MENU MOBILE DA PAGINA INICIAL
-  $( '#dl-menu' ).dlmenu({
-    animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
+  // TOLLTIP
+  $('[data-toggle="popover"]').popover({
+    trigger:'hover'
+  });
+
+  // INICIAR CURSO
+  $('.iniciar-curso').on('click',function(){
+      var data = new Object();
+
+      data.curso_idcurso     = $(this).attr('data-curso');
+      data.usuario_idusuario = $(this).attr('data-user');
+
+      function inscricaoCallback(response){
+        console.log(response);
+        redireciona('Dashboard?p=curso&inscr='+response);
+      }
+      
+      $.post("controllers/curso/inscricao.php", data, inscricaoCallback);
+  });
+
+  // ACESSAR CURSO INSCRITO
+  $('.acessar-curso').on('click', function(){
+    redireciona('Dashboard?p=curso&inscr='+$(this).attr('data-inscr'));
   });
 
   // TORNAR-SE INSTRUTOR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PARA HOJE
@@ -96,6 +88,11 @@ jQuery(function ($){
       }, 3000);
 
     });
+  });
+
+  // MENU MOBILE DA PAGINA INICIAL
+  $( '#dl-menu' ).dlmenu({
+    animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
   });
 
   // ATUALIZAR INFORMAÇÕES DE PERFIL DO USUARIO
@@ -152,65 +149,7 @@ jQuery(function ($){
     }
   });
 
-  // USER PROFILE
-  $('.form_send_information_bt').on('click',function(){
-    
-    var $form     = $(this).closest('form');
-    var form_id   = $form.attr('id');
-    var form_url  = $form.attr('action');
-    var form_evento       = $form.attr('event'); //O que ocorrerá se sucesso
-    var form_evento_tipo  = $form.attr('event_type'); //O que ocorrerá se sucesso
-    var form = $("#"+form_id);
-    var dados = $("#"+form_id).serialize();
-    var erros = 0;
-
-    $.each(dados.split('&'), function (index, elem){
-      var vals          = elem.split('=');
-      var input_id      = $("#"+vals[0]);
-      var conteudo      = vals[1];
-      var form_id       = input_id.attr('id');
-      var obrigatorio   = input_id.attr('required');
-      var mensagem      = input_id.attr('required_message');
-
-      if ( (obrigatorio != undefined) && (input_id.val()=="" ) ){
-        Notificacao('error',mensagem,'Campo obrigatório');
-        input_id.focus();
-        erros = 1;
-      }
-    });
-
-    if(erros == 0){
-      $.ajax({
-        type: "POST",
-        url: form_url,
-        data: dados,
-        success: function( data ){
-          var resultado        = data.split('___');
-          var tipo_retorno     = resultado[0].replace(/^\s+|\s+$/g,"");
-          var mensagem_retorno = resultado[1];
-          var registro_id      = resultado[2];
-
-          if(tipo_retorno=='erro'){
-            Notificacao('error',mensagem_retorno,'Houve algo de errado');
-          }else{
-            Notificacao('success',mensagem_retorno,'Tudo certo');
-
-            if ((form_evento != undefined) && (form_evento != "" )){
-              if(form_evento_tipo=='redireciona'){
-                var novo_registro = form_evento.replace("Registro",registro_id);
-                redireciona(novo_registro);
-              }else if(form_evento_tipo=='transfer_new_id_for_input'){
-                var event_transfer_id  = $form.attr('event_transfer_id');
-                $("#"+event_transfer_id).val(registro_id);
-              }
-            }
-          }
-        }
-      });
-    }
-  });
-
-  // ATUALIZAR CURRICULO DO INSTRUTOR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PARA HOJE
+  // ATUALIZAR CURRICULO DO INSTRUTOR 
   $('.updateCurriculo').on('click', function(){
 
     var data = new Object();
@@ -316,33 +255,6 @@ jQuery(function ($){
       passwd: $("#register_pass").val()
     };
 
-    function registerCallback(response){
-      switch(response){
-        case '0__':
-          Notificacao('error','E-mail inválido','E-mail obrigatório');
-          $('#register_email').focus();
-        break;
-        case '1__':
-          Notificacao('error','Este usuário já existe', 'Nome de usuário ja cadastrado, por favor escolha ouro nome de usuário!');
-          $('#register_name').focus();
-        break;
-        case '2__':
-          Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
-          $('#register_email').focus();
-        break;
-        case '3__':
-          // mensagem usada qaundo a confirmação por email esta configurada
-          // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
-          Notificacao('success','Login realizado com sucesso','Redirecionando...');
-          redireciona('dashboard');
-        break;
-        case '4__':
-          Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
-          redireciona('home');
-        break;
-      }
-    }
-
     $.post("controllers/user/register.php", data, registerCallback);
   });
 
@@ -363,25 +275,75 @@ jQuery(function ($){
       pid: $("#user_email").val(),
       passwd: $("#user_pass").val()
     }
+    
+    $.post("controllers/login.php", data, loginCallback);
+  });
 
-    function loginCallback(response){
-      switch(response){
-        case '0__':
-          Notificacao('error','Ops!','Combinação de e-mail e senha invalidos');
-          $('#LoginFormEmail').focus();
-        break;
-        case '1__':
-          Notificacao('error','Usuário Bloquado!','Entre em contato com os administradores.');
-        break;
-        case '2__':
-          Notificacao('success','Redirecionando...','Login realizado com sucesso');
-          redireciona("Home");
-        break;
-      }
+  /****************************************** REVISAR CADATRO E LOGIN VIA REDE SOCIAL******************************************/
+
+  // CADASTRO USUÁRIO VIA REDE SOCIAL
+  $('.social-signup').on('click',function(){
+    
+    var data = {
+      rede : $(this).attr('data-target')
+    }
+
+    $.post("controllers/user/register.php", data, registerCallback);
+  });
+
+  // LOGIN USUÁRIO VIA REDE SOCIAL
+  $('.social-signin').on('click',function(){
+
+    var data = {
+      rede : $(this).attr('data-taget')
     }
 
     $.post("controllers/login.php", data, loginCallback);
   });
+
+  
+  function loginCallback(response){
+    switch(response){
+      case '0__':
+        Notificacao('error','Ops!','Combinação de e-mail e senha invalidos');
+        $('#LoginFormEmail').focus();
+      break;
+      case '1__':
+        Notificacao('error','Usuário Bloquado!','Entre em contato com os administradores.');
+      break;
+      case '2__':
+        Notificacao('success','Redirecionando...','Login realizado com sucesso');
+        redireciona(window.location.href);
+      break;
+    }
+  }
+
+  function registerCallback(response){
+    switch(response){
+      case '0__':
+        Notificacao('error','E-mail inválido','E-mail obrigatório');
+        $('#register_email').focus();
+      break;
+      case '1__':
+        Notificacao('error','Este usuário já existe', 'Nome de usuário ja cadastrado, por favor escolha ouro nome de usuário!');
+        $('#register_name').focus();
+      break;
+      case '2__':
+        Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
+        $('#register_email').focus();
+      break;
+      case '3__':
+        // mensagem usada qaundo a confirmação por email esta configurada
+        // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
+        Notificacao('success','Login realizado com sucesso','Redirecionando...');
+        redireciona(window.location.href);
+      break;
+      case '4__':
+        Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
+        redireciona('home');
+      break;
+    }
+  }
 
   // LOGOUT USUÁRIO
   $(".logoff").on('click', function(){
@@ -397,68 +359,7 @@ jQuery(function ($){
   });
 
 
-  /****************************************** REVISAR CADATRO E LOGIN VIA REDE SOCIAL******************************************/
 
-  // CADASTRO USUÁRIO VIA REDE SOCIAL
-  $('.social-signup').on('click',function(){
-    
-    var data = {
-      rede : $(this).attr('data-target')
-    }
-
-    function socialRegisterCallback(response){
-      console.log(response);
-      switch(response){
-        case '0__':
-          Notificacao('error','E-mail inválido','E-mail obrigatório');
-          $('#register_email').focus();
-        break;
-        case '1__':
-          Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
-          $('#register_email').focus();
-        break;
-        case '2__':
-          // mensagem usada qaundo a confirmação por email esta configurada
-          // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
-          Notificacao('success','Login realizado com sucesso','Redirecionando...');
-          redireciona('dashboard');
-        break;
-        case '3__':
-          Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
-          redireciona('home');
-        break;
-      }
-    }
-
-    $.post("controllers/user/register.php", data, socialRegisterCallback);
-
-  });
-
-  // LOGIN USUÁRIO VIA REDE SOCIAL
-  $('.social-signin').on('click',function(){
-
-    var data = {
-      rede : $(this).attr('data-taget')
-    }
-
-    function socialLoginCallback(response){
-      switch(response){
-        case '0__':
-          Notificacao('error','Ops!','Combinação de e-mail e senha invalidos'); //Alterar esta mensagem de notificação para uma mensagem mais adequada
-          $('#LoginFormEmail').focus();
-        break;
-        case '1__':
-          Notificacao('error','Usuário Bloquado!','Entre em contato com os administradores.');
-        break;
-        case '2__':
-          Notificacao('success','Redirecionando...','Login realizado com sucesso');
-          redireciona("Home");
-        break;
-      }
-    }
-
-    $.post("controllers/login.php", data, socialLoginCallback);
-  });
 
 
   /********************************************FIM CADASTRO E LOGIM VIA REDES SOCIAIS********************************************/

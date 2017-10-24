@@ -13,6 +13,7 @@
 			$this->param 	= $get[1];
 			$this->title 	= SYS_NAME." - Curso";
 			$this->curso 	= new CursoModel;
+			$this->inscricao= new Inscricao; 
 
 		}
 

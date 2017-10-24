@@ -6,33 +6,37 @@
 
         // PERFIL DO USUARIO
         case 'perfil':
-            include_once ROOT."template/contents/perfil.ctp";
+            include_once ROOT."template/dashboard-contents/perfil.ctp";
         break;
 
         case 'perfil-edit':
-            include_once ROOT."template/contents/perfil-edit.ctp";
+            include_once ROOT."template/dashboard-contents/perfil-edit.ctp";
         break;
 
         // CERTIFICADO
         case 'certificado-model':
-            include_once ROOT."template/contents/certificado-model.ctp";
+            include_once ROOT."template/dashboard-contents/certificado-model.ctp";
         break;
         
-        // CURSOS
+        // CURSOS 
         case 'novo-curso':
-            include_once ROOT."template/contents/novo-curso.ctp";
+            include_once ROOT."template/dashboard-contents/novo-curso.ctp";
         break;
 
         case 'meus-cursos':
-            include_once ROOT."template/contents/meus-cursos.ctp";
+            include_once ROOT."template/dashboard-contents/meus-cursos.ctp";
         break;
 
         case 'minhas-inscricoes':
-            include_once ROOT."template/contents/minhas-inscricoes.ctp";
+            include_once ROOT."template/dashboard-contents/minhas-inscricoes.ctp";
+        break;
+
+        case 'curso':
+            include_once ROOT."template/dashboard-contents/curso.ctp";
         break;
 
         default:
-            include_once ROOT."template/contents/perfil.ctp";
+            include_once ROOT."template/dashboard-contents/perfil.ctp";
         
     }
 

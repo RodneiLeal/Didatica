@@ -10,9 +10,6 @@ jQuery(document).ready(function($){
 		backToLoginLink = formForgotPassword.find('.cd-form-bottom-message a'),
 		mainNav = $('.botoes_topo');
 	
-	// ABRE MODAL CERTIFICADO MODELO
-	$('#modal-certificado-modelo').modal('show');
-
 	//open modal
 	mainNav.on('click', function(event){
 		$(event.target).is(mainNav) && mainNav.children('ul').toggleClass('is-visible');
@@ -20,8 +17,9 @@ jQuery(document).ready(function($){
 
 	//open sign-up form
 	$('.cd-signup').on('click', signup_selected);
+
 	//open login-form form
-	$('.cd-signin, .course_start').on('click', login_selected);
+	$('.cd-signin').on('click', login_selected);
 
 	//close modal
 	formModal.on('click', function(event){

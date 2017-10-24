@@ -11,7 +11,6 @@
 	}
 </style>
  
-  <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>Certificado Modelo</h1>
     <ol class="breadcrumb">
@@ -27,6 +26,15 @@
         <div class="box box-primary">
           <div class="box-header with-border">
             <h3 class="box-title">Certificado Modelo</h3>
+
+						<!-- ESTE BOTÃO ESTARÁ DISPONÍVEL SOMENTE DEPOIS DE O USUÁRIO SER APROVADO NA PROVA -->
+						<a href="" class="btn btn-default bg-orange btn-promotion pull-right">
+							<strong>
+								<i class="fa fa-thumbs-up"></i>
+								&#160;&#160;Eu quero meu certificado!
+							</strong>
+						</a>
+
           </div>
           <div class="box-body">
             	<!-- frente do certificado -->
@@ -78,43 +86,3 @@
       </div>
     </div>
   </section>
-
-
-	<!-- colocar imagem de fundo e alterar o texto do modal -->
-
-	<div class="modal fade" role="dialog" id="modal-certificado-modelo">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button class="close" type="button" data-dismiss="modal">&times;</button>
-					<h3 style="color: #ee8829">PARABÉNS!</h3>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-12">
-								<p class="recuo">
-									É com enorme satisfação que o parabenizamos por ter concluído este curso.
-								</p>
-								<p class="recuo">
-									Para que possamos permanecer oferecendo materiais de qualidade como este que você acabou de utilizar e mantermos este site no ar,  precisamos de sua ajuda.
-								</p>
-								<p class="recuo">
-									<!-- valores serão trocadas por variaveis de configuração -->
-									O valor monetário é de <strong>R$ 39,99</strong> podendo ser em <strong>9x de R$ 5,14</strong> pelo PagSeguro, é respectivo a certificação do aluno(a).
-								</p>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<div class="row">
-						<div class="col-md-12 pull-right">
-							<p>
-								Grato pela atenção e colaboração.
-							</p>
-							<img src="img/logo.png">
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>

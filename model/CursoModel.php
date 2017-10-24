@@ -83,8 +83,30 @@
         }
 
         public function getCategorias(){
-            $sql =  "SELECT * FROM categoria";
+            $sql     =  "SELECT * FROM categoria";
             $stmt    =  $this->db->query($sql);
+            $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
+
+        public function getAulas($idcurso){
+            $data    = array($idcurso);
+            $sql     =  "SELECT * FROM aula WHERE curso_idcurso = ?";
+            $stmt    =  $this->db->query($sql, $data);
+            $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
+
+        public function getProvas($idinscricao){
+            $data    = array($idinscricao);
+            $sql     =  "SELECT * FROM exame WHERE inscricao_idinscricao = ?";
+            $stmt    =  $this->db->query($sql, $data);
             $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
                 return false;

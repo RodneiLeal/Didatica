@@ -154,39 +154,11 @@
                   </div>
                 </div>
 
-                <div class="box box-primary panel">
-                
-                  <div class="box-header">
-                    <h4 class="box-title">
-                      <a href="#aula-2" data-parent="#accordion" data-toggle="collapse" aria-expanded="true">Aula 2</a>
-                    </h4>
-                  </div>
-
-                  <div class="collapse in panel-collapse" aria-expanded="false" id="aula-2">
-                    <div class="box-body">
-
-                      <div class="row">
-                        <div class="col-md-12">
-                          <label>Titulo</label>
-                          <input type="text" class="form-control" require placeholder="Titulo da Aula">
-                          <br>
-                          <label>Objetivos</label>
-                          <textarea class="editor" name="" id="editor4" cols="30" ></textarea>
-                          <br>
-                          <input type="file" name="aula[]">
-                        </div>
-                      </div>
-                    
-                    </div>
-                  </div>
-                </div>
-
               </div>
             </div>
             
             <div class="box-footer">
               <div class="col-md-12">
-                <button class="btn btn-warning btn-lg">Adicionar Aula <i class="fa fa-book"></i></button>
                 <button class="btn btn-success btn-lg">Próximo Passo <i class="fa fa-angle-double-right"></i></button>
               </div>
             </div>            
@@ -348,7 +320,6 @@
                 </div>
 
               </div>
-
             </div>
             
           </div>
@@ -363,11 +334,4 @@
     </div>
   </section>
  
-  <?php
-    endif;
-  ?>
-
-<script>
-	// load_content_data("courselistcontent","views/content/course/course-content-item-show-edit.php?course=123");
-	// load_content_data("courselistcontentquestion","views/content/course/course-content-item-show-edit.php?course=123");
-</script>
+  <?php endif;?>

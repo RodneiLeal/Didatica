@@ -5,3 +5,27 @@ a{
 p.recuo{
     text-indent: 2em;
 }
+
+.b{
+    font-weight: bold;
+}
+
+.white{
+    color:white;
+}
+
+.display-left{
+    display: flex;
+    align-items: left;
+    justify-content: left;
+}
+
+.display-right{
+    display: flex;
+    align-items: right;
+    justify-content: right;
+}
+
+.btn-promotion{
+    text-transform: uppercase;
+}

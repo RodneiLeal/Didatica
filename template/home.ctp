@@ -100,6 +100,7 @@
 
 								
                                 <?php
+                                
                                     $cursos = $this->cursos->getCursos();
                                     foreach ($cursos as $curso):
                                         extract($curso);

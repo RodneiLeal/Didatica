@@ -4,11 +4,12 @@
 
 	$ini_app = parse_ini_file('config.ini', true);
 	extract($ini_app['sistema']);
+	define('MAIN_PKG', $main_pkg);
 	define("SYS_NAME", "Didática Online");
 	define('MASTER_MAIL', $master_email);
 	define("ROOT", __DIR__.DIRECTORY_SEPARATOR);
 	define("UPLOADS", ROOT."/views/_uploads");
-	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'./':$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
+	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"http://localhost/".MAIN_PKG."/":$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
 	define("CONFIRME_URI", HOME_URI.$confirme_path_file);
 	define("DB_HOST", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'localhost':$db_host);
 	define("DB_NAME", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'didatica_db':$db_name);

@@ -169,36 +169,37 @@
                     <div class="col-md-3 col-sm-3 col-xs-12">
 
                     	<div class="widget kopa-course-search-2-widget">
-						<?php
-							$imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
-						?>
+							<?php $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;?>
 
 							<img src="<?=$imagem?>" height="218px">
  	                        <div class="widget-content text-center">
 								<br>
-	                        	<form method="post" action="#" class="course-form clearfix">
-
 									<h5><?$titulo?></h5>
 
 
 									<?php
-										if(!empty($_SESSION)){
+										if(!empty($_SESSION)):
 
 											$inscricao = new Inscricao;
-											$inscricao = $inscricao->getInscricaoPorCursoUsuario($idusuario, $idcurso);
-
-											if(!$inscricao){
-												echo '<a href="javascript:void()" id="course_start" course="'.$idcurso.'" class="kopa-button green-button medium-button kopa-button-icon">Iniciar Curso</a>';
-											}else{
-												echo '<a href="dashboard.php?p=course&enroll='.$inscricao[0]['idinscricao'].'&act=read" class="kopa-button green-button medium-button kopa-button-icon">Acessar Curso</a>';
-											}
-										}else{
-											echo '<a href="javascript:void()" id="course_start" course="'.$idcurso.'" class="kopa-button green-button medium-button kopa-button-icon course_start">Iniciar Curso</a>';
-										}
+											$inscricao = $inscricao->getInscricaoPorCursoUsuario($idusuario, $idcurso)[0];
+											if(!$inscricao):
 									?>
+												<!-- registra o curso na base de dados e direciona o usuario para a pagina do curso -->
+												<button  data-curso="<?=$idcurso?>" data-user="<?=$idusuario?>" class="kopa-button green-button medium-button kopa-button-icon iniciar-curso">Iniciar Curso</button>
+									
+											<?php else:?>
+												<!-- direciona o usuario para a pagina do curso -->
+												<button data-inscr="<?=$inscricao['idinscricao']?>" class="kopa-button green-button medium-button kopa-button-icon acessar-curso">Acessar Curso</button>
+										
+											<?php endif?> 
+										<?php else :?>
+												<!-- Obriga o usuario a efetuar o cadastro ou o login e depois direciona-o para a pagina do curso -->
+											<button class="kopa-button green-button medium-button kopa-button-icon cd-signin">Iniciar Curso</button>
+										
+									<?php endif ?>
+									
 
 
-		                        </form>
 								<hr>
 									<div class="comment-avatar  ">
 										<img alt="foto do instrutor" src="<?=$foto?>" width="50px">
@@ -265,30 +266,3 @@
 
     </div>
     <!-- main-content -->
-
-
-
-
-
-
-
-
-
-<script>
-	$(function() {
-		var jElement = $('.kopa-course-search-2-widget');
-		$(window).scroll(function(){
-			if ( $(this).scrollTop() > 300 ){
-				jElement.css({
-					'position':'fixed',
-					'top':'10px'
-				});
-			}else{
-				jElement.css({
-					'top':'100px'
-				});
-			}
-		});
-	});
-</script>
-
