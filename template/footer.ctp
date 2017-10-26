@@ -114,6 +114,13 @@
 		</div>
 	</div>
 
+	<style>
+	.modal-body{
+		overflow-y: auto;
+		max-height: 300px;
+	}
+	</style>
+
 	<div id="pp" class="modal fade" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -121,7 +128,7 @@
 					<button class="close" type="button" data-dismiss="modal">&times;</button>
 					<h4>Politica de Privacidade</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="overflow-y: auto;max-height: 400px;">
 					<p>
 					Todas as suas informações pessoais recolhidas, serão usadas para o ajudar a tornar a sua visita no nosso site o mais produtiva e agradável possível.
 					</p>

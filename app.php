@@ -2,7 +2,7 @@
 	/*confihgurações de sistema*/
 	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-	$ini_app = parse_ini_file('config.ini', true);
+	$ini_app = parse_ini_file('app-cfg.ini', true);
 	extract($ini_app['sistema']);
 	define('MAIN_PKG', $main_pkg);
 	define("SYS_NAME", "Didática Online");

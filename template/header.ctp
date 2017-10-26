@@ -30,12 +30,8 @@
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700italic,700' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800' rel='stylesheet' type='text/css'>
 
-        <!-- Le fav and touch icons -->
         <link rel="shortcut icon" href="img/favicon.png">
-        <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
-        <link rel="apple-touch-icon" sizes="72x72" href="img/apple-touch-icon-72x72.png">
-        <link rel="apple-touch-icon" sizes="114x114" href="img/apple-touch-icon-114x114.png">
-
+  
 		<style>
 			ul{
 				list-style:none;

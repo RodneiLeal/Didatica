@@ -29,9 +29,14 @@
             <span class="desccription"><?=$meuCurso['resumo_rapido']?></span>
           </div><!-- /.box-body -->
           <div class="box-footer">
+
+              <?php if(false):?>
+
             <button class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Editar</button>
             <button class="btn btn-default btn-xs"><i class="fa fa-globe"></i> Publicar</button>
             <button class="btn btn-default btn-xs"><i class="fa fa-ban"></i> Bloquear</button>
+              <?php endif?>
+
           </div><!-- /.box-footer -->
         </div>
       </div>

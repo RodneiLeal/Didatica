@@ -1,15 +1,16 @@
 <?php
     include '../../loader.php';
     session_start();
-    // session_destroy();
 
 	extract($_POST);
     $user  = new User;
-    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
-
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-		echo '0__';
-		exit;
+    
+    if(isset($email)){
+        $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+            echo '0__';
+            exit;
+        }
     }
 
     if(isset($pswd)){
@@ -28,6 +29,8 @@
     
     // // final
     $_SESSION = $user_update;
+
+    echo true;
 
 
     

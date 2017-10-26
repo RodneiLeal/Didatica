@@ -14,31 +14,23 @@
 
     <base href="<?=HOME_URI?>">
 
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-    <!-- DataTables -->
-    <link rel="stylesheet" href="js/vendor/plugins/datatables/dataTables.bootstrap.css">
-    <!-- Theme style -->
     <link rel="stylesheet" href="js/vendor/dist/css/AdminLTE.min.css">
-    <!-- AdminLTE Skins. Choose a skin from the css/skins
-    folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="js/vendor/dist/css/skins/_all-skins.min.css">
-    
     <link rel="stylesheet" href="css/vendor/plugins/notification/toastr.min.css">
     <link rel="stylesheet" href="css/complementar.css">
-    
 
-    
+    <link rel="shortcut icon" href="img/favicon.png">
+
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
     <title><?=$this->getTitle()?></title>
 
     <!-- adicionar descrição e palavras chaves -->
@@ -50,18 +42,14 @@
     <div class="wrapper">
 
       <header class="main-header">
-        <!-- Logo -->
         <a href="" class="logo">
-          <!-- mini logo for sidebar mini 50x50 pixels -->
           <span class="logo-mini"><img src="img/logo-mini.png" width="20px"></span>
-          <!-- logo for regular state and mobile devices -->
           <span class="logo-lg"><img src="img/logo.png" width="100px"></span>
         </a>
 
+        <input id="idusuario" type="hidden" value="<?=$idusuario?>">
         
-        <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
-          <!-- Sidebar toggle button-->
           <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
             <span class="icon-bar"></span>
@@ -69,7 +57,11 @@
             <span class="icon-bar"></span>
           </a>
           <div class="navbar-custom-menu">
+
             <ul class="nav navbar-nav">
+
+            <?php if(false):?>
+
               <!-- Messages: style can be found in dropdown.less-->
               <li class="dropdown messages-menu">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
@@ -93,6 +85,7 @@
                           <p>Why not buy a new awesome theme?</p>
                         </a>
                       </li><!-- end message -->
+
                       <li>
                         <a href="">
                           <div class="pull-left">
@@ -146,6 +139,11 @@
                   <li class="footer"><a href="">See All Messages</a></li>
                 </ul>
               </li>
+
+              <?php endif?>
+
+              <?php if(false):?>
+
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
@@ -188,6 +186,11 @@
                   <li class="footer"><a href="">View all</a></li>
                 </ul>
               </li>
+              
+              <?php endif?>
+
+              <?php if(false):?>
+            
               <!-- Tasks: style can be found in dropdown.less -->
               <li class="dropdown tasks-menu">
                 <a href="" class="dropdown-toggle" data-toggle="dropdown">
@@ -258,7 +261,8 @@
                   </li>
                 </ul>
               </li>
-
+              
+              <?php endif?>
 
               <?php 
               $foto = empty($foto)?'img/users/sem-foto.png':$foto ?>

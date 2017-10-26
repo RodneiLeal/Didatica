@@ -11,7 +11,11 @@
 
         public function getTitle(){
 			return $this->title;
-		}
+        }
+        
+        public function solicitacao($data){
+            return $this->db->insert('solicitacao', $data);
+        }
 
         public function getCategoriaCursos(){
 			$sql = "SELECT * FROM categoria ORDER BY categoria ASC";

@@ -100,12 +100,13 @@
 
 								
                                 <?php
-                                
-                                    $cursos = $this->cursos->getCursos();
-                                    foreach ($cursos as $curso):
-                                        extract($curso);
-                                        $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
-                                        $media  = number_format($media, 2, '.', ' ');
+                                    
+                                    if($cursos = $this->cursos->getCursos()):
+                                        
+                                        foreach ($cursos as $curso):
+                                            extract($curso);
+                                            $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;
+                                            $media  = number_format($media, 2, '.', ' ');
                                 ?>
 
                                     <li class="masonry-item">
@@ -137,7 +138,8 @@
                                     </li>
 
                                 <?php
-                                    endforeach;
+                                        endforeach;
+                                    endif;
                                 ?>
 						
                                 </ul>

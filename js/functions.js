@@ -3,19 +3,100 @@ jQuery(function ($){
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
 
-  // REMOVE A IMAGEM QUANDO ROLAR A PAGINAPARA CIMA
-  $(window).scroll(function(){
-    if ( $(this).scrollTop() > 300 ){
-      jElement.css({
-        'position':'fixed',
-        'top':'10px'
-      });
-    }else{
-      jElement.css({
-        'top':'100px'
-      });
-    }
-  });
+  // TORNAR-SE INSTRUTOR
+    $('.form-curriculo').on('click', function(){
+      $('#novo-instrutor').modal('hide');
+    });
+
+    $('.form-bancario').on('click', function(){
+      $('#form-curriculo').modal('hide');
+    });
+
+    $('.salvar-curriculo').on('click', function(event){
+
+      event.preventDefault();
+
+      var perfil     = new Object();
+      var curriculo = new Object();
+      var conta  = new Object();
+
+      idusuario = $('#idusuario').val();
+
+      perfil.idusuario             = idusuario;
+      curriculo.usuario_idusuario  = idusuario;
+      conta.usuario_idusuario      = idusuario;
+
+      if(!isEmpty($('#perfil-nome').val()))
+        perfil.nome =  $('#perfil-nome').val();
+
+      if(!isEmpty($('#perfil-sobrenome').val()))
+        perfil.sobrenome =  $('#perfil-sobrenome').val();
+      
+      if(!isEmpty(CKEDITOR.instances['curriculo_resumo'].getData()))
+        curriculo.resumo =  CKEDITOR.instances['curriculo_resumo'].getData();
+
+      if(!isEmpty($('#curriculo-titulacao').val()))
+        curriculo.titulacao =  $('#curriculo-titulacao').val();
+        
+      if(!isEmpty($('#curriculo-formacao').val()))
+        curriculo.formacao =  $('#curriculo-formacao').val();
+        
+      if(!isEmpty($('#curriculo-instituicao').val()))
+        curriculo.instituicao =  $('#curriculo-instituicao').val();
+        
+      if(!isEmpty($('#curriculo-lattes').val()))
+        curriculo.lattes =  $('#curriculo-lattes').val();
+        
+      if(!isEmpty($('#conta-banco').val()))
+        conta.bancos_idbancos =  $('#conta-banco').val();
+
+      if(!isEmpty($('#conta-agencia').val()))
+        conta.agencia =  $('#conta-agencia').val();
+
+      if(!isEmpty($('#conta-conta').val()))
+        conta.conta =  $('#conta-conta').val();
+
+      if(!isEmpty($('#conta-operacao').val()))
+        conta.operacao =  $('#conta-operacao').val();
+
+      if(!isEmpty($('#conta-cpf').val()))
+        conta.cpf =  $('#conta-cpf').val();
+
+      // NECESSARIO AVALIAR CAMPOS EM BRANCO E PARAR PROGRAMA CASO ALGUM CAMPO ESTEJA FALTANDO
+
+      $.post('controllers/user/update.php', perfil, updateUserCallback);
+
+      function updateUserCallback(response){
+        if(response){
+          Notificacao('success', '', 'Seu perfil foi atualizado!');
+          $.post('controllers/instrutor/saveCurriculo.php', curriculo, saveCurriculoCallback);
+        }
+      }
+      
+      function saveCurriculoCallback(response){
+        if(response){
+          Notificacao('success', '', 'Seu currículo foi arquivado!');
+          $.post('controllers/instrutor/saveBanckInformation.php', conta, saveBanckInformationCallback);
+        }
+      }
+      
+      function saveBanckInformationCallback(response){
+        if(response){
+          Notificacao('success', '', 'Seus dados bancarios foram arquivados!');
+          data = {usuario_idusuario: idusuario, tipo: 1};
+          $.post('controllers/solicitacao.php', data, solicitacaoCallback);
+        }
+      }
+      
+      function solicitacaoCallback(response){
+        if(response){
+          Notificacao('success', 'Seu solicitação foi enviada!', 'Fique atento, enviaremos uma mensagem assim que concluirmos o processo.');
+          $('#form-bancario').modal('hide');
+          setTimeout(redireciona(window.location.href), 3000);
+        }
+      }
+    });
+  // FIM TORNAR-SE INSTRUTOR
 
   // TOLLTIP
   $('[data-toggle="popover"]').popover({
@@ -42,61 +123,15 @@ jQuery(function ($){
     redireciona('Dashboard?p=curso&inscr='+$(this).attr('data-inscr'));
   });
 
-  // TORNAR-SE INSTRUTOR <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< PARA HOJE
-  $("#instructor_new_bt").click(function(){
-    $(".instructor_new_action").fadeOut(400);
-    $(".instructor_new_load").html("<img src='dist/img/loader.gif'>");
-
-    instructor_new = 'instructor_new';
-
-    $.post("controller/user.php",
-      {
-        instructor_new: instructor_new
-      },
-      
-      function(response){
-      
-      var retorno = response.replace(/^\s+|\s+$/g,"");
-      var retorno = retorno.split("__");
-
-      setTimeout(function(){
-        switch(retorno[0]){
-
-          case '0':
-            Notificacao('warning',retorno[1],'Completar dados profissionais.');
-            setTimeout(function(){
-              location.assign("?p=user-edit#tab_profissional");
-            }, 5000);
-          break;
-
-          case '1':
-            Notificacao('success',retorno[1],'Excelente');
-
-            $(".instructor_new_load").html("");
-            $(".instructor_new_action").fadeOut(400);
-            setTimeout(function(){
-              location.reload();
-            }, 3000);
-          break;
-
-          default:
-            Notificacao('error',retorno[1],' Houve algo de errado');
-            $(".instructor_new_action").fadeIn(400);
-            $(".instructor_new_load").html("");
-
-        }
-      }, 3000);
-
-    });
-  });
-
   // MENU MOBILE DA PAGINA INICIAL
   $( '#dl-menu' ).dlmenu({
     animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
   });
 
   // ATUALIZAR INFORMAÇÕES DE PERFIL DO USUARIO
-  $('#updateUserProfile').on('click', function(){
+  $('#updateUserProfile').on('click', function(event){
+
+    event.preventDefault();
 
     var data = new Object();
 
@@ -129,7 +164,7 @@ jQuery(function ($){
     
     function userUpdateCallback(response){
       Notificacao('success', 'Perfil Atualizado', 'Seu perfil atualizado com sucesso!');
-      redireciona('Dashboard');
+      redireciona(window.location.href);
     }
 
     $.post('controllers/user/update.php', data, userUpdateCallback);
@@ -150,7 +185,9 @@ jQuery(function ($){
   });
 
   // ATUALIZAR CURRICULO DO INSTRUTOR 
-  $('.updateCurriculo').on('click', function(){
+  $('.updateCurriculo').on('click', function(event){
+
+    event.preventDefault();
 
     var data = new Object();
 
@@ -174,11 +211,9 @@ jQuery(function ($){
       
     function curriculoCallback(response){
       console.log(response);
-      switch(response){
-        case '1__':
-          Notificacao('success', 'Currículo Atualizado', 'Seu currículo foi atualizado com sucesso!');
-          redireciona('Dashboard');
-        break;
+      if(response){
+        Notificacao('success', 'Currículo Atualizado', 'Seu currículo foi atualizado com sucesso!');
+        redireciona(window.location.href);
       }
     }
 
@@ -186,7 +221,9 @@ jQuery(function ($){
   });
 
   // ATUALIZAR DADOS BANCARIOS DO INSTRUTOR
-  $('.updateBanckInformation').on('click', function(){
+  $('.updateBanckInformation').on('click', function(event){
+
+    event.preventDefault();
 
     var data = new Object();
 
@@ -229,7 +266,9 @@ jQuery(function ($){
   });
 
   // CADASTRO USUÁRIO
-  $('#register-bt').on('click', function(){
+  $('#register-bt').on('click', function(event){
+
+    event.preventDefault();
 
     if (isEmpty($("#register_name").val())){
       Notificacao('error','Informe um nome de usuário','Nome obrigatório');
@@ -259,7 +298,9 @@ jQuery(function ($){
   });
 
   // LOGIN USUÁRIO
-  $('#login-bt').on('click',function(){
+  $('#login-bt').on('click', function(event){
+
+    event.preventDefault();
 
     if (isEmpty($("#user_email").val())){
       Notificacao('error','Informe seu e-mail de cadastro','E-mail obrigatório');
@@ -279,10 +320,8 @@ jQuery(function ($){
     $.post("controllers/login.php", data, loginCallback);
   });
 
-  /****************************************** REVISAR CADATRO E LOGIN VIA REDE SOCIAL******************************************/
-
-  // CADASTRO USUÁRIO VIA REDE SOCIAL
-  $('.social-signup').on('click',function(){
+  // CADASTRO USUÁRIO VIA REDE SOCIAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REVISAR
+  $('.social-signup').on('click', function(){
     
     var data = {
       rede : $(this).attr('data-target')
@@ -291,8 +330,8 @@ jQuery(function ($){
     $.post("controllers/user/register.php", data, registerCallback);
   });
 
-  // LOGIN USUÁRIO VIA REDE SOCIAL
-  $('.social-signin').on('click',function(){
+  // LOGIN USUÁRIO VIA REDE SOCIAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REVISAR
+  $('.social-signin').on('click', function(){
 
     var data = {
       rede : $(this).attr('data-taget')
@@ -301,7 +340,21 @@ jQuery(function ($){
     $.post("controllers/login.php", data, loginCallback);
   });
 
-  
+  // LOGOUT USUÁRIO
+  $(".logoff").on('click', function(){
+    data = {
+      logoff: true
+    }
+
+    function logoffCallback(response){
+      location.href='home';
+    }
+
+    $.post('controllers/logout.php', data, logoffCallback);
+  });
+
+/*******************************  FUNÇÕES PUBLICAS  *************************************/
+
   function loginCallback(response){
     switch(response){
       case '0__':
@@ -345,27 +398,40 @@ jQuery(function ($){
     }
   }
 
-  // LOGOUT USUÁRIO
-  $(".logoff").on('click', function(){
-    data = {
-      logoff: true
-    }
 
-    function logoffCallback(response){
-      location.href='home';
-    }
 
-    $.post('controllers/logout.php', data, logoffCallback);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  /******************************************** DESTE PONTA PARA BAIXO AS FUNÇÕES PRECISAM SER REVIZADAS ********************************************/
+
+   // REMOVE A IMAGEM QUANDO ROLAR A PAGINAPARA CIMA
+   $(window).scroll(function(){
+    if ( $(this).scrollTop() > 300 ){
+      jElement.css({
+        'position':'fixed',
+        'top':'10px'
+      });
+    }else{
+      jElement.css({
+        'top':'100px'
+      });
+    }
   });
 
-
-
-
-
-  /********************************************FIM CADASTRO E LOGIM VIA REDES SOCIAIS********************************************/
-
-
-  // ADICIONA IMAGEM USUÁRIO (PERFIL) /***************verificar utilidade*******************/
+  // ADICIONA IMAGEM USUÁRIO (PERFIL)
   $(".ProfileUpdateImage").on("change", function(){
     var file = this.files[0].name;
     

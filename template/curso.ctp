@@ -174,7 +174,7 @@
 							<img src="<?=$imagem?>" height="218px">
  	                        <div class="widget-content text-center">
 								<br>
-									<h5><?$titulo?></h5>
+									<h5><?=$titulo?></h5>
 
 
 									<?php
