@@ -80,6 +80,10 @@
             return false;
         }
 
+        public function pastaPessoal($data){
+            return $result;
+        }
+
         public function getUser($values, $limit = false){
             $set = array();
             $sql = "SELECT * FROM usuario ";

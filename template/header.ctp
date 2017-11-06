@@ -36,6 +36,15 @@
 			ul{
 				list-style:none;
 			}
+
+			.dropdown-menu>li>a{
+				width:100%;
+			}
+
+			.fa-angle-right{
+				margin-top:6px;
+			}
+
 			.form-wrapper-top-search {
 				background: #fff;
 				-webkit-border-radius: 4px;
@@ -63,6 +72,8 @@
 				width: 400px;
 				color: black;
 			}
+
+			
 
 			.form-wrapper-top-search button[type="submit"] {
 				margin-left: -50px;
@@ -96,14 +107,22 @@
 								<li class="current-menu-item">
 									<a>Categorias<span class="menu-description">Encontre seu curso</span></a>
 									<ul>
-										<li>
-											<a>Cursos</a>
-											<ul>
-												<?php foreach(Main::getCategoriaCursos() as $categoria):?>
-													<li><a href="cursos/<?=$categoria['categoria']?>"><?=$categoria['categoria']?></a></li>
-												<?php endforeach ?>
-											</ul>
-										</li>
+										<?php foreach(Main::getCategoriaCursos() as $categoria):?>
+											<li>
+												<!-- o link tem que mudar para subcategoria -->
+												<a href="cursos/<?=$categoria['categoria']?>"><?=$categoria['categoria']?><i class="fa fa-angle-right pull-right"></i></a>
+												<ul>
+													<?php foreach(Main::getSubcategoriaCursos($categoria['idcategoria']) as $subcategoria):?>
+													
+													<li>
+														<a href="cursos/<?=$categoria['categoria']?>/<?=$subcategoria['subcategoria']?>"><?=$subcategoria['subcategoria']?></a>
+													</li>
+
+													<?php endforeach ?>
+													
+												</ul>
+											</li>
+										<?php endforeach ?>
 									</ul>
 								</li>
 								<li >
@@ -116,18 +135,22 @@
 
 							<div class="text-right botoes_topo" >
 								<?php if(!empty($locked) && $locked) : ?>
+								<a>Ola, <?=$username?>!</a>
+
 								<div class="dropdown">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-										Ola, <?=$username?>!
+										Menu <i class="fa fa-caret-down"></i>
 									</a>
 									<ul class="dropdown-menu">
 										<li><a href="Dashboard">Painel de Controle</a></li>
-										<li><a href="Dashboard?p=minhas-inscricoes">Meus cursos</a></li>
+										<li><a href="Dashboard?p=minhas-inscricoes">Minhas Inscrições</a></li>
 										<li><a href="Dashboard?p=minhas-mensagens">Mensagens</a></li>
 										<li role="separator" class="divider"></li>
 										<li><a class="logoff">Sair</a></li>
 									</ul>
 								</div>
+
+
 								<?php else : ?>
 										<a class="cd-signin"><i class="fa fa-sign-in"></i> Entrar</a>
 								<?php endif ?>

@@ -118,12 +118,12 @@
                                                 </a>
                                                 <!--<span class="entry-hot">Hot</span>-->
                                             </div>
-                                                
-                                            <div class="avaliacao">
-                                                <div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$votantes?> opiniões de alunos"><span><?=$media?></span></div>
-                                            </div>
 
                                             <div class="entry-content">
+                                                <div class="avaliacao">
+                                                    <div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$votantes?> opiniões de alunos"><span><?=$media?></span> </div>
+                                                </div>
+
                                                 <div class="course-teacher">
                                                     <span><?=$categoria?></span><br>
                                                     <a href="instrutor/<?=$instrutor_idinstrutor?>/<?=Main::preparaURL($instrutor)?>"><?=$instrutor?></a>

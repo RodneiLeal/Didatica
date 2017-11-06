@@ -38,7 +38,7 @@
 			<li class="treeview">
 				<a><i class="fa fa-book"></i><span>Cursos</span><i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">
-					<!--<li><a href="Dashboard?p=novo-curso" title="Novo curso"></i>Novo curso</a></li>-->
+					<li><a href="Dashboard?p=novo-curso" title="Novo curso"></i>Novo curso</a></li>
 					<li><a href="Dashboard?p=meus-cursos" title="Meus cursos"></i>Meus cursos</a></li>
 					<li><a href="Dashboard?p=minhas-inscricoes" title="Minhas Inscrições"></i>Minhas Inscrições</a></li>
 				</ul>

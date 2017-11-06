@@ -11,8 +11,8 @@
     <div class="row">
 
       <?php
-
-        if($meusCursos = $this->cursos->getCursosInstrutor($idusuario)):
+        $instrutor = $this->instrutor->getInstrutor($idusuario)[0];
+        if($meusCursos = $this->cursos->getCursosInstrutor($instrutor['idinstrutor'])):
           foreach($meusCursos as $meuCurso):
             $imagem = empty($meuCurso['imagem'])?'img/curso/no-image.png':$meuCurso['imagem'];
             $media  = number_format($meuCurso['media'], 2, '.', ' ');
@@ -26,7 +26,7 @@
               <img class="img-responsive  course_list" src="<?=$imagem?>" alt="">
           </div><!-- /.box-header -->
           <div class="box-body">
-            <span class="desccription"><?=$meuCurso['resumo_rapido']?></span>
+            <span class="desccription"><?=$meuCurso['resumo']?></span>
           </div><!-- /.box-body -->
           <div class="box-footer">
 

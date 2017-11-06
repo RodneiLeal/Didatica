@@ -3,6 +3,125 @@ jQuery(function ($){
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
 
+  //INSERIR CURSO
+  
+    //CURSO PREVIEW 
+    $('.curso-titulo').on('change keyup', function(){
+      $('.preview-curso-titulo').text($(this).val());
+    });
+
+    $('.curso-subcategoria').on('change keyup', function(){
+      $('.preview-curso-subcategoria').text($('.curso-subcategoria option:selected').text());
+    });
+
+    $('.curso-categoria').on('change keyup', function(){
+      $('.preview-curso-categoria').text($('.curso-categoria option:selected').text());
+    });
+    
+    $('.remove-ask').on('click', function(){
+      $(this).parents('.panel').remove();
+    });
+
+    i = 1;
+    $('.add-ask').on('click', function(){
+      i++;
+      var template  = $('<div>').addClass('box box-primary panel template');
+            
+      var boxheader = $('<div>').addClass('box-header')
+      var h4 = $('<h4>').addClass('box-title'); 
+      h4.append(function(){
+        var a = $('<a>').attr({
+          'data-toggle':'collapse',
+          'data-parent':'#accordion',
+          'aria-expanded':'true'});
+        return a.text('Questão '+i);
+      });
+      var div = $('<div>').addClass('box-tools pull-left');
+      div.append(function(){
+       var a = $('<a>').addClass('btn btn-box-tool remove-ask remove-ask');
+        a.append(function(){
+          return $('<i>').addClass("fa fa-trash fa-2x");
+        });
+        a.on('click', function(){
+          $(this).parents('.panel').remove();
+        });
+        return a;
+      });
+      boxheader.append(h4, div);
+      
+      var panel = $('<div>').addClass("collapse in panel-collapse")
+      panel.attr({
+        'aria-expanded':"true",
+        'id':"panel-1",
+        'href':'#panel-'+i
+      });
+      panel.append(function(){
+        
+        var div = $('<div>').addClass("box-body");
+        var row1 = $('<div>').addClass("row");
+        row1.append(function(){
+          var div = $('<div>').addClass("col-md-12");
+          var label = $('<label>').text('Questão');
+          var input = $('<input>').addClass('form-control');
+          input.attr({
+            'type':"text",
+            'name':"provas["+i+"][questao]",
+            'placeholder':"Questão"
+          });
+          return div.append(label, input);
+        });
+
+        var row2 = $('<div>').addClass("row");
+        var divcol1 = $('<div>').addClass("col-md-6");
+        var divcol2 = $('<div>').addClass("col-md-6");
+        row2.append(
+          divcol1.append($('<label>').text('Opções'), optionsGroup(1), optionsGroup(2), optionsGroup(3)),
+          divcol2.append($('<label>').text('Opções'), optionsGroup(4), optionsGroup(5)));
+                
+        function optionsGroup(q){
+          var divgroup = $('<div>').addClass('input-group');
+          return divgroup.append(function(){
+            var span = $('<span>').addClass('input-group-addon');
+            return span.append(function(){
+              return $('<input>').attr({
+                'type':"radio",
+                'value':q,
+                'name':"provas["+i+"][resposta]"
+              });
+            })},
+            $('<input>').attr({
+              'class': "form-control",
+              'name':'provas['+i+'][opcao_'+q+']',
+              'type':"text",
+              'placeholder':"Resposta"
+            })
+          );
+        }
+
+        return div.append(row1, row2);
+      });
+
+      template.append(boxheader, panel);
+      
+      $('.question-box').append(template);
+    });
+    
+    $('.prox-etapa').on('click', function(){
+      var section = $(this).parents('section');
+      section.addClass('display-hidden');
+      section.next().removeClass('display-hidden');
+    });
+
+    $('.etapa-anterior').on('click', function(){
+      var section = $(this).parents('section');
+      section.addClass('display-hidden');
+      section.prev().removeClass('display-hidden');
+    });
+
+
+
+  // FIM INSERIR CURSO
+
   // TORNAR-SE INSTRUTOR
     $('.form-curriculo').on('click', function(){
       $('#novo-instrutor').modal('hide');
@@ -20,7 +139,7 @@ jQuery(function ($){
       var curriculo = new Object();
       var conta  = new Object();
 
-      idusuario = $('#idusuario').val();
+      var idusuario = $('#idusuario').val();
 
       perfil.idusuario             = idusuario;
       curriculo.usuario_idusuario  = idusuario;
@@ -172,7 +291,7 @@ jQuery(function ($){
   });
 
   // IMAGEM PREVIEW
-  $(".imageFile").change(function(){
+  $(".imageFile").on('change', function(){
     var imageFile = this;
     if (imageFile.files && imageFile.files[0]){
       var reader = new FileReader();
@@ -352,6 +471,37 @@ jQuery(function ($){
 
     $.post('controllers/logout.php', data, logoffCallback);
   });
+
+  // SELECIONA SUBCATEGORIA
+  $('.curso-categoria').on('change', function(){
+    $.ajax({
+      url: 'controllers/subcategorias.php',
+      method: 'POST',
+      data: {categoria_idcategoria:$(this).val()}
+    }).done(function(response){
+      $('.curso-subcategoria').html(response);
+    });
+  });
+
+  // $('.').on('click', function(){
+  //   var idusuario = $('#idusuario').val();
+  //   var data = new Object();
+
+  //   data.usuario_idusuario           = idusuario;
+  //   data.subcategoria_idsubcategoria = $('.curso-titulo').val();
+  //   data.titulo                      = $('.curso-hora').val();
+  //   data.ementa                      = $('.curso-subcategoria').val();
+  //   data.resumo                      = CKEDITOR.instances['resumo'].getData();
+    
+  //   console.log(data);
+
+
+  //   // if(isEmpty($().val()))
+  //   //   Notificacao('error', '', $(this).attr('required_msg'));
+  //   // else
+  //   //   data.
+
+  // });
 
 /*******************************  FUNÇÕES PUBLICAS  *************************************/
 

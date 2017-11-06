@@ -48,9 +48,6 @@
             $sql     = "SELECT * FROM view_inscricao WHERE usuario_idusuario = ?";
             $stmt    = $this->db->query($sql, $data);
             $result  = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if(empty($result)){
-                return false;
-            }
             return $result;
         }
 

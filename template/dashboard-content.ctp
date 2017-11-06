@@ -1,6 +1,6 @@
 <?php
     $p = NULL;
-    extract($_REQUEST);
+    extract($_GET);
 
     switch ($p) {
 

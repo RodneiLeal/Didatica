@@ -18,6 +18,7 @@
                         <a href="Dashboard?p=perfil-edit" class="btn btn-box-tool"><i class="fa fa-pencil"></i></a>
                     </div>
                 </div>
+
                 <div class="box-body box-profile">
                     <img class="profile-user-img img-responsive img-circle" src="<?=$foto?>" alt="<?=$username?>">
                     <h3 class="profile-username text-center"><?=$username?></h3>
@@ -29,13 +30,14 @@
                         <li class="list-group-item">
                             <b>Publicações</b>
                             <a class="pull-right">
+                           
                                 <?=count($this->cursos->getCursosInstrutor($idinstrutor))?>
                             </a>
                         </li>
                         <li class="list-group-item">
                             <b>Inscritos</b>
                             <a class="pull-right">
-                                <?=count($this->inscricoes->getInscricaoPorUsuario($idinstrutor))?>
+                                <?=count($this->inscricoes->getInscricaoPorUsuario($idusuario))?>
                             </a>
                         </li>
                     </ul>
@@ -67,7 +69,7 @@
                     <p class="text-muted"><?=$resumo?></p>
                     <hr>
                     <strong><i class="fa fa-address-card margin-r-5"></i> Lattes</strong>
-                    <p class="text-muted"><a href="<?=$lattes?>" target="_blank"><?=$lattes?></a></p>
+                    <p class="text-muted"><a href="//<?=$lattes?>" target="_blank"><?=$lattes?></a></p>
 
                 </div>
             </div>

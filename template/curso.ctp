@@ -15,7 +15,7 @@
                             </h1>
                         </div>
                         <div class="col-md-12">
-							<h5 class=" clearfix pull-left" style="color:#fff"><?=$resumo_rapido?></h5>
+							<h5 class=" clearfix pull-left" style="color:#fff"><?=$resumo?></h5>
                         </div>
                         <div class="col-md-12  pull-left">
 							<br>

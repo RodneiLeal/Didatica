@@ -7,14 +7,10 @@
     </ol>
   </section>
 
-  <?php
-    if(true):
-  ?>
-  <!-- Informações do curso -->
-  <section class="content" id="my-courses-add-step-1">
-    <div class="row">
-      <form action="" method="post" >
-      
+  <form method="POST" enctype="multipart/form-data" action="./controllers/curso/saveCourse.php">
+    <!-- Informações do curso -->
+    <section class="content" id="etapa-1">
+      <div class="row">
         <!-- Dados iniciais do curso -->
         <div class="col-md-8">
           <div class="box box-primary">
@@ -23,16 +19,24 @@
             </div>
             <div class="box-body">
               <div class="row">
-                <div class="col-md-12">
+                <div class="col-md-6">
                   <label>Título do curso</label>
-                  <input type="text" class="form-control" name="inputCourseTitle" id="inputCourseTitle" required="true" required_message="Ops, por favor, informe o título do curso" >
+                  <input type="text" class="form-control curso-titulo" name="curso[titulo]"  placeholder="Título do curso" >
                 </div>
-              </div>  
-                
+
+                <div class="col-md-6">
+                  <label>Horas mínima de curso</label>
+                  <input type="text" class="form-control time" name="curso[tempo]"  placeholder="Tempo mínimo de curso em horas">
+                </div>
+              </div>
+
               <div class="row">
+
                 <div class="col-md-6">
                   <label>Categoria do curso</label>
-                  <select class="form-control" name="inputCourseCategory" id="inputCourseCategory">
+                  <select class="form-control curso-categoria">
+
+                    <option disabled selected>Categorias</option>
                     <?php
                       if($categorias = $this->cursos->getCategorias()):
                         foreach($categorias as $categoria):
@@ -44,80 +48,77 @@
                     ?>
                   </select>
                 </div>
+
                 <div class="col-md-6">
-                  <label>Hora média do curso</label>
-                  <input type="number" class="form-control time"  name="inputCourseHour" id="inputCourseHour" required="true"  value="30">
+                  <label>Subcategorias do curso</label>
+                  <select class="form-control curso-subcategoria" name="curso[subcategoria_idsubcategoria]">
+                      <option disabled selected>Subcategorias</option>
+                  </select>
                 </div>
               </div>
-              
+
               <div class="row">
                 <div class="col-md-6">
                   <label>Resumo</label>
-                  <textarea class="editor" id="editor1" class="form-control" name="inputCourseResume" required="true" required_message="Ops, por favor, informe a chamada rápida (Resumo)" ></textarea>
+                  <textarea class="form-control editor" name="curso[resumo]" id="editor1" placeholder="Resumo simples"></textarea>
                 </div>
-                
+
                 <div class="col-md-6">
                   <label>Ementa</label>
-                  <textarea class="editor" id="editor2" class="form-control" name="inputCourseDescription" id="inputCourseDescription" required="true" required_message="Ops, por favor, informe a descrição completa deste curso" ></textarea>
+                  <textarea class="form-control editor" name="curso[ementa]" id="editor2" ></textarea>
                 </div>
               </div>
             </div>
             <div class="box-footer">
               <div class="col-md-12">
-                <input id="inputName" name="operation" value="course_creator_1" type="hidden">
-                <button class="btn btn-success btn-lg">Próximo passo <i class="fa fa-angle-double-right"></i></button>
+                <button type="button" class="btn btn-success btn-lg prox-etapa">Próximo <i class="fa fa-angle-double-right"></i></button>
               </div>
             </div>
           </div>
         </div>
-
         <!-- preview do curso -->
         <div class="col-md-4">
-          <div class="box box-primary">
+          <div class="box box-primary" style="overflow: hidden">
             <div class="box-header with-border">
-              <h3 class="box-title"><a href="">Preview curso</a></h3>
+              <h3 class="box-title">Preview curso</h3>
             </div><!-- /.box-header -->
-            <div class="box-body">
-              <div class="preview_block"></div>
-              <img id="preview" class="img-responsive course_list" src="img/curso/no-image.png" />
-              <div class="starrr" data-rating="0" title="Média entre 0 Opiniões de alunos"><span>0</span></div>
+            <div class="box-body" >
+              <img id="preview" class="img-responsive course_list imagePreview" src="img/curso/no-image.png" />
+              <div class="starrr" data-rating="0" title="Média entre 0 Opiniões de alunos"><span>0</span> </div>
               <div class="row">
-                <div class="col-md-12">
-                  <h5>Categoria</h5>    
+                <div class="col-md-6">
+                  <h5><strong>Categoria: </strong> <span class="preview-curso-categoria"></span></h5>
                 </div>
-                <div class="col-md-12">
-                  <h5>autor</h5>
-                </div>
-                <div class="col-md-12">
-                  <h4>Tíulo</h4>
+
+                <div class="col-md-6">
+                  <h5><strong>Subcategoria:</strong> <span class="preview-curso-subcategoria"></span></h5>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h5><strong>Autor: </strong><?=$nome.' '.$sobrenome?></h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <h4 class="preview-curso-titulo">Tíulo</h4>
+                </div>
+              </div>
+
+
             </div><!-- /.box-body -->
             <div class="box-footer">
               <label>Imagem principal</label>
-              <input type="file" name="produto_imagem_1" id="product_file_image_1" class="btn btn-dfault btn-xs product_file_image_input" >
+              <input type="file" name="curso" reqired class="btn btn-dfault btn-xs imageFile" >
             </div><!-- /.box-footer -->
           </div>
         </div>
+      </div>
+    </section>
 
-      </form>
-    </div>
-  </section>
-
-  <!-- ao clicar em avançar, este dados serão salvos no banco de dados e retornará a esta pagina -->
-
-  <?php
-    endif;
-    if(true):
-  ?>
- 
-  <!-- nesta etapa o instrutor poderá criar varias seções.
-  cada seção comum titulo, descrição ou resumo e material de apoio que deverá ser arquivo .pdf -->
-  
-  <!-- arquivos do curso -->
-  <section class="content" id="my-courses-add-step-3">
-    <div class="row">
-      <form action="" method="post" enctype="multipart/form-data">
+    <!-- AULAS DO CURSO -->
+    <section class="content display-hidden" id="etapa-2">
+      <div class="row">
         <div class="col-md-12">
           <div class="box box-primary">
 
@@ -141,197 +142,152 @@
                       <div class="row">
                         <div class="col-md-12">
                           <label>Titulo</label>
-                          <input type="text" class="form-control" require placeholder="Titulo da Aula">
+                          <input class="form-control" name="aula[titulo]"  placeholder="Titulo da Aula">
                           <br>
                           <label>Objetivos</label>
-                          <textarea class="editor" name="" id="editor3" cols="30" ></textarea>
+                          <textarea class="editor" name="aula[objetivos]" id="editor3"  palceholder="Descreva aqui os objetivos do seu curso"></textarea>
                           <br>
-                          <input type="file" name="aula[]">
+                          <input type="file" name="aula">
                         </div>
                       </div>
-                    
+
                     </div>
                   </div>
                 </div>
 
               </div>
             </div>
-            
+
             <div class="box-footer">
               <div class="col-md-12">
-                <button class="btn btn-success btn-lg">Próximo Passo <i class="fa fa-angle-double-right"></i></button>
-              </div>
-            </div>            
-          </div>
-        </div>
-      </form>
-    </div>
-  </section>
-
-  <?php
-    endif;
-    if(true):
-  ?>
-
-  <!-- Prova -->
-  <section class="content" id="my-courses-add-step-4">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="box box-primary">
-
-          <div class="box-header with-border">
-            <h3 class="box-title">Banco de questões para Prova</h3>
-          </div>
-
-          <div class="box-body">
-
-            <div class="box-group">
-
-              <!-- template para questionario -->
-              <div class="box box-primary panel">
-                <div class="box-header">
-
-                  <h4 class="box-title">
-                    <a href="#panel-1" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" class="">Questão 1</a>
-                  </h4>
-                </div>
-
-                <div class="collapse in panel-collapse" aria-expanded="true" id="panel-1">
-                  <div class="box-body">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label>Questão</label>
-                        <input type="text" class="form-control" placeholder="Questão">
-                      </div>
-                    </div>
-                    <div class="row">
-
-                      <div class="col-md-6">
-                        <label>Opções</label>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="1" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="2" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-                        
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="3" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <label>Opções</label>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="4" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="5" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-                      
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-              
-              <div class="box box-primary panel">
-                <div class="box-header">
-                  <h4 class="box-title">
-                    <a href="#panel-2" data-toggle="collapse" data-parent="#accordion" aria-expanded="true" style="">Quetão 2</a>
-                  </h4>
-                </div>
-                
-                <div class="collapse panel-collapse" aria-expanded="false" id="panel-2">
-                  <div class="box-body">
-                    <div class="row">
-                      <div class="col-md-12">
-                        <label>Questão</label>
-                        <input type="text" class="form-control" placeholder="Questão">
-                      </div>
-                    </div>
-                    <div class="row">
-
-                      <div class="col-md-6">
-                        <label>Opções</label>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="1" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="2" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-                        
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="3" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <label>Opções</label>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="4" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-
-                        <div class="input-group">
-                          <span class="input-group-addon">
-                            <input type="radio" value="5" name="reposta-1">
-                          </span>
-                          <input class="form-control" type="text" placeholder="Resposta">
-                        </div>
-                      
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
+                <button type="button" class="btn btn-success btn-lg etapa-anterior"><i class="fa fa-angle-double-left"></i> Voltar</button>
+                <button type="button" class="btn btn-success btn-lg pull-right prox-etapa">Próximo <i class="fa fa-angle-double-right"></i></button>
               </div>
             </div>
-            
           </div>
-          
-          <div class="box-footer">
-            <button class="btn btn-warning btn-lg">Adicionar Questão <i class="fa fa-question-circle"></i></button>
-            <button class="btn btn-success btn-lg">Finalizar <i class="fa fa-thumbs-up"></i></button>
-          </div>
-
         </div>
       </div>
-    </div>
-  </section>
- 
-  <?php endif;?>
+    </section>
+
+    <!-- Prova -->
+    <section class="content display-hidden" id="etapa-3">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="box box-primary">
+
+            <div class="box-header with-border">
+              <h3 class="box-title">Banco de questões para Prova</h3>
+            </div>
+
+            <div class="box-body" >
+
+              <div class="box-group question-box">
+
+                <!-- template para questionario -->
+                <div class="box box-primary panel template">
+                  <div class="box-header">
+                    <h4 class="box-title">
+                      <a href="#panel-1" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">Questão 1</a>
+                    </h4>
+                    <div class="box-tools pull-left">
+                        <a class="btn btn-box-tool remove-ask"><i class="fa fa-trash fa-2x"></i></a>
+                    </div>
+                  </div>
+
+                  <div class="collapse in panel-collapse" aria-expanded="true" id="panel-1">
+
+                    <div class="box-body">
+
+                      <div class="row">
+                        <div class="col-md-12">
+                          <label>Questão</label>
+                          <input type="text" class="form-control" name="provas[1][questao]" placeholder="Questão">
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-6">
+                          <label>Opções</label>
+
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <input type="radio" value="1" name="provas[1][resposta]">
+                            </span>
+                            <input class="form-control" name="provas[1][opcao_1]" type="text" placeholder="Resposta">
+                          </div>
+
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <input type="radio" value="2" name="provas[1][resposta]">
+                            </span>
+                            <input class="form-control" name="provas[1][opcao_2]" type="text" placeholder="Resposta">
+                          </div>
+
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <input type="radio" value="3" name="provas[1][resposta]">
+                            </span>
+                            <input class="form-control" name="provas[1][opcao_3]" type="text" placeholder="Resposta">
+                          </div>
+                        </div>
+
+                        <div class="col-md-6">
+                          <label>Opções</label>
+
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <input type="radio" value="4" name="provas[1][resposta]">
+                            </span>
+                            <input class="form-control" name="provas[1][opcao_4]" type="text" placeholder="Resposta">
+                          </div>
+
+                          <div class="input-group">
+                            <span class="input-group-addon">
+                              <input type="radio" value="5" name="provas[1][resposta]">
+                            </span>
+                            <input class="form-control" name="provas[1][opcao_5]" type="text" placeholder="Resposta">
+                          </div>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="box-footer">
+              <button type="button" class="btn btn-success btn-lg etapa-anterior"><i class="fa fa-angle-double-left"></i> Voltar</button>
+              <button type="button" class="btn btn-warning btn-lg add-ask">Adicionar Questão <i class="fa fa-question-circle"></i></button>
+              <button type="submit" class="btn btn-success btn-lg pull-right">Finalizar <i class="fa fa-thumbs-up"></i></button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

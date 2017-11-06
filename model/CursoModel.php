@@ -11,7 +11,7 @@
 
         // SELECIONA TODOS OS CURSOS
         public function getCursos(){
-            $sql     = "SELECT * FROM view_cursos";
+            $sql     = "SELECT * FROM view_cursos WHERE locked = 1";
             $stmt    =  $this->db->query($sql);
             $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
@@ -26,16 +26,18 @@
             $sql    = "SELECT * FROM view_cursos WHERE instrutor_idinstrutor = ?";
             $stmt   = $this->db->query($sql, $data);
             $result =  $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if(empty($result)){
-                return false;
-            }
             return $result;
         }
 
         // SELECIONA CURSOS POR CATEGORIA
-        public function getCursosPorCategoria($categoria){
-            $data	 = array($categoria);
-            $sql     = "SELECT * FROM view_cursos WHERE categoria = ?";
+        public function getCursosPorCategoria($categoria, $subcategoria=null){
+            if(!empty($subcategoria)){
+                $data	 = array($subcategoria);
+                $sql     = "SELECT * FROM view_cursos WHERE subcategoria = ?";
+            }else{
+                $data	 = array($categoria);
+                $sql     = "SELECT * FROM view_cursos WHERE categoria = ?";
+            }
 			$stmt	 = $this->db->query($sql, $data);
 			$result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
@@ -82,6 +84,7 @@
             return $result;
         }
 
+        // BUSCA TODAS CATEGORIAS DE CURSOS
         public function getCategorias(){
             $sql     =  "SELECT * FROM categoria";
             $stmt    =  $this->db->query($sql);
@@ -92,6 +95,7 @@
             return $result;
         }
 
+        // BUSCA TODAS AS AULAS DE UM CURSO
         public function getAulas($idcurso){
             $data    = array($idcurso);
             $sql     =  "SELECT * FROM aula WHERE curso_idcurso = ?";
@@ -103,6 +107,7 @@
             return $result;
         }
 
+        // BUSCA TODAS AS PROVAS REALIZADAS POR UM USUARIO
         public function getProvas($idinscricao){
             $data    = array($idinscricao);
             $sql     =  "SELECT * FROM exame WHERE inscricao_idinscricao = ?";
@@ -112,6 +117,30 @@
                 return false;
             }
             return $result;
+        }
+
+        // SALVA UM NOVO CURSO NO BANCO DE DADOS
+        public function salvaCurso($data){
+            if($this->db->insert('curso', $data)){
+                return $this->db->last_id;
+            }
+            return false;
+        }
+
+        // SALVA TODAS AS AULAS DE UM CURSO 
+        public function salvaAulas($data){
+            if($this->db->insert('aula', $data)){
+                return $this->db->last_id;
+            }
+            return false;
+        }
+
+        // SALVA TODAS AS QUESTÕES PARA PROVA DE UM DETERMINADO CURSO
+        public function salvaQuestoes($data){
+            if($this->db->insert('db_questoes', $data)){
+                return $this->db->last_id;
+            }
+            return false;
         }
     }
     

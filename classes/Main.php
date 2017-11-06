@@ -23,6 +23,16 @@
 			return $query->fetchAll();
         }
 
+        public function getSubcategoriaCursos($idsubcategoria=null){
+            $sql    = "SELECT * FROM subcategoria  ";
+            if(isset($idsubcategoria)){
+                $sql   .= "WHERE categoria_idcategoria = {$idsubcategoria} ";
+            }
+            $sql   .= "ORDER BY subcategoria ASC";
+            $query   = $this->db->query($sql);
+            return $query->fetchAll(PDO::FETCH_ASSOC);
+        }
+
         public function getBancos($idbanco = false){
             $sql   = "SELECT * FROM bancos ";
             $whare = "WHARE idbancos = {$idbanco} ";

@@ -1,6 +1,8 @@
 <?php
-	$curso_categoria_nome = $this->action;
-	$cursos = $this->cursos->getCursosPorCategoria($curso_categoria_nome);
+	$curso_categoria_nome	 = $this->action;
+	$curso_subcategoria_nome = $this->param[0];
+	$cursos = $this->cursos->getCursosPorCategoria($curso_categoria_nome, $curso_subcategoria_nome);
+	$categoria_curso = isset($curso_subcategoria_nome)?$curso_subcategoria_nome:$curso_categoria_nome;
 ?>
     <div id="main-content">
 
@@ -21,9 +23,9 @@
 							
 							<?php
 								if($cursos):
-									echo "Os maiores especialistas em $curso_categoria_nome";
+									echo "Os maiores especialistas em $categoria_curso";
 								else:
-									echo "Não encontramos nenhum curso para $curso_categoria_nome";
+									echo "Não encontramos nenhum curso para $categoria_curso";
 								endif;
 							?>
 
@@ -47,7 +49,7 @@
 	    			<div class="col-md-12 col-sm-12 col-xs-12">
 	    				<div class="widget kopa-masonry-list-2-widget">
 	    					<div class="widget-title widget-title-s5 text-left">
- 	                            <h4>Cursos para: <?=$curso_categoria_nome;?></h4>
+ 	                            <h4>Cursos para: <?=$categoria_curso?></h4>
  	                        </div>
 
 	    					<div class="masonry-list-wrapper">
@@ -70,17 +72,16 @@
 														<!--<span class="entry-hot">New</span> se curso inserido a menos de 30 dias -->
 													</div>
 														
-													<div class="avaliacao">
-														<div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$votantes?> opiniões de alunos">
-															<span><?=$media?></span>
-														</div>
-													</div>
 
 													<div class="entry-content">
+														<div class="avaliacao">
+															<div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$votantes?> opiniões de alunos"><span><?=$media?></span> </div>
+														</div>
 														<div class="course-teacher">
 															<span><?=$categoria?></span><br>
 															<a href="instrutor/<?=$instrutor_idinstrutor?>/<?=Main::preparaURL($instrutor)?>"><?=$instrutor?></a>
 														</div>
+												
 														<h6 class="entry-title">
 															<a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">                                                            
 															<?=$titulo?>

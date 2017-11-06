@@ -21,12 +21,12 @@
               <button class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
-              <h3 class="modal-title">Título</h3>
+              <h3 class="modal-title">Seja bem vindo!</h3>
             </div>
 
             <div class="modal-body">
 
-              Aqui vai uma mensagem de boas vindas
+              "Ensinar não é transferir conhecimento, mas criar as possibilidades para a sua própria produção ou sua construção." (Paulo Freire) 
             
             </div>
 

@@ -15,7 +15,6 @@
 		);
     }
 
-	$datetime = date("Y-m-d H:i:s");
 	$email = filter_var($email, FILTER_SANITIZE_EMAIL);
 	
 	if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
@@ -36,8 +35,7 @@
 	$data = array(
 		'username'=>$username,
 		'email'=>$email,
-		'pswd'=>hash('sha256', $passwd),
-		'dataCadastro'=>$datetime
+		'pswd'=>hash('sha256', $passwd)
 	);
 
 	if(isset($dataUserRede) && is_array($dataUserRede)){

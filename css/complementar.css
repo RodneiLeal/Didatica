@@ -20,6 +20,10 @@ p.recuo{
     justify-content: left;
 }
 
+.display-hidden{
+    display: none;
+}
+
 .display-right{
     display: flex;
     align-items: right;

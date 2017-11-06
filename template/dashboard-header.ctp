@@ -4,6 +4,7 @@
       header('location: ./');
     }
     extract($_SESSION);
+    $foto = empty($foto)?'img/users/sem-foto.png': "data:image/jpeg; base64, '{$foto}'";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -264,8 +265,6 @@
               
               <?php endif?>
 
-              <?php 
-              $foto = empty($foto)?'img/users/sem-foto.png':$foto ?>
                 
               <!-- User Account: style can be found in dropdown.less -->
               <li class="dropdown user user-menu">
