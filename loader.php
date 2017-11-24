@@ -13,19 +13,28 @@
 		ini_set("display_errors", 1);
 	}
 
+	
 	spl_autoload_register(function($className){
 		
 		foreach (unserialize(FOLDERS) as $folder) {
 			$file = ROOT.$folder.DIRECTORY_SEPARATOR.$className.".php";
-
+			
 			if(file_exists($file)){
 				require_once $file;
 				return;
 			}
 		}
-
+		
 		require_once PAGE_NOT_FOUND;
 		exit;
 	});
-
-
+	
+	/**
+	 * apartir deste ponto tem que recuperar configurações fornecidas pelos administradores
+	 * 
+	 */
+	
+	define('N_QUESTOES', 10);
+	define('TENTATIVAS', 500);
+	define('NOTACORTE', 60);
+	define('CERTIFICADO_VALOR', 39.00);

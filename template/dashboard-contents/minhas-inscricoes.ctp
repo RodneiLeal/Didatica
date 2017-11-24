@@ -24,7 +24,7 @@
             </tr>
             <?php 
               
-              if($minhasInscricoes = $this->inscricoes->getInscricaoPorUsuario($idusuario)):
+              if($minhasInscricoes):
                 foreach($minhasInscricoes as $minhaInscricao):
             ?>
                 <tr>

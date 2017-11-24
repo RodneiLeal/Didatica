@@ -128,7 +128,7 @@
                                                     <span><?=$categoria?></span><br>
                                                     <a href="instrutor/<?=$instrutor_idinstrutor?>/<?=Main::preparaURL($instrutor)?>"><?=$instrutor?></a>
                                                 </div>
-                                                <h6 class="entry-title">
+                                                <h6 class="entry-title box-curso-titulo">
                                                     <a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">                                                            
                                                         <?=$titulo?>
                                                     </a>

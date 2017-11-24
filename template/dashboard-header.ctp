@@ -21,6 +21,7 @@
     <link rel="stylesheet" href="js/vendor/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="js/vendor/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="css/vendor/plugins/notification/toastr.min.css">
+    <link rel="stylesheet" href="css/vendor/jcrop/jquery.Jcrop.min.css">
     <link rel="stylesheet" href="css/complementar.css">
 
     <link rel="shortcut icon" href="img/favicon.png">
@@ -141,9 +142,9 @@
                 </ul>
               </li>
 
-              <?php endif?>
+            <?php endif?>
 
-              <?php if(false):?>
+            <?php if(false):?>
 
               <!-- Notifications: style can be found in dropdown.less -->
               <li class="dropdown notifications-menu">
@@ -188,9 +189,9 @@
                 </ul>
               </li>
               
-              <?php endif?>
+            <?php endif?>
 
-              <?php if(false):?>
+            <?php if(false):?>
             
               <!-- Tasks: style can be found in dropdown.less -->
               <li class="dropdown tasks-menu">
@@ -263,7 +264,7 @@
                 </ul>
               </li>
               
-              <?php endif?>
+            <?php endif?>
 
                 
               <!-- User Account: style can be found in dropdown.less -->
@@ -290,7 +291,7 @@
                               </font>
                             </a>
                             <small>Usuario desde <?php echo date('M/Y', strtotime($dataCadastro));?></small>
-                            <small>Ultimo acesso: <span>31/12/1999 23:59</span></small>
+                            <!-- <small>Ultimo acesso: <span>31/12/1999 23:59</span></small> -->
                         </p>
                     </li>
                     <li class="user-footer">

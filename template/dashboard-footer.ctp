@@ -167,15 +167,11 @@
 
 
     <!-- jQuery -->
-    <script
-			  src="https://code.jquery.com/jquery-3.2.1.min.js"
-			  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-			  crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <!-- DataTables -->
-    <script src="js/vendor/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="js/vendor/plugins/datatables/dataTables.bootstrap.min.js"></script>
+    <!-- CKeditor -->
+    <script src="//cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
     <!-- SlimScroll -->
     <script src="js/vendor/plugins/slimScroll/jquery.slimscroll.min.js"></script>
     <!-- FastClick -->
@@ -185,11 +181,12 @@
     <!-- AdminLTE for demo purposes -->
     <script src="js/vendor/dist/js/demo.js"></script>
 
-    <script src="//cdn.ckeditor.com/4.7.3/basic/ckeditor.js"></script>
     <script type="text/javascript" src="js/vendor/plugins/notification/toastr.min.js"></script>
+    <script type="text/javascript" src="js/vendor/countdown/jquery.countdown.min.js"></script>
     <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
-    <script type="text/javascript" src="js/vendor/menu/modernizr.custom.js"></script>
+    <script type="text/javascript" src="js/vendor/jcrop/jquery.Jcrop.min.js"></script>
     <script type="text/javascript" src="js/vendor/menu/jquery.dlmenu.js"></script>
+    <script type="text/javascript" src="js/vendor/menu/modernizr.custom.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>
     <script type="text/javascript" src="js/main.js"></script>
 

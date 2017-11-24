@@ -107,18 +107,6 @@
             return $result;
         }
 
-        // BUSCA TODAS AS PROVAS REALIZADAS POR UM USUARIO
-        public function getProvas($idinscricao){
-            $data    = array($idinscricao);
-            $sql     =  "SELECT * FROM exame WHERE inscricao_idinscricao = ?";
-            $stmt    =  $this->db->query($sql, $data);
-            $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if(empty($result)){
-                return false;
-            }
-            return $result;
-        }
-
         // SALVA UM NOVO CURSO NO BANCO DE DADOS
         public function salvaCurso($data){
             if($this->db->insert('curso', $data)){
@@ -138,6 +126,45 @@
         // SALVA TODAS AS QUESTÕES PARA PROVA DE UM DETERMINADO CURSO
         public function salvaQuestoes($data){
             if($this->db->insert('db_questoes', $data)){
+                return $this->db->last_id;
+            }
+            return false;
+        }
+
+        // SELECIONA ALEATORIAMENTE UM NUMERO DE QUESTÕES PARA MONTAR A PROVA DO CURSO 
+        public function getQuestoes($idcurso){
+            $data    = array($idcurso);
+            $sql     =  "SELECT * FROM db_questoes WHERE curso_idcurso = ? ORDER BY RAND() LIMIT ".N_QUESTOES;
+            $stmt    =  $this->db->query($sql, $data);
+            $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
+
+        // CONFERE SE UM QUESTÃO ESTA CERTA OU ERRADA
+        public function confereQuestao($data){
+            $sql     = "SELECT if(resposta = ?, TRUE, FALSE) as resposta, ";
+            $sql    .= "resposta AS correta FROM db_questoes ";
+            $sql    .= "WHERE id_questao = ? and curso_idcurso = ?";
+            $stmt    = $this->db->query($sql, $data);
+            $result  = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+
+        // BUSCA TODAS AS PROVAS REALIZADAS POR UM USUARIO INSCRITO EM UM CURSO
+        public function getProvas($idinscricao){
+            $data    = array($idinscricao);
+            $sql     = "SELECT * FROM didatica_db.exame WHERE inscricao_idinscricao = ?";
+            $stmt    = $this->db->query($sql, $data);
+            $result  = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+
+        // SALVA A PROVOA DO USUARIO ATUAL NO BANCO DE DADOS
+        public function salvaProva($data){
+            if($this->db->insert('exame', $data)){
                 return $this->db->last_id;
             }
             return false;

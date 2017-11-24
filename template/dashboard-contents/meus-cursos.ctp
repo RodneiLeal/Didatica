@@ -11,8 +11,8 @@
     <div class="row">
 
       <?php
-        $instrutor = $this->instrutor->getInstrutor($idusuario)[0];
-        if($meusCursos = $this->cursos->getCursosInstrutor($instrutor['idinstrutor'])):
+        
+        if($meusCursos):
           foreach($meusCursos as $meuCurso):
             $imagem = empty($meuCurso['imagem'])?'img/curso/no-image.png':$meuCurso['imagem'];
             $media  = number_format($meuCurso['media'], 2, '.', ' ');

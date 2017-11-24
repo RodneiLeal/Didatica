@@ -205,7 +205,7 @@
                             <div class="col-md-11">
                               <select id="banco" class="form-control">
 
-                                <?php foreach(Main::getBancos() as $banco):
+                                <?php foreach($bancos as $banco):
                                   $selected =  $banco['idbancos'] == $banco_idbanco ? 'selected' : '';
                                 ?>
 

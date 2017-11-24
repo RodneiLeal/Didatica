@@ -21,12 +21,12 @@
               <div class="row">
                 <div class="col-md-6">
                   <label>Título do curso</label>
-                  <input type="text" class="form-control curso-titulo" name="curso[titulo]"  placeholder="Título do curso" >
+                  <input type="text" class="form-control curso-titulo" name="curso[titulo]" placeholder="Título do curso" >
                 </div>
 
                 <div class="col-md-6">
                   <label>Horas mínima de curso</label>
-                  <input type="text" class="form-control time" name="curso[tempo]"  placeholder="Tempo mínimo de curso em horas">
+                  <input type="text" class="form-control time" name="curso[tempo]" placeholder="Tempo mínimo de curso em horas">
                 </div>
               </div>
 
@@ -38,7 +38,7 @@
 
                     <option disabled selected>Categorias</option>
                     <?php
-                      if($categorias = $this->cursos->getCategorias()):
+                      if($categorias):
                         foreach($categorias as $categoria):
                     ?>
                     <option value="<?=$categoria['idcategoria']?>"><?=$categoria['categoria']?></option>
@@ -83,7 +83,10 @@
               <h3 class="box-title">Preview curso</h3>
             </div><!-- /.box-header -->
             <div class="box-body" >
-              <img id="preview" class="img-responsive course_list imagePreview" src="img/curso/no-image.png" />
+              <label for="selectImage">
+                <img id="preview" class="img-responsive course_list imagePreview" src="img/curso/select-image.png" />
+              </label>
+              <input id="selectImage" type="file" name="curso" reqired class="btn btn-dfault btn-xs imageFile" style="display: none" >
               <div class="starrr" data-rating="0" title="Média entre 0 Opiniões de alunos"><span>0</span> </div>
               <div class="row">
                 <div class="col-md-6">
@@ -107,10 +110,6 @@
 
 
             </div><!-- /.box-body -->
-            <div class="box-footer">
-              <label>Imagem principal</label>
-              <input type="file" name="curso" reqired class="btn btn-dfault btn-xs imageFile" >
-            </div><!-- /.box-footer -->
           </div>
         </div>
       </div>

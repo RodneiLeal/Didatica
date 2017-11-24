@@ -30,14 +30,13 @@
                         <li class="list-group-item">
                             <b>Publicações</b>
                             <a class="pull-right">
-                           
-                                <?=count($this->cursos->getCursosInstrutor($idinstrutor))?>
+                                <?=$publicacoes?>
                             </a>
                         </li>
                         <li class="list-group-item">
                             <b>Inscritos</b>
                             <a class="pull-right">
-                                <?=count($this->inscricoes->getInscricaoPorUsuario($idusuario))?>
+                                <?=$inscritos?>
                             </a>
                         </li>
                     </ul>

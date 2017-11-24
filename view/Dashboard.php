@@ -26,5 +26,7 @@
 			include_once ROOT."template/dashboard-footer.ctp";
 		}
 
+		// INCLUIR AQUI OUTRAS FUNÇÕES UTILIZADAS PELA DASHBOARD
+
 
 	}

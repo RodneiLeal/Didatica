@@ -24,6 +24,7 @@
         <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
         <link rel="stylesheet" href="css/responsive.css" type="text/css" media="all" />
 		<link rel="stylesheet" href="css/menu/component.css" type="text/css" media="all" />
+		<link rel="stylesheet" href="css/complementar.css" type="text/css" media="all" />
 
 		<link rel="stylesheet" href="css/vendor/plugins/notification/toastr.min.css" type="text/css" media="all"/>
 
@@ -32,60 +33,6 @@
 
         <link rel="shortcut icon" href="img/favicon.png">
   
-		<style>
-			ul{
-				list-style:none;
-			}
-
-			.dropdown-menu>li>a{
-				width:100%;
-			}
-
-			.fa-angle-right{
-				margin-top:6px;
-			}
-
-			.form-wrapper-top-search {
-				background: #fff;
-				-webkit-border-radius: 4px;
-						border-radius: 4px;
-				padding: 6px;
-				position: relative;
-				width: 450px;
-			}
-
-			.form-wrapper-top-search input[type="text"] {
-				width:150px;
-				height:50px;
-				border:0px;
-				border-left:1px solid #fafafa;
-				padding-left:10px;
-				top: 2px;
-				bottom: 2px;
-					transition: width .3s ease-in-out;
-					-webkit-transition: width .3s ease-in-out;
-					-moz-transition: width .3s ease-in-out;
-					-ms-transition: width .3s ease-in-out;
-			}
-
-			.form-wrapper-top-search input[type="text"]:focus {
-				width: 400px;
-				color: black;
-			}
-
-			
-
-			.form-wrapper-top-search button[type="submit"] {
-				margin-left: -50px;
-				height: 50px;
-				width: 30px;
-				background: #dfdfdf;
-				color: white;
-				border: 0;
-				-webkit-appearance: none;
-			}
-		</style>
-
     </head>
 
 <body class="kopa-home-2">

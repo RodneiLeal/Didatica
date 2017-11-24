@@ -27,6 +27,7 @@ jQuery(document).ready(function($){
 			formModal.removeClass('is-visible');
 		}	
 	});
+	
 	//close modal when clicking the esc keyboard button
 	$(document).keyup(function(event){
     	if(event.which=='27'){

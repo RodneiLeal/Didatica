@@ -2,9 +2,130 @@ jQuery(function ($){
 
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
+  var acertos = 0;
+  var jcrop_api;
+
+  // PROVA
+    // INICIA O CRONOMETRO REGRESSIVO
+    $('.iniciar-prova, #good-luck').on('click', function(){
+      time = $('[data-time]').attr('data-time');
+      function date(t=0){
+        var d = new Date();
+        return d.getTime() + (t*60000);
+      }
+
+      $('.clock').countdown(date(time), function(event){
+        $(this).html('Finaliza em '+event.strftime('%M:%S'))
+      }).on('finish.countdown', function (event) {
+        $(this).html('Tempo esgotado!');
+        var prova = $('#prova').serializeArray();
+        finalizarProva(prova);
+        $('#finalizar-prova').attr('disabled', 'disabled');
+      });
+    });
+
+    // MOSTRA MODAL INICIAL
+    $('#good-luck').modal('show');
+
+    // CONFERE QUETÕES DA MARCADA
+    $('.opcao').on('change', function(event){
+      opt = $(this);
+
+      function confereQuestaoCallback(response){
+        response = JSON.parse(response);
+        $('[name="' + opt.attr('name') + '"]').attr('disabled', 'disabled');
+        opt.removeAttr('disabled', 'disabled');
+        opt.css({'display':'none'});
+
+        if(response[0].resposta==1){ 
+          opt.before('<i class="fa fa-check green"></i>');
+          acertos++;
+        }else{
+          opt.before('<i class="fa fa-times red"></i>');
+        }
+      }
+
+      opcao = $('#curso, [name="'+opt.attr('name')+'"]').serialize();
+
+      $.ajax({
+        url: 'controllers/curso/confereQuestao.php',
+        type: 'POST',
+        datatype: 'application/json',
+        data: opcao,
+        success: confereQuestaoCallback
+      });
+
+    });
+
+    // FINALIZAR A PROVA
+    $('#finalizar-prova').on('click', function (event) {
+      event.preventDefault();
+      $(this).attr('disabled', 'disabled');
+      var prova = $('#prova').serializeArray();
+      if(prova.length>2){
+        finalizarProva(prova);
+      }else{
+        Notificacao('error', 'Sua prova está em branco!', 'Nenhuma questão foi marcada');
+      }
+    });
+
+    function finalizarProva(prova){
+      $('.clock').countdown('stop');
+      prova.unshift({name:'nota', value:acertos});
+      
+      function provaCallback(response){
+        response = JSON.parse(response);
+        if (response.avaliacao){
+          $('#good-work').modal('show');
+          $('.nota').html(response.nota+'%');
+        }else{
+          $('#too-bad').modal('show');
+          $('.nota').html(response.nota+'%');
+        }
+        $('.respostas').html('Você acertou <strong>'+acertos+'</strong> questões');
+        setInterval(function(){
+          redireciona('Dashboard?p=curso&inscr=' + prova[2].value)
+        },600000);
+      }
+      
+      $.ajax({
+        url: 'controllers/curso/saveProva.php',
+        type: 'POST',
+        datatype: 'application/json',
+        data: prova,
+        success: provaCallback
+      });
+    }
+
+  // FIM PROVA
+
+
+  // CROP IMAGEM 
+  // $('#preview').on('click', function(){
+
+  //   $('#preview').Jcrop({
+  //     // onChange: showCoords,
+  //     // onSelect: showCoords,
+  //     minSize: [200, 140],
+  //     maxSize: [200, 140],
+  //     allowResize: true,
+  //     // onRelease: clearCoords
+  //   }, function () {
+  //     jcrop_api = this;
+  //   });
+    
+  //   function showCoords(c) {
+  //     $('#x1').val(c.x);
+  //     $('#y1').val(c.y);
+  //     $('#x2').val(c.x2);
+  //     $('#y2').val(c.y2);
+  //     $('#w').val(c.w);
+  //     $('#h').val(c.h);
+  //   };
+  // });
+  // FIM CROP
 
   //INSERIR CURSO
-  
     //CURSO PREVIEW 
     $('.curso-titulo').on('change keyup', function(){
       $('.preview-curso-titulo').text($(this).val());
@@ -118,8 +239,6 @@ jQuery(function ($){
       section.prev().removeClass('display-hidden');
     });
 
-
-
   // FIM INSERIR CURSO
 
   // TORNAR-SE INSTRUTOR
@@ -181,7 +300,8 @@ jQuery(function ($){
       if(!isEmpty($('#conta-cpf').val()))
         conta.cpf =  $('#conta-cpf').val();
 
-      // NECESSARIO AVALIAR CAMPOS EM BRANCO E PARAR PROGRAMA CASO ALGUM CAMPO ESTEJA FALTANDO
+        // PODE SER MELHORADO PARA FAZER UM UNICO ENVIO PARA PROCESSAMENTO DA MESMA FORMA COMO FOI FEITO COM O INSERIR CURSO
+        // NECESSARIO AVALIAR CAMPOS EM BRANCO E PARAR PROGRAMA CASO ALGUM CAMPO ESTEJA FALTANDO
 
       $.post('controllers/user/update.php', perfil, updateUserCallback);
 
@@ -211,7 +331,7 @@ jQuery(function ($){
         if(response){
           Notificacao('success', 'Seu solicitação foi enviada!', 'Fique atento, enviaremos uma mensagem assim que concluirmos o processo.');
           $('#form-bancario').modal('hide');
-          setTimeout(redireciona(window.location.href), 3000);
+          setInterval(redireciona(window.location.href), 3000);
         }
       }
     });
@@ -483,26 +603,6 @@ jQuery(function ($){
     });
   });
 
-  // $('.').on('click', function(){
-  //   var idusuario = $('#idusuario').val();
-  //   var data = new Object();
-
-  //   data.usuario_idusuario           = idusuario;
-  //   data.subcategoria_idsubcategoria = $('.curso-titulo').val();
-  //   data.titulo                      = $('.curso-hora').val();
-  //   data.ementa                      = $('.curso-subcategoria').val();
-  //   data.resumo                      = CKEDITOR.instances['resumo'].getData();
-    
-  //   console.log(data);
-
-
-  //   // if(isEmpty($().val()))
-  //   //   Notificacao('error', '', $(this).attr('required_msg'));
-  //   // else
-  //   //   data.
-
-  // });
-
 /*******************************  FUNÇÕES PUBLICAS  *************************************/
 
   function loginCallback(response){
@@ -567,7 +667,7 @@ jQuery(function ($){
 
   /******************************************** DESTE PONTA PARA BAIXO AS FUNÇÕES PRECISAM SER REVIZADAS ********************************************/
 
-   // REMOVE A IMAGEM QUANDO ROLAR A PAGINAPARA CIMA
+   // REMOVE A IMAGEM QUANDO ROLAR A PAGINA PARA CIMA
    $(window).scroll(function(){
     if ( $(this).scrollTop() > 300 ){
       jElement.css({
@@ -736,7 +836,7 @@ jQuery(function ($){
 
 
 
-  // FUNCTION VALIDAARQUIVO(CAMPO)
+  // FUNCTION VALIDA ARQUIVO(CAMPO)
   $("#product_file_image_1").on("change", function(){
 
       var file = this.files[0].name;
