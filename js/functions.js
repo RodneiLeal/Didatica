@@ -5,6 +5,41 @@ jQuery(function ($){
   var acertos = 0;
   var jcrop_api;
 
+  $('#congratulations').modal('show');
+
+  // SOLICITAR CERTIFICADO
+    $("#certificate-request").click(function (event) {
+      event.preventDefault();
+      var course = $(this).attr("course");
+      $('body').loading('start');
+      data = {
+        inscr: $('#inscr').val()
+      }
+
+      function pgs_getCodeCallback(response) {
+        PagSeguroLightbox({
+          code: response
+        },{
+          success: successCallback(response),
+          abort: abortCallback
+        });
+        
+        function successCallback(redirectCode){
+          // console.log(redirectCode);
+          $('body').loading('stop');
+        }
+        
+        function abortCallback(){
+          // console.error(response);
+          $('body').loading('stop');
+        }
+      }
+      
+      $.post("controllers/curso/certificado/pagamento/redirectCode.php", data, pgs_getCodeCallback);
+    });
+    
+  // FIM SOLICITAR CERTIIFICADO
+  
   // PROVA
     // INICIA O CRONOMETRO REGRESSIVO
     $('.iniciar-prova, #good-luck').on('click', function(){
@@ -60,9 +95,9 @@ jQuery(function ($){
     // FINALIZAR A PROVA
     $('#finalizar-prova').on('click', function (event) {
       event.preventDefault();
-      $(this).attr('disabled', 'disabled');
       var prova = $('#prova').serializeArray();
       if(prova.length>2){
+        $('#finalizar-prova, input[type=radio]').attr('disabled', 'disabled');
         finalizarProva(prova);
       }else{
         Notificacao('error', 'Sua prova está em branco!', 'Nenhuma questão foi marcada');
@@ -79,12 +114,13 @@ jQuery(function ($){
           $('#good-work').modal('show');
           $('.nota').html(response.nota+'%');
         }else{
-          $('#too-bad').modal('show');
+          // $('#too-bad').modal('show');
+          $('#good-work').modal('show');
           $('.nota').html(response.nota+'%');
         }
         $('.respostas').html('Você acertou <strong>'+acertos+'</strong> questões');
         setInterval(function(){
-          redireciona('Dashboard?p=curso&inscr=' + prova[2].value)
+          redireciona('Dashboard?p=curso&inscr=' + prova[2].value);
         },600000);
       }
       
@@ -98,7 +134,6 @@ jQuery(function ($){
     }
 
   // FIM PROVA
-
 
   // CROP IMAGEM 
   // $('#preview').on('click', function(){
@@ -176,6 +211,7 @@ jQuery(function ($){
         'id':"panel-1",
         'href':'#panel-'+i
       });
+      
       panel.append(function(){
         
         var div = $('<div>').addClass("box-body");
@@ -348,9 +384,8 @@ jQuery(function ($){
 
       data.curso_idcurso     = $(this).attr('data-curso');
       data.usuario_idusuario = $(this).attr('data-user');
-
+      
       function inscricaoCallback(response){
-        console.log(response);
         redireciona('Dashboard?p=curso&inscr='+response);
       }
       
@@ -1174,22 +1209,7 @@ jQuery(function ($){
   });
 
 
-  // Solicitar Certificado
-  $(".course_get_certified").click(function(){
-    var course = $(this).attr("course");
 
-    $.post("controller/course/course_payment_load_code_pagseguro.php", {
-      course: course
-    }, function(data) {
-      var resultado = data.split('-');
-      var valor = resultado[0];
-      var code = resultado[1];
-      if (valor == 0) {
-        $('#code').val(code);
-        $('#form_pagseguro').submit();
-      }
-    });
-  });
 
   // Avaliar Curso
   $(".course_get_rate").click(function(){

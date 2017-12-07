@@ -2,7 +2,7 @@
 	/*confihgurações de sistema*/
 	setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
 
-	$ini_app = parse_ini_file('app-cfg.ini', true);
+	$ini_app = parse_ini_file('app.ini', true);
 	extract($ini_app['sistema']);
 	define('MAIN_PKG', $main_pkg);
 	define("SYS_NAME", "Didática Online");
@@ -16,7 +16,7 @@
 	define("DB_USER", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"root":$db_user);
 	define("DB_PASSWD", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"1234":$db_passwd);
 	define("DB_CHARSET", "utf8");
-	define("DEBUG", false);
+	define("DEBUG", $debug);
 	define("PAGE_NOT_FOUND", ROOT."includes".DIRECTORY_SEPARATOR."404.php");
 	define("FOLDERS", serialize(array("classes",
 									  "controllers",
@@ -27,17 +27,12 @@
 									  "template")));
 									  
 	extract($ini_app['pagseguro']);
-	define('PSG_TOKEN', $psg_token);
-	define('PSG_EMAIL', $psg_email);
-	define('PSG_EMAIL_SANDBOX', $psg_email_sandbox);
-	define('PSG_URL', $psg_url);
-	define('PSG_URL_LIGHTBOX', $psg_url_lightbox);
-	define('PSG_URL_NOTIFICACAO', $psg_url_notificacao);
-	define('SANDBOX_ACTIVE', $sandbox_active);
-
-	$pgs_library = SANDBOX_ACTIVE ? "https://stc.sandbox.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js": "https://stc.pagseguro.uol.com.br/pagseguro/api/v2/checkout/pagseguro.lightbox.js";
-
-	// $_SESSION['compraProduto']						= 'Certificado Curso'; #produto teste
+	define('PGS_TOKEN', $pgs_token);
+	define('PGS_EMAIL', $pgs_email);
+	define('PGS_EMAIL_SANDBOX', $pgs_email_sandbox);
+	define('PGS_URL', $pgs_url);
+	define('PGS_URL_LIGHTBOX', $pgs_url_lightbox);
+	define('PGS_URL_NOTIFICACAO', $pgs_url_notificacao);
+	define('PGS_LIBRARY', $pgs_library);
 	
-
 	require_once ROOT."loader.php";

@@ -59,12 +59,12 @@
 
               <div class="row">
                 <div class="col-md-6">
-                  <label>Resumo</label>
+                  <label>Resumo <span class="label-desc">(Breve descrição sobre o curso)</span></label>
                   <textarea class="form-control editor" name="curso[resumo]" id="editor1" placeholder="Resumo simples"></textarea>
                 </div>
 
                 <div class="col-md-6">
-                  <label>Ementa</label>
+                  <label>Ementa <span class="label-desc">(Tópicos do curso)</span></label>
                   <textarea class="form-control editor" name="curso[ementa]" id="editor2" ></textarea>
                 </div>
               </div>

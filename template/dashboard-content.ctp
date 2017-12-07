@@ -17,6 +17,8 @@
 
         // CERTIFICADO
         case 'certificado-model':
+        case 'certificado':
+            
             include_once ROOT."template/dashboard-contents/certificado-model.ctp";
         break;
         
@@ -103,7 +105,6 @@
             $instrutor_foto     = empty($curso['instrutor_foto'])?'img/users/sem-foto.png':$curso['instrutor_foto'];
             $style              = empty($curso['imagem'])?NULL:"style=\"background:url('{$curso['imagem']}')\"";
             $media              = number_format($curso['media'], 2, '.', ' ');
-            $certificado_valor  = 'R$ '.number_format(CERTIFICADO_VALOR, 2, '.', ' ');
             $questoes           = $this->cursos->getQuestoes($inscr['idcurso']);
             
             include_once ROOT."template/dashboard-contents/prova.ctp";

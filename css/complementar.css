@@ -91,7 +91,10 @@ ul{
     color: black;
 }
 
-
+.label-desc{
+    font-size: 11px;
+    color: #636262
+}
 
 .form-wrapper-top-search button[type="submit"] {
     margin-left: -50px;

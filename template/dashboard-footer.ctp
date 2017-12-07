@@ -162,10 +162,8 @@
 
     <?php endif ?>
 
-
-
-
-
+    <!-- PagSeguro -->
+    <script src="<?=PGS_LIBRARY?>"></script>
     <!-- jQuery -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- Bootstrap -->
@@ -185,6 +183,7 @@
     <script type="text/javascript" src="js/vendor/countdown/jquery.countdown.min.js"></script>
     <script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
     <script type="text/javascript" src="js/vendor/jcrop/jquery.Jcrop.min.js"></script>
+    <script type="text/javascript" src="js/vendor/loading/jquery.loading.min.js"></script>
     <script type="text/javascript" src="js/vendor/menu/jquery.dlmenu.js"></script>
     <script type="text/javascript" src="js/vendor/menu/modernizr.custom.js"></script>
     <script type="text/javascript" src="js/functions.js"></script>

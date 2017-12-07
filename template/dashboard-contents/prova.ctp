@@ -7,6 +7,8 @@
     </ol>
   </section>
 
+ 
+
   <section class="content">
     <div class="row">
       <div class="col-md-12">
@@ -70,8 +72,7 @@
                             </div>
                               
                             <div class="timeline-footer">
-                            
-                              <?php foreach($opcoes as $key_opt=>$opcao): ?>
+                              <?php foreach($opcoes as $key_opt=>$opcao): if(empty($opcao)) continue?>
                               <div class="input-group ">
                                 <span class="input-group-addon">
                                   <input class="opcao" type="radio" name="opcao[<?=$questao['id_questao']?>]" aria-label="Resposta" value="<?=++$key_opt?>">
@@ -176,7 +177,7 @@
     </div>
   </div>
 
-    <!-- MODAL CASO A TENHA IDO BEM NA PROVA -->
+  <!-- MODAL CASO A TENHA IDO BEM NA PROVA -->
   <div class="modal fade" role="dialog" id="good-work">
     <div class="modal-dialog">
 
@@ -207,12 +208,12 @@
         </div>
 
         <div class="box-footer">
-          <a href="Dashboard?p=certificado-model" class="btn btn-default bg-orange btn-promotion pull-right">
-							<strong>
-								<i class="fa fa-thumbs-up"></i>
-								&#160;&#160;Eu quero!
-							</strong>
-						</a>
+          <button type="button" class="btn btn-default bg-orange btn-promotion pull-right" id="certificate-request" data-dismiss="modal">
+            <strong>
+              <i class="fa fa-thumbs-up"></i>
+              &#160;&#160;Eu quero!
+            </strong>
+          </button>
         </div>
 
       </div>

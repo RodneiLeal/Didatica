@@ -22,6 +22,7 @@
     <link rel="stylesheet" href="js/vendor/dist/css/skins/_all-skins.min.css">
     <link rel="stylesheet" href="css/vendor/plugins/notification/toastr.min.css">
     <link rel="stylesheet" href="css/vendor/jcrop/jquery.Jcrop.min.css">
+    <link rel="stylesheet" href="css/vendor/loading/jquery.loading.min.css">
     <link rel="stylesheet" href="css/complementar.css">
 
     <link rel="shortcut icon" href="img/favicon.png">

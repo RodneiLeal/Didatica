@@ -33,8 +33,8 @@
 	 * apartir deste ponto tem que recuperar configurações fornecidas pelos administradores
 	 * 
 	 */
-	
+
 	define('N_QUESTOES', 10);
-	define('TENTATIVAS', 500);
 	define('NOTACORTE', 60);
-	define('CERTIFICADO_VALOR', 39.00);
+	define('CERTIFICADO_VALOR', '39.99');
+	define('UNIDADE_MONETARIA', 'BRL');
