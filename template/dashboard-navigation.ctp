@@ -28,7 +28,7 @@
 			<li class="treeview">
 				<a><i class="fa fa-university"></i><span>Instrutor</span><i class="fa fa-angle-left pull-right"></i></a>
 				<ul class="treeview-menu">
-					<li><a href="Dashboard?p=perfil-edit" title="Editar Perfil"></i>Editar Perfil</a></li>
+					<li><a href="Dashboard?p=editar-perfil" title="Editar Perfil"></i>Editar Perfil</a></li>
 
 					<!--<li><a href="Dashboard?p=mensagens" title="Caixa de mensagens"></i>Caixa de Mensagens</a></li>-->
 

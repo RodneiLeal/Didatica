@@ -5,9 +5,9 @@
     switch ($p) {
 
         // PERFIL DO USUARIO
-        case 'perfil-edit':
+        case 'editar-perfil':
             $bancos = Main::getBancos();
-            include_once ROOT."template/dashboard-contents/perfil-edit.ctp";
+            include_once ROOT."template/dashboard-contents/editar-perfil.ctp";
         break;
 
         case 'minhas-inscricoes':

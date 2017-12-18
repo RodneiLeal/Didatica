@@ -135,32 +135,46 @@ jQuery(function ($){
 
   // FIM PROVA
 
-  // CROP IMAGEM 
-  // $('#preview').on('click', function(){
+  // EDITAR IMAGEM 
+    // $('#select-image').on('change', function(){
+      
+    //   var imageFile = this;
+    //   var img = $('<img>');
+    //   if (imageFile.files && imageFile.files[0]) {
+    //     var reader = new FileReader();
+    //     reader.onload = function (e) {
+    //         img.attr('src', e.target.result);
+    //     }
+    //     reader.readAsDataURL(this.files[0]);
+    //   }
 
-  //   $('#preview').Jcrop({
-  //     // onChange: showCoords,
-  //     // onSelect: showCoords,
-  //     minSize: [200, 140],
-  //     maxSize: [200, 140],
-  //     allowResize: true,
-  //     // onRelease: clearCoords
-  //   }, function () {
-  //     jcrop_api = this;
-  //   });
-    
-  //   function showCoords(c) {
-  //     $('#x1').val(c.x);
-  //     $('#y1').val(c.y);
-  //     $('#x2').val(c.x2);
-  //     $('#y2').val(c.y2);
-  //     $('#w').val(c.w);
-  //     $('#h').val(c.h);
-  //   };
-  // });
+    //   img.addClass('img-responsive');
+    //   img.addClass('edit-image');
+      
+    //   $('.edit-image').remove();
+    //   $('.edit-panel').append(img);
+      
+    //   $('.edit-panel').Jcrop({
+    //     // onChange: showCoords,
+    //     // onSelect: showCoords,
+    //     allowResize: true,
+    //   }, function () {
+    //     jcrop_api = this;
+    //   });
+      
+    //   // function showCoords(c) {
+    //   //   $('#x1').val(c.x);
+    //   //   $('#y1').val(c.y);
+    //   //   $('#x2').val(c.x2);
+    //   //   $('#y2').val(c.y2);
+    //   //   $('#w').val(c.w);
+    //   //   $('#h').val(c.h);
+    //   // };
+
+    // });
   // FIM CROP
 
-  //INSERIR CURSO
+  // NOVO CURSO
     //CURSO PREVIEW 
     $('.curso-titulo').on('change keyup', function(){
       $('.preview-curso-titulo').text($(this).val());
@@ -275,7 +289,7 @@ jQuery(function ($){
       section.prev().removeClass('display-hidden');
     });
 
-  // FIM INSERIR CURSO
+  // FIM NOVO CURSO
 
   // TORNAR-SE INSTRUTOR
     $('.form-curriculo').on('click', function(){
@@ -446,17 +460,17 @@ jQuery(function ($){
   });
 
   // IMAGEM PREVIEW
-  $(".imageFile").on('change', function(){
-    var imageFile = this;
-    if (imageFile.files && imageFile.files[0]){
-      var reader = new FileReader();
-      reader.onload = function (e) {
-          $('.imagePreview').attr('src', e.target.result);
-          $('.imageName').html(imageFile.files[0].name);
-      }
-      reader.readAsDataURL(this.files[0]);
-    }
-  });
+  // $(".imageFile").on('change', function(){
+  //   var imageFile = this;
+  //   if (imageFile.files && imageFile.files[0]){
+  //     var reader = new FileReader();
+  //     reader.onload = function (e) {
+  //         $('.imagePreview').attr('src', e.target.result);
+  //         $('.imageName').html(imageFile.files[0].name);
+  //     }
+  //     reader.readAsDataURL(this.files[0]);
+  //   }
+  // });
 
   // ATUALIZAR CURRICULO DO INSTRUTOR 
   $('.updateCurriculo').on('click', function(event){
