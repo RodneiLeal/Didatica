@@ -129,7 +129,7 @@
             <div class="col-md-12">
               <p class="mediun-text">Separei algumas questões para avaliar seus estudos, porém, antes de começarmos, vou lhe passar algumas dicas:
               <ol type="1)">
-                <li>Você terá <span data-time="<?=count($questoes)?>"><?=count($questoes)?></span> minutos para resolver as questões. Após este tempo
+                <li>Você terá <span data-nquestoes="<?=count($questoes)?>"><?=count($questoes)?></span> minutos para resolver as questões. Após este tempo
                 sua prova será avaliada e arquivada automaticamente.</li>
                 
                 <li>Você poderá finalizar sua prova a qualquer tempo, clicando no botão <div class="btn btn-danger btn-sm">Finalizar</div></li>

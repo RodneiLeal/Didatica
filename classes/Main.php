@@ -85,6 +85,35 @@
                 $string = preg_replace("/[\s_]/", "-", $string);
                 return $string;
         }
+
+        public function object2array($object) { 
+            return @json_decode(@json_encode($object),1); 
+        }
+
+        public function logMsg( $msg, $level = 'info', $file = 'return.log' ){
+            // variável que vai armazenar o nível do log (INFO, WARNING ou ERROR)
+            $levelStr = '';
+            switch ( $level ){
+                case 'info':
+                    $levelStr = 'INFO';
+                break;
+                case 'warning':
+                    $levelStr = 'WARNING';
+                break;
+                case 'error':
+                    $levelStr = 'ERROR';
+                break;
+            }
         
+            $date = date( 'Y-m-d H:i:s' );
+        
+            // formata a mensagem do log
+            // 1o: data atual
+            // 2o: nível da mensagem (INFO, WARNING ou ERROR)
+            // 3o: a mensagem propriamente dita
+            // 4o: uma quebra de linha
+            $msg = sprintf( "[%s] [%s]: %s%s", $date, $levelStr, $msg, PHP_EOL );
+            file_put_contents( $file, $msg, FILE_APPEND );
+        }
     }
     

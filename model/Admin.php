@@ -1,9 +1,20 @@
 <?php
     class Admin extends Main{
 
-        public function buscaTransacao($code){
+        public function buscaTransacaoCode($code){
             $data   = array($code);
             $sql    = "SELECT * FROM caixa WHERE code = ?";
+            $stmt   = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
+
+        public function buscaTransacaoInscr($inscr){
+            $data   = array($inscr);
+            $sql    = "SELECT * FROM caixa WHERE inscricao_idinscricao = ?";
             $stmt   = $this->db->query($sql, $data);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
@@ -24,5 +35,4 @@
             }
             return false;
         }
-
     }

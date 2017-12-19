@@ -6,7 +6,8 @@
 				$parameters,
 				$instrutor,
 				$cursos,
-				$inscricoes;
+				$inscricoes,
+				$admin;
 
 		function __construct(){
 			parent::__construct();
@@ -17,6 +18,7 @@
 			$this->instrutor  = new Instructor;
 			$this->cursos     = new CursoModel;
 			$this->inscricoes = new Inscricao;
+			$this->admin 	  = new Admin;
 
 		}
 

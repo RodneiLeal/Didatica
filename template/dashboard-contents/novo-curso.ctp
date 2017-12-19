@@ -111,7 +111,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <h4 class="preview-curso-titulo">Tíulo</h4>
+                  <h4 class="preview-curso-titulo">Título</h4>
                 </div>
               </div>
 

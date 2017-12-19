@@ -43,13 +43,15 @@ jQuery(function ($){
   // PROVA
     // INICIA O CRONOMETRO REGRESSIVO
     $('.iniciar-prova, #good-luck').on('click', function(){
-      time = $('[data-time]').attr('data-time');
+
+      Nquestoes = $('[data-nquestoes]').attr('data-nquestoes');
+
       function date(t=0){
         var d = new Date();
         return d.getTime() + (t*60000);
       }
 
-      $('.clock').countdown(date(time), function(event){
+      $('.clock').countdown(date(Nquestoes), function(event){
         $(this).html('Finaliza em '+event.strftime('%M:%S'))
       }).on('finish.countdown', function (event) {
         $(this).html('Tempo esgotado!');
@@ -62,7 +64,7 @@ jQuery(function ($){
     // MOSTRA MODAL INICIAL
     $('#good-luck').modal('show');
 
-    // CONFERE QUETÕES DA MARCADA
+    // CONFERE QUETÃO MARCADA
     $('.opcao').on('change', function(event){
       opt = $(this);
 
@@ -106,7 +108,8 @@ jQuery(function ($){
 
     function finalizarProva(prova){
       $('.clock').countdown('stop');
-      prova.unshift({name:'nota', value:acertos});
+
+      prova.unshift({name:'acertos', value:acertos}, {'name':'nquestoes', 'value':Nquestoes});
       
       function provaCallback(response){
         response = JSON.parse(response);
@@ -114,8 +117,7 @@ jQuery(function ($){
           $('#good-work').modal('show');
           $('.nota').html(response.nota+'%');
         }else{
-          // $('#too-bad').modal('show');
-          $('#good-work').modal('show');
+          $('#too-bad').modal('show');
           $('.nota').html(response.nota+'%');
         }
         $('.respostas').html('Você acertou <strong>'+acertos+'</strong> questões');

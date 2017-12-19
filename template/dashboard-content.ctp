@@ -54,8 +54,9 @@
                 ';
 
             }else{
-
-                switch(0){// STATUS_PGTO
+                $status = $this->admin->buscaTransacaoInscr($inscr['idinscricao'])[0];
+                
+                switch($status['status']){// STATUS_PGTO
                     
                     // se status do pagamento for igual a 1 ou 2, então exibe mensagem de 'aguardando pagamento'
                     case 1:
@@ -88,7 +89,7 @@
                         $btn = 
                         ' 
                         <div class="box-body course_box text-center">
-                        <button type="button" class="btn btn-success" data-insc="{idinscricao}">
+                        <button type="button" class="btn btn-success" id="certificate-request" data-insc="{idinscricao}">
                             <i class="fa fa-id-card-o" aria-hidden="true"></i> Solicitar Certificado
                         </button>
                         </div>

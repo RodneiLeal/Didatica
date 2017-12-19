@@ -8,6 +8,10 @@
 </section>
 
 <section class="content">
+
+  <input type="hidden" name="idcurso" id="curso" value="<?=$inscr['idcurso']?>">
+  <input type="hidden" name="idinscr" id="inscr" value="<?=$inscr['idinscricao']?>">
+  
   <div class="row">
     <div class="col-md-12">
       <div class="box box-widget widget-user">
@@ -56,7 +60,7 @@
                           </div>
                           
                           <div class="timeline-footer display-right">
-                            <a href="<?=empty($aula['arquivo'])?'//':$aula['arquivo']?>" target="_blank" class="btn btn-default btn-xl" ><i class="fa fa-download"></i> Arquivo</a>
+                            <a href="<?=empty($aula['arquivo'])?'//':$aula['arquivo']?>" target="_blank" class="btn btn-default btn-xl" ><i class="fa fa-download"></i> Material de apoio</a>
                           </div>
                           
                       </div>
