@@ -3039,7 +3039,7 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 9; }
+  z-index: 9999; }
   .loading > i {
     position: absolute;
     top: 50%;

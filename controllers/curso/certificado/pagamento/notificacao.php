@@ -36,3 +36,6 @@
             $admin->atualizarTransacao($transaction['code'], $data);
         }
     }
+
+
+    // quando o status for 3 ou 4 (pago), então deverá gravar o valor na carteira do instrutor

@@ -1,13 +1,13 @@
   <section class="content-header">
-    <h1>Novo curso</h1>
+    <h1>Editar curso</h1>
     <ol class="breadcrumb">
       <li><a><i class="fa fa-dashboard"></i> Home</a></li>
       <li><a>Cursos</a></li>
-      <li class="active">Novo Curso</li>
+      <li class="active">Editar Curso</li>
     </ol>
   </section>
 
-  <form method="POST" enctype="multipart/form-data" action="./controllers/curso/saveCourse.php">
+  <form method="POST" enctype="multipart/form-data" action="./controllers/curso/updateCourse.php">
     <!-- Informações do curso -->
     <section class="content" id="etapa-1">
       <div class="row">
@@ -21,12 +21,12 @@
               <div class="row">
                 <div class="col-md-6">
                   <label>Título do curso</label>
-                  <input type="text" class="form-control curso-titulo" name="curso[titulo]" placeholder="Título do curso" >
+                  <input value="<?=$curso['titulo']?>" type="text" class="form-control curso-titulo" name="curso[titulo]" placeholder="Título do curso" >
                 </div>
 
                 <div class="col-md-6">
                   <label>Horas mínima de curso</label>
-                  <input type="text" class="form-control time" name="curso[tempo]" placeholder="Tempo mínimo de curso em horas">
+                  <input value="<?=$curso['tempo']?>" type="text" class="form-control time" name="curso[tempo]" placeholder="Tempo mínimo de curso em horas">
                 </div>
               </div>
 
@@ -60,12 +60,12 @@
               <div class="row">
                 <div class="col-md-6">
                   <label>Resumo <span class="label-desc">(Breve descrição sobre o curso)</span></label>
-                  <textarea class="form-control editor" name="curso[resumo]" id="editor1" placeholder="Resumo simples"></textarea>
+                  <textarea class="form-control editor" name="curso[resumo]" id="editor1" placeholder="Resumo simples"><?=$curso['resumo']?></textarea>
                 </div>
 
                 <div class="col-md-6">
                   <label>Ementa <span class="label-desc">(Tópicos do curso)</span></label>
-                  <textarea class="form-control editor" name="curso[ementa]" id="editor2" ></textarea>
+                  <textarea class="form-control editor" name="curso[ementa]" id="editor2" ><?=$curso['ementa']?></textarea>
                 </div>
               </div>
             </div>
@@ -76,8 +76,6 @@
             </div>
           </div>
         </div>
-
-
         
         <!-- preview do curso -->
         <div class="col-md-4">
@@ -87,13 +85,9 @@
             </div>
             <div class="box-body" id="crop-avatar" >
 
-
               <div class="avatar-view">
-                <input type="hidden" class="data-image" name="curso[imagem]">
-                <img class="img-responsive course_list" src="img/curso/select-image.png" />
+                <img class="img-responsive course_list" src="<?=$curso['imagem']?>" />
               </div>
-
-
 
               <div class="starrr" data-rating="0" title="Média entre 0 Opiniões de alunos"><span>0</span> </div>
               <div class="row">
@@ -112,7 +106,7 @@
               </div>
               <div class="row">
                 <div class="col-md-12">
-                  <h4 class="preview-curso-titulo">Título</h4>
+                  <h4 class="preview-curso-titulo"><?=$curso['titulo']?></h4>
                 </div>
               </div>
 
@@ -122,6 +116,20 @@
         </div>
       </div>
     </section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     <!-- AULAS DO CURSO -->
     <section class="content display-hidden" id="etapa-2">
@@ -149,10 +157,10 @@
                       <div class="row">
                         <div class="col-md-12">
                           <label>Titulo</label>
-                          <input class="form-control" name="aula[titulo]"  placeholder="Titulo da Aula">
+                          <input class="form-control" name="aula[titulo]"  placeholder="Titulo da Aula" value="<?=$aula['titulo']?>">
                           <br>
                           <label>Objetivos</label>
-                          <textarea class="editor" name="aula[objetivos]" id="editor3"  palceholder="Descreva aqui os objetivos do seu curso"></textarea>
+                          <textarea class="editor" name="aula[objetivos]" id="editor3"  palceholder="Descreva aqui os objetivos do seu curso"><?=$aula['objetivos']?></textarea>
                           <br>
                           <input type="file" name="aula">
                         </div>
@@ -190,11 +198,15 @@
 
               <div class="box-group question-box">
 
+              <?php
+                foreach ($questoes as $key=>$questao):
+              ?>
+
                 <!-- template para questionario -->
                 <div class="box box-primary panel template">
                   <div class="box-header">
                     <h4 class="box-title">
-                      <a href="#panel-1" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">Questão 1</a>
+                      <a href="#panel-1" data-toggle="collapse" data-parent="#accordion" aria-expanded="true">Questão <?=$key+1?></a>
                     </h4>
                     <div class="box-tools pull-left">
                         <a class="btn btn-box-tool remove-ask"><i class="fa fa-trash fa-2x"></i></a>
@@ -208,7 +220,7 @@
                       <div class="row">
                         <div class="col-md-12">
                           <label>Questão</label>
-                          <input type="text" class="form-control" name="provas[1][questao]" placeholder="Questão">
+                          <input type="text" class="form-control" name="provas[<?=$key?>][questao]" placeholder="Questão" value="<?=$questao['questao']?>">
                         </div>
                       </div>
 
@@ -218,23 +230,23 @@
 
                           <div class="input-group">
                             <span class="input-group-addon">
-                              <input type="radio" value="1" name="provas[1][resposta]">
+                              <input type="radio" value="1" name="provas[<?=$key?>][resposta]" <?=$questao['resposta']==1?'checked': ''?>>
                             </span>
-                            <input class="form-control" name="provas[1][opcao_1]" type="text" placeholder="Resposta">
+                            <input class="form-control" name="provas[<?=$key?>][opcao_1]" type="text" placeholder="Resposta" value="<?=$questao['opcao_1']?>">
                           </div>
 
                           <div class="input-group">
                             <span class="input-group-addon">
-                              <input type="radio" value="2" name="provas[1][resposta]">
+                              <input type="radio" value="2" name="provas[<?=$key?>][resposta]" <?=$questao['resposta']==2?'checked': ''?>>
                             </span>
-                            <input class="form-control" name="provas[1][opcao_2]" type="text" placeholder="Resposta">
+                            <input class="form-control" name="provas[<?=$key?>][opcao_2]" type="text" placeholder="Resposta" value="<?=$questao['opcao_2']?>">
                           </div>
 
                           <div class="input-group">
                             <span class="input-group-addon">
-                              <input type="radio" value="3" name="provas[1][resposta]">
+                              <input type="radio" value="3" name="provas[<?=$key?>][resposta]" <?=$questao['resposta']==3?'checked': ''?>>
                             </span>
-                            <input class="form-control" name="provas[1][opcao_3]" type="text" placeholder="Resposta">
+                            <input class="form-control" name="provas[<?=$key?>][opcao_3]" type="text" placeholder="Resposta" value="<?=$questao['opcao_3']?>">
                           </div>
                         </div>
 
@@ -243,16 +255,16 @@
 
                           <div class="input-group">
                             <span class="input-group-addon">
-                              <input type="radio" value="4" name="provas[1][resposta]">
+                              <input type="radio" value="4" name="provas[<?=$key?>][resposta]" <?=$questao['resposta']==4?'checked': ''?>>
                             </span>
-                            <input class="form-control" name="provas[1][opcao_4]" type="text" placeholder="Resposta">
+                            <input class="form-control" name="provas[<?=$key?>][opcao_4]" type="text" placeholder="Resposta" value="<?=$questao['opcao_4']?>">
                           </div>
 
                           <div class="input-group">
                             <span class="input-group-addon">
-                              <input type="radio" value="5" name="provas[1][resposta]">
+                              <input type="radio" value="5" name="provas[<?=$key?>][resposta]" <?=$questao['resposta']==5?'checked': ''?>>
                             </span>
-                            <input class="form-control" name="provas[1][opcao_5]" type="text" placeholder="Resposta">
+                            <input class="form-control" name="provas[<?=$key?>][opcao_5]" type="text" placeholder="Resposta" value="<?=$questao['opcao_5']?>">
                           </div>
 
                         </div>
@@ -261,6 +273,10 @@
                   </div>
 
                 </div>
+
+                <?php
+                  endforeach;
+                ?>
 
               </div>
 
@@ -283,6 +299,7 @@
     <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
+
           <form class="avatar-form" action="controllers/util/crop.php" enctype="multipart/form-data" method="post">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -336,6 +353,7 @@
               <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
             </div> -->
           </form>
+
         </div>
       </div>
     </div><!-- /.modal -->

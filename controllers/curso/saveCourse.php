@@ -8,12 +8,18 @@
     $path = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$curso['titulo'].'/';
 
     if(!file_exists($path)){
-        mkdir(ROOT.$path, 0777, true);
+        @mkdir(ROOT.$path, 0777, true);
     }
 
     $instrutor = $instrutor->getInstrutor($_SESSION['idusuario'])[0];
-    $curso = array_merge($curso, ['imagem'=>$path.$_FILES['curso']['name']], ['instrutor_idinstrutor'=>$instrutor['idinstrutor']]);
-    if(($idcurso = $cursoModel->salvaCurso($curso)) && move_uploaded_file($_FILES['curso']['tmp_name'], ROOT.$path.$_FILES['curso']['name'])){
+
+    $src = $curso['imagem'];
+    $curso['imagem'] = str_replace('bucket/', $path, $curso['imagem']);
+
+    $curso = array_merge($curso, ['instrutor_idinstrutor'=>$instrutor['idinstrutor']]);
+    
+
+    if(($idcurso = $cursoModel->salvaCurso($curso)) && rename('../../'.$src, '../../'.$curso['imagem'])){
         $aula = array_merge($aula, ['arquivo'=>$path.$_FILES['aula']['name']], ['curso_idcurso'=>$idcurso]);
         if(($idaula = $cursoModel->salvaAulas($aula)) && move_uploaded_file($_FILES['aula']['tmp_name'], ROOT.$path.$_FILES['aula']['name'])){
             foreach($provas as $prova){

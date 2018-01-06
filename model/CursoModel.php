@@ -132,9 +132,11 @@
         }
 
         // SELECIONA ALEATORIAMENTE UM NUMERO DE QUESTÕES PARA MONTAR A PROVA DO CURSO 
-        public function getQuestoes($idcurso){
+        public function getQuestoes($idcurso, $limite=null){
             $data    = array($idcurso);
-            $sql     =  "SELECT * FROM db_questoes WHERE curso_idcurso = ? ORDER BY RAND() LIMIT ".N_QUESTOES;
+            $sql     =  "SELECT * FROM db_questoes WHERE curso_idcurso = ?";
+            if(isset($limite))
+                $sql .= " ORDER BY RAND() LIMIT $limite";
             $stmt    =  $this->db->query($sql, $data);
             $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){

@@ -99,6 +99,14 @@
             include_once ROOT."template/dashboard-contents/curso.ctp";
             
         break;
+
+        case 'editar-curso':
+            $curso = $this->cursos->getCursoId($curso)[0];
+            $aula = $this->cursos->getAulas($curso['idcurso'])[0];
+            $questoes = $this->cursos->getQuestoes($curso['idcurso']);
+            $categorias = $this->cursos->getCategorias();
+            include_once ROOT."template/dashboard-contents/editar-curso.ctp";
+        break;
         
         case 'prova':
             $inscr              = $this->inscricoes->getInscricaoId($_REQUEST['inscr'])[0];
@@ -106,7 +114,7 @@
             $instrutor_foto     = empty($curso['instrutor_foto'])?'img/users/sem-foto.png':$curso['instrutor_foto'];
             $style              = empty($curso['imagem'])?NULL:"style=\"background:url('{$curso['imagem']}')\"";
             $media              = number_format($curso['media'], 2, '.', ' ');
-            $questoes           = $this->cursos->getQuestoes($inscr['idcurso']);
+            $questoes           = $this->cursos->getQuestoes($inscr['idcurso'], N_QUESTOES);
             
             include_once ROOT."template/dashboard-contents/prova.ctp";
         break;

@@ -3,7 +3,7 @@
 		include 'app.php';
 	}
 
-	include "classes/Hybrid/autoload.php";
+	include "util/Hybrid/autoload.php";
 
 	if(!defined("DEBUG") || DEBUG === true){
 		error_reporting(1); 			/*não esquecer de modificar este parametro para 0*/

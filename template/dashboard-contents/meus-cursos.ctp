@@ -21,7 +21,7 @@
       <div class="col-md-3">
         <div class="box box-primary">
           <div class="box-header with-border">
-              <h3 class="box-title"><a href=""><?=$meuCurso['titulo']?></a></h3>
+              <h3 class="box-title"><a href="curso/<?=$meuCurso['idcurso']?>/<?=Main::preparaURL($meuCurso['categoria'])?>/<?=Main::preparaURL($meuCurso['titulo'])?>"><?=$meuCurso['titulo']?></a></h3>
               <div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$meuCurso['votantes']?> Opiniões de alunos"><span><?=$media?> </span></div>
               <img class="img-responsive  course_list" src="<?=$imagem?>" alt="">
           </div><!-- /.box-header -->
@@ -29,10 +29,10 @@
             <span class="desccription"><?=$meuCurso['resumo']?></span>
           </div><!-- /.box-body -->
           <div class="box-footer">
+            
+            <a href="Dashboard?p=editar-curso&curso=<?=$meuCurso['idcurso']?>" class="btn btn-default btn-xs editar-curso"><i class="fa fa-edit"></i> Editar</a>
 
               <?php if(false):?>
-
-            <button class="btn btn-default btn-xs"><i class="fa fa-edit"></i> Editar</button>
             <button class="btn btn-default btn-xs"><i class="fa fa-globe"></i> Publicar</button>
             <button class="btn btn-default btn-xs"><i class="fa fa-ban"></i> Bloquear</button>
               <?php endif?>
