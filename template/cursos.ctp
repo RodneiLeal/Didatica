@@ -49,6 +49,7 @@
 	    			<div class="col-md-12 col-sm-12 col-xs-12">
 	    				<div class="widget kopa-masonry-list-2-widget">
 	    					<div class="widget-title widget-title-s5 text-left">
+								<span></span>
  	                            <h4>Cursos para: <?=$categoria_curso?></h4>
  	                        </div>
 
@@ -63,10 +64,10 @@
                                             $media  = number_format($media, 2, '.', ' ');
 								?>
 											<li class="masonry-item">
-												<article class="entry-item hot-item">
+												<article class="entry-item hot-item" data-html="true" data-toggle="popover" data-container="body" data-content="<?=$resumo?>">
 													<div class="entry-thumb">
 														<a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">
-															<div class="mask"></div>
+															<!-- <div class="mask"></div> -->
 															<img src="<?=$imagem?>" height="230px">
 														</a>
 														<!--<span class="entry-hot">New</span> se curso inserido a menos de 30 dias -->
@@ -142,46 +143,6 @@
             <!-- container -->
             
         </section>
-
-		
-		<section class="kopa-area kopa-area-15">
-     		<div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="widget kopa-ads-2-widget">
-                            <div class="widget-title widget-title-s5 text-center">
-                                <span></span>
-                                <h2>Faça parte do Didática Online</h2>
-                                <p>Comece a ensinar ou a aprender</p>
-								<BR><BR><BR>
-                             </div>
-							 
- 
-							 
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<div class="col-md-6 col-sm-6 col-xs-12 text-center">
-									<h4>Torne-se um Instrutor</h4>
-									Ensine o que você adora. A Didática Online disponibiliza a facilidade para você criar seu curso online
-									<br>
-									<a href="#" class="kopa-button blue-button medium-button kopa-button-icon">Começar</a>
-								</div>
-								<div class="col-md-6 col-sm-6 col-xs-12 text-center">
-									<h4>Aprenda com os melhores</h4>
-									Escolha grandes cursos e aprenda com os melhores e mais especializados instrutores da Didática Online
-									<br>
-									<a href="#" class="kopa-button blue-button medium-button kopa-button-icon">Entrar</a>
-								</div>
-							</div>
-							
-                        </div>
-                        <!-- widget -->
-                    </div>
-                    <!-- col-md-12 -->
-                </div>
-                <!-- row -->
-			</div>	
-		 </section>	
-			
     </div>
     <!-- main-content -->
 

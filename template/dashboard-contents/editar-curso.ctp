@@ -7,7 +7,7 @@
     </ol>
   </section>
 
-  <form method="POST" enctype="multipart/form-data" action="./controllers/curso/updateCourse.php">
+  <form method="POST" enctype="multipart/form-data" action="./controllers/curso/updateCurso.php">
     <!-- Informações do curso -->
     <section class="content" id="etapa-1">
       <div class="row">
@@ -21,6 +21,7 @@
               <div class="row">
                 <div class="col-md-6">
                   <label>Título do curso</label>
+                  <input type="hidden" name="curso[idcurso]" value="<?=$curso['idcurso']?>">
                   <input value="<?=$curso['titulo']?>" type="text" class="form-control curso-titulo" name="curso[titulo]" placeholder="Título do curso" >
                 </div>
 
@@ -80,12 +81,17 @@
         <!-- preview do curso -->
         <div class="col-md-4">
           <div class="box box-primary" style="overflow: hidden">
+
             <div class="box-header with-border">
               <h3 class="box-title">Preview curso</h3>
             </div>
+
             <div class="box-body" id="crop-avatar" >
 
               <div class="avatar-view">
+
+                <input type="hidden" class="data-image" name="curso[imagem]" value="<?=$curso['imagem']?>">
+
                 <img class="img-responsive course_list" src="<?=$curso['imagem']?>" />
               </div>
 
@@ -120,17 +126,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
     <!-- AULAS DO CURSO -->
     <section class="content display-hidden" id="etapa-2">
       <div class="row">
@@ -148,6 +143,7 @@
                 <div class="box box-primary panel">
                   <div class="box-header">
                     <h4 class="box-title">
+                      <input type="hidden" name="aula[idaula]" value="<?=$aula['idaula']?>">
                       <a href="#aula-1" data-parent="#accordion" data-toggle="collapse" aria-expanded="true">Aula 1</a>
                     </h4>
                   </div>
@@ -155,7 +151,7 @@
                     <div class="box-body">
 
                       <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                           <label>Titulo</label>
                           <input class="form-control" name="aula[titulo]"  placeholder="Titulo da Aula" value="<?=$aula['titulo']?>">
                           <br>
@@ -164,6 +160,12 @@
                           <br>
                           <input type="file" name="aula">
                         </div>
+
+                        <div class="col-md-6">
+                          <label>Material atual</label>
+                          <iframe id="preview-doc" src="<?=$aula['arquivo']?>"></iframe>
+                        </div>
+
                       </div>
 
                     </div>
@@ -216,6 +218,7 @@
                   <div class="collapse in panel-collapse" aria-expanded="true" id="panel-1">
 
                     <div class="box-body">
+                      <input type="hidden" name="provas[<?=$key?>][id_questao]" value="<?=$questao['id_questao']?>">
 
                       <div class="row">
                         <div class="col-md-12">
@@ -284,7 +287,7 @@
 
             <div class="box-footer">
               <button type="button" class="btn btn-success btn-lg etapa-anterior"><i class="fa fa-angle-double-left"></i> Voltar</button>
-              <button type="button" class="btn btn-warning btn-lg add-ask">Adicionar Questão <i class="fa fa-question-circle"></i></button>
+              <!-- <button type="button" class="btn btn-warning btn-lg add-ask">Adicionar Questão <i class="fa fa-question-circle"></i></button> -->
               <button type="submit" class="btn btn-success btn-lg pull-right">Finalizar <i class="fa fa-thumbs-up"></i></button>
             </div>
 

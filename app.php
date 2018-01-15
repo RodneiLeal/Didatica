@@ -12,7 +12,7 @@
 	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"http://localhost/".MAIN_PKG."/":$_SERVER['REQUEST_SCHEME'].'s://'.$_SERVER['HTTP_HOST']);
 	define("CONFIRME_URI", HOME_URI.$confirme_path_file);
 	define("DB_HOST", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'localhost':$db_host);
-	define("DB_NAME", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'didatica_db':$db_name);
+	define("DB_NAME", $db_name);
 	define("DB_USER", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"root":$db_user);
 	define("DB_PASSWD", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"1234":$db_passwd);
 	define("DB_CHARSET", "utf8");

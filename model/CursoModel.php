@@ -33,10 +33,10 @@
         public function getCursosPorCategoria($categoria, $subcategoria=null){
             if(!empty($subcategoria)){
                 $data	 = array($subcategoria);
-                $sql     = "SELECT * FROM view_cursos WHERE subcategoria = ?";
+                $sql     = "SELECT * FROM view_cursos WHERE subcategoria = ? AND locked = 1";
             }else{
                 $data	 = array($categoria);
-                $sql     = "SELECT * FROM view_cursos WHERE categoria = ?";
+                $sql     = "SELECT * FROM view_cursos WHERE categoria = ? AND locked = 1";
             }
 			$stmt	 = $this->db->query($sql, $data);
 			$result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -61,7 +61,7 @@
         // SELECIONA CURSO POR TITULO
         public function searchCursos(){
 			$data	 = array($this->search);
-            $sql	 = "SELECT * from view_cursos WHERE titulo LIKE '%?%'";
+            $sql	 = "SELECT * from view_cursos WHERE titulo LIKE '%?%' AND locked = 1";
 			$stmt	 = $this->db->query($sql, $data);
 			$result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
@@ -75,7 +75,8 @@
             $data    = array($idcurso);
             $sql     = "SELECT t1.*, t2.nome, t2.foto AS avatar FROM avaliacao AS t1 ";
             $sql    .= "LEFT JOIN usuario AS t2 ON t2.idusuario = t1.usuario_idusuario "; 
-            $sql    .= "WHERE curso_idcurso = ?";
+            $sql    .= "WHERE curso_idcurso = ? ";
+            $sql    .= " AND locked = 1";
             $stmt    =  $this->db->query($sql, $data);
             $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
@@ -168,6 +169,20 @@
         public function salvaProva($data){
             if($this->db->insert('exame', $data)){
                 return $this->db->last_id;
+            }
+            return false;
+        }
+
+        public function updateCurso($where_field, $where_field_value, $values){
+            if(is_string($this->db->update('curso', $where_field, $where_field_value, $values))){
+                return true;
+            }
+            return false;
+        }
+        
+        public function updateAula($where_field, $where_field_value, $values){
+            if(is_string($this->db->update('aula', $where_field, $where_field_value, $values))){
+                return true;
             }
             return false;
         }

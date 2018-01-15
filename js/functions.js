@@ -5,6 +5,24 @@ jQuery(function ($){
   var acertos = 0;
   var jcrop_api;
 
+  // REMOVE A IMAGEM QUANDO ROLAR A PAGINA PARA CIMA
+  $(window).scroll(function () {
+    this.$img = jElement.find('img#capa');
+    if ($(this).scrollTop() > 250) {
+      jElement.css({
+        'position': 'fixed',
+        'top': '10px'
+      });
+
+      this.$img.css({ 'display': 'none' });
+    } else {
+      jElement.css({
+        'top': '100px'
+      });
+      this.$img.css({ 'display': 'block' });
+    }
+  });
+
   $('#congratulations').modal('show');
 
   // SOLICITAR CERTIFICADO
@@ -142,7 +160,14 @@ jQuery(function ($){
     //CURSO PREVIEW 
     $('.curso-titulo').on('change keyup', function(){
       $('.preview-curso-titulo').text($(this).val());
+      $('[name="aula[titulo]"]').val($(this).val());
     });
+
+    $('textarea#ementa').on('change keyup', function(){
+      console.log($(this).val());
+
+      // $('[name="aula[objetivos]"]').val(CKEDITOR.instances['ementa'].getData());
+    })
 
     $('.curso-subcategoria').on('change keyup', function(){
       $('.preview-curso-subcategoria').text($('.curso-subcategoria option:selected').text());
@@ -423,19 +448,6 @@ jQuery(function ($){
 
   });
 
-  // IMAGEM PREVIEW
-  // $(".imageFile").on('change', function(){
-  //   var imageFile = this;
-  //   if (imageFile.files && imageFile.files[0]){
-  //     var reader = new FileReader();
-  //     reader.onload = function (e) {
-  //         $('.imagePreview').attr('src', e.target.result);
-  //         $('.imageName').html(imageFile.files[0].name);
-  //     }
-  //     reader.readAsDataURL(this.files[0]);
-  //   }
-  // });
-
   // ATUALIZAR CURRICULO DO INSTRUTOR 
   $('.updateCurriculo').on('click', function(event){
 
@@ -680,19 +692,7 @@ jQuery(function ($){
 
   /******************************************** DESTE PONTA PARA BAIXO AS FUNÇÕES PRECISAM SER REVIZADAS ********************************************/
 
-   // REMOVE A IMAGEM QUANDO ROLAR A PAGINA PARA CIMA
-   $(window).scroll(function(){
-    if ( $(this).scrollTop() > 300 ){
-      jElement.css({
-        'position':'fixed',
-        'top':'10px'
-      });
-    }else{
-      jElement.css({
-        'top':'100px'
-      });
-    }
-  });
+
 
   // ADICIONA IMAGEM USUÁRIO (PERFIL)
   $(".ProfileUpdateImage").on("change", function(){
@@ -1491,12 +1491,6 @@ jQuery(function ($){
 
      }
   });
-
-
-
-
-
-
 
   //função de notificações
   function Notificacao(tipo, titulo, mensagem)

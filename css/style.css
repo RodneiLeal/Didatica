@@ -4091,7 +4091,7 @@ Kopa course search 2 widget
  	position:fixed ;
 	top: 100px;
 	width:300px;
-	height:500px;
+	/* height:500px; */
 	box-shadow:0 2px 5px #727272;
 	z-index:999
  }
@@ -7068,8 +7068,7 @@ Kopa professor list 2 widget
   .page-header .page-header-inner {
     padding: 80px 0;
     position: relative;
-    z-index: 2;
-    text-align: center; }
+    z-index: 2;}
     .page-header .page-header-inner .page-title {
       font-size: 32px;
       line-height: 36px;
@@ -7880,6 +7879,7 @@ Kopa professor list 2 widget
     margin-right: 30px;
     width: 270px; }
   .entry-course-box .row > div.left-col .entry-content > p {
+    text-align: justify;
     line-height: 24px;
     margin-bottom: 20px;
 	font-weight: 400;

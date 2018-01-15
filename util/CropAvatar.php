@@ -42,10 +42,6 @@
             if ($type) {
                 $extension = image_type_to_extension($type);
 
-                // correto não é para pasta imagens e simpara a pasta imagens do usuario
-                // pasta users/$nome_usuario - para salvar o avatar do usuario.
-                // pasta users/$nome_usuario/cursos/$nome_do_curso - para salvar imagem do curso.
-
                 $location =  "../../bucket/"; 
 
                 $src = $location . date('YmdHis') . '.original' . $extension;
@@ -78,11 +74,7 @@
             }
         }
 
-        private function setDst() { // seta local de destino e nome do arquivo
-
-            // se origem for editar perfil, então local de destino final do arquivo é pasta uploads>$user_name
-            // se origem for editar curso ou novo curso, então destino final do arquivo é pasta uploads>$user_name>$curso
-
+        private function setDst() {
             $location =  "../../bucket/"; 
             $this -> dst = $location . date('YmdHis') . '.png';
         }

@@ -92,6 +92,7 @@
 	    			<div class="col-md-12 col-sm-12 col-xs-12">
 	    				<div class="widget kopa-masonry-list-2-widget">
 	    					<div class="widget-title widget-title-s5 text-left">
+                                <span></span>
  	                            <h4>Mais Pupulares</h4>
  	                        </div>
 
@@ -110,10 +111,11 @@
                                 ?>
 
                                     <li class="masonry-item">
-                                        <article class="entry-item hot-item">
+                                        <article class="entry-item hot-item" data-html="true" data-toggle="popover" data-container="body" data-content="<?=$resumo?>">
                                             <div class="entry-thumb">
+
                                                 <a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">
-                                                    <div class="mask"></div>
+                                                    <!-- <div class="mask"></div> -->
                                                     <img src="<?=$imagem?>" height="230px">
                                                 </a>
                                                 <!--<span class="entry-hot">Hot</span>-->

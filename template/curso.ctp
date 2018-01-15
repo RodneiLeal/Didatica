@@ -9,19 +9,18 @@
             <div class="page-header-inner">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="page-title clearfix pull-left">
-                                <?=$titulo?>
-                            </h1>
-                        </div>
-                        <div class="col-md-12">
-							<h5 class=" clearfix pull-left" style="color:#fff"><?=$resumo?></h5>
-                        </div>
+						<div class="col-md-9">
+							<h1 class="page-title clearfix pull-left">
+								<?=$titulo?>
+							</h1>
+						</div>
+					</div>
+					
+					<div class="row">
                         <div class="col-md-12  pull-left">
 							<br>
 							<h6 class=" clearfix pull-left" style="color:#fff">Criado por: <?=$instrutor?></h6>
                         </div>
-                        <!-- col-md-12 -->
                     </div>
                     <!-- row -->
                 </div>
@@ -45,42 +44,28 @@
 
                     			<div class="col-md-12 col-sm-12 col-xs-12 left-col">
 
-                                    <h5 class="entry-title">SOBRE O CURSO</h5>
-
+									<h5 class="entry-title">SOBRE O CURSO</h5>
+									
                                     <div class="entry-content">
-                                        <p>
-											<?=$ementa?>
-										</p>
+                                        <p><?=$resumo?></p>
 
-                                        <br>
+										
+										<h5 class="entry-title">O que você vai aprender neste curso:</h5>
 
-                                        <div class="tag-box">
+										<div class="entry-content">
+											<p><?=$ementa?></p>
+										</div>	
 
-                                            <span>Categoria:</span>
-
-                                            <a href="cursos/<?=$categoria?>"><?=$categoria?></a>
-                                        </div>
-                                        <!-- tag-box -->
-
-                                        <div class="social-box clearfix">
-
-
-                                            <ul class="social-links pull-left">
-												<!-- Go to www.addthis.com/dashboard to customize your tools -->
-												<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-55ccbb241577e148"></script>
-												<!-- Go to www.addthis.com/dashboard to customize your tools -->
-												<div class="addthis_inline_share_toolbox_pivb"></div>
-                                            </ul>
-
-                                        </div>
-
-                                        <!-- social-box -->
+										<div class="tag-box">
+											<span>Categoria:</span>
+											<a href="cursos/<?=$categoria?>"><?=$categoria?></a>
+										</div>
 
 										<?php
 											$foto = empty($foto)?'img/users/sem-foto.png':$foto;
 										?>
 
-                                        <div class="about-author">
+                                        <!-- <div class="about-author">
                                             <div class="author-avatar pull-left">
 												<a href="#">
 													<img src="<?=$foto?>" alt="<?=$instrutor?>">
@@ -94,7 +79,7 @@
 												</p>
 
                                             </div>
-                                        </div>
+                                        </div> -->
                                         <!-- about-author -->
 
                                     </div>
@@ -171,7 +156,7 @@
                     	<div class="widget kopa-course-search-2-widget">
 							<?php $imagem = empty($imagem)?'img/curso/no-image.png':$imagem;?>
 
-							<img src="<?=$imagem?>" height="218px">
+							<img src="<?=$imagem?>" id="capa">
  	                        <div class="widget-content text-center">
 								<br>
 									<h5><?=$titulo?></h5>
@@ -197,17 +182,13 @@
 											<button class="kopa-button green-button medium-button kopa-button-icon cd-signin">Iniciar Curso</button>
 										
 									<?php endif ?>
-									
-
 
 								<hr>
 									<div class="comment-avatar  ">
 										<img alt="foto do instrutor" src="<?=$foto?>" width="50px">
 									</div>
 									<h6><?=$instrutor?></h6>
-									<?php 
-										// echo $row['usuario_formacao'];
-									?>
+
 	                        </div>
 	                        <!-- widget-content -->
         				</div>
@@ -224,45 +205,5 @@
 
         </section>
         <!-- kopa-area -->
-
-
-		<section class="kopa-area kopa-area-15">
-     		<div class="container">
-                <div class="row">
-                    <div class="col-md-12 col-sm-12 col-xs-12">
-                        <div class="widget kopa-ads-2-widget">
-                            <div class="widget-title widget-title-s5 text-center">
-                                <span></span>
-                                <h2>Faça parte do Didática Online</h2>
-                                <p>Comece a ensinar ou a aprender</p>
-								<BR><BR><BR>
-                             </div>
-
-
-
-							<div class="col-md-12 col-sm-12 col-xs-12">
-								<div class="col-md-6 col-sm-6 col-xs-12 text-center">
-									<h4>Torne-se um Instrutor</h4>
-									Ensine o que você adora. A Didática Online disponibiliza a facilidade para você criar seu curso online
-									<br>
-									<a href="#" class="kopa-button blue-button medium-button kopa-button-icon">Começar</a>
-								</div>
-								<div class="col-md-6 col-sm-6 col-xs-12 text-center">
-									<h4>Aprenda com os melhores</h4>
-									Escolha grandes cursos e aprenda com os melhores e mais especializados instrutores da Didática Online
-									<br>
-									<a href="#" class="kopa-button blue-button medium-button kopa-button-icon">Entrar</a>
-								</div>
-							</div>
-
-                        </div>
-                        <!-- widget -->
-                    </div>
-                    <!-- col-md-12 -->
-                </div>
-                <!-- row -->
-			</div>
-		 </section>
-
     </div>
     <!-- main-content -->

@@ -16,7 +16,6 @@
 			include_once ROOT."template/header.ctp";
 			include_once ROOT."template/home.ctp";
 			include_once ROOT."template/footer.ctp";
-
 		}
 
 
