@@ -250,3 +250,23 @@ iframe#preview-doc{
     width: 100%;
     min-height: 350px;
 }
+
+
+*{
+   -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+}
+
+.painel-financeiro{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 32px !important;
+    font-weight: 600;
+    line-height: 38px;
+    padding-bottom: 4px;
+}

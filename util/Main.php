@@ -47,7 +47,7 @@
 			return $query->fetchAll();
         }
 
-        public function formataData($data, $mode){
+        public function formataData($data, $mode='d'){
             $data = new DateTime($data);
             switch($mode){
                 case 'dh':

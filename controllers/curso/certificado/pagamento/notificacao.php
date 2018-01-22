@@ -28,14 +28,18 @@
                 'code'=>$transaction['code'],
                 'valor'=>$transaction['grossAmount']
             );
-
             
         if(!$admin->buscaTransacaoCode($transaction['code'])){
             $id = $admin->gravarTransacao($data);
         }else{
             $admin->atualizarTransacao($transaction['code'], $data);
+            switch ($data['status']) {
+                case 3:
+                case 4:
+                    $admin->pagarComissao($data);
+                break;
+            }
         }
+        
     }
 
-
-    // quando o status for 3 ou 4 (pago), então deverá gravar o valor na carteira do instrutor

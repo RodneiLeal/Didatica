@@ -48,35 +48,9 @@
 
 			<div class="col-md-4 col-sm-4 col-xs-12">
 
-				<div class="widget kopa-newsletter-widget">
+				<div id="fb-root"></div>
+				<div class="fb-page" data-href="https://www.facebook.com/didaticacursosonline" data-width="440" data-height="290" data-small-header="false" data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true"></div>
 
-					<h4 class="widget-title">Newsletter</h4>
-					
-					<form class="newsletter-form clearfix" method="post" action="">
-						<p class="input-email clearfix">
-							<input type="text" size="40" required class="email" value="" name="email" onblur="if(this.value=='')this.value=this.defaultValue;" onfocus="if(this.value==this.defaultValue)this.value='';">
-							<input type="submit" class="submit" value="Assinar">
-						</p>                    
-					</form>
-					<div id="newsletter-response"></div>
-
-				</div>
-				<!-- kopa-newsletter-widget -->
-
-				<div class="widget kopa-social-link-widget">
-
-					<h4 class="widget-title">Siga-nos</h4>
-
-					<ul class="social-nav model-2 clearfix">
-						<li><a href="#" class="twitter"><i class="fa fa-twitter"></i></a></li>
-						<li><a href="#" class="facebook"> <i class="fa fa-facebook"></i></a></li>
-						<li><a href="#" class="google-plus"><i class="fa fa-google-plus"></i></a></li>
-						<li><a href="#" class="linkedin"><i class="fa fa-linkedin"></i></a></li>
-						<li><a href="#" class="pinterest"><i class="fa fa-pinterest-p"></i></a></li>
-					</ul>
-					
-				</div>
-				<!-- kopa-social-link-widget -->
 				
 			</div>
 		<!-- col-md-4 -->
@@ -876,6 +850,15 @@
 <script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/functions.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.11&appId=159280651284190';
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 	
 	

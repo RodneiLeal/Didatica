@@ -1,27 +1,40 @@
 jQuery(function ($){
 
+  
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
   var jcrop_api;
 
-  // REMOVE A IMAGEM QUANDO ROLAR A PAGINA PARA CIMA
-  $(window).scroll(function () {
-    this.$img = jElement.find('img#capa');
-    if ($(this).scrollTop() > 250) {
-      jElement.css({
-        'position': 'fixed',
-        'top': '10px'
-      });
 
-      this.$img.css({ 'display': 'none' });
-    } else {
-      jElement.css({
-        'top': '100px'
-      });
-      this.$img.css({ 'display': 'block' });
-    }
-  });
+  // FACEBOOK API
+    (function (d, s, id) {
+      var js, fjs = d.getElementsByTagName(s)[0];
+      if (d.getElementById(id)) return;
+      js = d.createElement(s); js.id = id;
+      js.src = 'https://connect.facebook.net/pt_BR/sdk.js#xfbml=1&version=v2.11&appId=159280651284190';
+      fjs.parentNode.insertBefore(js, fjs);
+    }(document, 'script', 'facebook-jssdk'));
+  // FIM
+
+  // REMOVE A IMAGEM QUANDO ROLAR A PAGINA PARA CIMA
+    $(window).scroll(function () {
+      this.$img = jElement.find('img#capa');
+      if ($(this).scrollTop() > 250) {
+        jElement.css({
+          'position': 'fixed',
+          'top': '10px'
+        });
+
+        this.$img.css({ 'display': 'none' });
+      } else {
+        jElement.css({
+          'top': '100px'
+        });
+        this.$img.css({ 'display': 'block' });
+      }
+    });
+  // FIM 
 
   $('#congratulations').modal('show');
 
@@ -43,12 +56,10 @@ jQuery(function ($){
         });
         
         function successCallback(redirectCode){
-          // console.log(redirectCode);
           $('body').loading('stop');
         }
         
         function abortCallback(){
-          // console.error(response);
           $('body').loading('stop');
         }
       }
@@ -56,13 +67,15 @@ jQuery(function ($){
       $.post("controllers/curso/certificado/pagamento/redirectCode.php", data, pgs_getCodeCallback);
     });
     
-  // FIM SOLICITAR CERTIIFICADO
+  // FIM
   
   // PROVA
     // INICIA O CRONOMETRO REGRESSIVO
     $('.iniciar-prova, #good-luck').on('click', function(){
 
-      Nquestoes = $('[data-nquestoes]').attr('data-nquestoes');
+      Nquestoes = $('#nquestoes').val();
+
+      console.log(Nquestoes);
 
       function date(t=0){
         var d = new Date();
@@ -153,7 +166,7 @@ jQuery(function ($){
       });
     }
 
-  // FIM PROVA
+  // FIM
 
   // NOVO CURSO
                      /*  falta somente a validacao das informações  */

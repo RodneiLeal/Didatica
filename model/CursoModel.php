@@ -132,6 +132,11 @@
             return false;
         }
 
+        // ATUALIZAR BANCO DE QUESTÕES DE UM CURSO
+        public function atualizaQuestoes($data){
+            var_dump($data);
+        }
+
         // SELECIONA ALEATORIAMENTE UM NUMERO DE QUESTÕES PARA MONTAR A PROVA DO CURSO 
         public function getQuestoes($idcurso, $limite=null){
             $data    = array($idcurso);

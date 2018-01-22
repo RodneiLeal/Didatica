@@ -120,10 +120,13 @@
         break;
 
         default:
+        
             if($tipo){
-                $publicacoes = count($this->cursos->getCursosInstrutor($idinstrutor));
-                $inscritos   = count($this->inscricoes->getInscricaoPorinstrutor($idinstrutor));
+                $publicacoes       = count($this->cursos->getCursosInstrutor($idinstrutor));
+                $inscritos         = count($this->inscricoes->getInscricaoPorinstrutor($idinstrutor));
+                $resumoFinanceiro  = $this->instrutor->resumoFinanceiro($idinstrutor);
             }
+
             include_once ROOT."template/dashboard-contents/perfil.ctp";
         
     }

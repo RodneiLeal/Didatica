@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <?php if($tipo): ?>
+        <?php if($tipo): /* este trecho de codigo deve ser reduzino para uma função */?> 
 
         <div class="col-md-9">
             <div class="box box-primary">
@@ -73,8 +73,12 @@
                 </div>
             </div>
         </div>
-
         <?php endif;?>
-
     </div>
+
+        <?php if($tipo): /* este trecho de codigo deve ser reduzino para uma função */
+             echo $resumoFinanceiro;
+        endif;?>
+
 </section>
+

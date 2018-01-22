@@ -54,7 +54,7 @@
                         </li>
 
                         <?php 
-                          if(true): 
+                          if(!empty($questoes)): 
                             foreach($questoes as $key=>$questao):
                               $opcoes = array_values(array_slice($questao, 3, 5));
                         ?>
@@ -111,6 +111,8 @@
       </div>
     </div>
   </section>
+
+  <input type="hidden" id="nquestoes" value="<?=count($questoes)?>">
 
   <!-- MODAL DE ORIENTAÇÃO PARA PROVA -->
   <div class="modal fade" role="dialog" id="good-luck">

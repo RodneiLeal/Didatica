@@ -38,3 +38,4 @@
 	define('NOTACORTE', 60);
 	define('CERTIFICADO_VALOR', '39.99');
 	define('UNIDADE_MONETARIA', 'BRL');
+	define('COMISSAO', 10/100);

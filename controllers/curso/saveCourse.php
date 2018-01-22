@@ -22,10 +22,12 @@
     if(($idcurso = $cursoModel->salvaCurso($curso)) && rename('../../'.$src, '../../'.$curso['imagem'])){
         $aula = array_merge($aula, ['arquivo'=>$path.$_FILES['aula']['name']], ['curso_idcurso'=>$idcurso]);
         if(($idaula = $cursoModel->salvaAulas($aula)) && move_uploaded_file($_FILES['aula']['tmp_name'], ROOT.$path.$_FILES['aula']['name'])){
+            
             foreach($provas as $prova){
                 $prova = array_merge($prova, ['curso_idcurso'=>$idcurso]);
                 $idquestao = $cursoModel->salvaQuestoes($prova);
             }
+            
         }  
     }
     

@@ -123,9 +123,6 @@
       </div>
     </section>
 
-
-
-
     <!-- AULAS DO CURSO -->
     <section class="content display-hidden" id="etapa-2">
       <div class="row">
@@ -204,6 +201,7 @@
                 foreach ($questoes as $key=>$questao):
               ?>
 
+                <input type="hidden" name="provas[<?=$key?>][id_questao]" value="<?=$questao['id_questao']?>">
                 <!-- template para questionario -->
                 <div class="box box-primary panel template">
                   <div class="box-header">
@@ -218,7 +216,6 @@
                   <div class="collapse in panel-collapse" aria-expanded="true" id="panel-1">
 
                     <div class="box-body">
-                      <input type="hidden" name="provas[<?=$key?>][id_questao]" value="<?=$questao['id_questao']?>">
 
                       <div class="row">
                         <div class="col-md-12">
