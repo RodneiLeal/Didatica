@@ -1,6 +1,6 @@
 <?php
 
-	class Valida_Certificado extends Main implements interfaceController{
+	class Valida_certificado extends Main implements interfaceController{
 
 		private $action,
 				$parameters;
@@ -14,6 +14,6 @@
 		}
 
 		public function index(){
-			include_once ROOT."template/certificado-validate.ctp";
+			include_once ROOT."template/valida-certificado.ctp";
 		}
 	}

@@ -115,5 +115,22 @@
             $msg = sprintf( "[%s] [%s]: %s%s", $date, $levelStr, $msg, PHP_EOL );
             file_put_contents( $file, $msg, FILE_APPEND );
         }
+
+        public function EnviaEmail($destinatario_email, $destinatario_nome, $assunto, $mensagem, $link){ 
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            curl_setopt($ch, CURLOPT_USERPWD, 'api:key-ce207b344d6e7bb0bb925f9ab83ec646'); /* VERIFICAR CHAVE DA API MAILGUN */
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v2/www.showprojetos.com.br/messages');
+            curl_setopt($ch, CURLOPT_POSTFIELDS, 
+                        array('from' => 'Didática Online Contato <nao-responda@didaticaonline.com.br>',
+                            'to' => $destinatario_nome .'<'.$destinatario_email.'>',
+                            'subject' => $assunto,
+                            'html' => $mensagem));
+            $result = curl_exec($ch);
+            curl_close($ch);
+            return $result;
+        }
     }
     

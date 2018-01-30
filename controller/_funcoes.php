@@ -40,28 +40,10 @@ if(!function_exists(preparaURL))
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
 if(!function_exists(EnviaEmail))
 {
-	function EnviaEmail($destinatario_email, $destinatario_nome, $assunto, $mensagem, $link)
-	{ 
-		 
- 		$ch = curl_init();
+	function EnviaEmail($destinatario_email, $destinatario_nome, $assunto, $mensagem, $link){ 
+		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
 		curl_setopt($ch, CURLOPT_USERPWD, 'api:key-ce207b344d6e7bb0bb925f9ab83ec646');
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

@@ -1,5 +1,6 @@
 <?php
   include_once "../../loader.php";
+  
   $crop = new CropAvatar(
     isset($_POST['avatar_src']) ? $_POST['avatar_src'] : null,
     isset($_POST['avatar_data']) ? $_POST['avatar_data'] : null,

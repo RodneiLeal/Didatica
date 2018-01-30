@@ -3,10 +3,79 @@
     class User extends Main{
 
         protected $get;
+        private $msg,
+                $result;
+
         
-        function __construct(){
+        function __construct($action = null, $param = null){
             parent::__construct();
-            $this->get = func_num_args()>=1?func_get_args():array();
+
+            if(!empty($action)) 
+                $this->$action($param); /* todas as ações deverão passar por esta variavel */
+
+        }
+
+        public function getResult(){
+            return $this->result;
+        }
+
+        public function getMsg(){
+            return $this->msg;
+        }
+
+        public function passRecovery($email, $maiusculas = true, $numeros = true, $simbolos = false){
+
+            $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+            if (filter_var($email, FILTER_VALIDATE_EMAIL)){
+                if($usuario = $this->getUser(array('email'=>$email))[0]){
+
+                    extract($usuario);
+
+                    $lmin = 'abcdefghijklmnopqrstuvwxyz';
+                    $lmai = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                    $num = '1234567890';
+                    $simb = '!@#$%';
+
+                    $passwd = '';
+                    $caracteres = '';
+                    $caracteres .= $lmin;
+
+                    if ($maiusculas) $caracteres .= $lmai;
+                    if ($numeros) $caracteres .= $num;
+                    if ($simbolos) $caracteres .= $simb;
+
+                    $len = strlen($caracteres);
+                    
+                    for ($n = 1; $n <= 10; $n++){
+                        $rand = mt_rand(1, $len);
+                        $passwd .= $caracteres[$rand-1];
+                    }
+
+                    $usuario_nome = $nome.' '.$sobrenome;
+                    
+                    $mensagem = "Olá, {$usuario_nome}.
+                                 <br><br>
+                                 Recentemente você solicitou uma nova senha de acesso à Didatica Online<br><br>
+                                 Sua nova senha é: {$passwd}
+                                 <br><br>
+                                 Acesse seu painel de controle e altere a senha gerada
+                                 <br><br>
+                                 <br><br>
+                                 <small>Está é uma mensagem automática, por favor, não responda</small>
+                               ";
+
+                    if($this->db->update('usuario', 'email', $email, array('pswd'=>hash('sha256', $passwd)))){
+                        if($this->EnviaEmail($email, $usuario_nome, 'Didatica Online - Solicitação de nova senha de acesso', $mensagem, '')){
+                            $this->result = $passwd;
+                            $this->msg = array('type'=>'success', 'title'=>'Solicitação feita com sucesso.', 'msg'=>'Enviamos instruções de recuperação da sua conta para '.$email);
+                        }
+                    }
+                } else {
+                    $this->msg = array('type'=>'error', 'title'=>'', 'msg'=>'e-mail não cadastrado!');
+                }
+            }else{
+                $this->msg = array('type'=>'error', 'title'=>'', 'msg'=>'e-mail inválido');
+            }
         }
 
         public function login($pid, $passwd){
@@ -78,10 +147,6 @@
                 return $result;
             }
             return false;
-        }
-
-        public function pastaPessoal($data){
-            return $result;
         }
 
         public function getUser($values, $limit = false){

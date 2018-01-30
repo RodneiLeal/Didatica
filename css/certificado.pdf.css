@@ -1,0 +1,84 @@
+*{
+	margin: 0;
+	padding: 0;
+}
+
+body{
+	background:url("../img/bg.pdf.png") no-repeat center;
+}
+
+section{
+	font-family: tahoma, helvetica, verdana, "sans-serif";
+	width: 235mm;
+	height: 185mm;
+	position: relative;
+	top:70px;
+	left: 150px;
+}
+
+.row, .certificado-header, .certificado-body, .certificado-footer{
+	width: 100%;
+}
+
+.certificado-header, .certificado-body, .certificado-footer{
+	padding: 10px;
+}
+
+.certificado-footer{
+	position: absolute;
+	bottom: 0;
+}
+
+.pull-left{
+	float: left;
+}
+
+.pull-right{
+	float: right;
+}
+
+.title{
+	font-size:4.2em;
+	font-weight: bold;
+	color: #ee8829;
+}
+
+.mensagem-frente, .ass-box{
+	margin-top: 110px;
+}
+
+.mensagem-verso{
+	margin-top: 35px
+}
+
+p{
+	font-size:1.2em; 
+}
+
+.nomeAluno{
+	color: #0071a5;
+}
+
+.col{
+	width: 350px;
+	height: 100px;
+}
+
+.assinatura{
+	text-align: center;
+}
+
+.dataAluno, .nomeAluno, .title{
+	text-transform: uppercase;
+	font-weight: bold;
+}
+
+.validacao{
+	font-size: 14px;
+	padding-left: 10px;
+}
+
+.topicos{
+	font-size: 16px;
+	margin: 30px 0 0 30px;
+}

@@ -28,11 +28,17 @@
                                     <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-528">
 										<a data-toggle="modal" class="closed-modal" data-target="#sobre">Sobre nós</a>
 									</li>
+
                                     <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-541">
 										<a data-toggle="modal" class="closed-modal" data-target="#pp">Política de Privacidade</a>
 									</li>
+
 									<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-541">
 										<a data-toggle="modal" class="closed-modal" data-target="#termos">Termos de Uso</a>
+									</li>
+
+									<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-541">
+										<a href="valida_certificado">Validar Certificado</a>
 									</li>
                                 </ul>
                             </div>
@@ -751,7 +757,7 @@
 					</p>
 
 					<p class="fieldset">
- 						<button class="full-width" type="button" id="login-bt" access="website">Login</button>
+ 						<button class="full-width" type="button" id="login-bt">Login</button>
 					</p>
 				</form>
 
@@ -820,13 +826,13 @@
 
 				<form class="cd-form">
 					<p class="fieldset">
-						<label class="image-replace cd-email" for="reset-email">E-mail</label>
-						<input class="full-width has-padding has-border" id="reset-email" type="email" placeholder="E-mail">
+						<label class="image-replace cd-email" for="reset-passwd">E-mail</label>
+						<input class="full-width has-padding has-border" id="reset-passwd" type="email" placeholder="E-mail">
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 
 					<p class="fieldset">
-						<button class="full-width has-padding" type="button" onclick="lembrar_senha_site()">Gerar nova senha</button>
+						<button class="full-width has-padding reset-passwd" type="button" >Gerar nova senha</button>
 					</p>
 				</form>
 

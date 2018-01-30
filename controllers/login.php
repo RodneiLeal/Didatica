@@ -1,15 +1,15 @@
 <?php
     session_start();
     require "../loader.php";
-    $user  =  new User();
-    extract($_REQUEST);
+    $user  =  new User;
+    extract($_POST);
 
     if(isset($rede)){
         extract($user->getUserSocial($rede));
         $passwd = $identifier.$email;
     }
 
-    $login = $user->login($pid, $passwd);
+    $login = $user->login(trim($pid), trim($passwd));
 
     if(empty($login[0])){
         echo '0__';

@@ -1,12 +1,14 @@
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
+<section class="content-header">
     <h1>Editar Perfil</h1>
     <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Examples</a></li>
-      <li class="active">User profile edit</li>
+        <li><a ><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a >Usuário</a></li>
+        <li class="active">
+            <?=$username?>
+        </li>
     </ol>
-  </section>
+</section>
+
   <input type="hidden" id="id" value="<?=$idusuario?>">
   <section class="content">
     <div class="row">

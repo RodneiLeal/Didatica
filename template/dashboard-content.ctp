@@ -18,7 +18,6 @@
         // CERTIFICADO
         case 'certificado-model':
         case 'certificado':
-            
             include_once ROOT."template/dashboard-contents/certificado-model.ctp";
         break;
         

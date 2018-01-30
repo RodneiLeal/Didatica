@@ -4,8 +4,69 @@ jQuery(function ($){
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
-  var jcrop_api;
 
+
+
+  // VALIDA CERTIFICADO
+    $('#certified-validate').on('click', function () {
+
+      if (isEmpty($("#certified-validate-code").val())) {
+        Notificacao('error', 'Por favor, informe o código do Certificado');
+        $('#certified-validate-code').focus(); return 1;
+      }
+
+      $(".certified-return").html("<img src='img/loader.gif'>");
+
+      var data = {
+        code: $("#certified-validate-code").val(),
+      }
+
+      function validateCertificateCallback(response) {
+        // alert(response);
+
+        // switch(response){
+        //   case '0__':
+        //     Notificacao('error','Dados não localizados','Não localizamos este registro');
+        //     $('.certified-return').html("<img src='dist/img/checkout/erro.png'> <BR> O Certificado informado não é válido <hr>");
+        //   break;
+        //   case '1__':
+        //     Notificacao('success','Dados localizados','Este cerificado é válido');
+        //     $('.certified-return').html("<img src='dist/img/checkout/sucesso.png'> <BR><br> Certificado de: "+ response + "<hr>");
+        //   break;
+        // }
+      }
+
+      $.post("controller/certified-validate.php", data, validateCertificateCallback);
+    });
+  // FIM
+
+  // RESET PASSWORD
+    $('.reset-passwd').on('click', function(){
+      var $email = $('#reset-passwd');
+
+      if(isEmpty($email.val())){
+        $email.focus();
+        Notificacao('error', 'Por favor, informe seu e-mail!', 'Ops!');
+      }else {
+        var data = {
+          'action': 'passRecovery',
+          'email': $email.val()
+        }
+
+        function resetPasswdCallback(response){
+          response = JSON.parse(response);
+          var message = response.message;
+          Notificacao(message.type, message.title, message.msg);
+          if(message.type === 'success'){
+            setTimeout(function(){redireciona('./')}, 4000);
+          }
+          $email.focus();
+        }
+
+        $.post('controllers/user/passRecovery.php', data, resetPasswdCallback);
+      }
+    });
+  // FIM
 
   // FACEBOOK API
     (function (d, s, id) {
@@ -291,7 +352,7 @@ jQuery(function ($){
       section.prev().removeClass('display-hidden');
     });
 
-  // FIM NOVO CURSO
+  // FIM
 
   // TORNAR-SE INSTRUTOR
     $('.form-curriculo').on('click', function(){
@@ -387,263 +448,282 @@ jQuery(function ($){
         }
       }
     });
-  // FIM TORNAR-SE INSTRUTOR
+  // FIM
 
   // TOLLTIP
-  $('[data-toggle="popover"]').popover({
-    trigger:'hover'
-  });
+    $('[data-toggle="popover"]').popover({
+      trigger:'hover'
+    });
+  // FIM
 
   // INICIAR CURSO
-  $('.iniciar-curso').on('click',function(){
-      var data = new Object();
+    $('.iniciar-curso').on('click',function(){
+        var data = new Object();
 
-      data.curso_idcurso     = $(this).attr('data-curso');
-      data.usuario_idusuario = $(this).attr('data-user');
-      
-      function inscricaoCallback(response){
-        redireciona('Dashboard?p=curso&inscr='+response);
-      }
-      
-      $.post("controllers/curso/inscricao.php", data, inscricaoCallback);
-  });
+        data.curso_idcurso     = $(this).attr('data-curso');
+        data.usuario_idusuario = $(this).attr('data-user');
+        
+        function inscricaoCallback(response){
+          redireciona('Dashboard?p=curso&inscr='+response);
+        }
+        
+        $.post("controllers/curso/inscricao.php", data, inscricaoCallback);
+    });
+  // FIM
 
   // ACESSAR CURSO INSCRITO
-  $('.acessar-curso').on('click', function(){
-    redireciona('Dashboard?p=curso&inscr='+$(this).attr('data-inscr'));
-  });
+    $('.acessar-curso').on('click', function(){
+      redireciona('Dashboard?p=curso&inscr='+$(this).attr('data-inscr'));
+    });
+  // FIM
 
   // MENU MOBILE DA PAGINA INICIAL
-  $( '#dl-menu' ).dlmenu({
-    animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
-  });
+    $( '#dl-menu' ).dlmenu({
+      animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
+    });
+  // FIM
 
   // ATUALIZAR INFORMAÇÕES DE PERFIL DO USUARIO
-  $('#updateUserProfile').on('click', function(event){
+    $('#updateUserProfile').on('click', function(event){
 
-    event.preventDefault();
+      event.preventDefault();
 
-    var data = new Object();
+      var data = new Object();
 
-    data.idusuario = $('#id').val();
+      data.idusuario = $('#id').val();
 
-    /*****VERIFICAR COMO ENVIAR OS DADOS DE IMAGEM PARA O DOCUMENTO DE PROCESSO*****/
-    // if(!isEmpty($('#imageFile').val()))
-    //   data.img        = getFileImge;
+      /*****VERIFICAR COMO ENVIAR OS DADOS DE IMAGEM PARA O DOCUMENTO DE PROCESSO*****/
+      // if(!isEmpty($('#imageFile').val()))
+      //   data.img        = getFileImge;
 
-    if(!isEmpty($('#username').val()))
-      data.username  = $('#username').val();
-    
-    if(!isEmpty($('#nome').val()))
-      data.nome      = $('#nome').val();
-
-    if(!isEmpty($('#sobrenome').val()))
-      data.sobrenome = $('#sobrenome').val();
-
-    if(!isEmpty($('#email').val()))
-      data.email     = $('#email').val();
-    
-    if(!isEmpty($('#passwd').val()))
-      data.pswd       = $('#passwd').val();
-
-    function getFileImge(){
-      var img =  new FormData();
-      img.append($('#imageFile').attr('name'), $('#imageFile')[0].files[0]);
-      return img;
-    }
-    
-    function userUpdateCallback(response){
-      Notificacao('success', 'Perfil Atualizado', 'Seu perfil atualizado com sucesso!');
-      redireciona(window.location.href);
-    }
-
-    $.post('controllers/user/update.php', data, userUpdateCallback);
-
-  });
-
-  // ATUALIZAR CURRICULO DO INSTRUTOR 
-  $('.updateCurriculo').on('click', function(event){
-
-    event.preventDefault();
-
-    var data = new Object();
-
-    if(!isEmpty($('#id').val()))
-      data.idinstrutor = $('#idinstrutor').val();
-
-      if(!isEmpty(CKEDITOR.instances['resumo'].getData()))
-        data.resumo = CKEDITOR.instances['resumo'].getData();
-
-    if(!isEmpty($('#titulo').val()))
-      data.titulacao = $('#titulo').val();
+      if(!isEmpty($('#username').val()))
+        data.username  = $('#username').val();
       
-    if(!isEmpty($('#formacao').val()))
-      data.formacao = $('#formacao').val();
+      if(!isEmpty($('#nome').val()))
+        data.nome      = $('#nome').val();
 
-    if(!isEmpty($('#instituicao').val()))
-      data.instituicao = $('#instituicao').val();
+      if(!isEmpty($('#sobrenome').val()))
+        data.sobrenome = $('#sobrenome').val();
 
-    if(!isEmpty($('#lattes').val()))
-      data.lattes = $('#lattes').val();
+      if(!isEmpty($('#email').val()))
+        data.email     = $('#email').val();
       
-    function curriculoCallback(response){
-      console.log(response);
-      if(response){
-        Notificacao('success', 'Currículo Atualizado', 'Seu currículo foi atualizado com sucesso!');
+      if(!isEmpty($('#passwd').val()))
+        data.pswd       = $('#passwd').val();
+
+      function getFileImge(){
+        var img =  new FormData();
+        img.append($('#imageFile').attr('name'), $('#imageFile')[0].files[0]);
+        return img;
+      }
+      
+      function userUpdateCallback(response){
+        Notificacao('success', 'Perfil Atualizado', 'Seu perfil atualizado com sucesso!');
         redireciona(window.location.href);
       }
-    }
 
-    $.post('controllers/instrutor/updateCurriculo.php', data, curriculoCallback);
-  });
+      $.post('controllers/user/update.php', data, userUpdateCallback);
+
+    });
+  // FIM
+
+  // ATUALIZAR CURRICULO DO INSTRUTOR 
+    $('.updateCurriculo').on('click', function(event){
+
+      event.preventDefault();
+
+      var data = new Object();
+
+      if(!isEmpty($('#id').val()))
+        data.idinstrutor = $('#idinstrutor').val();
+
+        if(!isEmpty(CKEDITOR.instances['resumo'].getData()))
+          data.resumo = CKEDITOR.instances['resumo'].getData();
+
+      if(!isEmpty($('#titulo').val()))
+        data.titulacao = $('#titulo').val();
+        
+      if(!isEmpty($('#formacao').val()))
+        data.formacao = $('#formacao').val();
+
+      if(!isEmpty($('#instituicao').val()))
+        data.instituicao = $('#instituicao').val();
+
+      if(!isEmpty($('#lattes').val()))
+        data.lattes = $('#lattes').val();
+        
+      function curriculoCallback(response){
+        console.log(response);
+        if(response){
+          Notificacao('success', 'Currículo Atualizado', 'Seu currículo foi atualizado com sucesso!');
+          redireciona(window.location.href);
+        }
+      }
+
+      $.post('controllers/instrutor/updateCurriculo.php', data, curriculoCallback);
+    });
+  // FIM
 
   // ATUALIZAR DADOS BANCARIOS DO INSTRUTOR
-  $('.updateBanckInformation').on('click', function(event){
+    $('.updateBanckInformation').on('click', function(event){
 
-    event.preventDefault();
+      event.preventDefault();
 
-    var data = new Object();
+      var data = new Object();
 
-    data.idconta           = $('#idconta').val();
-    data.usuario_idusuario = $('#id').val();
-    data.bancos_idbancos   = $('#banco').val();
+      data.idconta           = $('#idconta').val();
+      data.usuario_idusuario = $('#id').val();
+      data.bancos_idbancos   = $('#banco').val();
 
-    if(!isEmpty($('#agencia').val()))
-      data.agencia = $('#agencia').val();
+      if(!isEmpty($('#agencia').val()))
+        data.agencia = $('#agencia').val();
 
-    if(!isEmpty($('#conta').val()))
-      data.conta = $('#conta').val();
+      if(!isEmpty($('#conta').val()))
+        data.conta = $('#conta').val();
 
-    if(!isEmpty($('#operacao').val()))
-      data.operacao = $('#operacao').val();
+      if(!isEmpty($('#operacao').val()))
+        data.operacao = $('#operacao').val();
 
-    if(!isEmpty($('#cpf').val()))
-      data.cpf = $('#cpf').val();
+      if(!isEmpty($('#cpf').val()))
+        data.cpf = $('#cpf').val();
 
-    function banckInformationCallback(response){
-      switch(response){
-        case '1__':
-          Notificacao('success', 'Dados Bancarios Atualizado', 'Seus dados bancarios forma atualizados com sucesso!');
-          redireciona('Dashboard');
-        break;
+      function banckInformationCallback(response){
+        switch(response){
+          case '1__':
+            Notificacao('success', 'Dados Bancarios Atualizado', 'Seus dados bancarios forma atualizados com sucesso!');
+            redireciona('Dashboard');
+          break;
+        }
       }
-    }
 
-    $.post('controllers/instrutor/updateBanckInformation.php', data, banckInformationCallback);
-  });
+      $.post('controllers/instrutor/updateBanckInformation.php', data, banckInformationCallback);
+    });
+  // FIM
   
   // ESTRELAS DE OPINIÕES
-  $(".starrr").starrr();
-  
+    $(".starrr").starrr();
+  // FIM
+
   // EDITOR DE TEXTO
-  $('.editor').each(function(){
-    CKEDITOR.replace($(this).attr('id'), {
-      height: '165'
-    })
-  });
+    $('.editor').each(function(){
+      CKEDITOR.replace($(this).attr('id'), {
+        height: '165'
+      })
+    });
+  // FIM
 
   // CADASTRO USUÁRIO
-  $('#register-bt').on('click', function(event){
+    $('#register-bt').on('click', function(event){
 
-    event.preventDefault();
+      event.preventDefault();
 
-    if (isEmpty($("#register_name").val())){
-      Notificacao('error','Informe um nome de usuário','Nome obrigatório');
-      $('#register_name').focus();
-      return 1;
-    }
+      if (isEmpty($("#register_name").val())){
+        Notificacao('error','Informe um nome de usuário','Nome obrigatório');
+        $('#register_name').focus();
+        return 1;
+      }
 
-    if (isEmpty($("#register_email").val())){
-      Notificacao('error','Informe seu e-amail para cadastro','E-mail obrigatório');
-      $('#register_email').focus();
-      return 1;
-    }
+      if (isEmpty($("#register_email").val())){
+        Notificacao('error','Informe seu e-amail para cadastro','E-mail obrigatório');
+        $('#register_email').focus();
+        return 1;
+      }
 
-    if (isEmpty($("#register_pass").val())){
-      Notificacao('error','Informe sua senha para cadastro','Senha obrigatório');
-      $('#register_pass').focus();
-      return 1;
-    }
+      if (isEmpty($("#register_pass").val())){
+        Notificacao('error','Informe sua senha para cadastro','Senha obrigatório');
+        $('#register_pass').focus();
+        return 1;
+      }
 
-    var data = {
-      username: $("#register_name").val(),
-      email: $("#register_email").val(),
-      passwd: $("#register_pass").val()
-    };
+      var data = {
+        username: $("#register_name").val(),
+        email: $("#register_email").val(),
+        passwd: $("#register_pass").val()
+      };
 
-    $.post("controllers/user/register.php", data, registerCallback);
-  });
+      $.post("controllers/user/register.php", data, registerCallback);
+    });
+  // FIM
 
   // LOGIN USUÁRIO
-  $('#login-bt').on('click', function(event){
+    $('#login-bt').on('click', function(event){
 
-    event.preventDefault();
+      var $email = $("#user_email");
+      var $pswd  = $("#user_pass");
 
-    if (isEmpty($("#user_email").val())){
-      Notificacao('error','Informe seu e-mail de cadastro','E-mail obrigatório');
-      $('#user_email').focus(); return 1;
-    }
+      event.preventDefault();
 
-    if (isEmpty($("#user_pass").val())){
-      Notificacao('error','Informe sua senha de cadastro','Senha obrigatório');
-      $('#user_pass').focus(); return 1;
-    }
+      if (isEmpty($email.val())){
+        Notificacao('error','Informe seu e-mail de cadastro','E-mail obrigatório');
+        $email.focus(); return 1;
+      }
 
-    var data = {
-      pid: $("#user_email").val(),
-      passwd: $("#user_pass").val()
-    }
-    
-    $.post("controllers/login.php", data, loginCallback);
-  });
+      if (isEmpty($pswd.val())){
+        Notificacao('error','Informe sua senha de cadastro','Senha obrigatório');
+        $pswd.focus(); return 1;
+      }
+
+      var data = {
+        pid: $email.val(),
+        passwd: $pswd.val()
+      }
+      
+      $.post("controllers/login.php", data, loginCallback);
+    });
+  // FIM
 
   // CADASTRO USUÁRIO VIA REDE SOCIAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REVISAR
-  $('.social-signup').on('click', function(){
-    
-    var data = {
-      rede : $(this).attr('data-target')
-    }
+    $('.social-signup').on('click', function(){
+      
+      var data = {
+        rede : $(this).attr('data-target')
+      }
 
-    $.post("controllers/user/register.php", data, registerCallback);
-  });
+      $.post("controllers/user/register.php", data, registerCallback);
+    });
+  // FIM
 
   // LOGIN USUÁRIO VIA REDE SOCIAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REVISAR
-  $('.social-signin').on('click', function(){
+    $('.social-signin').on('click', function(){
 
-    var data = {
-      rede : $(this).attr('data-taget')
-    }
+      var data = {
+        rede : $(this).attr('data-taget')
+      }
 
-    $.post("controllers/login.php", data, loginCallback);
-  });
+      $.post("controllers/login.php", data, loginCallback);
+    });
+  // FIM
 
   // LOGOUT USUÁRIO
-  $(".logoff").on('click', function(){
-    data = {
-      logoff: true
-    }
+    $(".logoff").on('click', function(){
+      data = {
+        logoff: true
+      }
 
-    function logoffCallback(response){
-      location.href='home';
-    }
+      function logoffCallback(response){
+        location.href='home';
+      }
 
-    $.post('controllers/logout.php', data, logoffCallback);
-  });
+      $.post('controllers/logout.php', data, logoffCallback);
+    });
+  // FIM
 
   // SELECIONA SUBCATEGORIA
-  $('.curso-categoria').on('change', function(){
-    $.ajax({
-      url: 'controllers/subcategorias.php',
-      method: 'POST',
-      data: {categoria_idcategoria:$(this).val()}
-    }).done(function(response){
-      $('.curso-subcategoria').html(response);
+    $('.curso-categoria').on('change', function(){
+      $.ajax({
+        url: 'controllers/subcategorias.php',
+        method: 'POST',
+        data: {categoria_idcategoria:$(this).val()}
+      }).done(function(response){
+        $('.curso-subcategoria').html(response);
+      });
     });
-  });
+  // FIM
 
 /*******************************  FUNÇÕES PUBLICAS  *************************************/
 
   function loginCallback(response){
+
     switch(response){
       case '0__':
         Notificacao('error','Ops!','Combinação de e-mail e senha invalidos');
@@ -703,127 +783,13 @@ jQuery(function ($){
 
 
 
+
   /******************************************** DESTE PONTA PARA BAIXO AS FUNÇÕES PRECISAM SER REVIZADAS ********************************************/
 
 
 
-  // ADICIONA IMAGEM USUÁRIO (PERFIL)
-  $(".ProfileUpdateImage").on("change", function(){
-    var file = this.files[0].name;
-    
-    TamanhoString = file.length;
-    extensao   = file.substr(TamanhoString - 4,TamanhoString);
-    if (TamanhoString == 0 ){
-        Notificacao('error','Nenhuma arquivo selecionado','Arquivo inválido');
-        return false;
-    }else if(file.size > 100000){
-      Notificacao('error','Arquivo muito grande, reduza-o um pouco','Arquivo grande');
-      return false;
-    }else{
-      var ext = new Array('.jpg','.png','.bmp');
-      for(var i = 0; i < ext.length; i++){
-        if (extensao == ext[i]){
-          flag = "ok";
-          break;
-        }else{
-          flag = "erro";
-        }
-      }
-      if (flag=="erro"){
-        Notificacao('error','Envie apenas arquivos de imagens','Arquivo inválido');
-        return false;
-      }
-    }
-  
-    // var file_data = file.prop('files')[0];
-    $("#preview").fadeOut(500);
-    $(".preview_block").html("<img src='dist/img/loader.gif'>");
-  
-    var form_data = new FormData();
-    form_data.append('file', this.files[0]);
-    var operation = 'ProfileImage';
-  
-      $.ajax({
-          url: 'controller/user.php?operation='+operation, // point to server-side PHP script
-          dataType: 'text',  // what to expect back from the PHP script, if anything
-          cache: false,
-          contentType: false,
-          processData: false,
-          data: form_data,
-          //data: form_data,
-          type: 'post',
-          success: function(resultado)
-          {
-            if(resultado==0)
-            {
-              Notificacao('error','Houve algo de errado no envio','Tente novamente');
-              return false;
-            }
-            else
-            {
-              Notificacao('success','Arquivo enviado e salvo','Sucesso');
-  
-  
-  
-              setTimeout(function(){
-                var preview = document.getElementById('preview');
-                var input = document.getElementById('upload_logo');
-  
-                if (input.files && input.files[0])
-                {
-                  var reader = new FileReader();
-                  reader.onload = function (e) {
-                    preview.setAttribute('src', e.target.result);
-                  }
-                  reader.readAsDataURL(input.files[0]);
-                } else {
-                  preview.setAttribute('src', '');
-                }
-  
-                  $(".preview_block").html("");
-                  $("#preview").fadeIn(500);
-  
-              }, 2000);
-              return false;
-            }
-          }
-  
-      });
-    //$("#formulario").submit();
-    return true;
-  });
-  
-  // VALIDA CERTIFICADO
-  $('#certified-validate').on('click', function(){
 
-    if (isEmpty($("#certified-validate-code").val())){
-        Notificacao('error','Por favor, informe o código do Certificado');
-        $('#certified-validate-code').focus(); return 1;
-    }
-
-    $(".certified-return").html("<img src='dist/img/loader.gif'>");
-
-    var data =  {
-      code: $("#certified-validate-code").val(),
-    }
-
-    function validateCertificateCallback(response){
-      // alert(response);
-
-      // switch(response){
-      //   case '0__':
-      //     Notificacao('error','Dados não localizados','Não localizamos este registro');
-      //     $('.certified-return').html("<img src='dist/img/checkout/erro.png'> <BR> O Certificado informado não é válido <hr>");
-      //   break;
-      //   case '1__':
-      //     Notificacao('success','Dados localizados','Este cerificado é válido');
-      //     $('.certified-return').html("<img src='dist/img/checkout/sucesso.png'> <BR><br> Certificado de: "+ response + "<hr>");
-      //   break;
-      // }
-    }
-
-    $.post("controller/certified-validate.php", data, validateCertificateCallback);
-  });
+  
 
 
 
@@ -1264,40 +1230,7 @@ jQuery(function ($){
 
 
 
-	function lembrar_senha_site()
-	{
-		var email = $("#reset-email").val();
 
-		if(email = "")
-		{
-			$("#reset-email").focus();
-			Notificacao('error','Por favor, informe seu e-mail','Ops');
-		}
-		else
-		{
-
-			 $.post('controller/user.php',{user_email: $("#reset-email").val(),ResetPass:'recover_access' },function(data)
-			 {
-				if(data==0)
-				{
-					$("#reset-email").focus();
-					Notificacao('error','Por favor, informe um e-mail válido','Ops');
-				}
-				else if(data==1)
-				{
-					$("#reset-email").focus();
-					Notificacao('error','não encontramos seu cadastro','Ops');
-				}
-				else
-				{
-
-					$("#reset-email").focus();
-					Notificacao('success','Sua nova senha foi enviada por e-mail','Sucesso');
-				}
-
-			 })
-		}
-	}
 
 
 	$(document).ready(function(){
