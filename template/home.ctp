@@ -10,7 +10,7 @@
 
                         <article class="entry-item">
                             <div class="entry-thumb">
-                                <img src="placeholders/post-image/post-1.jpg" alt="">
+                                <img src="img/post-1.jpg" alt="">
                                 <div class="mask"></div>
                             </div>
                             <div class="entry-content">
@@ -39,7 +39,7 @@
                     <div class="item">
                         <article class="entry-item">
                             <div class="entry-thumb">
-                                <img src="placeholders/post-image/post-001.jpg" alt="">
+                                <img src="img/post-001.jpg" alt="">
                                 <div class="mask"></div>
                             </div>
                             <div class="entry-content">
@@ -111,7 +111,7 @@
                                 ?>
 
                                     <li class="masonry-item">
-                                        <article class="entry-item hot-item" data-html="true" data-toggle="popover" data-container="body" data-content="<?=$resumo?>">
+                                        <article class="entry-item hot-item" data-html="true" data-toggle="popover" title="<?=$titulo?>" data-container="body" data-content="<?=$resumo?>">
                                             <div class="entry-thumb">
 
                                                 <a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">

@@ -35,6 +35,7 @@
             }
             return false;
         }
+        
 
         public function pagarComissao($data){
             $sql    = 'SELECT * FROM didatica_db.view_inscricao WHERE idinscricao = '. $data['inscricao_idinscricao'];
@@ -50,6 +51,29 @@
                           'credito' => $comissao);
 
             $this->db->insert('carteira', $data);
+        }
 
+
+        /**
+         * Gera um codigo para o certificado e grava este no banco de dados
+         * 
+         * @since 0.1
+         * @access public
+         * @param array $data são os dados a serem inseridos na tabela
+         * @return int id ultimo valor de identificação da gravação no banco de dados 
+         */
+        public function gerarCertificado($data){
+            
+            // gera um codigo unico para identificação do certificado
+            $codigo = hash();
+
+            // prepara os dados para gravação
+            $data = array( 'inscricao_idinscricao' => $inscr, 'codigo' => $codigo);
+
+            // grava informações no banco de dados
+            $this->db->insert('certificado', $data);
+
+            // pega a ultima identificação da gravação no banco de dados
+            $this->db->lastId;
         }
     }

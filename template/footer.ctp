@@ -5,7 +5,7 @@
 
             <div class="col-md-4 col-sm-4 col-xs-12">
 
-                <div id="footer-logo-image"><a href=""><img src="placeholders/logo-lg.png" alt=""></a></div>
+                <div id="footer-logo-image"><a href=""><img src="img/logo-lg.png" alt=""></a></div>
 
                 <div class="widget widget_text">
                     <p>A melhor plataforma de ensino Online.</p>

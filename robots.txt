@@ -1,0 +1,9 @@
+#A todos os robots
+User-agent: *
+
+#permitido o acesso a todo o site
+Allow: /
+
+#Exceto os seguintes diretorios
+Disallow: /Dashboard/
+Disallow: /dashboard/

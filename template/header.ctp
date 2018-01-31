@@ -31,7 +31,8 @@
         <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,300,300italic,400italic,600,600italic,700italic,700' rel='stylesheet' type='text/css'>
         <link href='https://fonts.googleapis.com/css?family=Raleway:400,300,500,600,700,800' rel='stylesheet' type='text/css'>
 
-        <link rel="shortcut icon" href="img/favicon.png">
+        <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+		<link rel="shortcut icon" type="image/png" href="img/favicon.ico" />
   
     </head>
 
@@ -43,7 +44,7 @@
                     <div class="col-md-2 col-sm-2 col-xs-12">
                         <div id="logo-image" class="pull-left">
                             <a href="">
-                                <img src="placeholders/logo.png" alt="">
+                                <img src="img/logo.png" alt="">
                             </a>
                         </div>
 					</div>
