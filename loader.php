@@ -4,6 +4,7 @@
 	}
 
 	include "util/Hybrid/autoload.php";
+	// include "util/dompdf/include/autoload.inc.php";
 
 	if(!defined("DEBUG") || DEBUG === true){
 		error_reporting(1); 			/*não esquecer de modificar este parametro para 0*/
@@ -12,7 +13,6 @@
 		error_reporting(E_ALL);
 		ini_set("display_errors", 1);
 	}
-
 	
 	spl_autoload_register(function($className){
 		
@@ -34,6 +34,8 @@
 	 * 
 	 */
 
+	define('CEO', 'Felipe Rodrigo');
+	define('CET', 'Leonardo Oliveira');
 	define('N_QUESTOES', 10);
 	define('NOTACORTE', 60);
 	define('CERTIFICADO_VALOR', '39.99');

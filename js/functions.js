@@ -5,8 +5,6 @@ jQuery(function ($){
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
 
-
-
   // VALIDA CERTIFICADO
     $('#certified-validate').on('click', function () {
 
@@ -100,7 +98,7 @@ jQuery(function ($){
   $('#congratulations').modal('show');
 
   // SOLICITAR CERTIFICADO
-    $("#certificate-request").click(function (event) {
+    $(".solicitar-certificado").click(function (event) {
       event.preventDefault();
       var course = $(this).attr("course");
       $('body').loading('start');
@@ -154,39 +152,42 @@ jQuery(function ($){
     });
 
     // MOSTRA MODAL INICIAL
-    $('#good-luck').modal('show');
+      $('#good-luck').modal('show');
+    // FIM
 
     // CONFERE QUETÃO MARCADA
-    $('.opcao').on('change', function(event){
-      opt = $(this);
+        $('.opcao').on('change', function(event){
+          opt = $(this);
 
-      function confereQuestaoCallback(response){
-        response = JSON.parse(response);
-        $('[name="' + opt.attr('name') + '"]').attr('disabled', 'disabled');
-        opt.removeAttr('disabled', 'disabled');
-        opt.css({'display':'none'});
+          function confereQuestaoCallback(response){
+            response = JSON.parse(response);
+            $('[name="' + opt.attr('name') + '"]').attr('disabled', 'disabled');
+            opt.removeAttr('disabled', 'disabled');
+            opt.css({'display':'none'});
 
-        if(response[0].resposta==1){ 
-          opt.before('<i class="fa fa-check green"></i>');
-          acertos++;
-        }else{
-          opt.before('<i class="fa fa-times red"></i>');
-        }
-      }
+            if(response[0].resposta==1){ 
+              opt.before('<i class="fa fa-check green"></i>');
+              acertos++;
+            }else{
+              opt.before('<i class="fa fa-times red"></i>');
+            }
+          }
 
-      opcao = $('#curso, [name="'+opt.attr('name')+'"]').serialize();
+          opcao = $('#curso, [name="'+opt.attr('name')+'"]').serialize();
 
-      $.ajax({
-        url: 'controllers/curso/confereQuestao.php',
-        type: 'POST',
-        datatype: 'application/json',
-        data: opcao,
-        success: confereQuestaoCallback
-      });
+          $.ajax({
+            url: 'controllers/curso/confereQuestao.php',
+            type: 'POST',
+            datatype: 'application/json',
+            data: opcao,
+            success: confereQuestaoCallback
+          });
 
-    });
+        });
+    // FIM
 
-    // FINALIZAR A PROVA
+
+  // FINALIZAR A PROVA
     $('#finalizar-prova').on('click', function (event) {
       event.preventDefault();
       var prova = $('#prova').serializeArray();

@@ -210,7 +210,7 @@
         </div>
 
         <div class="box-footer">
-          <button type="button" class="btn btn-default bg-orange btn-promotion pull-right" id="certificate-request" data-dismiss="modal">
+          <button type="button" class="btn btn-default bg-orange btn-promotion pull-right solicitar-certificado" data-dismiss="modal">
             <strong>
               <i class="fa fa-thumbs-up"></i>
               &#160;&#160;Eu quero!

@@ -29,12 +29,8 @@
             <h3 class="box-title">Certificado</h3>
 
 						<!-- ESTE BOTÃO ESTARÁ DISPONÍVEL SOMENTE DEPOIS DE O USUÁRIO SER APROVADO NA PROVA -->
-						<a href="" class="btn btn-default bg-orange btn-promotion pull-right">
-							<strong>
-								<i class="fa fa-thumbs-up"></i>
-								&#160;&#160;Eu quero meu certificado!
-							</strong>
-						</a>
+					
+						<?=$btn?>
 
           </div>
           <div class="box-body">
@@ -65,12 +61,12 @@
 										<div class="col-3"></div>
 										<div class="col-3">
 											<p class="assinatura">
-												_________________________<br><span>Felipe Rodrigo</span><br>Diretor de treinamento
+												_________________________<br><span><?=CET?></span><br>Diretor de treinamento
 											</p>
 										</div>
 										<div class="col-3">
 											<p class="assinatura">
-												_________________________<br><span>Leonardo Oliveira</span><br>Diretor Executivo
+												_________________________<br><span><?=CEO?></span><br>Diretor Executivo
 											</p>
 										</div>
 									</div>
@@ -88,7 +84,7 @@
     </div>
   </section>
 
-	<!-- CASO A PROVA SEJA CONCLUIDA COM APROVEITAMENTO ACIMA DE DA PONTUAÇÃO CONFIGURADA -->
+	<!-- CASO A PROVA SEJA CONCLUIDA COM APROVEITAMENTO ACIMA DE DA PONTUAÇÃO CONFIGURADA 
 	<div class="modal fade" role="dialog" id="congratulations">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -106,7 +102,6 @@
 									Para que possamos permanecer oferecendo materiais de qualidade como este que você acabou de utilizar e mantermos este site no ar,  precisamos de sua ajuda.
 								</p>
 								<p class="recuo">
-									<!-- valores serão trocadas por variaveis de configuração -->
 									O valor monetário é de <strong>R$ <?=number_format(CERTIFICADO_VALOR, 2, ',', '.')?></strong> podendo ser em <strong><?=$parcelas='9x de R$ 5,14'?></strong> pelo PagSeguro, é respectivo a certificação do aluno(a).
 								</p>
 						</div>
@@ -132,4 +127,4 @@
 				</div>
 			</div>
 		</div>
-	</div>
+	</div>-->

@@ -20,10 +20,12 @@
         }
 
         $transaction = $admin->object2array($xml = @simplexml_load_string($xml));
+        $idinscricao = $transaction['items']['item']['id'];
+        $xmlretorno  = json_encode($xml);
 
         $data = array(
-                'xmlRetorno'=>json_encode($xml),
-                'inscricao_idinscricao'=>$transaction['items']['item']['id'],
+                'xmlRetorno'=>$xmlretorno,
+                'inscricao_idinscricao'=>$idinscricao,
                 'status'=>$transaction['status'],
                 'code'=>$transaction['code'],
                 'valor'=>$transaction['grossAmount']
@@ -37,9 +39,11 @@
                 case 3:
                 case 4:
                     $admin->pagarComissao($data);
+                    $idcertificado = $admin->gerarCertificado($transaction);
+                    $datetime = date('Y-m-d H:i:s');
+                    $admin->atualizaInscricao($idinscricao, array('certificado_idcertificado'=>$idcertificado, 'data_finalizacao'=>$datetime));
                 break;
             }
         }
-        
     }
 

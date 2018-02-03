@@ -16,9 +16,40 @@
         break;
 
         // CERTIFICADO
-        case 'certificado-model':
+        case 'certificado-modelo':
         case 'certificado':
-            include_once ROOT."template/dashboard-contents/certificado-model.ctp";
+
+            $inscr          = $this->inscricoes->getInscricaoId($_GET['inscr'])[0];
+            $provas         = $this->cursos->getProvas($inscr['idinscricao']);
+
+            $btn = '';
+            
+            if(!empty($provas) && ($provas[count($provas)-1]['nota'] >= NOTACORTE)){
+                $btn = 
+                '
+                    <button type="button" class="btn btn-default bg-orange btn-promotion pull-right solicitar-certificado">
+                        <strong>
+                            <i class="fa fa-thumbs-up"></i>
+                            &#160;&#160;Eu quero meu certificado!
+                        </strong>
+                    </button>
+                ';
+
+                if(!empty($inscr['data_finalizacao'])){
+                    $btn = 
+                    '
+                        <form action="certificado" method="POST" target="_blanc">
+                            <input type="hidden" name="inscr" value="6">
+                            <input type="hidden" name="curso" value="8">
+                            <button type="submit" class="btn btn-success pull-right">
+                                <i class="fa fa-id-card-o" aria-hidden="true"></i> Download do Certificado
+                            </button>
+                        </form>
+                    ';
+                }
+            }
+
+            include_once ROOT."template/dashboard-contents/certificado-modelo.ctp";
         break;
         
         // CURSOS 
@@ -76,9 +107,13 @@
                         $btn = 
                         '
                         <div class="box-body course_box text-center">
-                        <button type="button" class="btn btn-success print_certificate" course="{id do curso}">
-                            <i class="fa fa-id-card-o" aria-hidden="true"></i>Download do Certificado
-                        </button>
+                            <form action="certificado" method="POST" target="_blanc">
+                                <input type="hidden" name="inscr" value="'.$inscr['idinscricao'].'">
+                                <input type="hidden" name="curso" value="'.$inscr['idcurso'].'">
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa fa-id-card-o" aria-hidden="true"></i> Download do Certificado
+                                </button>
+                            </form>
                         </div>
                         ';
                     break;
@@ -88,9 +123,9 @@
                         $btn = 
                         ' 
                         <div class="box-body course_box text-center">
-                        <button type="button" class="btn btn-success" id="certificate-request" data-insc="{idinscricao}">
-                            <i class="fa fa-id-card-o" aria-hidden="true"></i> Solicitar Certificado
-                        </button>
+                            <button type="button" class="btn btn-success solicitar-certificado">
+                                <i class="fa fa-id-card-o" aria-hidden="true"></i> Solicitar Certificado
+                            </button>
                         </div>
                         ';
                 }
