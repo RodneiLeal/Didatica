@@ -1,9 +1,20 @@
 <?php
     class Inscricao extends Main{
 
+        private $result,
+                $msg;
+
         function __construct(){
             parent::__construct();
             $get = func_num_args()>=1?func_get_args():array();
+        }
+
+        public function getResult(){
+            return $this->result;
+        }
+
+        public function getMsg(){
+            return $this->msg;
         }
 
         // SELECIONA INSCRIÇÃO POR UMA IDENTIFICAÇÃO
@@ -64,10 +75,20 @@
         }
 
         public function inscreverUsuario($data){
-            if($this->db->insert('inscricao', $data)){
-                return $this->db->last_id;
+            session_start();
+            $curso = new CursoModel;
+            $curso = $curso->getCursoId($data['curso_idcurso'])[0];
+            
+            if($_SESSION['idusuario'] === $curso['idusuario']){
+               $this->msg = array('type'=>'error', 'title'=>'Inscrição não permitida.', 'msg'=>'você não pode inscrever-se em seu proprio curso');
+               $this->result = false;
             }
-            return false;
+            else{
+                if($this->db->insert('inscricao', $data)){
+                    $this->msg = array('type'=>'success', 'title'=>'Inscrição realizada com sucesso.', 'msg'=>'Bons estudos.');
+                    $this->result = $this->db->last_id;
+                }
+            }
         }
     }
     

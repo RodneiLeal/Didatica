@@ -64,7 +64,7 @@
                                             $media  = number_format($media, 2, '.', ' ');
 								?>
 											<li class="masonry-item">
-												<article class="entry-item hot-item" data-html="true" data-toggle="popover" data-container="body" data-content="<?=$resumo?>">
+												<article class="entry-item hot-item" data-html="true" data-toggle="popover" title="<?=$titulo?>" data-container="body" data-content="<?=$resumo?>">
 													<div class="entry-thumb">
 														<a href="curso/<?=$idcurso?>/<?=Main::preparaURL($categoria)?>/<?=Main::preparaURL($titulo)?>">
 															<!-- <div class="mask"></div> -->

@@ -22,11 +22,8 @@
 							<h6 class=" clearfix pull-left" style="color:#fff">Criado por: <?=$instrutor?></h6>
                         </div>
                     </div>
-                    <!-- row -->
                 </div>
-                <!-- container -->
             </div>
-            <!-- page-header-inner -->
         </header>
 
 
@@ -48,14 +45,10 @@
 									
                                     <div class="entry-content">
                                         <p><?=$resumo?></p>
-
-										
 										<h5 class="entry-title">O que você vai aprender neste curso:</h5>
-
 										<div class="entry-content">
 											<p><?=$ementa?></p>
 										</div>	
-
 										<div class="tag-box">
 											<span>Categoria:</span>
 											<a href="cursos/<?=$categoria?>"><?=$categoria?></a>
@@ -65,32 +58,9 @@
 											$foto = empty($foto)?'img/users/sem-foto.png':$foto;
 										?>
 
-                                        <!-- <div class="about-author">
-                                            <div class="author-avatar pull-left">
-												<a href="#">
-													<img src="<?=$foto?>" alt="<?=$instrutor?>">
-												</a>
-											</div>
-                                            <div class="author-content">
-                                                <h4><a href="#"><?=$instrutor?></a></h4>
-												Formação ???
-                                                <p>
-													Sobre o instrutor????
-												</p>
-
-                                            </div>
-                                        </div> -->
-                                        <!-- about-author -->
-
                                     </div>
-
                     			</div>
-                    			<!-- col-md-8 -->
-
-
                     		</div>
-                    		<!-- row -->
-
 
                             <div id="comments">
                                 <h4>Comentários</h4>
@@ -104,12 +74,10 @@
 
 									<li class="comment clearfix">
 										<article class="comment-wrap clearfix">
-
 											<div class="comment-avatar pull-left">
 												<img alt="<?=$nome?>" src="<?=$avatar?>">
 												<h6><?=$nome?></h6>
 											</div>
-
 											<div class="comment-body">
 												<div class="comment-content">
 													<p>
@@ -121,36 +89,29 @@
 														<?=$justificativa?>
 													</p>
 												</div>
-
 												<div class="avaliacao">
                                                 	<div class="starrr" data-rating="<?=$estrelas?>"></div>
                                             	</div>
-
 												<footer class="clearfix">
-													
 													<div class="pull-right clearfix">
 														<span class="entry-date pull-left">
 															<?=strftime('%A, %d de %B de %Y', strtotime($data_avaliacao))?>
 														</span>
 													</div>
 												</footer>
-											</div><!--comment-body -->
+											</div>
 										</article>
 									</li>
+
 								<?php
 										endforeach;
 									endif;
 								?>
-                                </ol><!--comments-list-->
+
+                                </ol>
                             </div>
-
-
                     	</div>
-                    	<!-- entry-course-box -->
-
-
                     </div>
-                    <!-- col-md-9 -->
                     <div class="col-md-3 col-sm-3 col-xs-12">
 
                     	<div class="widget kopa-course-search-2-widget">
@@ -161,20 +122,19 @@
 								<br>
 									<h5><?=$titulo?></h5>
 
-
 									<?php
 										if(!empty($_SESSION)):
 
 											$inscricao = new Inscricao;
-											$inscricao = $inscricao->getInscricaoPorCursoUsuario($idusuario, $idcurso)[0];
-											if(!$inscricao):
+											$inscricao = $inscricao->getInscricaoPorCursoUsuario($_SESSION['idusuario'], $idcurso)[0];
+											if($inscricao):
 									?>
-												<!-- registra o curso na base de dados e direciona o usuario para a pagina do curso -->
-												<button  data-curso="<?=$idcurso?>" data-user="<?=$idusuario?>" class="kopa-button green-button medium-button kopa-button-icon iniciar-curso">Iniciar Curso</button>
-									
-											<?php else:?>
 												<!-- direciona o usuario para a pagina do curso -->
 												<button data-inscr="<?=$inscricao['idinscricao']?>" class="kopa-button green-button medium-button kopa-button-icon acessar-curso">Acessar Curso</button>
+									
+											<?php else:?>
+												<!-- registra o curso na base de dados e direciona o usuario para a pagina do curso -->
+												<button  data-curso="<?=$idcurso?>" data-user="<?=$_SESSION['idusuario']?>" class="kopa-button green-button medium-button kopa-button-icon iniciar-curso">Iniciar Curso</button>
 										
 											<?php endif?> 
 										<?php else :?>
@@ -190,20 +150,9 @@
 									<h6><?=$instrutor?></h6>
 
 	                        </div>
-	                        <!-- widget-content -->
         				</div>
-
                     </div>
-                    <!-- col-md-3 -->
-
-
                 </div>
-                <!-- row -->
-
             </div>
-            <!-- container -->
-
         </section>
-        <!-- kopa-area -->
     </div>
-    <!-- main-content -->

@@ -186,7 +186,6 @@ jQuery(function ($){
         });
     // FIM
 
-
   // FINALIZAR A PROVA
     $('#finalizar-prova').on('click', function (event) {
       event.preventDefault();
@@ -459,13 +458,21 @@ jQuery(function ($){
 
   // INICIAR CURSO
     $('.iniciar-curso').on('click',function(){
-        var data = new Object();
-
-        data.curso_idcurso     = $(this).attr('data-curso');
-        data.usuario_idusuario = $(this).attr('data-user');
+      
+        data = {
+          'curso_idcurso':$(this).attr('data-curso'),
+          'usuario_idusuario': $(this).attr('data-user')
+        }
         
         function inscricaoCallback(response){
-          redireciona('Dashboard?p=curso&inscr='+response);
+          response = JSON.parse(response);
+          var message = response.message;
+          Notificacao(message.type, message.title, message.msg);
+
+          if(response.result){
+            redireciona('Dashboard?p=curso&inscr='+response.result);
+          }
+
         }
         
         $.post("controllers/curso/inscricao.php", data, inscricaoCallback);
@@ -1386,23 +1393,7 @@ jQuery(function ($){
     location.href=url;
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  $('#box_content_add_button').on('click',function()
-  {
+  $('#box_content_add_button').on('click',function(){
     var elemento = document.getElementById('box_content_add_button');
     if(elemento.className.indexOf('btn-primary') != -1){
         $('#box_content_add_button').removeClass("btn-primary").addClass("btn-danger");
