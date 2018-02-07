@@ -103,6 +103,13 @@
   </div>
 </section>
 
+
+
+
+
+
+
+
 <!-- AVALIAR CURSO SOMENTE SE FOR APROVADO -->
 <div class="modal fade" id="modal_avaliar" tabindex="-1" role="dialog" >
   <div class="modal-dialog" role="document">

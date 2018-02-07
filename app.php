@@ -9,7 +9,7 @@
 	define('MASTER_MAIL', $master_email);
 	define("ROOT", __DIR__.DIRECTORY_SEPARATOR);
 	define("UPLOADS", ROOT."/views/_uploads");
-	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"http://localhost/".MAIN_PKG."/":$_SERVER['REQUEST_SCHEME'].'s://'.$_SERVER['HTTP_HOST']);
+	define("HOME_URI", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?"http://localhost/".MAIN_PKG."/":$_SERVER['REQUEST_SCHEME'].'://'.$_SERVER['HTTP_HOST']);
 	define("CONFIRME_URI", HOME_URI.$confirme_path_file);
 	define("DB_HOST", $_SERVER['REMOTE_ADDR']=='127.0.0.1'?'localhost':$db_host);
 	define("DB_NAME", $db_name);

@@ -15,6 +15,7 @@
     margin-top: 20px;
   }
 }
+
 .login-certified-validate-body {
   background: #fff;
   padding: 20px;
@@ -27,6 +28,7 @@
 }
 .login-certified-validate-msg
 {
+  font-size: 1.5em;
   margin: 0;
   text-align: center;
   padding: 0 20px 20px 20px;

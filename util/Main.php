@@ -48,15 +48,18 @@
         }
 
         public function formataData($data, $mode='d'){
-            $data = new DateTime($data);
-            switch($mode){
-                case 'dh':
-                    return $data->format('d/m/Y H:i:s');
-                case 'd':
-                    return $data->format('d/m/Y');
-                default:
-                    return $data->format('d/m/Y');
+            if(!empty($data)){
+                $data = new DateTime($data);
+                switch($mode){
+                    case 'dh':
+                        return $data->format('d/m/Y H:i:s');
+                    case 'd':
+                        return $data->format('d/m/Y');
+                    default:
+                        return $data->format('d/m/Y');
+                }
             }
+            return $data;
         }
         
         public function preparaURL($string){

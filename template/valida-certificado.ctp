@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="js/vendor/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" type="text/css" href="css/vendor/plugins/notification/toastr.min.css" />
+    <link rel="stylesheet" type="text/css" href="css/vendor/loading/jquery.loading.min.css" />
     <link rel="stylesheet" type="text/css" href="css/custom.css">
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -30,12 +31,13 @@
       </div><!-- /.login-logo -->
 
       <div class="login-certified-validate-body">
-          <p class="login-certified-validate-msg">Validação de Certificado</p>
+          <p class="login-certified-validate-msg">Validar Certificado</p>
 
             <div class="form-group has-feedback">
               <input type="text" class="form-control text-center" id="certified-validate-code" placeholder="numero do certificado">
               <span class="fa fa-font form-control-feedback"></span>
             </div>
+
               <div class="certified-return text-center"></div>
 
             <div class="row">
