@@ -130,8 +130,9 @@
 
             $tmp_img_w = $data -> width;
             $tmp_img_h = $data -> height;
-            $dst_img_w = 195*1.6667;
-            $dst_img_h = 195;
+
+            $dst_img_w = $tmp_img_w;
+            $dst_img_h = $tmp_img_h;
 
             $src_x = $data -> x;
             $src_y = $data -> y;

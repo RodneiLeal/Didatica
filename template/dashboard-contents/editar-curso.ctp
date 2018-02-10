@@ -20,9 +20,14 @@
             <div class="box-body">
               <div class="row">
                 <div class="col-md-6">
+
                   <label>Título do curso</label>
-                  <input type="hidden" name="curso[idcurso]" value="<?=$curso['idcurso']?>">
-                  <input value="<?=$curso['titulo']?>" type="text" class="form-control curso-titulo" name="curso[titulo]" placeholder="Título do curso" >
+                  <div class="input-group">
+                    <input type="hidden" name="curso[idcurso]" value="<?=$curso['idcurso']?>">
+                    <input type="text" name="curso[titulo]" value="<?=$curso['titulo']?>" class="form-control curso-titulo" placeholder="Título do curso" maxlength="20">
+                    <span class="input-group-addon countdown-caractere"></span>
+                  </div>
+
                 </div>
 
                 <div class="col-md-6">
@@ -61,12 +66,12 @@
               <div class="row">
                 <div class="col-md-6">
                   <label>Resumo <span class="label-desc">(Breve descrição sobre o curso)</span></label>
-                  <textarea class="form-control editor" name="curso[resumo]" id="editor1" placeholder="Resumo simples"><?=$curso['resumo']?></textarea>
+                  <textarea class="form-control editor" maxlength="255" name="curso[resumo]" id="editor1" placeholder="Resumo simples"><?=$curso['resumo']?></textarea>
                 </div>
 
                 <div class="col-md-6">
                   <label>Ementa <span class="label-desc">(Tópicos do curso)</span></label>
-                  <textarea class="form-control editor" name="curso[ementa]" id="editor2" ><?=$curso['ementa']?></textarea>
+                  <textarea class="form-control editor" name="curso[ementa]" id="editor2" maxlength="255"><?=$curso['ementa']?></textarea>
                 </div>
               </div>
             </div>

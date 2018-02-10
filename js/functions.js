@@ -4,6 +4,22 @@ jQuery(function ($){
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
+  var maxlength = $('[maxlength]');
+  var caracterCount = $('.countdown-caractere');
+
+  // // CONTADOR DE CARACTERES
+  // mxl = maxlength.attr('maxlength');
+
+  // caracterCount.html(mxl - maxlength.val().length);
+
+  // $('[maxlength]').on('keydown keyup', function(){
+  //   var $this = $(this);
+  //   var $nct  = $this.attr('maxlength');
+  //   var $cd   = $this.val().length
+  //   var $cr   = $nct-$cd;
+  //   $('.countdown-caractere').html($cr)
+  // });
+  // // FIM
 
   // VALIDA CERTIFICADO
     $('#certified-validate').on('click', function () {
@@ -492,10 +508,7 @@ jQuery(function ($){
       var data = new Object();
 
       data.idusuario = $('#id').val();
-
-      /*****VERIFICAR COMO ENVIAR OS DADOS DE IMAGEM PARA O DOCUMENTO DE PROCESSO*****/
-      // if(!isEmpty($('#imageFile').val()))
-      //   data.img        = getFileImge;
+      data.foto = $('.imagePreview').attr('src');
 
       if(!isEmpty($('#username').val()))
         data.username  = $('#username').val();
@@ -512,14 +525,10 @@ jQuery(function ($){
       if(!isEmpty($('#passwd').val()))
         data.pswd       = $('#passwd').val();
 
-      function getFileImge(){
-        var img =  new FormData();
-        img.append($('#imageFile').attr('name'), $('#imageFile')[0].files[0]);
-        return img;
-      }
-      
       function userUpdateCallback(response){
-        Notificacao('success', 'Perfil Atualizado', 'Seu perfil atualizado com sucesso!');
+        response =  JSON.parse(response);
+        var message = response.message;
+        Notificacao(message.type, message.title, message.msg);
         redireciona(window.location.href);
       }
 

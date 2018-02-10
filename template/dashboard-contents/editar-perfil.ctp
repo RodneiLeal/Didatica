@@ -112,6 +112,8 @@
                       </div>
                     </div>
 
+                    
+                    
                     <?php if($tipo): ?>
 
                     <input type="hidden" id="idinstrutor" value="<?=$idinstrutor?>">
@@ -265,7 +267,9 @@
     <div class="modal fade" id="avatar-modal" aria-hidden="true" aria-labelledby="avatar-modal-label" role="dialog" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <form class="avatar-form" action="crop.php" enctype="multipart/form-data" method="post">
+
+          <form class="avatar-form" action="controllers/util/crop.php" enctype="multipart/form-data" method="post">
+
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title" id="avatar-modal-label">Editor de imagem</h4>

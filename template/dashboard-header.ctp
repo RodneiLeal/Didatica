@@ -4,7 +4,7 @@
       header('location: ./');
     }
     extract($_SESSION);
-    $foto = empty($foto)?'img/users/sem-foto.png': "data:image/jpeg; base64, '{$foto}'";
+    $foto = empty($foto) ?'img/users/sem-foto.png': $foto;
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -297,7 +297,7 @@
                     </li>
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="Dashboard?p=perfil-edit" class="btn btn-default btn-flat">Editar</a>
+                            <a href="Dashboard?p=editar-perfil" class="btn btn-default btn-flat">Editar</a>
                         </div>
                         <div class="pull-right">
                             <a class="logoff btn btn-default btn-flat">Sair</a>

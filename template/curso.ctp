@@ -55,7 +55,7 @@
 										</div>
 
 										<?php
-											$foto = empty($foto)?'img/users/sem-foto.png':$foto;
+											$instrutor_foto = empty($instrutor_foto)?'img/users/sem-foto.png':$instrutor_foto;
 										?>
 
                                     </div>
@@ -145,7 +145,7 @@
 
 								<hr>
 									<div class="comment-avatar  ">
-										<img alt="foto do instrutor" src="<?=$foto?>" width="50px">
+										<img class="img-circle" alt="foto do instrutor" src="<?=$instrutor_foto?>" width="50px">
 									</div>
 									<h6><?=$instrutor?></h6>
 

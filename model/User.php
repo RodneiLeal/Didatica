@@ -178,17 +178,48 @@
             return $result;
         }
 
-        public function updateUser($table, $where_field, $where_field_value, $values){
-            if(is_string($this->db->update($table, $where_field, $where_field_value, $values))){
-                return true;
-            }
-            return false;
-
-            /********forma correta de funcionamento ----- ANALISAR ----******/
+        public function updateUser(array $dataUser){
+            session_start();
+            extract($dataUser);
             
-            // $stmt = $this->db->update($table, $where_field, $where_field_value, $values);
-            // $result = $stmt->fetchAll(PDO::FETCH_ASSOC); 
-            // return $result;
+            $src = $foto;
+            $path =  'uploads/users/'.$_SESSION['username'].'/';
+
+            if($_SESSION['username'] != $username && rename('../../'.$path, '../../uploads/users/'.$username)){
+                $path = str_replace($_SESSION['username'], $username, $path);
+                $dataUser['foto'] = str_replace($_SESSION['username'], $username, $foto);
+            }
+            
+            if($_SESSION['foto'] != $foto){
+                $dataUser['foto'] = str_replace('bucket/', $path, $src);
+                rename('../../'.$src, '../../'.$dataUser['foto']);
+            }
+
+            if($email == $_SESSION['email']){
+                unset($dataUser['email']);
+            }else{
+                $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+                if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                    echo '0__';
+                    exit;
+                }
+            }
+            
+            if(isset($pswd)){
+                $dataUser['pswd'] = hash('sha256', $pswd);
+            }else{
+                unset($dataUser['pswd']);
+            }
+
+            if($this->db->update('usuario', @array_shift(array_keys($dataUser)), @array_shift($dataUser), $dataUser)){
+                $this->result = true;
+                $this->msg    = array('type'=>'success', 'title'=>'Perfil atualizado',  'msg'=>'Seu Perfil foi atializado com sucesso!');
+            }
+
+            $data = array('idusuario'=>$idusuario);
+            $user_update = $this->getUser($data, 1)[0];
+            
+            $_SESSION = $user_update;
         }
 
     }
