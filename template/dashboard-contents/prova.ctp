@@ -77,7 +77,7 @@
                                 <span class="input-group-addon">
                                   <input class="opcao" type="radio" name="opcao[<?=$questao['id_questao']?>]" aria-label="Resposta" value="<?=++$key_opt?>">
                                 </span>
-                                <span class="form-control" ><?=$opcao?></span>
+                                <span class="form-control auto-height" ><?=$opcao?></span>
                               </div>
                               <?php endforeach ?>
 

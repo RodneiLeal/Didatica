@@ -270,3 +270,7 @@ iframe#preview-doc{
     line-height: 38px;
     padding-bottom: 4px;
 }
+
+.form-control.auto-height{
+    height: auto;
+}
