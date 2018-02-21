@@ -733,15 +733,15 @@
 		</div>
 	</div>
 	
-	<div class="cd-user-modal"> <!-- this is the entire modal form, including the background -->
-		<div class="cd-user-modal-container"> <!-- this is the container wrapper -->
+	<div class="cd-user-modal">
+		<div class="cd-user-modal-container">
 		
 			<ul class="cd-switcher">
 				<li><a class="cd-signin">Entrar</a></li>
 				<li><a class="cd-signup">Novo Cadastro</a></li>
 			</ul>
 
-			<div id="cd-login"> <!-- log in form -->
+			<div id="cd-login">
 				<form class="cd-form login_box">
 					<p class="fieldset">
 						<label class="image-replace cd-email" for="signin-email">E-mail ou usuário</label>
@@ -768,16 +768,15 @@
 					<button data-target="google" class="social-signin btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
 					<button data-target="linkedin" class="social-signin btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
 
-				</div><!-- /.social-auth-links -->
+				</div>
 				<BR><BR>
-				<p class="cd-form-bottom-message"><a href="#0">Esqueceu sua senha?</a></p>
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
-			</div> <!-- cd-login -->
+				<p class="cd-form-bottom-message"><a href="#0">Esqueci minha senha?</a></p>
+				
+			</div> 
 
-			<div id="cd-signup"> <!-- sign up form -->
+			<div id="cd-signup">
 					
-				<form class="cd-form register_box">
-
+				<form class="cd-form signup-form">
 					<p class="fieldset">
 						<label class="image-replace cd-username" for="register_name">Seu nome</label>
 						<input class="full-width has-padding has-border" id="register_name" type="text" placeholder="Nome de usuário">
@@ -798,30 +797,26 @@
 
 						<span class="cd-error-message">Informe sua senha!</span>
 					</p>
-
  
 					<p class="fieldset">
-						<button class="full-width has-padding" type="button" id="register-bt" access="new_register">Criar nova conta</button>
+						<button class="signup full-width has-padding" type="button" access="new_register">Criar nova conta</button>
 					</p>
 				</form>
 
 				<div class="social-auth-links text-center">
 					<p>- OU -</p>
 
-					<button data-target="facebook" id="" class="social-signup btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
-					<!-- <a href="controller/login_social/login.php?login=facebook" class="btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</a> -->
+					<button data-target="Facebook" class="signup btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
 
-					<button data-target="google" class="social-signup btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
-					<!-- <a href="controller/login_social/login.php?login=google" class="btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a> -->
+					<button data-target="Google" class="signup btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
 
-					<button data-target="linkedin" class="social-signup btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
-					<!-- <a href="controller/login_social/login.php?login=linkedin" class="btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> Linkedin</a> -->
+					<button data-target="LinkedIn" class="signup btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
 
-				</div><!-- /.social-auth-links -->
-				<!-- <a href="#0" class="cd-close-form">Close</a> -->
-			</div> <!-- cd-signup -->
+				</div>
+				
+			</div>
 
-			<div id="cd-reset-password"> <!-- reset password form -->
+			<div id="cd-reset-password"> 
 				<p class="cd-form-message">Esqueceu sua senha, por favor, informe seu e-mail, você receberá sua nova senha no e-mail informado.</p>
 
 				<form class="cd-form">
@@ -837,11 +832,10 @@
 				</form>
 
 				<p class="cd-form-bottom-message"><a href="#0">Voltar para log-in</a></p>
-			</div> <!-- cd-reset-password -->
-
+			</div>
 			<a href="#0" class="cd-close-form">Fechar</a>
-		</div> <!-- cd-user-modal-container -->
-	</div> <!-- cd-user-modal -->
+		</div>
+	</div>
 
 </body> 
 </html>

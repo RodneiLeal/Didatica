@@ -1,6 +1,6 @@
 jQuery(function ($){
 
-  
+  // $.support.cors = true;
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
@@ -195,46 +195,47 @@ jQuery(function ($){
         });
     // FIM
 
-  // FINALIZAR A PROVA
-    $('#finalizar-prova').on('click', function (event) {
-      event.preventDefault();
-      var prova = $('#prova').serializeArray();
-      if(prova.length>2){
-        $('#finalizar-prova, input[type=radio]').attr('disabled', 'disabled');
-        finalizarProva(prova);
-      }else{
-        Notificacao('error', 'Sua prova está em branco!', 'Nenhuma questão foi marcada');
-      }
-    });
-
-    function finalizarProva(prova){
-      $('.clock').countdown('stop');
-
-      prova.unshift({name:'acertos', value:acertos}, {'name':'nquestoes', 'value':Nquestoes});
-      
-      function provaCallback(response){
-        response = JSON.parse(response);
-        if (response.avaliacao){
-          $('#good-work').modal('show');
-          $('.nota').html(response.nota+'%');
+    // FINALIZAR A PROVA
+      $('#finalizar-prova').on('click', function (event) {
+        event.preventDefault();
+        var prova = $('#prova').serializeArray();
+        if(prova.length>2){
+          $('#finalizar-prova, input[type=radio]').attr('disabled', 'disabled');
+          finalizarProva(prova);
         }else{
-          $('#too-bad').modal('show');
-          $('.nota').html(response.nota+'%');
+          Notificacao('error', 'Sua prova está em branco!', 'Nenhuma questão foi marcada');
         }
-        $('.respostas').html('Você acertou <strong>'+acertos+'</strong> questões');
-        setInterval(function(){
-          redireciona('Dashboard?p=curso&inscr=' + prova[2].value);
-        },600000);
-      }
-      
-      $.ajax({
-        url: 'controllers/curso/saveProva.php',
-        type: 'POST',
-        datatype: 'application/json',
-        data: prova,
-        success: provaCallback
       });
-    }
+
+      function finalizarProva(prova){
+        $('.clock').countdown('stop');
+
+        prova.unshift({name:'acertos', value:acertos}, {'name':'nquestoes', 'value':Nquestoes});
+        
+        function provaCallback(response){
+          response = JSON.parse(response);
+          if (response.avaliacao){
+            $('#good-work').modal('show');
+            $('.nota').html(response.nota+'%');
+          }else{
+            $('#too-bad').modal('show');
+            $('.nota').html(response.nota+'%');
+          }
+          $('.respostas').html('Você acertou <strong>'+acertos+'</strong> questões');
+          setInterval(function(){
+            redireciona('Dashboard?p=curso&inscr=' + prova[2].value);
+          },600000);
+        }
+        
+        $.ajax({
+          url: 'controllers/curso/saveProva.php',
+          type: 'POST',
+          datatype: 'application/json',
+          data: prova,
+          success: provaCallback
+        });
+      }
+    // FIM
 
   // FIM
 
@@ -529,7 +530,7 @@ jQuery(function ($){
         response =  JSON.parse(response);
         var message = response.message;
         Notificacao(message.type, message.title, message.msg);
-        redireciona(window.location.href);
+        location.reload();
       }
 
       $.post('controllers/user/update.php', data, userUpdateCallback);
@@ -623,73 +624,60 @@ jQuery(function ($){
   // FIM
 
   // CADASTRO USUÁRIO
-    $('#register-bt').on('click', function(event){
-
+    $('.signup').on('click', function(event){
       event.preventDefault();
-
-      if (isEmpty($("#register_name").val())){
-        Notificacao('error','Informe um nome de usuário','Nome obrigatório');
-        $('#register_name').focus();
-        return 1;
-      }
-
-      if (isEmpty($("#register_email").val())){
-        Notificacao('error','Informe seu e-amail para cadastro','E-mail obrigatório');
-        $('#register_email').focus();
-        return 1;
-      }
-
-      if (isEmpty($("#register_pass").val())){
-        Notificacao('error','Informe sua senha para cadastro','Senha obrigatório');
-        $('#register_pass').focus();
-        return 1;
-      }
-
+      
+      var $nome = $("#register_name");
+      var $email = $("#register_email");
+      var $pass = $("#register_pass");
+      
       var data = {
-        username: $("#register_name").val(),
-        email: $("#register_email").val(),
-        passwd: $("#register_pass").val()
+        rede: $(this).attr('data-target'),
+        username: $nome.val(),
+        email: $email.val(),
+        passwd: $pass.val()
       };
 
+      function registerCallback(response) {
+        var response = JSON.parse(response);
+        var message = response.message;
+        Notificacao(message.type, message.title, message.msg);
+        if (response.result) {
+          setTimeout(function () {
+            location.href = 'home'
+          }, 3000);
+        }       
+      }
+      
       $.post("controllers/user/register.php", data, registerCallback);
+
     });
   // FIM
 
   // LOGIN USUÁRIO
     $('#login-bt').on('click', function(event){
+      event.preventDefault();
 
       var $email = $("#user_email");
       var $pswd  = $("#user_pass");
-
-      event.preventDefault();
-
-      if (isEmpty($email.val())){
-        Notificacao('error','Informe seu e-mail de cadastro','E-mail obrigatório');
-        $email.focus(); return 1;
-      }
-
-      if (isEmpty($pswd.val())){
-        Notificacao('error','Informe sua senha de cadastro','Senha obrigatório');
-        $pswd.focus(); return 1;
-      }
 
       var data = {
         pid: $email.val(),
         passwd: $pswd.val()
       }
+
+      function loginCallback(response) {
+        var response = JSON.parse(response);
+        var message = response.message;
+        Notificacao(message.type, message.title, message.msg);
+        if(response.result){
+          setTimeout(function(){
+            location.reload()
+          }, 3000);
+        }
+      }
       
       $.post("controllers/login.php", data, loginCallback);
-    });
-  // FIM
-
-  // CADASTRO USUÁRIO VIA REDE SOCIAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REVISAR
-    $('.social-signup').on('click', function(){
-      
-      var data = {
-        rede : $(this).attr('data-target')
-      }
-
-      $.post("controllers/user/register.php", data, registerCallback);
     });
   // FIM
 
@@ -711,7 +699,7 @@ jQuery(function ($){
       }
 
       function logoffCallback(response){
-        location.href='home';
+        location.reload();
       }
 
       $.post('controllers/logout.php', data, logoffCallback);
@@ -732,49 +720,9 @@ jQuery(function ($){
 
 /*******************************  FUNÇÕES PUBLICAS  *************************************/
 
-  function loginCallback(response){
+  
 
-    switch(response){
-      case '0__':
-        Notificacao('error','Ops!','Combinação de e-mail e senha invalidos');
-        $('#LoginFormEmail').focus();
-      break;
-      case '1__':
-        Notificacao('error','Usuário Bloquado!','Entre em contato com os administradores.');
-      break;
-      case '2__':
-        Notificacao('success','Redirecionando...','Login realizado com sucesso');
-        redireciona(window.location.href);
-      break;
-    }
-  }
 
-  function registerCallback(response){
-    switch(response){
-      case '0__':
-        Notificacao('error','E-mail inválido','E-mail obrigatório');
-        $('#register_email').focus();
-      break;
-      case '1__':
-        Notificacao('error','Este usuário já existe', 'Nome de usuário ja cadastrado, por favor escolha ouro nome de usuário!');
-        $('#register_name').focus();
-      break;
-      case '2__':
-        Notificacao('error','Este e-mail já está cadastrado','E-mail obrigatório');
-        $('#register_email').focus();
-      break;
-      case '3__':
-        // mensagem usada qaundo a confirmação por email esta configurada
-        // Notificacao('success','Enviamos uma mensagem para o e-mail informado ','Por favor confirme seu cadstro.');
-        Notificacao('success','Login realizado com sucesso','Redirecionando...');
-        redireciona(window.location.href);
-      break;
-      case '4__':
-      Notificacao('error','Algo errado aconteceu, por favor tente mais tarde!','Algo deu errado');
-      redireciona('home');
-      break;
-    }
-  }
   
   function isEmpty(value){
     return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;

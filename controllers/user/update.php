@@ -1,7 +1,6 @@
 <?php
     include '../../loader.php';
-    $user  = new User;
-    $user->updateUser($_POST);
+    $user  = new User('updateUser', $_POST);
     $response = array(
         'status' => 200,
         'message'=>$user->getMsg(),
@@ -9,7 +8,3 @@
     );
 
     echo json_encode($response);
-
-
-
-    

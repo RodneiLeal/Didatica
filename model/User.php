@@ -1,4 +1,5 @@
 <?php
+    use \Hybridauth\Hybridauth;
 
     class User extends Main{
 
@@ -64,7 +65,7 @@
                                  <small>Está é uma mensagem automática, por favor, não responda</small>
                                ";
 
-                    if($this->db->update('usuario', 'email', $email, array('pswd'=>hash('sha256', $passwd)))){
+                    if($this->db->update('usuario', 'email', $email, array('pswd'=>password_hash($passwd, PASSWORD_BCRYPT)))){
                         if($this->EnviaEmail($email, $usuario_nome, 'Didatica Online - Solicitação de nova senha de acesso', $mensagem, '')){
                             $this->result = $passwd;
                             $this->msg = array('type'=>'success', 'title'=>'Solicitação feita com sucesso.', 'msg'=>'Enviamos instruções de recuperação da sua conta para '.$email);
@@ -78,82 +79,240 @@
             }
         }
 
-        public function login($pid, $passwd){
-            $passwd = hash('sha256', $passwd);
-            $sql    = "SELECT * FROM usuario WHERE (usuario.email = '{$pid}' OR usuario.username = '{$pid}') AND usuario.pswd = '{$passwd}' LIMIT 1";
-            $stmt   = $this->db->query($sql);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if(empty($result)){
-                return false;
+        public function login($login){
+            $pid = trim($login['pid']);
+            $passwd = trim($login['passwd']);
+            
+            if(!isset($pid) or empty($pid) ){
+                $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'E-mail/Nome de usuário vazio',
+                    'msg'=>'É necessario o e-mail ou nome de usuário para acessar o seu perfil.'
+                );
+                return;
             }
-            return $result;
+            
+            if(!isset($passwd) or empty($passwd) ){
+                $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Campo senha está vazio',
+                    'msg'=>'É necessario uma senha para acessar o seu perfil.'
+                );
+                return;
+            }
+
+            try{
+                $sql    = "SELECT * FROM usuario WHERE (usuario.email = '{$pid}' OR usuario.username = '{$pid}') LIMIT 1";
+                $stmt   = $this->db->query($sql);
+                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+                if(empty($result)){
+                    $this->msg = array(
+                        'type'=>'error',
+                        'title'=>'Desculpe,',
+                        'msg'=>'este e-mail ou usuario não está cadastrado.'
+                    );
+                    return;
+                }
+
+                if(password_verify($passwd, $result[0]['pswd'])){
+                    session_start();
+                    $_SESSION = $result[0];
+                    $this->msg = array(
+                        'type'=>'success',
+                        'title'=>'Olá '.$_SESSION['username'].',',
+                        'msg'=>''
+                    );
+                    $this->result = true;
+                    return;
+                }
+                else{
+                    $this->msg = array(
+                        'type'=>'error',
+                        'title'=>'Desculpe,',
+                        'msg'=>'a combinação de e-mail/usuario e senha não conhecidem'
+                    );
+                    return;
+                }
+            }catch(Exception $e){
+                $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Oops, parece que estamos com algum probleminha!',
+                    'msg'=>$e->getMessage()
+                );
+            }
         }
 
-        public function getUserSocial($rede){
-            $urlCallback = 'http://didatica.online/controllers/user/login.php?rede=';
-            
-            switch($rede){
-                case 'facebook':
-                    $config =  [
-                        'callback' => $urlCallback.$rede,
-                        'keys'     => [ 'key' => '159280651284190', 'secret' => 'd4043ce62d63f634064d32b0a967ca97' ]
-                    ];
-                break;
-                case 'google':
-                    $config = [
-                        'callback' => $urlCallback.$rede,
-                        'keys'     => [ 'key' => '540948825743-n8vqmgotkgl7cfetgkhh1911411mhcsc.apps.googleusercontent.com', 'secret' => 'izUV01B0E4Pkrrhs8o6EWgqM' ]
-                    ];
-                break;
-                case 'linkedin':
-                    $config = [
-                        'callback' => $urlCallback.$rede,
-                        'keys'     => [ 'key' => '772eq6xy5cqbub', 'secret' => 'YI9PeFJtODF4E2Zc' ]
-                    ];
-                break;
-            }
-            
-            try{
-                $hybridauth = new Hybridauth( $config );
-                
-                $adapter = $hybridauth->authenticate($rede);
-                $userProfile = $adapter->getUserProfile();
-                $adapter->disconnect();
-            }catch(\Exception $e){
-                echo 'Oops, we ran into an issue! ' . $e->getMessage();
-            }
+        public function registrar(array $signupData){
+            extract($signupData);
+            $urlCallback = HOME_URI.'controllers/login.php?rede=';
 
-            $dataUser = array(
-                'identifier'=> $userProfile->identifier,
-                'email'     => $userProfile->email,
-                'foto'      => $userProfile->photoUrl,
-                'nome'      => $userProfile->firstName,
-                'sobrenome' => $userProfile->lastName,
-                'username'  => $userProfile->displayName
-            );
-    
-            return $config;
+            if (isset($rede)) { /* cadastro automático utilizando das redes sociais */
+                switch($rede){
+                    case 'Facebook':
+                        $config =  [
+                            'callback' => $urlCallback.$rede,
+                            'providers'=>[
+                                'Facebook'=>[
+                                    'enabled'=>true,
+                                    'keys'     => [ 'id' => '159280651284190', 'secret' => 'd4043ce62d63f634064d32b0a967ca97' ]
+                                ]
+                            ]
+                        ];
+                    break;
+                    case 'Google':
+                        $config = [
+                            'callback' => $urlCallback.$rede,
+                            'providers'=>[
+                                'Google'=>[
+                                    'enabled'=>true,
+                                    'keys'     => [ 'id' => '540948825743-n8vqmgotkgl7cfetgkhh1911411mhcsc.apps.googleusercontent.com', 'secret' => 'izUV01B0E4Pkrrhs8o6EWgqM' ]
+                                ]
+                            ]
+                        ];
+                    break;
+                    case 'LinkedIn':
+                        $config = [
+                            'callback' => $urlCallback.$rede,
+                            'providers'=>[
+                                'LinkedIn'=>[
+                                    'enabled'=>true,
+                                    'keys'     => [ 'id' => '772eq6xy5cqbub', 'secret' => 'YI9PeFJtODF4E2Zc' ]
+                                ]
+                            ]
+                        ];
+                    break;
+                }
+                
+                try{
+                    $hybridauth = new Hybridauth( $config );
+                    $adapter = $hybridauth->authenticate($rede);
+                    $userProfile = $adapter->getUserProfile();
+                    $adapter->disconnect();
+
+                    $dataUser = array(
+                        'identifier'=> $userProfile->identifier,
+                        'email'     => $userProfile->email,
+                        'foto'      => $userProfile->photoUrl,
+                        'nome'      => $userProfile->firstName,
+                        'sobrenome' => $userProfile->lastName,
+                        'username'  => $userProfile->displayName
+                    );
+                    
+                    // se o processo estiver ok até este ponto, então salvar informações obtidas
+
+                    $this->msg = array(
+                        'type'=>'success',
+                        'title'=>'Cadastro concluído',
+                        'msg'=>'Você esta conectado através do '.$rede
+                    );
+
+                    return;
+                    
+                }catch(\Hybridauth\Exception\Exception $e){
+                    $this->msg = array(
+                        'type'=>'error',
+                        'title'=>'Oops, encontramos um problema!',
+                        'msg'=>$e->getMessage()
+                    );
+                }
+            }
+            else{ /* Cadastro manual através do formulario do site */
+                try{
+                    /* verifica se um email foi informado */
+                    if(!isset($email) or empty($email)){
+                        $this->msg = array(
+                            'type'=>'error',
+                            'title'=>'E-mail obrigatório',
+                            'msg'=>'É nescessario informar um e-mail para se cadastrar'
+                        );
+                        return;
+                    }
+                    
+                    /* verifica se o email informado tem um formato valido */
+                    $email = filter_var($email, FILTER_SANITIZE_EMAIL);
+                    if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                        $this->msg = array(
+                            'type'=>'error',
+                            'title'=>'E-mail inválido',
+                            'msg'=>'É nescessario informar um e-mail válido para se cadastrar'
+                        );
+                        return;
+                    }
+                    
+                    /* verifica se existe um email informado */
+                    if($this->getUser(array('email'=>$email))[0]){
+                        $this->msg = array(
+                            'type'=>'error',
+                            'title'=>'E-mail já cadastrado!',
+                            'msg'=>'Este e-mail já esta cadastrado, caso tenha esquecido sua senha, tente redefini-la clicando em "Esqueci minha senha"'
+                        );
+                        return;
+                    }
+
+                    /* verifica se um nome de usuario foi informado */
+                    if(!isset($username) xor empty($username)){
+                        $this->msg = array(
+                            'type'=>'error',
+                            'title'=>'Nome de usuário é obrigatório',
+                            'msg'=>'O nome de usuário é obrigatório para identificar-se no sistema.'
+                        );
+                        return;
+                    }
+
+                    /* verifica se o nome de usuario ja exite */
+                    if(!empty($this->getUser(array('username'=>$username))[0])){
+                        $this->msg = array(
+                            'type'=>'error',
+                            'title'=>'Nome de usuário inválido',
+                            'msg'=>'Este nome de usuário ja esta em uso, por favor escolha outro!'
+                        );
+                        return;
+                    }
+                
+                    /* Verifica se fo informado uma senha de acesso */
+                    if(!isset($passwd) xor empty($passwd)){
+                        $this->msg = array(
+                            'type'=>'error',
+                            'title'=>'Campo senha está vazio.',
+                            'msg'=>'É necessario ter uma senha para acessar os seus curso e seus certificados.'
+                        );
+                        return;
+                    }
+
+                    /* cria um array com os dados informados */
+                    $dataUser = array(
+                        'username'=>$username,
+                        'email'=>$email,
+                        'pswd'=>password_hash($passwd, PASSWORD_BCRYPT)
+                    );
+
+                    try{ /* tenta registrar o usuario com os dados informados e fazer o login com o mesmo */
+                        $this->db->insert('usuario', $dataUser);
+                        $this->login(array('pid'=>$email, 'passwd'=>$passwd));
+                    }catch(Exception $e){ 
+                        $this->msg = array(
+                            'type'=>'error',
+                            'title'=>'Oops, encontramos um problema!',
+                            'msg'=>$e->getMessage()
+                        );
+                    }
+
+                }catch(Exception $e){
+                    $this->msg = array(
+                        'type'=>'error',
+                        'title'=>'Oops, encontramos um problema!',
+                        'msg'=>$e->getMessage()
+                    ); 
+                }
+            }
         }
         
-        public function saveUser($data){
-            if($this->db->insert('usuario', $data)){
-                $data = array($this->db->last_id);
-                $sql = "SELECT * FROM usuario WHERE idusuario = ?";
-                $stmt = $this->db->query($sql, $data);
-                $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                if(empty($result)){
-                    return false;
-                }
-                return $result;
-            }
-            return false;
-        }
-
         public function getUser($values, $limit = false){
             $set = array();
             $sql = "SELECT * FROM usuario ";
             
-            if(!empty($values)  && is_array($values)){
+            if(!empty($values) && is_array($values)){
                 
                 foreach($values as $column=>$value){
                     $set[] = " `$column` = ? ";
@@ -185,6 +344,10 @@
             $src = $foto;
             $path =  'uploads/users/'.$_SESSION['username'].'/';
 
+            if(!file_exists('../../'.$path)){
+                mkdir('../../'.$path);
+            }
+
             if($_SESSION['username'] != $username && rename('../../'.$path, '../../uploads/users/'.$username)){
                 $path = str_replace($_SESSION['username'], $username, $path);
                 $dataUser['foto'] = str_replace($_SESSION['username'], $username, $foto);
@@ -200,20 +363,28 @@
             }else{
                 $email = filter_var($email, FILTER_SANITIZE_EMAIL);
                 if (!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                    echo '0__';
-                    exit;
+                    $this->msg = array(
+                        'type'=>'error',
+                        'title'=>'E-mail inválido',
+                        'msg'=>'É nescessario informar um e-mail válido manutenção do seu perfil.'
+                    );
+                    return;
                 }
             }
             
             if(isset($pswd)){
-                $dataUser['pswd'] = hash('sha256', $pswd);
+                $dataUser['pswd'] = password_hash($pswd, PASSWORD_BCRYPT);
             }else{
                 unset($dataUser['pswd']);
             }
 
             if($this->db->update('usuario', @array_shift(array_keys($dataUser)), @array_shift($dataUser), $dataUser)){
+                $this->msg    = array(
+                    'type'=>'success',
+                    'title'=>'Perfil atualizado',
+                    'msg'=>'Seu Perfil foi atializado com sucesso!'
+                );
                 $this->result = true;
-                $this->msg    = array('type'=>'success', 'title'=>'Perfil atualizado',  'msg'=>'Seu Perfil foi atializado com sucesso!');
             }
 
             $data = array('idusuario'=>$idusuario);
