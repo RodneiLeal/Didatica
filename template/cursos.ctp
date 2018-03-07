@@ -1,9 +1,3 @@
-<?php
-	$curso_categoria_nome	 = $this->action;
-	$curso_subcategoria_nome = $this->param[0];
-	$cursos = $this->cursos->getCursosPorCategoria($curso_categoria_nome, $curso_subcategoria_nome);
-	$categoria_curso = isset($curso_subcategoria_nome)?$curso_subcategoria_nome:$curso_categoria_nome;
-?>
     <div id="main-content">
 
         <header class="page-header">
@@ -13,32 +7,12 @@
             <div class="page-header-inner">
                 <div class="container">
                     <div class="row">
-                        <div class="col-md-12">
-                            <h1 class="page-title clearfix pull-left">
-                                <?=$curso_categoria_nome;?>
-                            </h1>
-                        </div>
-                        <div class="col-md-12">
-							<h5 class=" clearfix pull-left" style="color:#fff">
-							
-							<?php
-								if($cursos):
-									echo "Os maiores especialistas em $categoria_curso";
-								else:
-									echo "Não encontramos nenhum curso para $categoria_curso";
-								endif;
-							?>
 
-							</h5>
-                        </div>
-
-                        <!-- col-md-12 -->                        
-                    </div>
-                    <!-- row -->
+                        <?=$msg?>
+						
+					</div>
                 </div>
-                <!-- container -->
             </div>
-            <!-- page-header-inner -->
         </header>
 
 		
@@ -50,7 +24,6 @@
 	    				<div class="widget kopa-masonry-list-2-widget">
 	    					<div class="widget-title widget-title-s5 text-left">
 								<span></span>
- 	                            <h4>Cursos para: <?=$categoria_curso?></h4>
  	                        </div>
 
 	    					<div class="masonry-list-wrapper">

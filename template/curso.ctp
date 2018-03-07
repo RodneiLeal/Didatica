@@ -123,7 +123,7 @@
 									<h5><?=$titulo?></h5>
 
 									<?php
-										if(!empty($_SESSION)):
+										if(isset($_SESSION['idusuario'])):
 
 											$inscricao = new Inscricao;
 											$inscricao = $inscricao->getInscricaoPorCursoUsuario($_SESSION['idusuario'], $idcurso)[0];

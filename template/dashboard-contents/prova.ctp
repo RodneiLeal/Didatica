@@ -174,6 +174,21 @@
             </div>
           </div>
         </div>
+
+        <div class="box-footer">
+          <button type="button" class="btn btn-warning btn-promotion pull-right btn-refazer">
+            <strong>
+              Refazer a prova
+            </strong>
+          </button>
+
+          <button type="button" class="btn btn-warning btn-promotion pull-left btn-voltar" data-dismiss="modal">
+            <strong>
+              Voltar para inscrições
+            </strong>
+          </button>
+        </div>
+
       </div>
                 
     </div>

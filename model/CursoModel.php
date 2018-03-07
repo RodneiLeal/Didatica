@@ -2,12 +2,21 @@
     class CursoModel extends Main {
 
         protected $get;
+        private $msg,
+                $result;
 
-        function __construct(){
+        function __construct($action = null, $param = null){
             parent::__construct();
             $this->get = func_num_args()>=1?func_get_args():array();
         }
 
+        public function getMsg(){
+            return $this->msg;
+        }
+
+        public function getResult(){
+            return $this->result;
+        }
 
         // SELECIONA TODOS OS CURSOS
         public function getCursos(){
@@ -59,10 +68,10 @@
         }
 
         // SELECIONA CURSO POR TITULO
-        public function searchCursos(){
-			$data	 = array($this->search);
-            $sql	 = "SELECT * from view_cursos WHERE titulo LIKE '%?%' AND locked = 1";
-			$stmt	 = $this->db->query($sql, $data);
+        public function searchCursos($word){
+			// $data	 = array($word);
+            $sql	 = "SELECT * from view_cursos WHERE titulo LIKE '%$word%' AND locked = 1";
+			$stmt	 = $this->db->query($sql);
 			$result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
                 return false;
@@ -178,7 +187,8 @@
             return false;
         }
 
-        public function updateCurso($where_field, $where_field_value, $values){
+        public function updateCurso($dataCurso){
+
             if(is_string($this->db->update('curso', $where_field, $where_field_value, $values))){
                 return true;
             }

@@ -15,7 +15,7 @@
   <div class="row">
     <div class="col-md-12">
       <div class="box box-widget widget-user">
-        <div class="widget-user-header bg-blue" <?=$style?>>
+        <div class="widget-user-header bg-blue">
           <h3 class="widget-user-name" style="margin-top: 0;"><?=$curso['titulo']?></h3>
           <h6 class="widget-user-desc">Por <a href="//" class="b white"><?=$curso['instrutor']?></a></h6>
           <div class="row">

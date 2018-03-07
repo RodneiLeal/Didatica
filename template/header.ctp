@@ -52,6 +52,7 @@
 					
 						<nav id="main-nav">
 							<ul id="main-menu" class="clearfix">
+
 								<li class="current-menu-item">
 									<a>Categorias<span class="menu-description">Encontre seu curso</span></a>
 									<ul>
@@ -73,17 +74,23 @@
 										<?php endforeach ?>
 									</ul>
 								</li>
+
 								<li >
 									<form class="form-wrapper-top-search" action="cursos" method="GET">
 										<input type="text" name="search" placeholder="Buscar curso..." required>
-										<button type="submit"><i class="fa fa-search"></i></button>
+										<button type="submit" class="btn-search"><i class="fa fa-search"></i></button>
 									</form>
 								</li>
+
 							</ul>
 
 							<div class="text-right botoes_topo" >
+
+								<a href="valida_certificado">Validar Certificado</a>
+
 								<?php if(!empty($locked) && $locked) : ?>
-								<a>Ola, <?=$username?>!</a>
+								
+								<a>Olá <?=$username?>!</a>
 
 								<div class="dropdown">
 									<a class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
