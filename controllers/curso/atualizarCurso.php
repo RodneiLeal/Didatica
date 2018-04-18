@@ -5,9 +5,9 @@
 
     extract($_POST);
     
-    $path = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$curso['titulo'].'/';
-    $src = $curso['imagem'];
-    $curso['imagem'] = str_replace('bucket/', $path, $curso['imagem']);
+    // $path = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$curso['titulo'].'/';
+    // $src = $curso['imagem'];
+    // $curso['imagem'] = str_replace('bucket/', $path, $curso['imagem']);
     
     /* UPDATE CURSO */
     $cursoModel->updateCurso(@array_shift(array_keys($curso)), @array_shift($curso), $curso);

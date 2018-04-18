@@ -35,7 +35,7 @@
 				// $path = filter_var($path, FILTER_SANITIZE_URL);
 				$path = explode("/", $path);
 
-				$this->controller  = ucfirst($this->chk_array($path, 0));
+				$this->controller  = str_replace(' ', '_', ucfirst($this->chk_array($path, 0)));
 
 				$this->action 	   = $this->chk_array($path, 1);
 				if($this->chk_array($path, 2)){

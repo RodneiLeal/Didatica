@@ -1,27 +1,181 @@
 jQuery(function ($){
 
-  // $.support.cors = true;
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
-  var maxlength = $('[maxlength]');
-  var caracterCount = $('.countdown-caractere');
+  
+  $('#congratulations').modal('show');
+  
+  $('.btn-voltar').on('click', function(){
+    redireciona('Dashboard/inscricoes');
+  });
+  
+  $('.btn-refazer').on('click', function(){
+    location.reload();
+  });
 
-  // // CONTADOR DE CARACTERES
-  // mxl = maxlength.attr('maxlength');
+  // GERENCIADOR DE CURSO
 
-  // caracterCount.html(mxl - maxlength.val().length);
+    $('button[name="salvarcurso"]').on('click', function(event) {
+      event.preventDefault();
+      this.$form      = $(document).find('#curso');
+      this.$curso     = this.$form.find('[name="curso[idcurso]"]');
+      this.$url       = this.$form.attr('action');
+      this.$titulo    = this.$form.find('[name="curso[titulo]"]');
+      this.$categoria = this.$form.find('[name="curso[categoria]"] :selected');
+      this.$imagem    = this.$form.find('[name="curso[imagem]"]');
 
-  // $('[maxlength]').on('keydown keyup', function(){
-  //   var $this = $(this);
-  //   var $nct  = $this.attr('maxlength');
-  //   var $cd   = $this.val().length
-  //   var $cr   = $nct-$cd;
-  //   $('.countdown-caractere').html($cr)
-  // });
-  // // FIM
+      try{
+        this.$descricao = CKEDITOR.instances['editor1'].getData();
+        this.$ementa    = CKEDITOR.instances['editor2'].getData();
+      }catch(e){
+        console.log(e);
+      }
 
-  // VALIDA CERTIFICADO
+      // validar todo os elementos antes de enviar para processamento
+
+       this.$data = {
+        idcurso:               this.$curso.val() === undefined ? '' : this.$curso.val(),
+        titulo:                this.$titulo.val() === undefined ? '' : this.$titulo.val(),
+        categoria_idcategoria: this.$categoria.val() === undefined ? '' : this.$categoria.val(),
+        imagem:                this.$imagem.val() === undefined ? '' : this.$imagem.val(),
+        resumo:                this.$descricao === undefined ? '' : this.$descricao,
+        ementa:                this.$ementa === undefined ? '' : this.$ementa
+      }
+
+      function salvarCursoCallback(response){
+        this.$response = JSON.parse(response);
+        this.$message  = this.$response.message;
+        this.$result   = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+
+        if(this.$result){
+          redireciona('Dashboard/curso/'+this.$result);
+        }
+      }
+
+      $.post(this.$url, this.$data, salvarCursoCallback);
+    });
+
+    
+    $('button[name="salvaraula"]').on('click', function(event) {
+      event.preventDefault();
+      this.$form      = $(document).find('#aula');
+      this.$curso     = this.$form.find('[name="curso[idcurso]"]');
+      this.$aula      = this.$form.find('[name="aula[idaula]"]');
+      this.$url       = this.$form.attr('action');
+
+      this.$titulo    = this.$form.find('[name="aula[titulo]"]');
+
+      // this.$arquivo   = this.$form.find('[name="aula[arquivo]"]');
+      // this.$formdata = new FormData();
+      // this.$formdata.append('arquivo', this.$arquivo[0]);
+
+      try{
+        this.$objetivos = CKEDITOR.instances['editor3'].getData();
+      }catch(e){
+        console.log(e);
+      }
+
+       this.$data = {
+        idaula:          this.$aula.val() === undefined ? '' : this.$aula.val(),
+        curso_idcurso:   this.$curso.val() === undefined ? '' : this.$curso.val(),
+        titulo:          this.$titulo.val() === undefined ? '' : this.$titulo.val(),
+        // arquivo:         this.$formdata,
+        // arquivo:         this.$arquivo.val() === undefined ? '' : this.$arquivo.val(),
+        objetivos:       this.$objetivos === undefined ? '' : this.$objetivos
+      }
+
+      curso = this.$curso.val();
+
+      function salvarAulaCallback(response){
+        this.$response = JSON.parse(response);
+        this.$message  = this.$response.message;
+        this.$result   = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+
+        if (this.$result) {
+          setInterval(function(){
+            redireciona('Dashboard/curso/'+ curso + '/Banco de questões')
+          },3000);
+        }
+      }
+
+      $.post(this.$url, this.$data, salvarAulaCallback);
+    });
+
+
+    $('button[name="salvarquestoes"]').on('click', function(event) {
+      event.preventDefault();
+      this.$form      = $(document).find('#aula');
+      this.$curso     = this.$form.find('[name="curso[idcurso]"]');
+      this.$aula      = this.$form.find('[name="aula[idaula]"]');
+      this.$url       = this.$form.attr('action');
+
+      this.$titulo    = this.$form.find('[name="aula[titulo]"]');
+
+      // this.$arquivo   = this.$form.find('[name="aula[arquivo]"]');
+      // this.$formdata = new FormData();
+      // this.$formdata.append('arquivo', this.$arquivo[0]);
+
+      try{
+        this.$objetivos = CKEDITOR.instances['editor3'].getData();
+      }catch(e){
+        console.log(e);
+      }
+
+       this.$data = {
+        idaula:          this.$aula.val() === undefined ? '' : this.$aula.val(),
+        curso_idcurso:   this.$curso.val() === undefined ? '' : this.$curso.val(),
+        titulo:          this.$titulo.val() === undefined ? '' : this.$titulo.val(),
+        // arquivo:         this.$formdata,
+        // arquivo:         this.$arquivo.val() === undefined ? '' : this.$arquivo.val(),
+        objetivos:       this.$objetivos === undefined ? '' : this.$objetivos
+      }
+
+      curso = this.$curso.val();
+
+      function salvarAulaCallback(response){
+        this.$response = JSON.parse(response);
+        this.$message  = this.$response.message;
+        this.$result   = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+
+        if (this.$result) {
+          setInterval(function(){
+            redireciona('Dashboard/curso/'+ curso + '/Banco de questões')
+          },3000);
+        }
+      }
+
+      $.post(this.$url, this.$data, salvarAulaCallback);
+    });
+
+    
+
+
+  // FIM
+  
+  // CONTADOR DE CARACTERES
+    $('.input-container').each(function(){
+      $container = $(this);
+      $input     = $container.find('[maxlength]');
+      $bxCounter = $container.find('.input-counter');
+      $maxLength = $input.attr('maxlength');
+      $bxCounter.html($maxLength);
+
+      $input.on('input keydown keyup', function(){
+        $container              = $(this).parent();
+        $maxLength              = $(this).attr('maxlength');
+        $caractersInserted      = $(this).val().length;
+        $caractersRemaining     = $maxLength - $caractersInserted;
+        $bxCounter = $container.find('.input-counter');
+        $bxCounter.html($caractersRemaining);
+      });
+    });
+  // FIM
+
+  // VALIDAr CERTIFICADO
     $('#certified-validate').on('click', function () {
       var $code = $("#certified-validate-code")
       if(isEmpty($code.val())){
@@ -104,13 +258,13 @@ jQuery(function ($){
     });
   // FIM 
 
-  $('#congratulations').modal('show');
-
   // SOLICITAR CERTIFICADO
     $(".solicitar-certificado").click(function (event) {
       event.preventDefault();
+
       var course = $(this).attr("course");
       $('body').loading('start');
+
       data = {
         inscr: $('#inscr').val()
       }
@@ -142,9 +296,7 @@ jQuery(function ($){
     $('.iniciar-prova, #good-luck').on('click', function(){
 
       Nquestoes = $('#nquestoes').val();
-
-      console.log(Nquestoes);
-
+      
       function date(t=0){
         var d = new Date();
         return d.getTime() + (t*60000);
@@ -627,68 +779,57 @@ jQuery(function ($){
     $('.signup').on('click', function(event){
       event.preventDefault();
       
-      var $nome = $("#register_name");
-      var $email = $("#register_email");
-      var $pass = $("#register_pass");
-      
-      var data = {
-        rede: $(this).attr('data-target'),
-        username: $nome.val(),
-        email: $email.val(),
-        passwd: $pass.val()
+      this.$nome = $("#register_name");
+      this.$email = $("#register_email");
+      this.$pass = $("#register_pass");
+
+      this.$data = {
+        username: this.$nome.val(),
+        email: this.$email.val(),
+        passwd: this.$pass.val()
       };
 
       function registerCallback(response) {
-        var response = JSON.parse(response);
-        var message = response.message;
-        Notificacao(message.type, message.title, message.msg);
-        if (response.result) {
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if (this.$response.result) {
           setTimeout(function () {
             location.href = 'home'
           }, 3000);
         }       
       }
-      
-      $.post("controllers/user/register.php", data, registerCallback);
+
+
+      $.post('controllers/user/register.php', this.$data, registerCallback);
 
     });
   // FIM
 
   // LOGIN USUÁRIO
-    $('#login-bt').on('click', function(event){
+    $('button#login').on('click', function(event){
       event.preventDefault();
 
-      var $email = $("#user_email");
-      var $pswd  = $("#user_pass");
+      this.$form  = $(document).find('#form-login');
+      this.$email = this.$form.find("#user_email")
+      this.$pswd  = this.$form.find("#user_pass")
+      this.$url   = this.$form.attr('action');
 
-      var data = {
-        pid: $email.val(),
-        passwd: $pswd.val()
+      this.$data = {
+        pid: this.$email.val(),
+        passwd: this.$pswd.val()
       }
 
       function loginCallback(response) {
-        var response = JSON.parse(response);
-        var message = response.message;
-        Notificacao(message.type, message.title, message.msg);
-        if(response.result){
-          setTimeout(function(){
-            location.reload()
-          }, 3000);
+        var $response = JSON.parse(response);
+        var $message  = $response.message;
+        Notificacao($message.type, $message.title, $message.msg);
+        if($response.result){
+            location.reload();
         }
       }
       
-      $.post("controllers/login.php", data, loginCallback);
-    });
-  // FIM
-
-  // LOGIN USUÁRIO VIA REDE SOCIAL <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< REVISAR
-    $('.social-signin').on('click', function(){
-
-      var data = {
-        rede : $(this).attr('data-taget')
-      }
-
-      $.post("controllers/login.php", data, loginCallback);
+      $.post(this.$url, this.$data, loginCallback);
     });
   // FIM
 
@@ -706,23 +847,7 @@ jQuery(function ($){
     });
   // FIM
 
-  // SELECIONA SUBCATEGORIA
-    $('.curso-categoria').on('change', function(){
-      $.ajax({
-        url: 'controllers/subcategorias.php',
-        method: 'POST',
-        data: {categoria_idcategoria:$(this).val()}
-      }).done(function(response){
-        $('.curso-subcategoria').html(response);
-      });
-    });
-  // FIM
-
 /*******************************  FUNÇÕES PUBLICAS  *************************************/
-
-  
-
-
   
   function isEmpty(value){
     return typeof value == 'string' && !value.trim() || typeof value == 'undefined' || value === null;
@@ -752,9 +877,6 @@ jQuery(function ($){
     }
     toastr[tipo](mensagem, titulo);
   }
-  
-
-
  
   // Avaliar Curso
   $(".course_get_rate").click(function(){
@@ -763,5 +885,13 @@ jQuery(function ($){
     $("#modal_avaliar").modal("show");
     $("#FormEnrollRate_matricula").val(course);
   });
-
 });
+
+
+
+
+
+
+
+
+

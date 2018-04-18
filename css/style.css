@@ -82,7 +82,7 @@ a, .mask, .nav-tabs.kopa-tabs-2 > li:before, .panel-group .panel .panel-heading 
 body {
   font-size: 14px;
   line-height: 22px;
-  color: #637587;
+  color: #003e5b !important;
   font-weight: 300;
   font-style: normal; }
 
@@ -166,7 +166,6 @@ h6 {
   line-height: 20px; }
 
 a {
-  color: #637587;
   text-decoration: none !important;
   outline: none !important; }
   a:hover, a.active {
@@ -331,7 +330,7 @@ body {
 
 .kopa-area {
   position: relative;
-  padding: 80px 0; }
+  margin: 20px 0; }
 
 .kopa-area-light {
   background-color: #f2f4f5; }
@@ -2242,8 +2241,7 @@ body {
         text-transform: none;
         min-height: 20px;
         max-height: 20px;
-        overflow: hidden;
-        color: #a7aebf; }
+        overflow: hidden;}
       #main-menu > li > a:before {
         content: "";
         width: 100%;
@@ -2296,7 +2294,6 @@ body {
           text-align: left;
           border: none;
           padding: 10px 0;
-          color: #637587;
           text-transform: none;
           font-size: 14px;
           display: block; }
@@ -2326,7 +2323,6 @@ body {
               text-align: left;
               border: none;
               padding: 10px 0;
-              color: #637587;
               text-transform: none;
               font-size: 14px;
               display: block; }
@@ -2747,7 +2743,7 @@ body {
       .widget .widget-title.widget-title-s5 p {
         font-size: 21px;
         line-height: 26px;
-        color: #a7aebf;
+        color: #17377b;
         text-transform: none; }
       .widget .widget-title.widget-title-s5:before {
         content: "";
@@ -4286,9 +4282,9 @@ Kopa masonry list 2 widget
             margin-bottom: 5px;
             color: #a7aebf; }
             .kopa-masonry-list-2-widget .masonry-list-wrapper > ul > li .entry-item .entry-content .course-teacher span {
-              color: #0071a3; }
+              color: #17377b; }
             .kopa-masonry-list-2-widget .masonry-list-wrapper > ul > li .entry-item .entry-content .course-teacher a {
-              color: #a7aebf; }
+              color: #17377b; }
               .kopa-masonry-list-2-widget .masonry-list-wrapper > ul > li .entry-item .entry-content .course-teacher a:hover {
                 color: #0071a3; }
           .kopa-masonry-list-2-widget .masonry-list-wrapper > ul > li .entry-item .entry-content .entry-title {
@@ -9943,9 +9939,9 @@ Singe product page
           border-color: rgba(255, 255, 255, 0.09);
           padding: 4px 0; }
           #bottom-sidebar-s2 > .row > div .widget.widget_nav_menu ul li a {
-            color: #637587; }
+            color: #1d2730; }
             #bottom-sidebar-s2 > .row > div .widget.widget_nav_menu ul li a:hover {
-              color: #0071a3; }
+              color: #0071a5; }
         #bottom-sidebar-s2 > .row > div .widget.kopa-newsletter-widget .newsletter-form .input-email input[type="text"] {
           border: 1px solid #ececec; }
         #bottom-sidebar-s2 > .row > div .widget.kopa-newsletter-widget .newsletter-form .input-email input[type="submit"] {
@@ -10084,12 +10080,12 @@ xsigin/signup popup
 -------------------------------- */
 .cd-user-modal {
   position: fixed;
-  top: 10%;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(52, 54, 66, 0.9);
-  z-index: 3;
+  z-index: 999;
   overflow-y: auto;
   cursor: pointer;
   visibility: hidden;
@@ -10248,7 +10244,7 @@ xsigin/signup popup
   /* space left for the HIDE button */
   padding-right: 65px;
 }
-.cd-form button[type=button] {
+.cd-form button.button {
   padding: 16px 0;
   cursor: pointer;
   background: #2f889a;
@@ -10262,7 +10258,7 @@ xsigin/signup popup
   appearance: none;
   width: 100%;
 }
-.no-touch .cd-form button[type=button]:hover, .no-touch .cd-form button[type=button]:focus {
+.no-touch .cd-form button.button :hover, .no-touch .cd-form button.button :focus {
   background: #3599ae;
   outline: none;
 }
@@ -11010,9 +11006,6 @@ xsigin/signup popup
   background-color: #ffffff;
 }
 
-
-
-
 .btn.btn-flat {
   border-radius: 0;
   -webkit-box-shadow: none;
@@ -11025,5 +11018,5 @@ xsigin/signup popup
 .social-auth-links
 {
 	margin-top:-10px;
-	padding-bottom:0px
+	padding-bottom:20px
 }

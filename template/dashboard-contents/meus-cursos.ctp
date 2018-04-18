@@ -21,18 +21,22 @@
       <div class="col-md-3">
         <div class="box box-primary">
           <div class="box-header with-border">
-              <h3 class="box-title"><a href="curso/<?=$meuCurso['idcurso']?>/<?=Main::preparaURL($meuCurso['categoria'])?>/<?=Main::preparaURL($meuCurso['titulo'])?>"><?=$meuCurso['titulo']?></a></h3>
+              <h3 class="box-title">
+                <a href="Dashboard/curso/<?=$meuCurso['idcurso']?>"> <i class="fa fa-edit"></i>
+                  <?=$meuCurso['titulo']?>
+                </a>
+              </h3>
               <div class="starrr" data-rating="<?=$media?>" title="Média entre <?=$meuCurso['votantes']?> Opiniões de alunos"><span><?=$media?> </span></div>
               <img class="img-responsive  course_list" src="<?=$imagem?>" alt="">
           </div>
           <div class="box-footer">
             
-            <a href="Dashboard?p=editar-curso&curso=<?=$meuCurso['idcurso']?>" class="btn btn-default btn-xs editar-curso"><i class="fa fa-edit"></i> Editar</a>
+            <a href="curso/<?=$meuCurso['idcurso']?>/<?=Main::preparaURL($meuCurso['categoria'])?>/<?=Main::preparaURL($meuCurso['titulo'])?>" class="btn btn-default btn-xs editar-curso">
+            
 
-              <?php if(false):?>
-            <button class="btn btn-default btn-xs"><i class="fa fa-globe"></i> Enviar para Análise</button>
-            <button class="btn btn-default btn-xs"><i class="fa fa-ban"></i> Remover</button>
-              <?php endif?>
+            </i>Visualizar curso</a>
+
+      
 
           </div><!-- /.box-footer -->
         </div>

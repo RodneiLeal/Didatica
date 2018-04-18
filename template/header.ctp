@@ -39,6 +39,7 @@
 <body class="kopa-home-2">
     <div id="kopa-page-header">
         <div id="kopa-header-top">
+
             <div class="container">
                 <div class="row">
                     <div class="col-md-2 col-sm-2 col-xs-12">
@@ -58,18 +59,7 @@
 									<ul>
 										<?php foreach(Main::getCategoriaCursos() as $categoria):?>
 											<li>
-												<!-- o link tem que mudar para subcategoria -->
-												<a href="cursos/<?=$categoria['categoria']?>"><?=$categoria['categoria']?><i class="fa fa-angle-right pull-right"></i></a>
-												<ul>
-													<?php foreach(Main::getSubcategoriaCursos($categoria['idcategoria']) as $subcategoria):?>
-													
-													<li>
-														<a href="cursos/<?=$categoria['categoria']?>/<?=$subcategoria['subcategoria']?>"><?=$subcategoria['subcategoria']?></a>
-													</li>
-
-													<?php endforeach ?>
-													
-												</ul>
+												<a href="cursos/<?=$categoria['categoria']?>"><?=$categoria['categoria']?></a>
 											</li>
 										<?php endforeach ?>
 									</ul>
@@ -86,7 +76,7 @@
 
 							<div class="text-right botoes_topo" >
 
-								<a href="valida_certificado">Validar Certificado</a>
+								<a href="validar certificado">Validar Certificado</a>
 
 								<?php if(!empty($locked) && $locked) : ?>
 								
@@ -154,8 +144,6 @@
                 </div>
                 <!-- row -->
             </div>
-            <!-- container -->
+
         </div>
-        <!-- kopa-header-top -->
     </div>
-    <!-- kopa-page-header -->

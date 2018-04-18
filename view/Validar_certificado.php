@@ -1,6 +1,6 @@
 <?php
 
-	class Valida_certificado extends Main implements interfaceController{
+	class Validar_certificado extends Main implements interfaceController{
 
 		private $action,
 				$parameters;
@@ -10,7 +10,7 @@
 			$get = func_num_args()>=1? func_get_args():array();
 			$this->action = $get[0];
 			$this->parameters = $get[1];
-			$this->title = SYS_NAME." - Valida Certificado";
+			$this->title = SYS_NAME." - Validar Certificado";
 		}
 
 		public function index(){

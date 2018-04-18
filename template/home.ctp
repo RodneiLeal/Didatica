@@ -93,7 +93,7 @@
 	    				<div class="widget kopa-masonry-list-2-widget">
 	    					<div class="widget-title widget-title-s5 text-left">
                                 <span></span>
- 	                            <h4>Mais Pupulares</h4>
+ 	                            <h4>Mais Populares</h4>
  	                        </div>
 
 	    					<div class="masonry-list-wrapper">

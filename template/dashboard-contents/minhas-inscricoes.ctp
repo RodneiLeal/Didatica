@@ -30,7 +30,7 @@
                 <tr>
 
                   <!-- ao clicar no nome do curso, deverá acessar a pagina do curso -->
-                  <td><a class="btn btn-link" href="Dashboard?p=curso&inscr=<?=$minhaInscricao['idinscricao']?>"><?=$minhaInscricao['titulo']?></a></td>
+                  <td><a class="btn btn-link" href="Dashboard/inscricao/<?=$minhaInscricao['idinscricao']?>"><?=$minhaInscricao['titulo']?></a></td>
 
                   <td><?=$this->inscricoes->formataData($minhaInscricao['data_inscricao'], 'dh')?></td>
                   
@@ -43,7 +43,7 @@
                   ?>
                   <!-- este botão irá exibir um certificado modelo com dados parciais do usuário, enquanto não for concluido o curso e não for efetuado o pagamento do certificado. Após o pagamento será exibido o numero do certificado e o status de curso concluido. -->
                   
-                  <td><a class="btn btn-xs btn-info certificado-modelo" href="Dashboard?p=certificado-modelo&inscr=<?=$minhaInscricao['idinscricao']?>>">Certificado modelo</a></td>
+                  <td><a class="btn btn-xs btn-info certificado-modelo" href="Dashboard/certificado/<?=$minhaInscricao['idinscricao']?>">Certificado modelo</a></td>
                 </tr>
             <?php
                 endforeach;

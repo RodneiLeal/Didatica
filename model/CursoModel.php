@@ -8,6 +8,9 @@
         function __construct($action = null, $param = null){
             parent::__construct();
             $this->get = func_num_args()>=1?func_get_args():array();
+
+             if(!empty($action)) 
+                $this->$action($param);
         }
 
         public function getMsg(){
@@ -69,7 +72,6 @@
 
         // SELECIONA CURSO POR TITULO
         public function searchCursos($word){
-			// $data	 = array($word);
             $sql	 = "SELECT * from view_cursos WHERE titulo LIKE '%$word%' AND locked = 1";
 			$stmt	 = $this->db->query($sql);
 			$result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -117,24 +119,124 @@
             return $result;
         }
 
-        // SALVA UM NOVO CURSO NO BANCO DE DADOS
-        public function salvaCurso($data){
-            if($this->db->insert('curso', $data)){
-                return $this->db->last_id;
+        // SALVA UM CURSO NO BANCO DE DADOS
+        public function salvar_curso($data){
+            session_start();
+            $instrutor = new Instructor;
+            $path   = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$data['titulo'].'/';
+            
+            if(!file_exists($path)){
+                @mkdir(ROOT.$path, 0777, true);
             }
-            return false;
+
+            $instrutor = $instrutor->getInstrutor($_SESSION['idusuario'])[0];
+            $src = $data['imagem'];
+            $data['imagem'] = str_replace('bucket/', $path, $data['imagem']);
+            $data = array_merge($data, ['instrutor_idinstrutor'=>$instrutor['idinstrutor']]);
+            $data = array_filter($data);
+
+            if(!isset($data['idcurso'])){
+                $data = array_merge($data, ['imagem'=>'img/curso/no-image.jpeg']);
+                if(($this->db->insert('curso', $data))){
+                    $this->result = $this->db->last_id;
+                    $this->msg = array(
+                        'type'  =>'success',
+                        'title' =>'Curso salvo.',
+                        'msg'   =>'Seu novo curso foi salvo como rascunho, quando concluir todas as etapas seguintes clique em "Enviar para análise."'
+                    );
+                    return;
+                }
+            }
+            else{ 
+                $data = array_merge($data, ['locked'=>0]);
+                $this->result = $data['idcurso'];
+
+                if(isset($data['imagem'])){
+                    rename('../../'.$src, '../../'.$data['imagem']);
+                }
+
+                if($this->db->update('curso',  @array_shift(array_keys($data)),  @array_shift($data), $data)){
+                    $this->msg = array(
+                        'type'  =>'success',
+                        'title' =>'Curso atuallizado.',
+                        'msg'   =>'As informações do seu curso foram atualizadas, no entanto é necessário enviar novamente para análise"'
+                    );
+                    return;
+                }
+            }
+
+            $this->result = false;
+            $this->msg = array(
+                'type'  =>'error',
+                'title' =>'Oops!',
+                'msg'   =>'Algo deu errado ao tentar salvar o seu curso.'
+            );
+            return;
         }
 
         // SALVA TODAS AS AULAS DE UM CURSO 
-        public function salvaAulas($data){
-            if($this->db->insert('aula', $data)){
-                return $this->db->last_id;
+        public function salvar_aulas($data){
+            session_start();
+            $path   = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$data['titulo'].'/';
+            $data = array_filter($data);
+
+            //     $aula = array_merge($aula, ['arquivo'=>$path.$_FILES['aula']['name']], ['curso_idcurso'=>$idcurso]);
+            
+            
+            if (!isset($data['idaula'])) {
+
+                // falta somente fazer o upload do arquivo de aula
+
+               if(($this->db->insert('aula', $data))){
+                    $this->result = true;
+                    $this->msg = array(
+                        'type'  =>'success',
+                        'title' =>'Aula salva.',
+                        'msg'   =>'Esta aula foi salva como rascunho, quando concluir todas as etapas seguintes clique em "Enviar para análise."'
+                    );
+                    return;
+                }
             }
-            return false;
+            else{
+                $this->result = true;
+                if($this->db->update('aula',  @array_shift(array_keys($data)),  @array_shift($data), $data)){
+
+                // falta somente fazer o upload do arquivo de atuaização de aula
+                    
+                    $this->msg = array(
+                        'type'  =>'success',
+                        'title' =>'Aula atuallizada.',
+                        'msg'   =>'As informações desta aula foram atualizadas"'
+                    );
+                    return;
+                }
+            }
+
+            $this->result = false;
+            $this->msg = array(
+                'type'  =>'error',
+                'title' =>'Oops!',
+                'msg'   =>'Algo deu errado ao tentar salvar o seu curso.'
+            );
+            return;
+
+
+
         }
 
         // SALVA TODAS AS QUESTÕES PARA PROVA DE UM DETERMINADO CURSO
         public function salvaQuestoes($data){
+
+            //     if(($idaula = $cursoModel->salvaAulas($aula)) && move_uploaded_file($_FILES['aula']['tmp_name'], ROOT.$path.$_FILES['aula']['name'])){
+                    
+            //         foreach($provas as $prova){
+            //             $prova = array_merge($prova, ['curso_idcurso'=>$idcurso]);
+            //             $idquestao = $cursoModel->salvaQuestoes($prova);
+            //         }
+                    
+            //     }  
+            // }
+            
             if($this->db->insert('db_questoes', $data)){
                 return $this->db->last_id;
             }
@@ -186,20 +288,6 @@
             }
             return false;
         }
-
-        public function updateCurso($dataCurso){
-
-            if(is_string($this->db->update('curso', $where_field, $where_field_value, $values))){
-                return true;
-            }
-            return false;
-        }
         
-        public function updateAula($where_field, $where_field_value, $values){
-            if(is_string($this->db->update('aula', $where_field, $where_field_value, $values))){
-                return true;
-            }
-            return false;
-        }
     }
     

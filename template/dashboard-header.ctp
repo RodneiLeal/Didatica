@@ -1,11 +1,3 @@
-<?php
-    @session_start();
-    if(empty($_SESSION)){
-      header('location: ./');
-    }
-    extract($_SESSION);
-    $foto = empty($foto) ?'img/users/sem-foto.png': $foto;
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
   <head>
@@ -279,7 +271,7 @@
 
                         <img src="<?=$foto?>" class="img-circle" alt="<?=$username?>">
                         <p>
-                            <a href="Dashboard?p=perfil" class="profile">
+                            <a href="Dashboard" class="profile">
                               <font color="#fff">
                                   <?php 
                                       if($tipo){
@@ -297,7 +289,7 @@
                     </li>
                     <li class="user-footer">
                         <div class="pull-left">
-                            <a href="Dashboard?p=editar-perfil" class="btn btn-default btn-flat">Editar</a>
+                            <a href="Dashboard/editar perfil" class="btn btn-default btn-flat">Editar</a>
                         </div>
                         <div class="pull-right">
                             <a class="logoff btn btn-default btn-flat">Sair</a>
@@ -316,3 +308,14 @@
 
       <!-- Content Wrapper. Contains page content -->
       <div class="content-wrapper">
+
+      <!-- este cabeçalho(mapa) é dinamico e representa a página em que o usuario está -->
+      
+        <!-- <section class="content-header">
+          <h1>Configurações do curso</h1>
+          <ol class="breadcrumb">
+            <li><a href="Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="Dashboard/meus cursos">Cursos</a></li>
+            <li class="active">Gerenciar Curso</li>
+          </ol>
+        </section> -->

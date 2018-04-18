@@ -15,7 +15,7 @@
             <div class="box box-primary">
                 <div class="box-header">
                     <div class="box-tools pull-left">
-                        <a href="Dashboard?p=editar-perfil" class="btn btn-box-tool"><i class="fa fa-pencil"></i></a>
+                        <a href="Dashboard/editar perfil" class="btn btn-box-tool"><i class="fa fa-pencil"></i></a>
                     </div>
                 </div>
 
@@ -54,7 +54,7 @@
                 <div class="box-header with-border">
                     <h3 class="box-title">Sobre mim</h3>
                     <div class="box-tools pull-left">
-                        <a href="Dashboard?p=editar-perfil" class="btn btn-box-tool"><i class="fa fa-pencil"></i></a>
+                        <a href="Dashboard/editar perfil" class="btn btn-box-tool"><i class="fa fa-pencil"></i></a>
                     </div>
                 </div>
                 <div class="box-body">

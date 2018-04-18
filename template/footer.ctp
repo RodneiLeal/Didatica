@@ -38,7 +38,7 @@
 									</li>
 
 									<li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-541">
-										<a href="valida_certificado">Validar Certificado</a>
+										<a href="validar certificado">Validar Certificado</a>
 									</li>
                                 </ul>
                             </div>
@@ -742,7 +742,8 @@
 			</ul>
 
 			<div id="cd-login">
-				<form class="cd-form login_box">
+
+				<form class="cd-form login_box" action="controllers/login.php" method="POST" id="form-login"> 
 					<p class="fieldset">
 						<label class="image-replace cd-email" for="signin-email">E-mail ou usuário</label>
 						<input class="full-width has-padding has-border" id="user_email" type="email" placeholder="Nome de usuário ou e-mail">
@@ -757,19 +758,18 @@
 					</p>
 
 					<p class="fieldset">
- 						<button class="full-width" type="button" id="login-bt">Login</button>
+ 						<button class="full-width button" id="login">Login</button>
 					</p>
 				</form>
 
 				<div class="social-auth-links text-center">
 					<p>- OU -</p>
-
-					<button data-target="facebook" class="social-signin btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
-					<button data-target="google" class="social-signin btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
-					<button data-target="linkedin" class="social-signin btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
-
+					<form action="" method="post">
+						<button data-target="facebook" class="social-signin btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
+						<button data-target="google" class="social-signin btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
+						<button data-target="linkedin" class="social-signin btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
+					</form>
 				</div>
-				<BR><BR>
 				<p class="cd-form-bottom-message"><a href="#0">Esqueci minha senha?</a></p>
 				
 			</div> 
@@ -799,19 +799,15 @@
 					</p>
  
 					<p class="fieldset">
-						<button class="signup full-width has-padding" type="button" access="new_register">Criar nova conta</button>
+						<button class="signup full-width button">Criar nova conta</button>
 					</p>
 				</form>
 
 				<div class="social-auth-links text-center">
 					<p>- OU -</p>
-
-					<button data-target="Facebook" class="signup btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
-
-					<button data-target="Google" class="signup btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
-
-					<button data-target="LinkedIn" class="signup btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
-
+					<a href="?rede=Facebook" class="social-signin btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</a>
+					<a href="?rede=Google" class="social-signin btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a>
+					<a href="?rede=LinkedIn" class="social-signin btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</a>
 				</div>
 				
 			</div>
@@ -827,7 +823,7 @@
 					</p>
 
 					<p class="fieldset">
-						<button class="full-width has-padding reset-passwd" type="button" >Gerar nova senha</button>
+						<button class="full-width reset-passwd button" >Gerar nova senha</button>
 					</p>
 				</form>
 
@@ -850,3 +846,106 @@
 <script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
 <script type="text/javascript" src="js/functions.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
+
+<?php
+
+	use \Hybridauth\Hybridauth;
+
+	class loginRede{
+		
+		private $rede;
+
+		function __construct($rede){
+			$this->rede = $rede;
+			self::init();
+		}
+
+		public function init(){
+
+
+			/* cadastro automático utilizando das redes sociais */
+			if(isset($this->rede)){
+				$urlCallback = HOME_URI.'/controllers/login.php?rede=';
+				
+				switch($this->rede){
+					case 'Facebook':
+						$config =  [
+							'callback' => $urlCallback.$this->rede,
+							'providers'=>[
+								'Facebook'=>[
+									'enabled'=>true,
+									'keys'     => [ 'id' => '159280651284190', 'secret' => 'd4043ce62d63f634064d32b0a967ca97' ]
+								]
+							]
+						];
+					break;
+					case 'Google':
+						$config = [
+							'callback' => $urlCallback.$this->rede,
+							'providers'=>[
+								'Google'=>[
+									'enabled'=>true,
+									'keys'     => [ 'id' => '540948825743-n8vqmgotkgl7cfetgkhh1911411mhcsc.apps.googleusercontent.com', 'secret' => 'izUV01B0E4Pkrrhs8o6EWgqM' ]
+								]
+							]
+						];
+					break;
+					case 'LinkedIn':
+						$config = [
+							'callback' => $urlCallback.$this->rede,
+							'providers'=>[
+								'LinkedIn'=>[
+									'enabled'=>true,
+									'keys'     => [ 'id' => '772eq6xy5cqbub', 'secret' => 'YI9PeFJtODF4E2Zc' ]
+								]
+							]
+						];
+					break;
+				}
+				
+				try{
+					$hybridauth = new Hybridauth( $config );
+					$adapter = $hybridauth->authenticate($this->rede);
+	
+					/* ************** esta havendo algum erro neste ponto **************** */
+	
+					$userProfile = $adapter->getUserProfile();
+					$adapter->disconnect();
+	
+					$dataUser = array(
+						'identifier'=> $userProfile->identifier,
+						'email'     => $userProfile->email,
+						'foto'      => $userProfile->photoUrl,
+						'nome'      => $userProfile->firstName,
+						'sobrenome' => $userProfile->lastName,
+						'username'  => $userProfile->displayName
+					);
+
+					// se o processo estiver ok até este ponto, então salvar informações obtidas
+
+					var_dump($dataUser);
+	
+					// $this->msg = array(
+					// 	'type'=>'success',
+					// 	'title'=>'Cadastro concluído',
+					// 	'msg'=>'Você esta conectado através do '.$this->rede
+					// );
+	
+					// return;
+					
+				}catch(\Hybridauth\Exception\Exception $e){
+					var_dump('exceção: '.$e->getMessage());
+					
+					// $this->msg = array(
+					// 	'type'=>'error',
+					// 	'title'=>'Oops, encontramos um problema!',
+					// 	'msg'=>$e->getMessage()
+					// );
+				}
+			}
+		}
+
+	}
+
+	if(isset($_GET['rede']))
+	new loginRede($_GET['rede']);
