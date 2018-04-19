@@ -12,3 +12,8 @@ view/ViewController\.php
 js/
 
 util/dompdf/
+bucket/
+
+uploads/
+
+\.htaccess

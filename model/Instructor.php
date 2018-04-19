@@ -1,8 +1,22 @@
 <?php
     class Instructor extends User {
 
-        function __construct(){
+        private $msg,
+                $result;
+
+        function __construct($action = null, $param = null){
             parent::__construct();
+
+            if(!empty($action)) 
+                $this->$action($param);
+        }
+
+        public function getMsg(){
+            return $this->msg;
+        }
+
+        public function getResult(){
+            return $this->result;
         }
         
         public function getInstrutor($idusuario){
@@ -39,11 +53,44 @@
             return $result;
         }
 
-        public function saveCurriculo($data){
+        private function novo_instrutor($param){
+            session_start();
+            $perfil    = ['idusuario'=>$_SESSION['idusuario']]+$param['perfil'];
+            $conta     = ['usuario_idusuario'=>$_SESSION['idusuario']]+$param['conta'];
+            $curriculo = ['usuario_idusuario'=>$_SESSION['idusuario']]+$param['curriculo'];
+
+            if(self::atualizar_perfil($perfil)&&
+               self::salvar_curriculo($curriculo)&&
+               self::salvar_conta($conta)&&
+               $this->solicitacao(['usuario_idusuario'=>$_SESSION['idusuario'], 'tipo'=>1])
+            ){
+                $this->msg = array(
+                    'type'=>'success',
+                    'title'=>'Seu solicitação foi encaminhada!',
+                    'msg'=>'Fique atento, enviaremos uma mensagem assim que concluirmos o processo de anáise das informações enviadas.'
+                );
+                $this->result = true;
+                return;
+            }
+             
+            $this->msg = array(
+                'type'=>'error',
+                'title'=>'Oops!',
+                'msg'=>'Aconteceu algo errado!'
+            );
+            $this->result = false;
+            return;
+        }
+
+        private function atualizar_perfil($data){
+            return $this->db->update('usuario', @array_shift(array_keys($data)), @array_shift($data), $data);
+        }
+
+        private function salvar_curriculo($data){
             return $this->db->insert('instrutor', $data);
         }
         
-        public function saveBanckInformation($data){
+        private function salvar_conta($data){
             return $this->db->insert('conta', $data);
         }
 

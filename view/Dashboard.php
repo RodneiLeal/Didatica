@@ -38,9 +38,10 @@
 		}
 
 		private function editar_perfil(){
-			extract($_SESSION);
+            extract($_SESSION);
 			$instrutor = $this->instrutor->getInstrutor($idusuario)[0];
-			extract($instrutor);
+            @extract($instrutor);
+            
 			$bancos = Main::getBancos();
             include_once ROOT."template/dashboard-contents/editar-perfil.ctp";
 		}
@@ -229,10 +230,6 @@
                     $sessao = 
                     '
                         <!-- formulario de dados do curso -->
-
-
-
-
                         <form action="" method="POST" enctype="multipart/form-data" id="questoes">
                 
                             <div class="form-header with-border-bottom">

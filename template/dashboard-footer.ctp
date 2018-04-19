@@ -14,151 +14,155 @@
 
     <?php if(!$tipo): ?>
 
-      <div class="modal fade" id="novo-instrutor">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-              </button>
-              <h3 class="modal-title">Seja bem vindo!</h3>
-            </div>
 
-            <div class="modal-body">
 
-              "Ensinar não é transferir conhecimento, mas criar as possibilidades para a sua própria produção ou sua construção." (Paulo Freire) 
-            
-            </div>
-
-            <div class="modal-footer">
-              <button class="btn btn-success btn-lg pull-left form-curriculo closed-modal" data-toggle="modal" data-target="#form-curriculo" >Prosseguir <i class="fa fa-angle-double-right"></i></button>
-              <img src="img/logo.png" class="pull-right">
-            </div>
-
-          </div>
-        </div>
-      </div>
-
-      <div class="modal fade" id="form-curriculo" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-
-            <div class="modal-header">
-              <button class="close" type="button" data-dismiss="modal">&times;</button>
-              <h3>Dados Profissionais</h3>
-            </div>
-
-            <div class="modal-body" style="overflow-y: auto;max-height: 400px;">
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <label for="perfil-nome">Nome</label>
-                  <input class="form-control" required type="text" name="nome" id="perfil-nome">
-                </div>
+      <form action="controllers/instrutor/newInstructor.php" id="novoInstrutor">
+        <div class="modal fade" id="novo-instrutor">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                <h3 class="modal-title">Seja bem vindo!</h3>
               </div>
-
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <label for="perfil-sobrenome">Sobrenome</label>
-                  <input class="form-control" required type="text" name="sobrenome" id="perfil-sobrenome">
-                </div>
+  
+              <div class="modal-body">
+  
+                "Ensinar não é transferir conhecimento, mas criar as possibilidades para a sua própria produção ou sua construção." (Paulo Freire) 
+              
               </div>
-
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="curriculo-titulacao">Titulação</label>
-                  <input  class="form-control" required type="text" name="titulacao" id="curriculo-titulacao">
-                </div>
-                <div class="col-md-6">
-                  <label for="curriculo-formacao">Formação</label>
-                  <input class="form-control" required type="text" name="formacao" id="curriculo-formacao">
-                </div>
+  
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-lg pull-left form-curriculo closed-modal" data-toggle="modal" data-target="#form-curriculo" >Prosseguir <i class="fa fa-angle-double-right"></i></button>
+                <img src="img/logo.png" class="pull-right">
               </div>
-
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="curriculo-instituicao">Instituição</label>
-                  <input class="form-control" required type="text" name="instituicao" id="curriculo-instituicao">
-                </div>
-                <div class="col-md-6">
-                  <label for="curriculo-lattes">Lattes</label>
-                  <input class="form-control" type="text" name="lattes" id="curriculo-lattes">
-                </div>
-              </div>
-
-              <div class="form-group row">
-                <div class="col-md-12">
-                  <label for="curriculo-resumo">Resumo</label>
-                  <textarea class="form-control editor" name="resumo" id="curriculo_resumo" cols="30" rows="10"></textarea>
-                </div>
-              </div>
-            </div>
-
-            <div class="modal-footer">
-              <button class="btn btn-success btn-lg pull-left form-bancario closed-modal" data-toggle="modal" data-target="#form-bancario">Prosseguir <i class="fa fa-angle-double-right"></i></button>
+  
             </div>
           </div>
         </div>
-      </div>
-
-      <div class="modal fade form-bancario" id="form-bancario" role="dialog" tabindex="-1">
-        <div class="modal-dialog modal-lg">
-          <div class="modal-content">
-
-            <div class="modal-header">
-              <button class="close" type="button" data-dismiss="modal">&times;</button>
-              <h3>Dados Bancarios</h3>
-            </div>
-
-            <div class="modal-body" style="overflow-y: auto;max-height: 400px;">
-
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="conta-cpf">CPF</label>
-                  <input class="form-control" required type="text" name="cpf" id="conta-cpf">
+  
+        <div class="modal fade" id="form-curriculo" role="dialog" tabindex="-1">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+  
+              <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                <h3>Dados Profissionais</h3>
+              </div>
+  
+              <div class="modal-body" style="overflow-y: auto;max-height: 400px;">
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="perfil-nome">Nome</label>
+                    <input class="form-control" required type="text" name="nome" id="perfil-nome">
+                  </div>
                 </div>
-                <div class="col-md-6">
-                  <label for="conta-banco">Banco</label>
-
-                  <select class="form-control" required name="banco" id="conta-banco">
-                    <option selected >Selesione seu banco</option>
-                    <?php foreach(Main::getBancos() as $banco):?>
-
-                    <option value="<?=$banco['idbancos']?>"><?=$banco['codigo']?> <?=$banco['instituicao']?> - <?=$banco['site']?></option>
-
-                    <?php endforeach ?>
-                  </select>
-                  
+  
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="perfil-sobrenome">Sobrenome</label>
+                    <input class="form-control" required type="text" name="sobrenome" id="perfil-sobrenome">
+                  </div>
+                </div>
+  
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="curriculo-titulacao">Titulação</label>
+                    <input  class="form-control" required type="text" name="titulacao" id="curriculo-titulacao">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="curriculo-formacao">Formação</label>
+                    <input class="form-control" required type="text" name="formacao" id="curriculo-formacao">
+                  </div>
+                </div>
+  
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="curriculo-instituicao">Instituição</label>
+                    <input class="form-control" required type="text" name="instituicao" id="curriculo-instituicao">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="curriculo-lattes">Lattes</label>
+                    <input class="form-control" type="text" name="lattes" id="curriculo-lattes">
+                  </div>
+                </div>
+  
+                <div class="form-group row">
+                  <div class="col-md-12">
+                    <label for="curriculo-resumo">Resumo</label>
+                    <textarea class="form-control editor" name="resumo" id="curriculo_resumo" cols="30" rows="10"></textarea>
+                  </div>
                 </div>
               </div>
-
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="conta-agencia">Agência</label>
-                  <input class="form-control" required type="text" name="agencia" id="conta-agencia">
-                </div>
-                <div class="col-md-6">
-                  <label for="conta-conta">Conta</label>
-                  <input class="form-control" required type="text" name="conta" id="conta-conta">
-                </div>
+  
+              <div class="modal-footer">
+                <button type="button" class="btn btn-success btn-lg pull-left form-bancario closed-modal" data-toggle="modal" data-target="#form-bancario">Prosseguir <i class="fa fa-angle-double-right"></i></button>
               </div>
-
-              <div class="form-group row">
-                <div class="col-md-6">
-                  <label for="conta-operacao">Operação</label>
-                  <input class="form-control" required type="text" name="operacao" id="conta-operacao">
-                </div>
-                <div class="col-md-6">
-                </div>
-              </div>
-
-            </div>
-
-            <div class="modal-footer">
-              <button class="btn btn-success btn-lg salvar-curriculo">Salvar&#160;&#160;<i class="fa fa-save"></i></button>
             </div>
           </div>
         </div>
-      </div>
+  
+        <div class="modal fade form-bancario" id="form-bancario" role="dialog" tabindex="-1">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+  
+              <div class="modal-header">
+                <button class="close" type="button" data-dismiss="modal">&times;</button>
+                <h3>Dados Bancarios</h3>
+              </div>
+  
+              <div class="modal-body" style="overflow-y: auto;max-height: 400px;">
+  
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="conta-cpf">CPF</label>
+                    <input class="form-control" required type="text" name="cpf" id="conta-cpf">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="conta-banco">Banco</label>
+  
+                    <select class="form-control" required name="banco" id="conta-banco">
+                      <option selected >Selesione seu banco</option>
+                      <?php foreach(Main::getBancos() as $banco):?>
+  
+                      <option value="<?=$banco['idbancos']?>"><?=$banco['codigo']?> <?=$banco['instituicao']?> - <?=$banco['site']?></option>
+  
+                      <?php endforeach ?>
+                    </select>
+                    
+                  </div>
+                </div>
+  
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="conta-agencia">Agência</label>
+                    <input class="form-control" required type="text" name="agencia" id="conta-agencia">
+                  </div>
+                  <div class="col-md-6">
+                    <label for="conta-conta">Conta</label>
+                    <input class="form-control" required type="text" name="conta" id="conta-conta">
+                  </div>
+                </div>
+  
+                <div class="form-group row">
+                  <div class="col-md-6">
+                    <label for="conta-operacao">Operação</label>
+                    <input class="form-control" required type="text" name="operacao" id="conta-operacao">
+                  </div>
+                  <div class="col-md-6">
+                  </div>
+                </div>
+  
+              </div>
+  
+              <div class="modal-footer">
+                <button class="btn btn-success btn-lg salvar-curriculo">Salvar&#160;&#160;<i class="fa fa-save"></i></button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
 
     <?php endif ?>
 

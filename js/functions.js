@@ -529,86 +529,57 @@ jQuery(function ($){
 
       event.preventDefault();
 
-      var perfil     = new Object();
-      var curriculo = new Object();
-      var conta  = new Object();
+      this.$form        = $(document).find('#novoInstrutor');
+      this.$url         = this.$form.attr('action');
+      this.$nome        = this.$form.find('[name="nome"]');
+      this.$sobrenome   = this.$form.find('[name="sobrenome"]');
+      this.$titulacao   = this.$form.find('[name="titulacao"]');
+      this.$formacao    = this.$form.find('[name="formacao"]');
+      this.$instituicao = this.$form.find('[name="instituicao"]');
+      this.$lattes      = this.$form.find('[name="lattes"]');
+      this.$resumo      = CKEDITOR.instances['curriculo_resumo'];
+      this.$cpf         = this.$form.find('[name="cpf"]')
+      this.$banco       = this.$form.find('[name="banco"] :selected')
+      this.$agencia     = this.$form.find('[name="agencia"]')
+      this.$conta       = this.$form.find('[name="conta"]')
+      this.$operacao    = this.$form.find('[name="operacao"]')
 
-      var idusuario = $('#idusuario').val();
-
-      perfil.idusuario             = idusuario;
-      curriculo.usuario_idusuario  = idusuario;
-      conta.usuario_idusuario      = idusuario;
-
-      if(!isEmpty($('#perfil-nome').val()))
-        perfil.nome =  $('#perfil-nome').val();
-
-      if(!isEmpty($('#perfil-sobrenome').val()))
-        perfil.sobrenome =  $('#perfil-sobrenome').val();
+      this.$data = {
+        perfil: {
+          nome: this.$nome.val(),
+          sobrenome: this.$sobrenome.val()
+        },
+        curriculo: {
+          titulacao: this.$titulacao.val(),
+          formacao: this.$formacao.val(),
+          instituicao: this.$instituicao.val(),
+          lattes: this.$lattes.val(),
+          resumo: this.$resumo.getData()
+        },
+        conta: {
+          cpf: this.$cpf.val(),
+          bancos_idbancos: this.$banco.val(),
+          agencia: this.$agencia.val(),
+          conta: this.$conta.val(),
+          operacao: this.$operacao.val()
+        }
+      }
       
-      if(!isEmpty(CKEDITOR.instances['curriculo_resumo'].getData()))
-        curriculo.resumo =  CKEDITOR.instances['curriculo_resumo'].getData();
-
-      if(!isEmpty($('#curriculo-titulacao').val()))
-        curriculo.titulacao =  $('#curriculo-titulacao').val();
-        
-      if(!isEmpty($('#curriculo-formacao').val()))
-        curriculo.formacao =  $('#curriculo-formacao').val();
-        
-      if(!isEmpty($('#curriculo-instituicao').val()))
-        curriculo.instituicao =  $('#curriculo-instituicao').val();
-        
-      if(!isEmpty($('#curriculo-lattes').val()))
-        curriculo.lattes =  $('#curriculo-lattes').val();
-        
-      if(!isEmpty($('#conta-banco').val()))
-        conta.bancos_idbancos =  $('#conta-banco').val();
-
-      if(!isEmpty($('#conta-agencia').val()))
-        conta.agencia =  $('#conta-agencia').val();
-
-      if(!isEmpty($('#conta-conta').val()))
-        conta.conta =  $('#conta-conta').val();
-
-      if(!isEmpty($('#conta-operacao').val()))
-        conta.operacao =  $('#conta-operacao').val();
-
-      if(!isEmpty($('#conta-cpf').val()))
-        conta.cpf =  $('#conta-cpf').val();
-
-        // PODE SER MELHORADO PARA FAZER UM UNICO ENVIO PARA PROCESSAMENTO DA MESMA FORMA COMO FOI FEITO COM O INSERIR CURSO
-        // NECESSARIO AVALIAR CAMPOS EM BRANCO E PARAR PROGRAMA CASO ALGUM CAMPO ESTEJA FALTANDO
-
-      $.post('controllers/user/update.php', perfil, updateUserCallback);
-
       function updateUserCallback(response){
-        if(response){
-          Notificacao('success', '', 'Seu perfil foi atualizado!');
-          $.post('controllers/instrutor/saveCurriculo.php', curriculo, saveCurriculoCallback);
+        console.log(response);
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if(this.$result){
+          setInterval(function(){
+            location.reload();
+          }, 3000);
         }
       }
-      
-      function saveCurriculoCallback(response){
-        if(response){
-          Notificacao('success', '', 'Seu currículo foi arquivado!');
-          $.post('controllers/instrutor/saveBanckInformation.php', conta, saveBanckInformationCallback);
-        }
-      }
-      
-      function saveBanckInformationCallback(response){
-        if(response){
-          Notificacao('success', '', 'Seus dados bancarios foram arquivados!');
-          data = {usuario_idusuario: idusuario, tipo: 1};
-          $.post('controllers/solicitacao.php', data, solicitacaoCallback);
-        }
-      }
-      
-      function solicitacaoCallback(response){
-        if(response){
-          Notificacao('success', 'Seu solicitação foi enviada!', 'Fique atento, enviaremos uma mensagem assim que concluirmos o processo.');
-          $('#form-bancario').modal('hide');
-          setInterval(redireciona(window.location.href), 3000);
-        }
-      }
+
+      $.post(this.$url, this.$data, updateUserCallback);
+
     });
   // FIM
 
