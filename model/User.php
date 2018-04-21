@@ -23,8 +23,11 @@
             return $this->msg;
         }
 
-        public function passRecovery($email, $maiusculas = true, $numeros = true, $simbolos = false){
-
+        public function passRecovery($data){
+            extract($data);
+            $maiusculas = true;
+            $numeros = true;
+            $simbolos = false;
             $email = filter_var($email, FILTER_SANITIZE_EMAIL);
             if (filter_var($email, FILTER_VALIDATE_EMAIL)){
                 if($usuario = $this->getUser(array('email'=>$email))[0]){
@@ -66,7 +69,7 @@
 
                     if($this->db->update('usuario', 'email', $email, array('pswd'=>password_hash($passwd, PASSWORD_BCRYPT)))){
                         if($this->EnviaEmail($email, $usuario_nome, 'Didatica Online - Solicitação de nova senha de acesso', $mensagem, '')){
-                            $this->result = $passwd;
+                            $this->result = true;
                             $this->msg = array('type'=>'success', 'title'=>'Solicitação feita com sucesso.', 'msg'=>'Enviamos instruções de recuperação da sua conta para '.$email);
                         }
                     }

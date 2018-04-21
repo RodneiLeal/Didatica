@@ -18,7 +18,7 @@
         }
 
         public function getCategoriaCursos(){
-			$sql = "SELECT * FROM categoria ORDER BY categoria ASC";
+			$sql = "SELECT t1.idcategoria, t1.categoria FROM didatica_db.categoria AS t1, didatica_db.curso AS t2 WHERE t2.categoria_idcategoria = t1.idcategoria AND t2.locked = 1 GROUP BY t1.idcategoria";
 			$query = $this->db->query($sql);
 			return $query->fetchAll();
         }
@@ -112,10 +112,10 @@
         public function EnviaEmail($destinatario_email, $destinatario_nome, $assunto, $mensagem, $link){ 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_USERPWD, 'api:key-ce207b344d6e7bb0bb925f9ab83ec646'); /* VERIFICAR CHAVE DA API MAILGUN */
+            curl_setopt($ch, CURLOPT_USERPWD, MAILGUN_KEY); /* VERIFICAR CHAVE DA API MAILGUN */
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            curl_setopt($ch, CURLOPT_URL, 'https://api.mailgun.net/v2/www.showprojetos.com.br/messages');
+            curl_setopt($ch, CURLOPT_URL, MAILGUN_LINK);
             curl_setopt($ch, CURLOPT_POSTFIELDS, 
                         array('from' => 'Didática Online Contato <nao-responda@didaticaonline.com.br>',
                             'to' => $destinatario_nome .'<'.$destinatario_email.'>',

@@ -20,7 +20,7 @@
             <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
               <label class="form-label">Comece informando o titulo do seu curso</label>
               <div class="input-container input-box form-control">
-                <input type="text" placeholder="ex.: Design de produtos com Ilustrator" maxlength="40" name="curso[titulo]" value="">
+                <input type="text" placeholder="ex.: Design de produtos com Ilustrator" maxlength="60" name="curso[titulo]" value="">
                 <span class="input-counter"></span>
               </div>
             </div>

@@ -88,8 +88,8 @@
 									</a>
 									<ul class="dropdown-menu">
 										<li><a href="Dashboard">Painel de Controle</a></li>
-										<li><a href="Dashboard?p=minhas-inscricoes">Minhas Inscrições</a></li>
-										<li><a href="Dashboard?p=minhas-mensagens">Mensagens</a></li>
+										<li><a href="Dashboard/inscricoes">Minhas Inscrições</a></li>
+										<li><a href="Dashboard/mensagens">Mensagens</a></li>
 										<li role="separator" class="divider"></li>
 										<li><a class="logoff">Sair</a></li>
 									</ul>

@@ -18,8 +18,9 @@
 	define("DB_CHARSET", "utf8");
 	define("DEBUG", $debug);
 	define("PAGE_NOT_FOUND", ROOT."includes".DIRECTORY_SEPARATOR."404.php");
+	define("MAILGUN_KEY", $mailgun_key);
+	define("MAILGUN_LINK", $mailgun_link);
 
-	
 	define("FOLDERS", serialize(array("util",
 									  "controllers",
 									  "includes",

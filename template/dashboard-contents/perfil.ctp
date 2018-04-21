@@ -1,5 +1,5 @@
 <section class="content-header">
-    <h1>Perfil</h1>
+    <h1>Pagina inicial</h1>
     <ol class="breadcrumb">
         <li><a ><i class="fa fa-dashboard"></i> Home</a></li>
         <li><a >Usuário</a></li>
@@ -10,6 +10,11 @@
 </section>
 
 <section class="content">
+
+        <?php if($tipo): /* este trecho de codigo deve ser reduzino para uma função */
+             echo $resumoFinanceiro;
+        endif;?>
+
     <div class="row">
         <div class="col-md-3">
             <div class="box box-primary">
@@ -76,9 +81,7 @@
         <?php endif;?>
     </div>
 
-        <?php if($tipo): /* este trecho de codigo deve ser reduzino para uma função */
-             echo $resumoFinanceiro;
-        endif;?>
+        
 
 </section>
 

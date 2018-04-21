@@ -1,7 +1,6 @@
 <?php
 	include '../../loader.php';
-    extract($_POST);
-    $user = new User($action, $email);
+    $user = new User('passRecovery', $_POST);
     $response = array(
         'state'  => 200,
         'message' => $user->getMsg(),

@@ -81,6 +81,15 @@
                               <input class="form-control" id="sobrenome" name="sobrenome" placeholder="Sobrenome" required type="text" value="<?=$sobrenome?>">
                             </div>
                           </div>
+
+                          <div class="form-group row">
+                            <div class="col-md-1">
+                              <label>Telefone</label>
+                            </div>
+                            <div class="col-md-11">
+                              <input class="form-control" id="tel" name="tel" placeholder="Telefone" required type="text" value="<?=$telefone?>">
+                            </div>
+                          </div>
       
                           <div class="form-group row">
                             <div class="col-md-1">

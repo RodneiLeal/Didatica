@@ -28,7 +28,7 @@
 		}
 
 		public function index(){
-			extract($_SESSION);
+            extract($_SESSION);
 			$foto = empty($foto)?"img/users/sem-foto.png":$foto;
 			$action =  empty($this->action)?'home':$this->action;
 			$action = str_replace(' ', '_', $action);
@@ -496,7 +496,11 @@
             $media              = number_format($curso['media'], 2, '.', ' ');
             $questoes           = $this->cursos->getQuestoes($inscr['idcurso'], N_QUESTOES);
             include_once ROOT."template/dashboard-contents/prova.ctp";			
-		}
+        }
+        
+        private function mensagens(){
+            echo 'mensagens';
+        }
 
 		
 	}

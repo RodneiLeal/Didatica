@@ -815,10 +815,10 @@
 			<div id="cd-reset-password"> 
 				<p class="cd-form-message">Esqueceu sua senha, por favor, informe seu e-mail, você receberá sua nova senha no e-mail informado.</p>
 
-				<form class="cd-form">
+				<form class="cd-form" action="controllers/user/passRecovery.php" id="pass-recovery">
 					<p class="fieldset">
 						<label class="image-replace cd-email" for="reset-passwd">E-mail</label>
-						<input class="full-width has-padding has-border" id="reset-passwd" type="email" placeholder="E-mail">
+						<input class="full-width has-padding has-border" id="email" name="email" type="email" placeholder="E-mail">
 						<span class="cd-error-message">Error message here!</span>
 					</p>
 

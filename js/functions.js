@@ -151,9 +151,6 @@ jQuery(function ($){
       $.post(this.$url, this.$data, salvarAulaCallback);
     });
 
-    
-
-
   // FIM
   
   // CONTADOR DE CARACTERES
@@ -175,7 +172,7 @@ jQuery(function ($){
     });
   // FIM
 
-  // VALIDAr CERTIFICADO
+  // VALIDAR CERTIFICADO
     $('#certified-validate').on('click', function () {
       var $code = $("#certified-validate-code")
       if(isEmpty($code.val())){
@@ -202,30 +199,51 @@ jQuery(function ($){
   // FIM
 
   // RESET PASSWORD
-    $('.reset-passwd').on('click', function(){
-      var $email = $('#reset-passwd');
+    $('.reset-passwd').on('click', function(event){
+      event.preventDefault();
+      this.$form = $(document).find('#pass-recovery');
+      this.$url  = this.$form.attr('action');
+      this.$email =  this.$form.find('[name="email"]');
 
-      if(isEmpty($email.val())){
-        $email.focus();
-        Notificacao('error', 'Por favor, informe seu e-mail!', 'Ops!');
-      }else {
-        var data = {
-          'action': 'passRecovery',
-          'email': $email.val()
-        }
-
-        function resetPasswdCallback(response){
-          var response = JSON.parse(response);
-          var message = response.message;
-          Notificacao(message.type, message.title, message.msg);
-          if(message.type === 'success'){
-            setTimeout(function(){redireciona('./')}, 4000);
-          }
-          $email.focus();
-        }
-
-        $.post('controllers/user/passRecovery.php', data, resetPasswdCallback);
+      this.$data = {
+        email: this.$email.val()
       }
+
+      function resetPasswdCallback(response){
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if (this.$result) {
+          setTimeout(function(){location.reload()}, 4000);
+        }
+        this.$email.focus();
+      }
+
+        $.post(this.$url, this.$data, resetPasswdCallback);
+
+
+
+
+
+
+
+
+
+
+      // var $email = $('#reset-passwd');
+
+      // if(isEmpty($email.val())){
+      //   $email.focus();
+      //   Notificacao('error', 'Por favor, informe seu e-mail!', 'Ops!');
+      // }else {
+      //   var data = {
+      //     'action': 'passRecovery',
+      //     'email': $email.val()
+      //   }
+
+
+      // }
     });
   // FIM
 
@@ -603,7 +621,7 @@ jQuery(function ($){
           Notificacao(message.type, message.title, message.msg);
 
           if(response.result){
-            redireciona('Dashboard?p=curso&inscr='+response.result);
+            redireciona('Dashboard/inscricao/' + response.result);
           }
 
         }
@@ -614,7 +632,7 @@ jQuery(function ($){
 
   // ACESSAR CURSO INSCRITO
     $('.acessar-curso').on('click', function(){
-      redireciona('Dashboard?p=curso&inscr='+$(this).attr('data-inscr'));
+      redireciona('Dashboard/inscricao/' + $(this).attr('data-inscr'));
     });
   // FIM
 
@@ -643,17 +661,22 @@ jQuery(function ($){
       if(!isEmpty($('#sobrenome').val()))
         data.sobrenome = $('#sobrenome').val();
 
+      if(!isEmpty($('#tel').val()))
+        data.telefone = $('#tel').val();
+
       if(!isEmpty($('#email').val()))
         data.email     = $('#email').val();
       
       if(!isEmpty($('#passwd').val()))
         data.pswd       = $('#passwd').val();
 
+        console.log(data);
+
       function userUpdateCallback(response){
         response =  JSON.parse(response);
         var message = response.message;
         Notificacao(message.type, message.title, message.msg);
-        location.reload();
+        // location.reload();
       }
 
       $.post('controllers/user/update.php', data, userUpdateCallback);
@@ -794,7 +817,7 @@ jQuery(function ($){
       function loginCallback(response) {
         var $response = JSON.parse(response);
         var $message  = $response.message;
-        Notificacao($message.type, $message.title, $message.msg);
+        // Notificacao($message.type, $message.title, $message.msg);
         if($response.result){
             location.reload();
         }
