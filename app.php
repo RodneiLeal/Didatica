@@ -5,7 +5,9 @@
 	$ini_app = parse_ini_file('app.ini', true);
 	extract($ini_app['sistema']);
 	define('MAIN_PKG', $main_pkg);
-	define("SYS_NAME", "Didática Online");
+	define("SYS_NAME", $sys_name);
+	define('DOMAIN', $domain);
+	define('DOMAIN_MAIL', $domain_mail);
 	define('MASTER_MAIL', $master_email);
 	define("ROOT", __DIR__.DIRECTORY_SEPARATOR);
 	define("UPLOADS", ROOT."/views/_uploads");

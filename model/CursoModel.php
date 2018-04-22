@@ -177,17 +177,19 @@
         // SALVA TODAS AS AULAS DE UM CURSO 
         public function salvar_aulas($data){
             session_start();
-            $path   = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$data['titulo'].'/';
-            $data = array_filter($data);
 
-            //     $aula = array_merge($aula, ['arquivo'=>$path.$_FILES['aula']['name']], ['curso_idcurso'=>$idcurso]);
-            
+            $curso = self::getCursoId($data['curso_idcurso'])[0];
+
+            $path   = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$curso['titulo'].'/';
+            $data = array_filter($data);
+            $arquivo = $data['arquivo'];
+            unset($data['arquivo']);
+
+
+            $data = array_merge($data, ['arquivo'=>$path.$arquivo['name']]);
             
             if (!isset($data['idaula'])) {
-
-                // falta somente fazer o upload do arquivo de aula
-
-               if(($this->db->insert('aula', $data))){
+               if(move_uploaded_file($arquivo['tmp_name'], '../../'.$path.$arquivo['name']) && ($this->db->insert('aula', $data))){
                     $this->result = true;
                     $this->msg = array(
                         'type'  =>'success',
@@ -199,10 +201,7 @@
             }
             else{
                 $this->result = true;
-                if($this->db->update('aula',  @array_shift(array_keys($data)),  @array_shift($data), $data)){
-
-                // falta somente fazer o upload do arquivo de atuaização de aula
-                    
+                if(move_uploaded_file($arquivo['tmp_name'], '../../'.$path.$arquivo['name']) && $this->db->update('aula',  @array_shift(array_keys($data)),  @array_shift($data), $data)){
                     $this->msg = array(
                         'type'  =>'success',
                         'title' =>'Aula atuallizada.',
@@ -219,9 +218,6 @@
                 'msg'   =>'Algo deu errado ao tentar salvar o seu curso.'
             );
             return;
-
-
-
         }
 
         // SALVA TODAS AS QUESTÕES PARA PROVA DE UM DETERMINADO CURSO

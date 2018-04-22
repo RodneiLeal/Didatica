@@ -59,7 +59,7 @@
                     $mensagem = "Olá, {$usuario_nome}.
                                  <br><br>
                                  Recentemente você solicitou uma nova senha de acesso à Didatica Online<br><br>
-                                 Sua nova senha é: {$passwd}
+                                 Sua nova senha é: <strong>{$passwd}</strong>
                                  <br><br>
                                  Acesse seu painel de controle e altere a senha gerada
                                  <br><br>
@@ -74,10 +74,12 @@
                         }
                     }
                 } else {
-                    $this->msg = array('type'=>'error', 'title'=>'', 'msg'=>'e-mail não cadastrado!');
+                    $this->msg = array('type'=>'error', 'title'=>'Oops!', 'msg'=>'e-mail não cadastrado!');
+                    $this->result = false;
                 }
             }else{
-                $this->msg = array('type'=>'error', 'title'=>'', 'msg'=>'e-mail inválido');
+                $this->msg = array('type'=>'error', 'title'=>'Oops!', 'msg'=>'e-mail inválido');
+                $this->result = false;
             }
         }
 
@@ -141,7 +143,7 @@
             }catch(Exception $e){
                 $this->msg = array(
                     'type'=>'error',
-                    'title'=>'Oops, parece que estamos com algum probleminha!',
+                    'title'=>'Oops, parece que estamos com algum problema!',
                     'msg'=>$e->getMessage()
                 );
             }

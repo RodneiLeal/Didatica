@@ -61,30 +61,17 @@ jQuery(function ($){
     $('button[name="salvaraula"]').on('click', function(event) {
       event.preventDefault();
       this.$form      = $(document).find('#aula');
-      this.$curso     = this.$form.find('[name="curso[idcurso]"]');
-      this.$aula      = this.$form.find('[name="aula[idaula]"]');
       this.$url       = this.$form.attr('action');
-
-      this.$titulo    = this.$form.find('[name="aula[titulo]"]');
-
-      // this.$arquivo   = this.$form.find('[name="aula[arquivo]"]');
-      // this.$formdata = new FormData();
-      // this.$formdata.append('arquivo', this.$arquivo[0]);
+      this.$curso     = this.$form.find('[name="curso_idcurso"]');
 
       try{
         this.$objetivos = CKEDITOR.instances['editor3'].getData();
       }catch(e){
         console.log(e);
       }
-
-       this.$data = {
-        idaula:          this.$aula.val() === undefined ? '' : this.$aula.val(),
-        curso_idcurso:   this.$curso.val() === undefined ? '' : this.$curso.val(),
-        titulo:          this.$titulo.val() === undefined ? '' : this.$titulo.val(),
-        // arquivo:         this.$formdata,
-        // arquivo:         this.$arquivo.val() === undefined ? '' : this.$arquivo.val(),
-        objetivos:       this.$objetivos === undefined ? '' : this.$objetivos
-      }
+      
+      this.$formdata = new FormData($('#aula')[0]);
+      this.$formdata.set('objetivos', this.$objetivos);
 
       curso = this.$curso.val();
 
@@ -93,7 +80,6 @@ jQuery(function ($){
         this.$message  = this.$response.message;
         this.$result   = this.$response.result;
         Notificacao(this.$message.type, this.$message.title, this.$message.msg);
-
         if (this.$result) {
           setInterval(function(){
             redireciona('Dashboard/curso/'+ curso + '/Banco de questões')
@@ -101,7 +87,14 @@ jQuery(function ($){
         }
       }
 
-      $.post(this.$url, this.$data, salvarAulaCallback);
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false
+      }).done(salvarAulaCallback);
+
     });
 
 
@@ -214,36 +207,14 @@ jQuery(function ($){
         this.$message = this.$response.message;
         this.$result = this.$response.result;
         Notificacao(this.$message.type, this.$message.title, this.$message.msg);
-        if (this.$result) {
-          setTimeout(function(){location.reload()}, 4000);
-        }
-        this.$email.focus();
+        // if (this.$result) {
+        //   setTimeout(function(){location.reload()}, 4000);
+        // }
+        // this.$email.focus();
       }
 
-        $.post(this.$url, this.$data, resetPasswdCallback);
+      $.post(this.$url, this.$data, resetPasswdCallback);
 
-
-
-
-
-
-
-
-
-
-      // var $email = $('#reset-passwd');
-
-      // if(isEmpty($email.val())){
-      //   $email.focus();
-      //   Notificacao('error', 'Por favor, informe seu e-mail!', 'Ops!');
-      // }else {
-      //   var data = {
-      //     'action': 'passRecovery',
-      //     'email': $email.val()
-      //   }
-
-
-      // }
     });
   // FIM
 
@@ -815,10 +786,10 @@ jQuery(function ($){
       }
 
       function loginCallback(response) {
-        var $response = JSON.parse(response);
-        var $message  = $response.message;
-        // Notificacao($message.type, $message.title, $message.msg);
-        if($response.result){
+        this.$response = JSON.parse(response);
+        this.$message  = this.$response.message;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if(this.$response.result){
             location.reload();
         }
       }

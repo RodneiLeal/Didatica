@@ -1,7 +1,7 @@
 <?php
 	include_once "../../loader.php";
 
-    $cursoModel =  new CursoModel('salvar_aulas', $_POST);
+    $cursoModel =  new CursoModel('salvar_aulas', $_POST+$_FILES);
     $response = array(
 		'status'=>200,
 		'message'=>$cursoModel->getMsg(),

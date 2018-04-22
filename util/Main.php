@@ -112,7 +112,7 @@
         public function EnviaEmail($destinatario_email, $destinatario_nome, $assunto, $mensagem, $link){ 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_USERPWD, MAILGUN_KEY); /* VERIFICAR CHAVE DA API MAILGUN */
+            curl_setopt($ch, CURLOPT_USERPWD, 'api:'.MAILGUN_KEY);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
             curl_setopt($ch, CURLOPT_URL, MAILGUN_LINK);

@@ -165,8 +165,8 @@
                     "
                     <!-- formulario de dados do curso -->
                     <form action=\"controllers/curso/salvarAula.php\" method=\"POST\" enctype=\"multipart/form-data\" id=\"aula\">
-                        <input type=\"hidden\" name=\"aula[idaula]\" value=\"".$aulas['idaula']."\">
-                        <input type=\"hidden\" name=\"curso[idcurso]\" value=\"".$param[0]."\">
+                        <input type=\"hidden\" name=\"idaula\" value=\"".$aulas['idaula']."\">
+                        <input type=\"hidden\" name=\"curso_idcurso\" value=\"".$param[0]."\">
                         <div class=\"form-header with-border-bottom\">
                             <h3 class=\"form-title\">Grade do Curso</h3>
                             <button name=\"salvaraula\" class=\"form-btn\">Salvar e continuar</button>
@@ -188,7 +188,7 @@
                                             <div class=\"row form-row\">
                                                 <div class=\"col-md-12\">
                                                     <div class=\"input-container input-box form-control\">
-                                                        <input class=\"form-control\" name=\"aula[titulo]\"  placeholder=\"Titulo da Aula\" maxlength=\"50\" value=\"".$aulas['titulo']."\">
+                                                        <input class=\"form-control\" name=\"titulo\"  placeholder=\"Titulo da Aula\" maxlength=\"50\" value=\"".$aulas['titulo']."\">
                                                         <span class=\"input-counter\"></span>
                                                     </div>
                                                 </div>
@@ -197,14 +197,14 @@
                                             <div class=\"row form-row\">
                                                 <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">
                                                     <label>Objetivos</label>
-                                                    <textarea class=\"editor\" name=\"aula[objetivos]\" id=\"editor3\"  palceholder=\"Descreva aqui os objetivos do seu curso\">".$aulas['objetivos']."</textarea>
+                                                    <textarea class=\"editor\" name=\"objetivos\" id=\"editor3\"  palceholder=\"Descreva aqui os objetivos do seu curso\">".$aulas['objetivos']."</textarea>
                                                 </div>
                                             </div>
                                             $doc
                                             <div class=\"row form-row\">
                                                 <div class=\"col-xs-12 col-sm-12 col-md-12 col-lg-12\">
                                                     <label>Selecionar arquivo</label>
-                                                    <input type=\"file\" name=\"aula[arquivo]\">
+                                                    <input type=\"file\" name=\"arquivo\">
                                                 </div>
                                             </div>
                                         </div>
