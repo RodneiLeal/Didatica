@@ -403,9 +403,13 @@ left: 5px;
     padding: 30px;
 }
 
-.form-header{
+.form-header, .form-footer, .form-tools{
     display: flex;
     padding: 30px;
+}
+
+.form-tools{
+    padding: 15px;
 }
 
 .form-title{
@@ -421,10 +425,12 @@ left: 5px;
     border: none;
     font-size: 15px;
     margin: 5px;
+    text-align: center;
 }
 
-.form-btn:hover{
+button.form-btn:hover{
     background: #075377;
+    color: white;
 }
 
 .form-btn-publish{
@@ -432,8 +438,17 @@ left: 5px;
     margin-top: 20px;
 }
 
-.form-btn-publish:hover{
+button.form-btn-publish:hover{
     background-color: #f3660c;
+}
+
+.form-btn-published{
+    background-color: #148c05
+}
+
+.form-btn-review{
+    background-color: #d5bc00;
+    color: #29303b;
 }
 
 .form-row{

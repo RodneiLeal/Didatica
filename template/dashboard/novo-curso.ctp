@@ -1,12 +1,3 @@
-  <section class="content-header">
-    <h1>Novo curso</h1>
-    <ol class="breadcrumb">
-      <li><a><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a>Cursos</a></li>
-      <li class="active">Novo Curso</li>
-    </ol>
-  </section>
-
 <section class="content">
   <form action="controllers/curso/salvarCurso.php" method="post" id="curso">
   <div class="row content-center">
@@ -20,7 +11,7 @@
             <div class="col-xs-11 col-sm-11 col-md-11 col-lg-11">
               <label class="form-label">Comece informando o titulo do seu curso</label>
               <div class="input-container input-box form-control">
-                <input type="text" placeholder="ex.: Design de produtos com Ilustrator" maxlength="60" name="curso[titulo]" value="">
+                <input type="text" placeholder="ex.: Design de produtos com Ilustrator" maxlength="90" name="curso[titulo]" value="">
                 <span class="input-counter"></span>
               </div>
             </div>

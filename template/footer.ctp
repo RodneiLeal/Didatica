@@ -682,7 +682,7 @@
 							Os instrutores não publicarão links que possam redirecionar o usuário para fora do sistema, sendo proibida a utilização da plataforma para propaganda e publicidade para quaisquer fins.
 						</li>
 						<li>
-							Os pagamentos dos créditos relativos aos direitos autorais dos instrutores serão feitos via depósito bancário, cabendo-lhes o equivalente a 10% (dez por cento) do valor das certificações efetivamente emitidas e realizadas em seu(s) curso(s) através do site, desde que devidamente pagas, excetuando-se taxas referentes aos custos operacionais repassadas aos alunos.
+							Os pagamentos dos créditos relativos aos direitos autorais dos instrutores serão feitos via depósito bancário, cabendo-lhes o equivalente a <?=COMISSAO?>% do valor das certificações efetivamente emitidas e realizadas em seu(s) curso(s) através do site, desde que devidamente pagas, excetuando-se taxas referentes aos custos operacionais repassadas aos alunos.
 						</li>
 						<li>
 							9. Os dados da conta bancária para depósito do pagamento serão solicitados ao instrutor antes do primeiro procedimento para pagamento do crédito relativo ao direito autoral.
@@ -762,14 +762,14 @@
 					</p>
 				</form>
 
-				<div class="social-auth-links text-center">
+				<!--div class="social-auth-links text-center">
 					<p>- OU -</p>
 					<form action="" method="post">
 						<button data-target="facebook" class="social-signin btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</button>
 						<button data-target="google" class="social-signin btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</button>
 						<button data-target="linkedin" class="social-signin btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</button>
 					</form>
-				</div>
+				</div-->
 				<p class="cd-form-bottom-message"><a href="#0">Esqueci minha senha?</a></p>
 				
 			</div> 
@@ -803,12 +803,12 @@
 					</p>
 				</form>
 
-				<div class="social-auth-links text-center">
+				<!--div class="social-auth-links text-center">
 					<p>- OU -</p>
 					<a href="?rede=Facebook" class="social-signin btn btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Facebook</a>
 					<a href="?rede=Google" class="social-signin btn btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Google+</a>
 					<a href="?rede=LinkedIn" class="social-signin btn btn-social btn-linkedin btn-flat"><i class="fa fa-linkedin"></i> LinkedIn</a>
-				</div>
+				</div-->
 				
 			</div>
 
@@ -836,16 +836,18 @@
 </body> 
 </html>
 
-<script type="text/javascript" src="//code.jquery.com/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script type="text/javascript" src="js/vendor/menu/modernizr.custom.js"></script>
-<script type="text/javascript" src="js/vendor/menu/jquery.dlmenu.js"></script>
-<script type="text/javascript" src="js/vendor/dist/js/droply.js"></script>
-<script type="text/javascript" src="js/vendor/plugins/notification/toastr.min.js"></script>
-<script type="text/javascript" src="js/vendor/star-rating/star-rating.js"></script>
-<script type="text/javascript" src="js/custom.js" charset="utf-8"></script>
-<script type="text/javascript" src="js/functions.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
+<script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="js/vendor/menu/modernizr.custom.js"></script>
+<script src="js/vendor/menu/jquery.dlmenu.js"></script>
+<script src="js/vendor/dist/js/droply.js"></script>
+<script src="js/vendor/plugins/notification/toastr.min.js"></script>
+<script src="js/vendor/star-rating/star-rating.js"></script>
+<script src="js/vendor/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="js/vendor/plugins/datatables/dataTables.bootstrap.min.js"></script>
+<script src="js/custom.js" charset="utf-8"></script>
+<script src="js/functions.js"></script>
+<script src="js/main.js"></script>
 
 <?php
 

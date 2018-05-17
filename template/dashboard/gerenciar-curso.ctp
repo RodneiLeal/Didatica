@@ -1,11 +1,3 @@
-<section class="content-header">
-  <h1>Configurações do curso</h1>
-  <ol class="breadcrumb">
-    <li><a href="Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="Dashboard/meus cursos">Cursos</a></li>
-    <li class="active">Gerenciar Curso</li>
-  </ol>
-</section>
 
   <section class="content">
     <div class="box box-primary">
@@ -13,7 +5,6 @@
         <div class="col-md-3">
           <div class="row">
             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                <input type="hidden" name="curso[idcurso]" value="">
                 <ul class="nav nav-stacked nav-steps">
 
 
@@ -28,7 +19,12 @@
             
             <div class="row">
               <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 flex">
-                <button class="form-btn form-btn-publish" style="flex: auto">Envia para análise</button>
+               <form style="display: contents" action="controllers/curso/analisar_curso.php" method="POST" enctype="multipart/form-data" id="analisar_curso">
+                  <input type="hidden" name="curso_idcurso" value="<?=$param[0]?>">
+
+                 <?=$btn_analise?>
+
+                </form>
               </div>
             </div>
           </div>

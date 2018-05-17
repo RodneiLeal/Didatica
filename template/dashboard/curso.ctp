@@ -1,12 +1,3 @@
-<section class="content-header">
-  <h1><?=$curso['titulo']?></h1>
-  <ol class="breadcrumb">
-    <li><a href="Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li><a href="//">Cursos</a></li>
-    <li class="active"><?=$curso['titulo']?></li>
-  </ol>
-</section>
-
 <section class="content">
 
   <input type="hidden" name="idcurso" id="curso" value="<?=$inscr['idcurso']?>">
@@ -87,14 +78,22 @@
                 <?=$btn?>
 
               <div class="box-body course_box text-center">
-                <button class="btn btn-primary course_get_rate" id="" course="{id co durso}">
-                  <i class="fa fa-thermometer-half" aria-hidden="true"></i> Avaliar Curso
+                <button class="btn btn-primary course_get_rate">
+                  <i class="fa fa-thermometer-half" aria-hidden="true"></i> Enviar mensagem para o instrutor
                 </button>
               </div>
+<!--
+
+
 
               <div class="box-body course_box text-center">
                 <button class="btn btn-warning btn-xs course_get_critical" id="" course="{id co durso}">Enviar crítica ao Tutor</button>
               </div>
+
+
+-->
+
+
             </div>
           </div>
         </div>
@@ -102,11 +101,6 @@
     </div>
   </div>
 </section>
-
-
-
-
-
 
 
 

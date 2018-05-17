@@ -1,12 +1,3 @@
-<section class="content-header">
-    <h1>Editar Perfil</h1>
-    <ol class="breadcrumb">
-        <li><a ><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a >Usuário</a></li>
-        <li class="active">
-            <?=$username?>
-        </li>
-    </ol>
 </section>
 
   <input type="hidden" id="id" value="<?=$idusuario?>">

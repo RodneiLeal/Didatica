@@ -66,7 +66,7 @@
             ){
                 $this->msg = array(
                     'type'=>'success',
-                    'title'=>'Seu solicitação foi encaminhada!',
+                    'title'=>'Sua solicitação foi encaminhada!',
                     'msg'=>'Fique atento, enviaremos uma mensagem assim que concluirmos o processo de anáise das informações enviadas.'
                 );
                 $this->result = true;

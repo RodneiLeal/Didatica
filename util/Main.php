@@ -110,20 +110,33 @@
         }
 
         public function EnviaEmail($destinatario_email, $destinatario_nome, $assunto, $mensagem, $link){ 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-            curl_setopt($ch, CURLOPT_USERPWD, 'api:'.MAILGUN_KEY);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
-            curl_setopt($ch, CURLOPT_URL, MAILGUN_LINK);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, 
-                        array('from' => 'Didática Online Contato <nao-responda@didaticaonline.com.br>',
-                            'to' => $destinatario_nome .'<'.$destinatario_email.'>',
-                            'subject' => $assunto,
-                            'html' => $mensagem));
-            $result = curl_exec($ch);
-            curl_close($ch);
-            return $result;
+            // $ch = curl_init();
+            // curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+            // curl_setopt($ch, CURLOPT_USERPWD, 'api:'.MAILGUN_KEY);
+            // curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            // curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');
+            // curl_setopt($ch, CURLOPT_URL, MAILGUN_LINK);
+            // curl_setopt($ch, CURLOPT_POSTFIELDS, 
+            //             array('from' => 'Didática Online Contato <nao-responda@didaticaonline.com.br>',
+            //                 'to' => $destinatario_nome .'<'.$destinatario_email.'>',
+            //                 'subject' => $assunto,
+            //                 'html' => $mensagem));
+            // $result = curl_exec($ch);
+            // curl_close($ch);
+            // return $result;
+
+            $headers = array(
+                'Content-type: text/html; charset=UTF-8',
+                'X-Priority: 1',
+                'From: Didatica <didatica@didatica.online>'
+            );
+
+            return mail(
+                $destinatario_email,
+                $assunto,
+                $mensagem,
+                implode($headers, '\r\n')
+            );
         }
     }
     

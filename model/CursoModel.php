@@ -148,7 +148,7 @@
                 }
             }
             else{ 
-                $data = array_merge($data, ['locked'=>0]);
+                // $data = array_merge($data, ['locked'=>0]);
                 $this->result = $data['idcurso'];
 
                 if(isset($data['imagem'])){
@@ -179,14 +179,41 @@
             session_start();
 
             $curso = self::getCursoId($data['curso_idcurso'])[0];
-
             $path   = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$curso['titulo'].'/';
-            $data = array_filter($data);
             $arquivo = $data['arquivo'];
             unset($data['arquivo']);
-
-
             $data = array_merge($data, ['arquivo'=>$path.$arquivo['name']]);
+            $data = array_filter($data);
+
+            if(!isset($data['titulo'])){
+                $this->result = false;
+                $this->msg = array(
+                    'type'  =>'error',
+                    'title' =>'Oops, faltou o titulo!',
+                    'msg'   =>'Sua aula precisa de um titulo.'
+                );
+                return;
+            }
+
+            if(!isset($data['objetivos'])){
+                $this->result = false;
+                $this->msg = array(
+                    'type'  =>'error',
+                    'title' =>'Xiii, faltou o resumo!',
+                    'msg'   =>'É necessário que você faça um resumo da sua aula, isso ajudará muito os seu alunos.'
+                );
+                return;
+            }
+
+            if(empty($arquivo['name'])){
+                $this->result = false;
+                $this->msg = array(
+                    'type'  =>'error',
+                    'title' =>'Nossa, você esqueceu de adicionar o material!',
+                    'msg'   =>'O material é muito importante para seus alunos poderem estudar.'
+                );
+                return;
+            }
             
             if (!isset($data['idaula'])) {
                if(move_uploaded_file($arquivo['tmp_name'], '../../'.$path.$arquivo['name']) && ($this->db->insert('aula', $data))){
@@ -215,28 +242,59 @@
             $this->msg = array(
                 'type'  =>'error',
                 'title' =>'Oops!',
-                'msg'   =>'Algo deu errado ao tentar salvar o seu curso.'
+                'msg'   =>'Algo deu errado ao tentar salvar esta aula.'
             );
             return;
         }
 
         // SALVA TODAS AS QUESTÕES PARA PROVA DE UM DETERMINADO CURSO
-        public function salvaQuestoes($data){
+        public function salvar_questoes($data){
+            extract($data);
 
-            //     if(($idaula = $cursoModel->salvaAulas($aula)) && move_uploaded_file($_FILES['aula']['tmp_name'], ROOT.$path.$_FILES['aula']['name'])){
-                    
-            //         foreach($provas as $prova){
-            //             $prova = array_merge($prova, ['curso_idcurso'=>$idcurso]);
-            //             $idquestao = $cursoModel->salvaQuestoes($prova);
-            //         }
-                    
-            //     }  
-            // }
-            
-            if($this->db->insert('db_questoes', $data)){
-                return $this->db->last_id;
+            foreach($questoes as $questao){
+                $questao = array_merge($questao, ['curso_idcurso'=>$data['curso_idcurso']]);
+                $questao = array_filter($questao);
+                
+                #verificar antes de inserir ou atualizar
+                // se questao não é vazia, se existe no minimo 3 opções e se tem uma resposta para estas opções
+
+                if(!isset(
+                    $questao['questao'], 
+                    $questao['opcao_1'],
+                    $questao['opcao_2'], 
+                    $questao['opcao_3'],
+                    $questao['resposta']
+                )){
+                    $this->result = false;
+                    $this->msg = array(
+                        'type'  =>'error',
+                        'title' =>'Oops!',
+                        'msg'   =>'Parece que você tem questões incompletas ou vazias.'
+                    );
+                    return;
+                }
+
+                if(isset($questao['id_questao']) && $this->db->update('db_questoes',  @array_shift(array_keys($questao)),  @array_shift($questao), $questao)){
+                    $this->result = true;
+                    $this->msg = array(
+                        'type'  =>'success',
+                        'title' =>'Questão atualizada',
+                        'msg'   =>'Esta questão foi atualizada com sucesso!'
+                    );
+                    return;
+                }
+                else{
+
+                    $this->db->insert('db_questoes', $questao);
+
+                    $this->result = true;
+                    $this->msg = array(
+                        'type'  =>'success',
+                        'title' =>'Questões salvas',
+                        'msg'   =>'Suas questões foram adicionadas ao banco de questões do curso.'
+                    );
+                }
             }
-            return false;
         }
 
         // ATUALIZAR BANCO DE QUESTÕES DE UM CURSO
@@ -244,12 +302,17 @@
             var_dump($data);
         }
 
-        // SELECIONA ALEATORIAMENTE UM NUMERO DE QUESTÕES PARA MONTAR A PROVA DO CURSO 
-        public function getQuestoes($idcurso, $limite=null){
+        // RECUPERA TODAS AS QUESTÕES DE UM CURSO OU SELECIONA ALEATORIAMENTE UM NUMERO DE QUESTÕES PARA MONTAR UMA PROVA 
+        public function getQuestoes($idcurso, $id_questao=null, $limite=null){
             $data    = array($idcurso);
             $sql     =  "SELECT * FROM db_questoes WHERE curso_idcurso = ?";
+
+            if(isset($id_questao))
+                $sql .= " AND id_questao = $id_questao";
+
             if(isset($limite))
                 $sql .= " ORDER BY RAND() LIMIT $limite";
+                
             $stmt    =  $this->db->query($sql, $data);
             $result  =  $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
@@ -283,6 +346,33 @@
                 return $this->db->last_id;
             }
             return false;
+        }
+
+        public function getSolicitacaoAnalise($idcurso){
+            $data   = array($idcurso);
+            $sql    = "SELECT * FROM solicitacao WHERE curso_idcurso = ? ";
+            $sql   .= "AND tipo = 2";
+            $stmt   = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
+            return $result;
+        }
+
+        public function analisar_curso($data){
+            session_start();
+            // var_dump(['usuario_idusuario'=>$_SESSION['idusuario'], 'tipo'=>2]+$data);
+
+            if($this->solicitacao(['usuario_idusuario'=>$_SESSION['idusuario'], 'tipo'=>2] + $data)){
+                $this->msg = array(
+                    'type'=>'success',
+                    'title'=>'Solicitação de anáise encaminhada!',
+                    'msg'=>'Seu curso foi enviado para análise. Assim que seu curso for aprovado ele aparecerá na página principal juntamente com os cursos em destaque.<br>Caso haja algum problema com seu curso você será notificado no campo de mensagens das correções necessarias a serem feitas.<br><br>Boa sorte!'
+                );
+                $this->result = true;
+                return;
+            }
         }
         
     }

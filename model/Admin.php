@@ -60,7 +60,7 @@
 
             $instrutor= $result[0]['instrutor_idinstrutor'];
             $ref      = $data['code'];
-            $comissao = $data['valor']*COMISSAO;
+            $comissao = $data['valor']*(COMISSAO/100);
             
             $data = array('instrutor_idinstrutor' => $instrutor,
                           'referencia' => $ref,

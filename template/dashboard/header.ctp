@@ -9,13 +9,14 @@
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <link rel="stylesheet" href="js/vendor/dist/css/AdminLTE.min.css">
     <link rel="stylesheet" href="js/vendor/dist/css/skins/_all-skins.min.css">
+    <link rel="stylesheet" href="js/vendor/plugins/datatables/dataTables.bootstrap.css">
     <link rel="stylesheet" href="css/vendor/plugins/notification/toastr.min.css">
     <link rel="stylesheet" href="css/vendor/crop/cropper.min.css">
     <link rel="stylesheet" href="css/vendor/loading/jquery.loading.min.css">
     <link rel="stylesheet" href="css/complementar.css">
+    
 
     <link rel="shortcut icon" href="img/favicon.png">
 
@@ -303,7 +304,7 @@
         </nav>
       </header>
       
-      <?php include_once ROOT."template/dashboard-navigation.ctp" ?>
+      <?php include_once ROOT."template/dashboard/navigation.ctp" ?>
 
 
       <!-- Content Wrapper. Contains page content -->

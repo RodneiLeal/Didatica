@@ -1,11 +1,3 @@
-<section class="content-header">
-  <h1>Minhas Inscrições</h1>
-  <ol class="breadcrumb">
-    <li><a href="Dashboard"><i class="fa fa-dashboard"></i>Home</a></li>
-    <li class="active">Minhas Inscrições</li>
-  </ol>
-</section>
-
 <section class="content">
   <div class="row">
     <div class="col-xs-12">

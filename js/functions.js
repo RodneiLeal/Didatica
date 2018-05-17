@@ -3,6 +3,15 @@ jQuery(function ($){
   var content = $('.content-wrapper');
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
+
+  $('#example2').DataTable({
+    "paging": true,
+    "lengthChange": true,
+    "searching": true,
+    "ordering": true,
+    "info": true,
+    "autoWidth": true
+  });
   
   $('#congratulations').modal('show');
   
@@ -43,6 +52,9 @@ jQuery(function ($){
         ementa:                this.$ementa === undefined ? '' : this.$ementa
       }
 
+      var idcurso = this.$curso.val();
+      console.log();
+
       function salvarCursoCallback(response){
         this.$response = JSON.parse(response);
         this.$message  = this.$response.message;
@@ -50,7 +62,12 @@ jQuery(function ($){
         Notificacao(this.$message.type, this.$message.title, this.$message.msg);
 
         if(this.$result){
-          redireciona('Dashboard/curso/'+this.$result);
+          if (isEmpty(idcurso)){
+            redireciona('Dashboard/curso/'+this.$result);
+          }
+          setTimeout(function(){
+            redireciona('Dashboard/curso/'+idcurso+'/Grade do curso');
+          }, 3000);
         }
       }
 
@@ -73,7 +90,7 @@ jQuery(function ($){
       this.$formdata = new FormData($('#aula')[0]);
       this.$formdata.set('objetivos', this.$objetivos);
 
-      curso = this.$curso.val();
+      idcurso = this.$curso.val();
 
       function salvarAulaCallback(response){
         this.$response = JSON.parse(response);
@@ -82,7 +99,7 @@ jQuery(function ($){
         Notificacao(this.$message.type, this.$message.title, this.$message.msg);
         if (this.$result) {
           setInterval(function(){
-            redireciona('Dashboard/curso/'+ curso + '/Banco de questões')
+            redireciona('Dashboard/curso/'+ idcurso + '/Banco de questões')
           },3000);
         }
       }
@@ -92,43 +109,27 @@ jQuery(function ($){
         url: this.$url,
         data: this.$formdata,
         processData: false,
-        contentType: false
+        contentType: false,
+        beforeSend: function(){
+          $('body').loading('start');
+        },
+        complete:function() {
+          $('body').loading('stop');
+        }
       }).done(salvarAulaCallback);
-
     });
 
 
     $('button[name="salvarquestoes"]').on('click', function(event) {
       event.preventDefault();
-      this.$form      = $(document).find('#aula');
-      this.$curso     = this.$form.find('[name="curso[idcurso]"]');
-      this.$aula      = this.$form.find('[name="aula[idaula]"]');
+      this.$form      = $(document).find('#questoes');
       this.$url       = this.$form.attr('action');
+      var curso = this.$form.find('[name="curso_idcurso"]').val();
 
-      this.$titulo    = this.$form.find('[name="aula[titulo]"]');
+      this.$data = $('[name^=questoes]').serializeArray();
+      this.$data.unshift({ name: 'curso_idcurso', value: curso});
 
-      // this.$arquivo   = this.$form.find('[name="aula[arquivo]"]');
-      // this.$formdata = new FormData();
-      // this.$formdata.append('arquivo', this.$arquivo[0]);
-
-      try{
-        this.$objetivos = CKEDITOR.instances['editor3'].getData();
-      }catch(e){
-        console.log(e);
-      }
-
-       this.$data = {
-        idaula:          this.$aula.val() === undefined ? '' : this.$aula.val(),
-        curso_idcurso:   this.$curso.val() === undefined ? '' : this.$curso.val(),
-        titulo:          this.$titulo.val() === undefined ? '' : this.$titulo.val(),
-        // arquivo:         this.$formdata,
-        // arquivo:         this.$arquivo.val() === undefined ? '' : this.$arquivo.val(),
-        objetivos:       this.$objetivos === undefined ? '' : this.$objetivos
-      }
-
-      curso = this.$curso.val();
-
-      function salvarAulaCallback(response){
+      function salvarQuestoesCallback(response){
         this.$response = JSON.parse(response);
         this.$message  = this.$response.message;
         this.$result   = this.$response.result;
@@ -136,12 +137,24 @@ jQuery(function ($){
 
         if (this.$result) {
           setInterval(function(){
-            redireciona('Dashboard/curso/'+ curso + '/Banco de questões')
+            redireciona('Dashboard/curso/'+ curso + '/Banco de questões/')
           },3000);
         }
-      }
 
-      $.post(this.$url, this.$data, salvarAulaCallback);
+        console.log(response);
+      }
+      
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$data,
+        beforeSend: function () {
+          $('body').loading('start');
+        },
+        complete: function () {
+          $('body').loading('stop');
+        }
+      }).done(salvarQuestoesCallback);
     });
 
   // FIM
@@ -206,11 +219,11 @@ jQuery(function ($){
         this.$response = JSON.parse(response);
         this.$message = this.$response.message;
         this.$result = this.$response.result;
+        this.$email.focus();
         Notificacao(this.$message.type, this.$message.title, this.$message.msg);
-        // if (this.$result) {
-        //   setTimeout(function(){location.reload()}, 4000);
-        // }
-        // this.$email.focus();
+        if (this.$result) {
+          setTimeout(function(){location.reload()}, 4000);
+        }
       }
 
       $.post(this.$url, this.$data, resetPasswdCallback);
@@ -283,7 +296,6 @@ jQuery(function ($){
   // PROVA
     // INICIA O CRONOMETRO REGRESSIVO
     $('.iniciar-prova, #good-luck').on('click', function(){
-
       Nquestoes = $('#nquestoes').val();
       
       function date(t=0){
@@ -306,34 +318,34 @@ jQuery(function ($){
     // FIM
 
     // CONFERE QUETÃO MARCADA
-        $('.opcao').on('change', function(event){
-          opt = $(this);
+      $('.opcao').on('change', function(event){
+        opt = $(this);
 
-          function confereQuestaoCallback(response){
-            response = JSON.parse(response);
-            $('[name="' + opt.attr('name') + '"]').attr('disabled', 'disabled');
-            opt.removeAttr('disabled', 'disabled');
-            opt.css({'display':'none'});
+        function confereQuestaoCallback(response){
+          response = JSON.parse(response);
+          $('[name="' + opt.attr('name') + '"]').attr('disabled', 'disabled');
+          opt.removeAttr('disabled', 'disabled');
+          opt.css({'display':'none'});
 
-            if(response[0].resposta==1){ 
-              opt.before('<i class="fa fa-check green"></i>');
-              acertos++;
-            }else{
-              opt.before('<i class="fa fa-times red"></i>');
-            }
+          if(response[0].resposta==1){ 
+            opt.before('<i class="fa fa-check green"></i>');
+            acertos++;
+          }else{
+            opt.before('<i class="fa fa-times red"></i>');
           }
+        }
 
-          opcao = $('#curso, [name="'+opt.attr('name')+'"]').serialize();
+        opcao = $('#curso, [name="'+opt.attr('name')+'"]').serialize();
 
-          $.ajax({
-            url: 'controllers/curso/confereQuestao.php',
-            type: 'POST',
-            datatype: 'application/json',
-            data: opcao,
-            success: confereQuestaoCallback
-          });
-
+        $.ajax({
+          url: 'controllers/curso/confereQuestao.php',
+          type: 'POST',
+          datatype: 'application/json',
+          data: opcao,
+          success: confereQuestaoCallback
         });
+
+      });
     // FIM
 
     // FINALIZAR A PROVA
@@ -380,34 +392,16 @@ jQuery(function ($){
 
   // FIM
 
-  // NOVO CURSO
-                     /*  falta somente a validacao das informações  */
-    //CURSO PREVIEW 
-    $('.curso-titulo').on('change keyup', function(){
-      $('.preview-curso-titulo').text($(this).val());
-      $('[name="aula[titulo]"]').val($(this).val());
-    });
-
-    $('textarea#ementa').on('change keyup', function(){
-      console.log($(this).val());
-
-      // $('[name="aula[objetivos]"]').val(CKEDITOR.instances['ementa'].getData());
-    })
-
-    $('.curso-subcategoria').on('change keyup', function(){
-      $('.preview-curso-subcategoria').text($('.curso-subcategoria option:selected').text());
-    });
-
-    $('.curso-categoria').on('change keyup', function(){
-      $('.preview-curso-categoria').text($('.curso-categoria option:selected').text());
-    });
-    
+  //**************************** REFATORAR **************************************
+ 
     $('.remove-ask').on('click', function(){
       $(this).parents('.panel').remove();
     });
 
+    // ADICIONA UM NOVO FORMULARIO DE QUESTÃO
     i = 1;
-    $('.add-ask').on('click', function(){
+    $('.add-ask').on('click', function(event){
+      event.preventDefault();
       i++;
       var template  = $('<div>').addClass('box box-primary panel template');
             
@@ -450,7 +444,7 @@ jQuery(function ($){
           var input = $('<input>').addClass('form-control');
           input.attr({
             'type':"text",
-            'name':"provas["+i+"][questao]",
+            'name':"questoes["+i+"][questao]",
             'placeholder':"Questão"
           });
           return div.append(label, input);
@@ -471,12 +465,12 @@ jQuery(function ($){
               return $('<input>').attr({
                 'type':"radio",
                 'value':q,
-                'name':"provas["+i+"][resposta]"
+                'name':"questoes["+i+"][resposta]"
               });
             })},
             $('<input>').attr({
               'class': "form-control",
-              'name':'provas['+i+'][opcao_'+q+']',
+              'name':'questoes['+i+'][opcao_'+q+']',
               'type':"text",
               'placeholder':"Resposta"
             })
@@ -491,16 +485,40 @@ jQuery(function ($){
       $('.question-box').append(template);
     });
     
-    $('.prox-etapa').on('click', function(){
-      var section = $(this).parents('section');
-      section.addClass('display-hidden');
-      section.next().removeClass('display-hidden');
-    });
+  // FIM
 
-    $('.etapa-anterior').on('click', function(){
-      var section = $(this).parents('section');
-      section.addClass('display-hidden');
-      section.prev().removeClass('display-hidden');
+  // ENVIAR CURSO PARA ANALISE
+  $('.publish').on('click', function(event){
+      event.preventDefault();
+      this.$form = $(document).find('#analisar_curso');
+      this.$url = this.$form.attr('action');
+      this.$formdata = new FormData($('#analisar_curso')[0]);
+
+      function analiseCallback(response) {
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if (this.$result) {
+          setInterval(function(){
+            location.reload();
+          }, 4000);
+        }
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false,
+        beforeSend: function () {
+          $('body').loading('start');
+        },
+        complete: function () {
+          $('body').loading('stop');
+        }
+      }).done(analiseCallback);
     });
 
   // FIM
@@ -851,12 +869,3 @@ jQuery(function ($){
     $("#FormEnrollRate_matricula").val(course);
   });
 });
-
-
-
-
-
-
-
-
-

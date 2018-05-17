@@ -1,12 +1,3 @@
-  <section class="content-header">
-    <h1>Editar curso</h1>
-    <ol class="breadcrumb">
-      <li><a><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a>Cursos</a></li>
-      <li class="active">Editar Curso</li>
-    </ol>
-  </section>
-
   <form method="POST" enctype="multipart/form-data" action="./controllers/curso/updateCurso.php">
     <!-- Informações do curso -->
     <section class="content" id="etapa-1">
