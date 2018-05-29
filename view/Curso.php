@@ -18,6 +18,8 @@
 		}
 
 		public function index(){
+			session_start();
+			extract($_SESSION);
 			include_once ROOT."template/header.ctp";
 			include_once ROOT."template/curso.ctp";
 			include_once ROOT."template/footer.ctp";

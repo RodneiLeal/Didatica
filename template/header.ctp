@@ -1,7 +1,4 @@
-<?php
-	@session_start();
-	extract($_SESSION);
-?>
+
 <!DOCTYPE html>
 <html lang="pt-br" >
 
@@ -89,7 +86,7 @@
 									<ul class="dropdown-menu">
 										<li><a href="Dashboard">Painel de Controle</a></li>
 										<li><a href="Dashboard/inscricoes">Minhas Inscrições</a></li>
-										<li><a href="Dashboard/mensagens">Mensagens</a></li>
+										<li><a href="Dashboard/mensagens">Mensagens<span class="label label-success label-home-menu"><?=Main::nMensagens()?></span></a></li>
 										<li role="separator" class="divider"></li>
 										<li><a class="logoff">Sair</a></li>
 									</ul>

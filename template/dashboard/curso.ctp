@@ -1,5 +1,4 @@
 <section class="content">
-
   <input type="hidden" name="idcurso" id="curso" value="<?=$inscr['idcurso']?>">
   <input type="hidden" name="idinscr" id="inscr" value="<?=$inscr['idinscricao']?>">
   
@@ -32,7 +31,7 @@
                   <ul class="timeline" data-children=".aula" id="aulas">
                     <li class="time-label">
                       <span class="bg-yellow">
-                        <i class="fa fa-folder-open-o"></i> <?=count($aulas)?> aulas
+                        <i class="fa fa-folder-open"></i> <?=count($aulas)?> aulas
                       </span>
                     </li>
 
@@ -60,7 +59,7 @@
                     <?php endforeach; endif; ?>
 
                     <li class="timeline-label ">
-                      <i class="fa fa-circle-o bg-yellow"></i>
+                      <i class="fa fa-circle bg-yellow"></i>
                     </li>
 
                   </ul>
@@ -78,8 +77,8 @@
                 <?=$btn?>
 
               <div class="box-body course_box text-center">
-                <button class="btn btn-primary course_get_rate">
-                  <i class="fa fa-thermometer-half" aria-hidden="true"></i> Enviar mensagem para o instrutor
+                <button class="btn btn-primary course_get_rate" data-toggle="modal" data-target="#send-message">
+                  <i class="fas fa-paper-plane" aria-hidden="true"></i> Enviar mensagem para o instrutor
                 </button>
               </div>
 <!--
@@ -104,34 +103,43 @@
 
 
 
-<!-- AVALIAR CURSO SOMENTE SE FOR APROVADO -->
-<div class="modal fade" id="modal_avaliar" tabindex="-1" role="dialog" >
-  <div class="modal-dialog" role="document">
-    <div class="modal-content" style="height:60%">
-      <div class="modal-header">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><i class="fa fa-close"></i></button>
-      </div>
-      <div class="modal-body" >
-        <form  id="FormEnrollRate" action="controller/course.php">
-          <div class="form-group">
-            <label for="exampleInputEmail1">Nota geral para o Curso</label>
-            <div class="user_star_rating_course"></div>
+<!-- ENVIAR MENSAGEM PARA O INSTRUTOR -->
+
+  <div class="modal fade" role="dialog" id="send-message">
+    <div class="modal-dialog">
+
+      <form  id="form-message" action="controllers/mensagem.php" method="POST">
+
+        <input type="hidden" name="para" value="<?=$curso['instrutor_idinstrutor']?>">
+
+        <div class="box box-widget widget-user">
+          <div class="widget-user-header bg-yellow">
+            <div class="widget-user-image">
+              <img src="<?=$instrutor_foto?>" class="img-circle" alt="<?=$curso['titulo']?> - <?=$curso['instrutor']?>" />
+            </div>
+            <h3 class="widget-user-username"><?=$curso['instrutor']?></h3>
           </div>
 
-          <div class="form-group">
-            <label for="exampleInputEmail1">Comentários</label>
-            <textarea class="form-control" id="FormEnrollRate_comentario" name="FormEnrollRate_comentario" rows="7" placeholder="Descreva o que achou sobre o conteúdo, explicação, entre outros detalhes"></textarea>
-          </div>
+          <div class="box-body">
+            <div class="row" style="padding:30px 10px 0 10px">
+              <div class="col-md-12">
+                  <div class="form-goup">
+                    <label> Assunto:</label>
+                      <input type="text" class="form-control" name="assunto" placeholder="Ex: Duvida sobre a geração de calor por fricçao.">
+                  </div>
 
-          <div class="form-group">
-            <input id="FormEnrollRate_nota" name="FormEnrollRate_nota"  value="" type="hidden">
-            <input id="FormEnrollRate_matricula" name="FormEnrollRate_matricula" value="" type="hidden">
-            <input id="" name="operation" value="rate" type="hidden">
-            <button type="button" class="btn btn-primary form_send_information_bt">Enviar Avaliação</button>
+                  <div class="form-group">
+                    <label>Mensagem</label>
+                    <textarea class="form-control" name="mensagem" rows="7" style="resize:none" placeholder="Dexe aqui sua ensagem para <?=$curso['instrutor']?>"></textarea>
+                  </div>
+              </div>
+            </div>
           </div>
+          <div class="box-footer">
+            <button class="pull-right btn btn-warning btn-xl send-message"><i class="fas fa-paper-plane"></i> Enviar</button>
+          </div>
+        </div>
+      </form>
 
-        </form>
-      </div>
     </div>
   </div>
-</div>

@@ -31,11 +31,105 @@
             extract($_SESSION);
 			$foto = empty($foto)?"img/users/sem-foto.png":$foto;
 			$action =  empty($this->action)?'home':$this->action;
-			$action = str_replace(' ', '_', $action);
+            $action = str_replace(' ', '_', $action);
+            $menu_message = self::getMensages();
+            $menu_navegacao = self::menu_navegacao($tipo, $idusuario);
 			include_once ROOT."template/dashboard/header.ctp";
 			self::$action($this->parameters);
 			include_once ROOT."template/dashboard/footer.ctp";
-		}
+        }
+        
+        private function menu_navegacao($tipo, $idusuario){
+            if($tipo){
+                $menu_instrutor = '
+                    <li>
+                        <a href="Dashboard">
+                            <i class="fa fa-home"></i><span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="treeview">
+                        <a><i class="fa fa-university"></i><span>Instrutor</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="Dashboard/editar perfil" title="Editar Perfil">Editar Perfil</a></li>
+                        </ul>
+                    </li>
+                        
+                    <li class="treeview">
+                        <a><i class="fa fa-book"></i><span>Cursos</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="Dashboard/novo curso" title="Novo curso">Novo curso</a></li>
+                            <li><a href="Dashboard/meus cursos" title="Meus cursos">Meus cursos</a></li>
+                            <li><a href="Dashboard/inscricoes" title="Minhas Inscrições">Minhas Inscrições</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="Dashboard/mensagens" title="Minhas Inscrições"><i class="fa fa-envelope"></i>Mensagens<span class="label label-success label-dsh-menu">'.self::nMensagens().'</span></a>
+                    </li>
+                    ';
+
+                    '<li class="treeview">
+                        <a><i class="fa fa-graduation-cap"></i><span>Certificados</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="Dashboard/meus_certificados" title="Lista todos os cursos">Ver meus Certificados</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="treeview">
+                        <a><i class="fa fa-money"></i><span>Financeiro</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="Dashboard/resumo financeiro" title="Lista todos os cursos">Meu saldo</a></li>
+                        </ul>
+                    </li>';
+
+                return $menu_instrutor;
+            }
+            else{
+                $menu_user = '
+                    <li>
+                        <a href="Dashboard">
+                            <i class="fa fa-home"></i><span>Home</span>
+                        </a>
+                    </li>
+
+                    <li class="treeview">
+                        <a><i class="fa fa-user"></i><span>Usuario</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="Dashboard/editar perfil" title="Editar Perfil">Editar Perfil</a></li>
+                            <!--<li><a href="Dashboard/mensagens" title="Caixa de mensagens">Caixa de Mensagens</a></li>-->
+                        </ul>
+                    </li>
+                    
+                    <li class="treeview">
+                        <a><i class="fa fa-book"></i><span>Cursos</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="Dashboard/inscricoes" title="Minhas Inscrições">Minhas Inscrições</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="Dashboard/mensagens" title="Minhas Inscrições"><i class="fa fa-envelope"></i>Mensagens<span class="label label-success label-dsh-menu">'.self::nMensagens().'</span></a>
+                    </li>
+                    ';
+                    
+                    $menu_user .= empty($this->instrutor->getSolicitacaoInstrutor($idusuario)[0])?
+                    '
+                    <li class="treeview">
+                        <a data-toggle="modal" class="closed-modal" data-target="#novo-instrutor">
+                            <i class="fa fa-university"></i><span>Tornar-se um Instrutor</span>
+                        </a>
+                    </li>
+                    ':'';
+                    
+                    '<li class="treeview">
+                        <a><i class="fa fa-graduation-cap"></i><span>Certificados</span><i class="fa fa-angle-left pull-right"></i></a>
+                        <ul class="treeview-menu">
+                            <li><a href="Dashboard/meus certificados" title="Lista todos os cursos"></i>Ver meus Certificados</a></li>
+                        </ul>
+                    </li>';
+
+                return $menu_user;
+            }
+        }
 
 		private function editar_perfil(){
             extract($_SESSION);
@@ -106,7 +200,7 @@
                                 <input type="hidden" name="inscr" value="'.$inscr['idinscricao'].'">
                                 <input type="hidden" name="curso" value="'.$inscr['idcurso'].'">
                                 <button type="submit" class="btn btn-success">
-                                    <i class="fa fa-id-card-o" aria-hidden="true"></i> Download do Certificado
+                                    <i class="fas fa-certificate" aria-hidden="true"></i> Download do Certificado
                                 </button>
                             </form>
                         </div>
@@ -119,7 +213,7 @@
                         ' 
                         <div class="box-body course_box text-center">
                             <button type="button" class="btn btn-success solicitar-certificado">
-                                <i class="fa fa-id-card-o" aria-hidden="true"></i> Solicitar Certificado
+                                <i class="fas fa-certificate" aria-hidden="true"></i> Solicitar Certificado
                             </button>
                         </div>
                         ';
@@ -519,11 +613,7 @@
                                     <div class=\"col-xs-6 col-sm-6 col-md-6 col-lg-6\">
                                         <label >Titulo do curso</label>
                                         <div class=\"input-container input-box form-control\">
-
-
                                         <input type=\"text\" placeholder=\"ex.: Design de produtos com Ilustrator\" maxlength=\"90\" name=\"curso[titulo]\" value=\"".$curso['titulo']."\" $disabled>
-
-                                        
                                         <span class=\"input-counter\"></span>
                                         </div>
                                     </div>
@@ -644,7 +734,7 @@
                             <input type="hidden" name="inscr" value="6">
                             <input type="hidden" name="curso" value="8">
                             <button type="submit" class="btn btn-success pull-right">
-                                <i class="fa fa-id-card-o" aria-hidden="true"></i> Download do Certificado
+                                <i class="fas fa-certificate" aria-hidden="true"></i> Download do Certificado
                             </button>
                         </form>
                     ';
@@ -663,9 +753,74 @@
             $questoes           = $this->cursos->getQuestoes($inscr['idcurso'], null, N_QUESTOES);
             include_once ROOT."template/dashboard/prova.ctp";			
         }
-        
+
+        private function getMensages(){
+            $messages   = $this->instrutor->readerMessages(null, true);
+            $nMessages  = count($messages);
+
+            $message_list =  "<li class=\"dropdown messages-menu\">
+            <a href=\"\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">
+                <i class=\"fa fa-envelope-o\"></i>
+                <span class=\"label label-success\">{$nMessages}</span>
+            </a>
+            <ul class=\"dropdown-menu\">
+                <li class=\"header\">Você tem {$nMessages} messages</li>
+                <li>
+                <ul class=\"menu\">";
+
+            foreach ($messages as $message) {
+                extract($message);
+                $data_envio  = $this->formataData($data_envio, 'dhm');
+                $foto = empty($foto)?"img/users/sem-foto.png":$foto;
+                
+                $message_list .= "<li>
+                    <a href=\"Dashboard/mensagem/{$idmensagem}\">
+                        <div class=\"pull-left\">
+                            <img src=\"{$foto}\" class=\"img-circle\" alt=\"User Image\">
+                        </div>
+
+                        <h4 title=\"{$assunto}\">
+                            ".mb_strimwidth($assunto, 0, 15, '...')."
+                            <small><i class=\"fa fa-clock-o\"></i>{$data_envio}</small>
+                        </h4>
+                        <h5>{$remetente}</h5>
+                    </a>
+                </li>";
+                
+            }
+
+            $message_list .= "</ul></li></ul></li>";
+
+            return $message_list;
+        }
+
+        private function mensagem($idmensagem){
+            $message   = $this->instrutor->readerMessages($idmensagem);
+            extract($message[0]);
+            $foto = empty($foto)?"img/users/sem-foto.png":$foto;
+
+            include_once ROOT."template/dashboard/mensagem.ctp";			
+        }
+
+        public function nMensagens(){
+			return count($this->instrutor->readerMessages(null, true));
+		}
+
         private function mensagens(){
-            echo 'mensagens';
+            $messages   = $this->instrutor->readerMessages();
+            $tabela = '<tbody>';
+            foreach ($messages as $index=>$message) {
+                $tabela .=  
+                "<tr>
+                    <th width=\"30\">".($index+1)."</th>
+                    <td><a href=\"Dashboard/mensagem/".$message['idmensagem']."\">".mb_strimwidth($message['assunto'], 0, 30, '[...]')."</a></td>
+                    <td>".$message['remetente']."</td>
+                    <td>".$this->formataData($message['data_envio'], 'dhm')."</td>
+                    <td>".$this->formataData($message['data_leitura'], 'dhm')."</td>
+                </tr>";
+            }
+            $tabela .= '</tbody>';
+            include_once ROOT."template/dashboard/mensagens.ctp";			
         }
 
 		

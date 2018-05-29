@@ -14,6 +14,8 @@
 		}
 
 		public function index(){
+			session_start();
+			extract($_SESSION);
 			include_once ROOT."template/valida-certificado.ctp";
 		}
 	}

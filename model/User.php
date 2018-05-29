@@ -325,4 +325,69 @@
             $_SESSION = $user_update;
         }
 
+        public function sendMessage(array $dataMessage){
+            session_start();
+
+            if(empty($dataMessage['assunto'])){
+                $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Oops, encontramos um problema!',
+                    'msg'=>'Qual o assunto da mensagem?'
+                );
+                $this->result = false;
+                return;
+            }
+
+            if(empty($dataMessage['mensagem'])){
+                $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Oops, encontramos um problema!',
+                    'msg'=>'Acho que faltou escrever a mensagem!'
+                );
+                $this->result = false;
+                return;
+            }
+
+            try{ 
+                $this->db->insert('mensagens', ['de'=>$_SESSION['idusuario']]+$dataMessage);
+                $this->msg = array(
+                    'type'=>'success',
+                    'title'=>'Mensagem enviada.',
+                    'msg'=>'Sua mensagem foi enviada com sucesso.'
+                );
+                $this->result = true;
+            }catch(Exception $e){ 
+                $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Oops, encontramos um problema!',
+                    'msg'=>$e->getMessage()
+                );
+                $this->result = false;
+            }
+        }
+
+        public function readerMessages($idmensagem=null, $all=false){
+            @session_start();
+            $data =  array($_SESSION['idusuario']);
+            $sql = 'SELECT * FROM view_message WHERE para = ?';
+            if(isset($idmensagem)){
+                $data = array_merge($data, $idmensagem);
+                $sql .= ' AND idmensagem = ?';
+                try{
+                    /* a data deve ser atualizada uma unica vez */
+                    $data_leitura = array('data_leitura'=>date("Y-m-d H:i:s"), 'lida'=>1);
+                    $this->db->update('mensagens', 'idmensagem', $idmensagem[0], $data_leitura);
+                }catch(Exception $e){
+
+                }
+            }
+            if($all){
+                $sql .= ' AND lida = 0';
+            }
+        
+            $stmt   = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+
     }

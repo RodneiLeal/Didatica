@@ -10,7 +10,8 @@
         }
 
         public function getTitle(){
-			return $this->title;
+            return $this->title;
+            
         }
         
         public function solicitacao($data){
@@ -43,6 +44,8 @@
                 switch($mode){
                     case 'dh':
                         return $data->format('d/m/Y H:i:s');
+                    case 'dhm':
+                        return $data->format('d/m/Y H:i');
                     case 'd':
                         return $data->format('d/m/Y');
                     default:
@@ -138,5 +141,10 @@
                 implode($headers, '\r\n')
             );
         }
+
+        public function nMensagens(){
+            $user = new User;
+			return count($user->readerMessages(null, true));
+		}
     }
     

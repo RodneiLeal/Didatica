@@ -23,6 +23,37 @@ jQuery(function ($){
     location.reload();
   });
 
+
+  // ENVIAR MENSAGEM
+    $('.send-message').on('click', function(event){
+      event.preventDefault();
+      this.$form  = $(document).find('#form-message');
+      this.$url   = this.$form.attr('action');
+      this.$formdata = new FormData($('#form-message')[0]);
+
+      function sendMessageAulaCallback(response){
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+
+        if (this.$result) {
+          $("#send-message").modal("toggle");
+        }
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false,
+      }).done(sendMessageAulaCallback);
+
+
+    });
+  // FIM
+
   // GERENCIADOR DE CURSO
 
     $('button[name="salvarcurso"]').on('click', function(event) {
@@ -391,14 +422,12 @@ jQuery(function ($){
     // FIM
 
   // FIM
-
-  //**************************** REFATORAR **************************************
  
     $('.remove-ask').on('click', function(){
       $(this).parents('.panel').remove();
     });
 
-    // ADICIONA UM NOVO FORMULARIO DE QUESTÃO
+  // ADICIONA UM NOVO FORMULARIO DE QUESTÃO
     i = 1;
     $('.add-ask').on('click', function(event){
       event.preventDefault();
@@ -488,7 +517,7 @@ jQuery(function ($){
   // FIM
 
   // ENVIAR CURSO PARA ANALISE
-  $('.publish').on('click', function(event){
+    $('.publish').on('click', function(event){
       event.preventDefault();
       this.$form = $(document).find('#analisar_curso');
       this.$url = this.$form.attr('action');

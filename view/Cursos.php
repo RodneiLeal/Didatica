@@ -1,33 +1,33 @@
 <?php
 
+	class Cursos extends Main implements interfaceController{
+		
+		private $cursos,
+				$action,
+				$param;
+		
+		
+		
+		function __construct(){
+			parent::__construct();
+			
+			
+			$get 				= func_num_args()>=1? func_get_args():array();
+			$this->action		= $get[0];
+			$this->param		= $get[1];
+			$this->title 		= SYS_NAME." - Cursos";
+			$this->cursos		= new CursoModel;
 
-class Cursos extends Main implements interfaceController{
-	
-	private $cursos,
-			$action,
-			$param;
-	
-	
-	
-	function __construct(){
-		parent::__construct();
-		
-		
-		$get 				= func_num_args()>=1? func_get_args():array();
-		$this->action		= $get[0];
-		$this->param		= $get[1];
-		$this->title 		= SYS_NAME." - Cursos";
-		$this->cursos		= new CursoModel;
-
-		
-		// verificar se metodo get esta programado
-		// verificar se metodo existe
-		// chamar metodo passando o parametro adequado
-		// retornar resultado
+			
+			// verificar se metodo get esta programado
+			// verificar se metodo existe
+			// chamar metodo passando o parametro adequado
+			// retornar resultado
 		}
 
 		public function index(){
-		
+			session_start();
+			extract($_SESSION);
 			
 			if(array_key_exists('search', $_GET)){
 				$cursos = $this->cursos->searchCursos($_GET['search']);
@@ -90,5 +90,5 @@ class Cursos extends Main implements interfaceController{
 			include_once ROOT."template/footer.ctp";
 
 		}
-		
+			
 	}
