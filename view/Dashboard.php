@@ -160,9 +160,10 @@
             $style          = empty($curso['imagem'])?NULL:"style=\"background:url('{$curso['imagem']}')\"";
             $aulas          = $this->cursos->getAulas($curso['idcurso']);
             $media          = number_format($curso['media'],2, '.', ' ');
-			$provas         = $this->cursos->getProvas($inscr['idinscricao']);
+            $provas         = $this->cursos->getProvas($inscr['idinscricao']);
 
             if(empty($provas) || !($provas[count($provas)-1]['nota'] >= NOTACORTE)){
+                $btn_avaliacao = null;
                 $btn = 
                 '
                 <div class="box-body course_box text-center">
@@ -180,6 +181,7 @@
                     // se status do pagamento for igual a 1 ou 2, então exibe mensagem de 'aguardando pagamento'
                     case 1:
                     case 2:
+                        $btn_avaliacao = null;
                         $btn = 
                         '
                         <div class="box-body course_box text-center">
@@ -193,6 +195,14 @@
                     // se status do pagamento for igual a 3 ou 4, então botão 'Download do Certificado' estará disponível
                     case 3:
                     case 4:
+                        $btn_avaliacao = 
+                        '
+                        <div class="box-body course_box text-center">
+                            <button class="btn btn-warning course_get_critical" data-target="#avaliacao" data-toggle="modal">
+                            <i class="fa fa-star"></i>
+                            De sua opinião sobre este curso</button>
+                        </div>
+                        ';
                         $btn = 
                         '
                         <div class="box-body course_box text-center">
@@ -205,10 +215,12 @@
                             </form>
                         </div>
                         ';
+                        
                     break;
                     
                     // em qualquer outro caso o botão 'Solicitar Certificado' estará disponível
                     default:
+                        $btn_avaliacao = null;
                         $btn = 
                         ' 
                         <div class="box-body course_box text-center">
@@ -425,7 +437,7 @@
                                                 <div class=\"row form-row\">
                                                     <div class=\"col-md-12\">
                                                         <div class=\"input-container input-box form-control\">
-                                                            <input class=\"form-control\" name=\"titulo\"  placeholder=\"Titulo da Aula\" maxlength=\"90\" value=\"".$aulas['titulo']."\">
+                                                            <input name=\"titulo\"  placeholder=\"Titulo da Aula\" maxlength=\"90\" value=\"".$aulas['titulo']."\">
                                                             <span class=\"input-counter\"></span>
                                                         </div>
                                                     </div>

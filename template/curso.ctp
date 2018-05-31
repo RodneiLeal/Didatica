@@ -75,7 +75,7 @@
 									<li class="comment clearfix">
 										<article class="comment-wrap clearfix">
 											<div class="comment-avatar pull-left">
-												<img alt="<?=$nome?>" src="<?=$avatar?>">
+												<img class="img-circle" alt="<?=$nome?>" src="<?=$avatar?>">
 												<h6><?=$nome?></h6>
 											</div>
 											<div class="comment-body">

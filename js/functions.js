@@ -23,6 +23,32 @@ jQuery(function ($){
     location.reload();
   });
 
+  $('.submit-review').on('click', function(event){
+    event.preventDefault();
+    this.$form = $(document).find('#form-comment');
+    this.$url = this.$form.attr('action');
+    this.$formdata = new FormData($('#form-comment')[0]);
+
+    function commentCallback(response) {
+      this.$response = JSON.parse(response);
+      this.$message = this.$response.message;
+      this.$result = this.$response.result;
+      Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+
+      if (this.$result) {
+        $("#avaliacao").modal("toggle");
+      }
+    }
+
+    $.ajax({
+      type: 'POST',
+      url: this.$url,
+      data: this.$formdata,
+      processData: false,
+      contentType: false,
+    }).done(commentCallback);
+  });
+
 
   // ENVIAR MENSAGEM
     $('.send-message').on('click', function(event){

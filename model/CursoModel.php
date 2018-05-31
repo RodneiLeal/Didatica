@@ -375,5 +375,60 @@
             }
         }
         
+        public function comentario($comentario){
+
+            if(empty($comentario['comentario'])){
+                 $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Oops!',
+                    'msg'=>'Seu comentario precisa de um titulo!'
+                );
+                return;
+            }
+
+            $data = array($comentario['usuario_idusuario'], $comentario['curso_idcurso']);
+            $sql  = 'SELECT * FROM didatica_db.avaliacao WHERE usuario_idusuario = ? AND curso_idcurso = ?';
+            $stmt =  $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+            if(!isset($comentario['estrelas'])){
+                 $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Oops!',
+                    'msg'=>'É preciso dar uma nota para completar sua avaliação.'
+                );
+                return;
+            }
+
+            if(empty($result)){
+                if($this->db->insert('avaliacao', $comentario)){
+                    $this->msg = array(
+                        'type'=>'success',
+                        'title'=>'Comentario registrado.',
+                        'msg'=>'Agradecemos o seu comentario.'
+                    );
+                    $this->result = $this->db->last_id;
+                    return;
+                }
+                else{
+                    $this->msg = array(
+                        'type'=>'error',
+                        'title'=>'Oops!',
+                        'msg'=>'Algo deu errado ao tentar registrar seu comentario.'
+                    );
+                    $this->result = $this->db->last_id;
+                    return;
+                }
+            }
+            else{
+                $this->msg = array(
+                    'type'=>'error',
+                    'title'=>'Oops!',
+                    'msg'=>'Você já avaliou este curso'
+                );
+                return;
+            }
+        }
+        
     }
     
