@@ -106,69 +106,31 @@
             return $result;
         }
 
-        public function resumoFinanceiro($data){
-            $_30 = $_15 = $_07 = $saldo = $ultimo_pagamento = number_format(0, 2, ',', '.');
-            $data = array($data);
-            $sql  = 'SELECT * FROM view_carteira WHERE instrutor = ?';
+        public function getCreditos($idinstrutor, $interval = 30){
+            $data = array($idinstrutor, $interval);
+            $sql  = 'SELECT SUM(carteira.credito) as creditos FROM carteira WHERE carteira.instrutor_idinstrutor = ? ';
+            $sql .= 'AND carteira.data_registro > (NOW() - INTERVAL ? DAY)';
             $stmt = $this->db->query($sql, $data);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
 
-            if(!empty($result)){
-                extract($result[0]);
-                $_30     = number_format($_30, 2, ',', '.');
-                $_15     = number_format($_15, 2, ',', '.');
-                $_07     = number_format($_07, 2, ',', '.');
-                $saldo   = number_format($saldo, 2, ',', '.');
-                $ultimo_pagamento   = number_format($ultimo_pagamento, 2, ',', '.');
-            }
+        public function getSaldo($idinstrutor){
+            $data = array($idinstrutor);
+            $sql  = 'SELECT (SUM(`carteira`.`credito`) - SUM(`carteira`.`debito`)) as saldo FROM carteira WHERE carteira.instrutor_idinstrutor = ? ';
+            $stmt = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
 
-            $html = "<div class=\"row\"> 
-                        <div class=\"col-md-9\"> 
-                            <div class=\"small-box bg-primary\"> 
-                                <div class=\"inner\"> 
-                                    <h3>Ganhos estimados</h3> 
-                                    <div class=\"row\"> 
-                                        <div class=\"col-md-4\"> 
-                                            <div class=\"inner\"> 
-                                                <h5>Últimos 30 dias</h5> 
-                                                <p class=\"painel-financeiro\">R$ {$_30}</p> 
-                                                <p style=\"font-size: 1px;\"><br></p> 
-                                            </div> 
-                                        </div> 
-                                        <div class=\"col-md-4\"> 
-                                            <div class=\"inner\"> 
-                                                <h5>Últimos 15 dias</h5> 
-                                                <p class=\"painel-financeiro\">R$ {$_15}</p> 
-                                                <p style=\"font-size: 1px;\"><br></p> 
-                                            </div> 
-                                        </div> 
-                                        <div class=\"col-md-4\"> 
-                                            <div class=\"inner\"> 
-                                                <h5>Últimos 7 dias</h5> 
-                                                <p class=\"painel-financeiro\">R$ {$_07}</p> 
-                                                <p style=\"font-size: 1px;\"><br></p> 
-                                            </div> 
-                                        </div> 
-                                    </div> 
-                                </div> 
-                            </div> 
-                        </div> 
- 
-                        <div class=\"col-md-3\"> 
-                            <div class=\"small-box bg-primary\"> 
-                                <div class=\"inner\"> 
-                                    <h3>Saldo atual</h3> 
-                                    <p class=\"painel-financeiro\">R$ {$saldo}</p> 
-                                    <p style=\"font-size: 13px;\">Último pagamento 
-                                        <br> 
-                                    valor: R$ {$ultimo_pagamento} 
-                                    </p> 
-                                </div> 
-                            </div> 
-                        </div> 
-                    </div>";
-
-            return $html;
+        public function getUltimoPagamento($idinstrutor){
+            $data = array($idinstrutor);
+            $sql  = 'SELECT carteira.data_registro, carteira.debito FROM carteira ';
+            $sql .= 'WHERE carteira.data_registro = (SELECT MAX(carteira.data_registro) AS maior_data ';
+            $sql .= 'FROM carteira WHERE carteira.instrutor_idinstrutor = ?) AND carteira.debito <> 0';
+            $stmt = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
         }
     }
     

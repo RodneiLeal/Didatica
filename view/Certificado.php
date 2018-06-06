@@ -26,7 +26,7 @@
 			$this->dompdf->load_html($html);
 			$this->dompdf->set_paper('A4', 'landscape');
 			$this->dompdf->render();
-			$this->dompdf->stream("saida.pdf", array("Attachment" => false));
+			$this->dompdf->stream("certificado.pdf", array("Attachment" => false));
 		}
 
 		public function getDadosCertificado(){

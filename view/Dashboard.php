@@ -716,7 +716,7 @@
 			if($tipo){
                 $publicacoes       = count($this->cursos->getCursosInstrutor($idinstrutor));
                 $inscritos         = count($this->inscricoes->getInscricaoPorinstrutor($idinstrutor));
-                $resumoFinanceiro  = $this->instrutor->resumoFinanceiro($idinstrutor);
+                $resumoFinanceiro  = self::resumoFinanceiro($idinstrutor);
             }
             include_once ROOT."template/dashboard/perfil.ctp";
 		}
@@ -767,7 +767,7 @@
         }
 
         private function getMensages(){
-            $messages   = $this->instrutor->readerMessages(null, true);
+            $messages   = $this->instrutor->readerMessages(NULL, TRUE);
             $nMessages  = count($messages);
 
             $message_list =  "<li class=\"dropdown messages-menu\">
@@ -815,7 +815,7 @@
         }
 
         public function nMensagens(){
-			return count($this->instrutor->readerMessages(null, true));
+			return count($this->instrutor->readerMessages(NULL, TRUE));
 		}
 
         private function mensagens(){
@@ -833,6 +833,71 @@
             }
             $tabela .= '</tbody>';
             include_once ROOT."template/dashboard/mensagens.ctp";			
+        }
+
+        public function resumoFinanceiro($idinstrutor){
+            $_30 = $_15 = $_07 = $saldo = $ultimo_pagamento_valor = number_format(0, 2, ',', '.');
+            $ultimo_pagamento_data = '--/--/---- --:--';
+            
+            $_30     = number_format($this->instrutor->getCreditos($idinstrutor, 30)[0]['creditos'], 2, ',', '.');
+            $_15     = number_format($this->instrutor->getCreditos($idinstrutor, 15)[0]['creditos'], 2, ',', '.');
+            $_07     = number_format($this->instrutor->getCreditos($idinstrutor, 07)[0]['creditos'], 2, ',', '.');
+            $_saldo  = number_format($this->instrutor->getSaldo($idinstrutor)[0]['saldo'], 2, ',', '.');
+
+            $ultimo_pagamento = @$this->instrutor->getUltimoPagamento($idinstrutor)[0];
+            
+            if(!empty($ultimo_pagamento)){
+                $ultimo_pagamento_valor = number_format($ultimo_pagamento['debito'], 2, ',', '.');
+                $ultimo_pagamento_data  = $this->formataData($ultimo_pagamento['data_registro'], 'dhm');
+            }
+
+            $html = "<div class=\"row\"> 
+                        <div class=\"col-md-9\"> 
+                            <div class=\"small-box bg-primary\"> 
+                                <div class=\"inner\"> 
+                                    <h3>Ganhos estimados</h3> 
+                                    <div class=\"row\"> 
+                                        <div class=\"col-md-4\"> 
+                                            <div class=\"inner\"> 
+                                                <h5>Últimos 30 dias</h5> 
+                                                <p class=\"painel-financeiro\">R$ {$_30}</p> 
+                                                <p style=\"font-size: 1px;\"><br></p> 
+                                            </div> 
+                                        </div> 
+                                        <div class=\"col-md-4\"> 
+                                            <div class=\"inner\"> 
+                                                <h5>Últimos 15 dias</h5> 
+                                                <p class=\"painel-financeiro\">R$ {$_15}</p> 
+                                                <p style=\"font-size: 1px;\"><br></p> 
+                                            </div> 
+                                        </div> 
+                                        <div class=\"col-md-4\"> 
+                                            <div class=\"inner\"> 
+                                                <h5>Últimos 7 dias</h5> 
+                                                <p class=\"painel-financeiro\">R$ {$_07}</p> 
+                                                <p style=\"font-size: 1px;\"><br></p> 
+                                            </div> 
+                                        </div> 
+                                    </div> 
+                                </div> 
+                            </div> 
+                        </div> 
+ 
+                        <div class=\"col-md-3\"> 
+                            <div class=\"small-box bg-primary\"> 
+                                <div class=\"inner\"> 
+                                    <h3>Saldo atual</h3> 
+                                    <p class=\"painel-financeiro\">R$ {$_saldo}</p> 
+                                    <p style=\"font-size: 13px;\">Último pagamento 
+                                    <br>
+                                    <strong>data: </strong>{$ultimo_pagamento_data} &nbsp;&nbsp;&nbsp; <strong>valor: </strong>R$ {$ultimo_pagamento_valor} 
+                                    </p> 
+                                </div> 
+                            </div> 
+                        </div> 
+                    </div>";
+
+            return $html;
         }
 
 		

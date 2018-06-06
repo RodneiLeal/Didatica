@@ -4,14 +4,7 @@ jQuery(function ($){
   var jElement = $('.kopa-course-search-2-widget');
   var acertos = 0;
 
-  $('#example2').DataTable({
-    "paging": true,
-    "lengthChange": true,
-    "searching": true,
-    "ordering": true,
-    "info": true,
-    "autoWidth": true
-  });
+
   
   $('#congratulations').modal('show');
   
@@ -23,32 +16,46 @@ jQuery(function ($){
     location.reload();
   });
 
-  $('.submit-review').on('click', function(event){
-    event.preventDefault();
-    this.$form = $(document).find('#form-comment');
-    this.$url = this.$form.attr('action');
-    this.$formdata = new FormData($('#form-comment')[0]);
 
-    function commentCallback(response) {
-      this.$response = JSON.parse(response);
-      this.$message = this.$response.message;
-      this.$result = this.$response.result;
-      Notificacao(this.$message.type, this.$message.title, this.$message.msg);
-
-      if (this.$result) {
-        $("#avaliacao").modal("toggle");
-      }
+  // SE EXISTIR O ELEMENTO DE TABELA ENTÃO APLICAR O DATATABLE
+    if ($(document).find('#example2').length) {
+      $('#example2').DataTable({
+        "paging": true,
+        "lengthChange": true,
+        "searching": true,
+        "ordering": true,
+        "info": true,
+        "autoWidth": true
+      });
     }
 
-    $.ajax({
-      type: 'POST',
-      url: this.$url,
-      data: this.$formdata,
-      processData: false,
-      contentType: false,
-    }).done(commentCallback);
-  });
+  // AVALIAR CURSO
+    $('.submit-review').on('click', function(event){
+      event.preventDefault();
+      this.$form = $(document).find('#form-comment');
+      this.$url = this.$form.attr('action');
+      this.$formdata = new FormData($('#form-comment')[0]);
 
+      function commentCallback(response) {
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+
+        if (this.$result) {
+          $("#avaliacao").modal("toggle");
+        }
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false,
+      }).done(commentCallback);
+    });
+  // FIM
 
   // ENVIAR MENSAGEM
     $('.send-message').on('click', function(event){
@@ -266,17 +273,17 @@ jQuery(function ($){
       event.preventDefault();
       this.$form = $(document).find('#pass-recovery');
       this.$url  = this.$form.attr('action');
-      this.$email =  this.$form.find('[name="email"]');
+      var $email =  this.$form.find('[name="email"]');
 
       this.$data = {
-        email: this.$email.val()
+        email: $email.val()
       }
 
       function resetPasswdCallback(response){
         this.$response = JSON.parse(response);
         this.$message = this.$response.message;
         this.$result = this.$response.result;
-        this.$email.focus();
+        $email.focus();
         Notificacao(this.$message.type, this.$message.title, this.$message.msg);
         if (this.$result) {
           setTimeout(function(){location.reload()}, 4000);
@@ -884,6 +891,7 @@ jQuery(function ($){
       $.post('controllers/logout.php', data, logoffCallback);
     });
   // FIM
+
 
 /*******************************  FUNÇÕES PUBLICAS  *************************************/
   

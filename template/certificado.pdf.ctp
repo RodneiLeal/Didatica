@@ -65,7 +65,7 @@
 
                     <div class=\"certificado-footer\">
                         <div class=\"row\">
-                            <p class=\"validacao\">Este cerfificado pode ser verificado em: https://<span>didatica.online/valida_certificado</span></p>
+                            <p class=\"validacao\">Este cerfificado pode ser verificado em: https://<span>didatica.online/validar certificado</span></p>
                         </div>
                     </div>
                 </section>

@@ -366,7 +366,7 @@
             }
         }
 
-        public function readerMessages($idmensagem=null, $all=false){
+        public function readerMessages($idmensagem=NULL, $all=FALSE){
             @session_start();
             $data =  array($_SESSION['idusuario']);
             $sql = 'SELECT * FROM view_message WHERE para = ?';

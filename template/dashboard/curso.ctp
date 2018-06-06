@@ -100,7 +100,7 @@
 
       <form  id="form-message" action="controllers/mensagem.php" method="POST">
 
-        <input type="hidden" name="para" value="<?=$curso['instrutor_idinstrutor']?>">
+        <input type="hidden" name="para" value="<?=$curso['idusuario']?>">
 
         <div class="box box-widget widget-user">
           <div class="widget-user-header bg-yellow">

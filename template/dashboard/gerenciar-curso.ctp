@@ -11,8 +11,6 @@
                   <li><a href="Dashboard/curso/<?=$param[0]?>/capa">Capa</a></li>
                   <li><a href="Dashboard/curso/<?=$param[0]?>/Grade do curso">Grade do curso</a></li>
                   <li><a href="Dashboard/curso/<?=$param[0]?>/Banco de questões">Banco de questões</a></li>
-                  <li><a href="Dashboard/curso/<?=$param[0]?>/Configurações">Configurações</a></li>
-                  
                 </ul>
               </div>
             </div>
