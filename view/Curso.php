@@ -18,6 +18,7 @@
 		}
 
 		public function index(){
+			session_name('store');
 			session_start();
 			extract($_SESSION);
 			include_once ROOT."template/header.ctp";

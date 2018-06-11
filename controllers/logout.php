@@ -1,9 +1,10 @@
 <?php
-    session_start();
-    extract($_REQUEST);
-    if($logoff == true){
-      unset($_SESSION);
-      session_destroy();
-      exit;
-    }
+  extract($_REQUEST);
+  session_name($name);
+  session_start();
+  if($logoff == true){
+    unset($_SESSION);
+    session_destroy();
+    exit;
+  }
     

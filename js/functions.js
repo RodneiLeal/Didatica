@@ -16,7 +16,6 @@ jQuery(function ($){
     location.reload();
   });
 
-
   // SE EXISTIR O ELEMENTO DE TABELA ENTÃO APLICAR O DATATABLE
     if ($(document).find('#example2').length) {
       $('#example2').DataTable({
@@ -688,9 +687,11 @@ jQuery(function ($){
   // FIM
 
   // MENU MOBILE DA PAGINA INICIAL
-    $( '#dl-menu' ).dlmenu({
-      animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
-    });
+    if ($(document).find('#dl-menu').length){
+      $( '#dl-menu' ).dlmenu({
+        animationClasses : { classin : 'dl-animate-in-5', classout : 'dl-animate-out-5' }
+      });
+    }
   // FIM
 
   // ATUALIZAR INFORMAÇÕES DE PERFIL DO USUARIO
@@ -809,7 +810,9 @@ jQuery(function ($){
   // FIM
   
   // ESTRELAS DE OPINIÕES
-    $(".starrr").starrr();
+    if ($(document).find('.starrr').length) {
+      $(".starrr").starrr();
+    }
   // FIM
 
   // EDITOR DE TEXTO
@@ -851,40 +854,42 @@ jQuery(function ($){
     });
   // FIM
 
-  // LOGIN USUÁRIO
-    $('button#login').on('click', function(event){
-      event.preventDefault();
+  // LOGIN
+    $('#login').on('submit', function(event){
+        event.preventDefault();
 
-      this.$form  = $(document).find('#form-login');
-      this.$email = this.$form.find("#user_email")
-      this.$pswd  = this.$form.find("#user_pass")
-      this.$url   = this.$form.attr('action');
+        this.$form  = $(this);
+        this.$email = this.$form.find('[name="user"]')
+        this.$pswd  = this.$form.find('[name="pswd"]')
+        this.$url   = this.$form.attr('action');
 
-      this.$data = {
-        pid: this.$email.val(),
-        passwd: this.$pswd.val()
-      }
-
-      function loginCallback(response) {
-        this.$response = JSON.parse(response);
-        this.$message  = this.$response.message;
-        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
-        if(this.$response.result){
-            location.reload();
+        this.$data = {
+          user: this.$email.val(),
+          pswd: this.$pswd.val()
         }
-      }
-      
-      $.post(this.$url, this.$data, loginCallback);
-    });
+
+        function loginCallback(response) {
+          this.$response = JSON.parse(response);
+          this.$message  = this.$response.message;
+          Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+          if(this.$response.result){
+            location.reload();
+          }
+        }
+        
+        $.post(this.$url, this.$data, loginCallback);
+      });
   // FIM
 
   // LOGOUT USUÁRIO
     $(".logoff").on('click', function(){
       data = {
+        name: $(this).attr('name'),
         logoff: true
       }
 
       function logoffCallback(response){
+      //  console.log(response);
         location.reload();
       }
 

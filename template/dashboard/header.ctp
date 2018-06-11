@@ -91,7 +91,7 @@
                             <a href="Dashboard/editar perfil" class="btn btn-default btn-flat">Editar</a>
                         </div>
                         <div class="pull-right">
-                            <a class="logoff btn btn-default btn-flat">Sair</a>
+                            <a class="logoff btn btn-default btn-flat" name="<?=session_name()?>">Sair</a>
                         </div>
                     </li>
                 </ul>

@@ -121,6 +121,7 @@
 
         // SALVA UM CURSO NO BANCO DE DADOS
         public function salvar_curso($data){
+            session_name('store');
             session_start();
             $instrutor = new Instructor;
             $path   = 'uploads/users/'.$_SESSION['username'].'/cursos/'.$data['titulo'].'/';
@@ -176,6 +177,7 @@
 
         // SALVA TODAS AS AULAS DE UM CURSO 
         public function salvar_aulas($data){
+            session_name('store');
             session_start();
 
             $curso = self::getCursoId($data['curso_idcurso'])[0];
@@ -361,6 +363,7 @@
         }
 
         public function analisar_curso($data){
+            session_name('store');
             session_start();
             // var_dump(['usuario_idusuario'=>$_SESSION['idusuario'], 'tipo'=>2]+$data);
 

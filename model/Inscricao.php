@@ -75,6 +75,7 @@
         }
 
         public function inscreverUsuario($data){
+            session_name('store');
             session_start();
             $curso = new CursoModel;
             $curso = $curso->getCursoId($data['curso_idcurso'])[0];

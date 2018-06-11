@@ -84,10 +84,10 @@
         }
 
         public function login($login){
-            $pid = trim($login['pid']);
-            $passwd = trim($login['passwd']);
+            $user = trim($login['user']);
+            $passwd = trim($login['pswd']);
             
-            if(!isset($pid) xor empty($pid)){
+            if(!isset($user) xor empty($user)){
                 $this->msg = array(
                     'type'=>'error',
                     'title'=>'E-mail/Nome de usuário vazio',
@@ -108,7 +108,9 @@
             }
 
             try{
-                $sql    = "SELECT * FROM usuario WHERE (usuario.email = '{$pid}' OR usuario.username = '{$pid}') LIMIT 1";
+                $sql    = "SELECT * FROM usuario "; 
+                $sql   .= "WHERE (usuario.email = '{$user}' OR usuario.username = '{$user}') ";
+                $sql   .= "LIMIT 1";
                 $stmt   = $this->db->query($sql);
                 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -122,6 +124,7 @@
                 }
 
                 if(password_verify($passwd, $result[0]['pswd'])){
+                    session_name('store');
                     session_start();
                     $_SESSION = $result[0];
                     $this->msg = array(
@@ -270,6 +273,7 @@
         }
 
         public function updateUser(array $dataUser){
+            session_name('store');            
             session_start();
             extract($dataUser);
             
@@ -326,6 +330,7 @@
         }
 
         public function sendMessage(array $dataMessage){
+			session_name('store');
             session_start();
 
             if(empty($dataMessage['assunto'])){
@@ -367,6 +372,7 @@
         }
 
         public function readerMessages($idmensagem=NULL, $all=FALSE){
+            session_name('store');
             @session_start();
             $data =  array($_SESSION['idusuario']);
             $sql = 'SELECT * FROM view_message WHERE para = ?';

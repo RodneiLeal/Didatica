@@ -7,7 +7,7 @@
 				$instrutor,
 				$cursos,
 				$inscricoes,
-				$admin;
+				$financ;
 
 		function __construct(){
 			parent::__construct();
@@ -19,8 +19,8 @@
 			$this->instrutor  	= new Instructor;
 			$this->cursos     	= new CursoModel;
 			$this->inscricoes 	= new Inscricao;
-			$this->admin 	  	= new Admin;
-
+			$this->financ 	  	= new Financeiro;
+            session_name('store');
 			session_start();
 			if(empty($_SESSION)){
 				header('location: '.HOME_URI);
@@ -174,7 +174,7 @@
                 ';
 
             }else{
-                $status = $this->admin->buscaTransacaoInscr($inscr['idinscricao'])[0];
+                $status = $this->financ->buscaTransacaoInscr($inscr['idinscricao'])[0];
                 
                 switch($status['status']){// STATUS_PGTO
                     

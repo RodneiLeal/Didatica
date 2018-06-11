@@ -1,5 +1,5 @@
 <?php
-    class Admin extends Main{
+    class Financeiro extends Main{
 
         private $msg,
                 $result;

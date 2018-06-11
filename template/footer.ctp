@@ -743,16 +743,16 @@
 
 			<div id="cd-login">
 
-				<form class="cd-form login_box" action="controllers/login.php" method="POST" id="form-login"> 
+				<form class="cd-form login_box" action="controllers/login.php" method="POST" id="login"> 
 					<p class="fieldset">
 						<label class="image-replace cd-email" for="signin-email">E-mail ou usuário</label>
-						<input class="full-width has-padding has-border" id="user_email" type="email" placeholder="Nome de usuário ou e-mail">
+						<input class="full-width has-padding has-border" name="user" type="text" placeholder="Nome de usuário ou e-mail">
 						<span class="cd-error-message">Informe seu e-mail!</span>
 					</p>
 
 					<p class="fieldset">
 						<label class="image-replace cd-password" for="signin-password">Senha</label>
-						<input class="full-width has-padding has-border" id="user_pass" type="password"  placeholder="Senha">
+						<input class="full-width has-padding has-border" name="pswd" type="password"  placeholder="Senha">
 						<a class="hide-password">Mostrar</a>
 						<span class="cd-error-message">Informe sua senha!</span>
 					</p>

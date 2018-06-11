@@ -88,7 +88,7 @@
 										<li><a href="Dashboard/inscricoes">Minhas Inscrições</a></li>
 										<li><a href="Dashboard/mensagens">Mensagens<span class="label label-success label-home-menu"><?=Main::nMensagens()?></span></a></li>
 										<li role="separator" class="divider"></li>
-										<li><a class="logoff">Sair</a></li>
+										<li><a name="<?=session_name()?>" class="logoff">Sair</a></li>
 									</ul>
 								</div>
 
@@ -114,7 +114,7 @@
 												<li><a href="Dashboard?p=minhas-inscricoes">Meus cursos</a></li>
 												<li><a href="Dashboard?p=minhas-mensagens">Mensagens</a></li>
 												<li role="separator" class="divider"></li>
-												<li><a class="logoff">Sair</a></li>
+												<li><a name="<?=session_name()?>" class="logoff">Sair</a></li>
 											</ul>
 										</li>
 										<?php else :?>

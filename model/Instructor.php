@@ -54,6 +54,7 @@
         }
 
         private function novo_instrutor($param){
+            session_name('store');
             session_start();
             $perfil    = ['idusuario'=>$_SESSION['idusuario']]+$param['perfil'];
             $conta     = ['usuario_idusuario'=>$_SESSION['idusuario']]+$param['conta'];

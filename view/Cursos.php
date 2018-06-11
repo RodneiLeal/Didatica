@@ -26,6 +26,7 @@
 		}
 
 		public function index(){
+			session_name('store');
 			session_start();
 			extract($_SESSION);
 			
