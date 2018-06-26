@@ -52,16 +52,21 @@
 		return true;
 	}
 
+	
+	$adm = new Adm;
+	
+	$sobre = $adm->getSobre();
+	define('SOBRE', $sobre['nos']);
+	define('PP', $sobre['pPrivacidade']);
+	define('TU', $sobre['tUsuario']);
+	define('TI', $sobre['tInstrutores']);
 
-	/**
-	 * apartir deste ponto tem que recuperar configurações fornecidas pelos administradores
-	 * 
-	 */
-
-	define('CEO', 'Felipe Rodrigo');
-	define('CET', 'Leonardo Oliveira');
-	define('N_QUESTOES', 10);
-	define('NOTACORTE', 60);
-	define('CERTIFICADO_VALOR', '39.99');
-	define('UNIDADE_MONETARIA', 'BRL');
-	define('COMISSAO', 20);
+	$cfg = $adm->getConfig();
+	define('CEO', $cfg['ceo']);
+	define('CET', $cfg['cet']);
+	define('N_QUESTOES', $cfg['n_questoes']);
+	define('NOTA_CORTE', $cfg['nota_corte']);
+	define('CERTIFICADO_VALOR', $cfg['certificado_valor']);
+	define('UNIDADE_MONETARIA', $cfg['unid_monet']);
+	define('COMISSAO', $cfg['comissao']);
+	define('MIN_SAQUE', $cfg['min_saque']);

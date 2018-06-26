@@ -1,6 +1,7 @@
 <?php
-    
+
     class Adm extends Main{
+
 
         protected $get;
         private $msg,
@@ -151,5 +152,38 @@
             }
         }
 
+        public function getSobre(){
+            $sql = "SELECT * FROM didatica_db.sobre";
+            $stmt   = $this->db->query($sql);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result[0];
+        }
 
+        public function getConfig(){
+            $sql = "SELECT * FROM didatica_db.config";
+            $stmt   = $this->db->query($sql);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result[0];
+        }
+
+        public function setConfig($data){
+            if($this->db->update('config',  @array_shift(array_keys($data)),  @array_shift($data), $data)){
+                $this->msg = array(
+                    'type'  =>'success',
+                    'title' =>'Ok!.',
+                    'msg'   =>'Informações atualizadas"'
+                );
+                return;
+            }
+        }
+
+        public function getSolicitacoes($idsolicitacao = NULL){
+            $sql = "SELECT * FROM didatica_db.view_solicitacao ";
+            if(!empty($idsolicitacao)){
+                $sql .= "WHERE idsolicitacao = {$idsolicitacao}";
+            }
+            $stmt = $this->db->query($sql);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
     }

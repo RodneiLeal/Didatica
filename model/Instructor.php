@@ -128,9 +128,40 @@
             $data = array($idinstrutor);
             $sql  = 'SELECT carteira.data_registro, carteira.debito FROM carteira ';
             $sql .= 'WHERE carteira.data_registro = (SELECT MAX(carteira.data_registro) AS maior_data ';
-            $sql .= 'FROM carteira WHERE carteira.instrutor_idinstrutor = ?) AND carteira.debito <> 0';
+            $sql .= 'FROM carteira WHERE carteira.instrutor_idinstrutor = ? AND carteira.debito <> 0)';
             $stmt = $this->db->query($sql, $data);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
+
+        public function resgatarCreditos($idusuario){
+            if($this->db->insert('solicitacao', $idusuario+['tipo'=>3])){
+                $this->msg = array(
+                    'type'=>'success',
+                    'title'=>'Sua solicitação foi encaminhada!',
+                    'msg'=>'Fique atento, enviaremos uma notificação assim que concluirmos o processo de transferência.'
+                );
+                $this->result = true;
+                return;
+            }
+             
+            $this->msg = array(
+                'type'=>'error',
+                'title'=>'Oops!',
+                'msg'=>'Aconteceu algo errado!'
+            );
+            $this->result = false;
+            return;
+        }
+
+        public function getConsultaResgateCredito($idusuario = NULL){
+            $data = array($idusuario);
+            $sql = "SELECT * FROM didatica_db.view_solicitacao WHERE usuario_idusuario = ? and tipo = 3";
+            $stmt = $this->db->query($sql, $data);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if(empty($result)){
+                return false;
+            }
             return $result;
         }
     }

@@ -1,6 +1,6 @@
 <?php
     include_once "../../../../loader.php";
-    $admin = new Admin;
+    $admin = new Financeiro;
 
     extract($_POST);
 

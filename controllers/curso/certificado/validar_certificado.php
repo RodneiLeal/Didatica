@@ -1,7 +1,7 @@
 <?php
     include_once "../../../loader.php";
     extract($_POST);
-    $admin = new Admin;
+    $admin = new Financeiro;
     $admin->validarCertificado($code);
     $response =  array(
         'status'=>200,

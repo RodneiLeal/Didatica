@@ -427,6 +427,7 @@ left: 5px;
 }
 
 .form-btn{
+    display: block;
     padding: 15px;
     background: #0171a5;
     color: white;

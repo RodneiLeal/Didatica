@@ -16,7 +16,7 @@ jQuery(function ($){
     location.reload();
   });
 
-  // SE EXISTIR O ELEMENTO DE TABELA ENTÃO APLICAR O DATATABLE
+  // SE EXISTIR TABELA ENTÃO APLICAR O DATATABLE
     if ($(document).find('#example2').length) {
       $('#example2').DataTable({
         "paging": true,
@@ -27,6 +27,7 @@ jQuery(function ($){
         "autoWidth": true
       });
     }
+  // FIM
 
   // AVALIAR CURSO
     $('.submit-review').on('click', function(event){
@@ -818,7 +819,7 @@ jQuery(function ($){
   // EDITOR DE TEXTO
     $('.editor').each(function(){
       CKEDITOR.replace($(this).attr('id'), {
-        height: '165'
+        height: '165',
       })
     });
   // FIM

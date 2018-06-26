@@ -162,7 +162,7 @@
             $media          = number_format($curso['media'],2, '.', ' ');
             $provas         = $this->cursos->getProvas($inscr['idinscricao']);
 
-            if(empty($provas) || !($provas[count($provas)-1]['nota'] >= NOTACORTE)){
+            if(empty($provas) || !($provas[count($provas)-1]['nota'] >= NOTA_CORTE)){
                 $btn_avaliacao = null;
                 $btn = 
                 '
@@ -728,7 +728,7 @@
 
             $btn = '';
             
-            if(!empty($provas) && ($provas[count($provas)-1]['nota'] >= NOTACORTE)){
+            if(!empty($provas) && ($provas[count($provas)-1]['nota'] >= NOTA_CORTE)){
                 $btn = 
                 '
                     <button type="button" class="btn btn-default bg-orange btn-promotion pull-right solicitar-certificado">
@@ -835,6 +835,24 @@
             include_once ROOT."template/dashboard/mensagens.ctp";			
         }
 
+        private function consultaSolicitacaoDeResgate($saldo, $ultimo_pagamento_data, $ultimo_pagamento_valor){
+            extract($_SESSION);
+            if($saldo >= MIN_SAQUE){
+                if(!$this->instrutor->getConsultaResgateCredito($idusuario)){
+                    return "<form action=\"controllers/instrutor/resgatarCreditos.php\" method=\"POST\">
+                                <input type=\"hidden\" name=\"usuario_idusuario\" value=\"{$idusuario}\">
+                                <button class=\"btn btn-block btn-lg btn-primary \">Resgatar créditos</button>
+                            </form>";
+                }else{
+                    return "<span class=\"form-btn form-btn-review\" style=\"padding:10px\">Solicitação em andamento</span>";
+                }
+            }
+            return "<p style=\"font-size: 13px;\">Último pagamento 
+                        <br>
+                        <strong>data: </strong>{$ultimo_pagamento_data} &nbsp;&nbsp;<strong>valor: </strong>R$ {$ultimo_pagamento_valor} 
+                    </p>";
+        }
+
         public function resumoFinanceiro($idinstrutor){
             $_30 = $_15 = $_07 = $saldo = $ultimo_pagamento_valor = number_format(0, 2, ',', '.');
             $ultimo_pagamento_data = '--/--/---- --:--';
@@ -842,20 +860,22 @@
             $_30     = number_format($this->instrutor->getCreditos($idinstrutor, 30)[0]['creditos'], 2, ',', '.');
             $_15     = number_format($this->instrutor->getCreditos($idinstrutor, 15)[0]['creditos'], 2, ',', '.');
             $_07     = number_format($this->instrutor->getCreditos($idinstrutor, 07)[0]['creditos'], 2, ',', '.');
-            $_saldo  = number_format($this->instrutor->getSaldo($idinstrutor)[0]['saldo'], 2, ',', '.');
+            $_saldo  = number_format($ns=$this->instrutor->getSaldo($idinstrutor)[0]['saldo'], 2, ',', '.');
 
             $ultimo_pagamento = @$this->instrutor->getUltimoPagamento($idinstrutor)[0];
             
             if(!empty($ultimo_pagamento)){
                 $ultimo_pagamento_valor = number_format($ultimo_pagamento['debito'], 2, ',', '.');
-                $ultimo_pagamento_data  = $this->formataData($ultimo_pagamento['data_registro'], 'dhm');
+                $ultimo_pagamento_data  = $this->formataData($ultimo_pagamento['data_registro'], 'd');
             }
 
             $html = "<div class=\"row\"> 
                         <div class=\"col-md-9\"> 
                             <div class=\"small-box bg-primary\"> 
                                 <div class=\"inner\"> 
-                                    <h3>Ganhos estimados</h3> 
+                                    <div class=\"painel-financeiro-title\">
+                                        <h3 class=\"title\">Ganhos estimados</h3>
+                                    </div>
                                     <div class=\"row\"> 
                                         <div class=\"col-md-4\"> 
                                             <div class=\"inner\"> 
@@ -887,12 +907,11 @@
                             <div class=\"small-box bg-primary\"> 
                                 <div class=\"inner\"> 
                                     <h3>Saldo atual</h3> 
-                                    <p class=\"painel-financeiro\">R$ {$_saldo}</p> 
-                                    <p style=\"font-size: 13px;\">Último pagamento 
-                                    <br>
-                                    <strong>data: </strong>{$ultimo_pagamento_data} &nbsp;&nbsp;&nbsp; <strong>valor: </strong>R$ {$ultimo_pagamento_valor} 
-                                    </p> 
-                                </div> 
+                                    <p class=\"painel-financeiro\">R$ {$_saldo}</p>"
+
+                                    .self::consultaSolicitacaoDeResgate($ns, $ultimo_pagamento_data, $ultimo_pagamento_valor).
+
+                                "</div> 
                             </div> 
                         </div> 
                     </div>";

@@ -6,6 +6,8 @@
 
     <title>Didatica Online | Log in</title>
 
+		<base href="<?=HOME_URI?>" >
+
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">

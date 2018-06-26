@@ -2,15 +2,17 @@
 
     class Admin extends Main implements interfaceController{
 
-		protected $curso,
-				  $user;
+		private $adm,
+				$action,
+				$param;
 
 		function __construct(){
 			parent::__construct();
-            $get	      = func_num_args()>=1?func_get_args():array();
-            $this->action = $get[0];
-			$this->param  = $get[1];
+			$get	      = func_num_args()>=1?func_get_args():array();
+			$this->action = empty($get[0])?'home':$get[0];
+			$this->param  = empty($get[1])?NULL:$get[1];
 			$this->title  = SYS_NAME." - Administração";
+			$this->adm	  = new Adm;
 			session_name('adm');
 			session_start();
 		}
@@ -20,10 +22,95 @@
 				include_once ROOT."template/admin/login.ctp";
 				return;
 			}
-			include_once ROOT."template/admin/index.ctp";
+			$action = $this->action;
+			self::$action($this->param);
+		}
+
+		public function home(){
+			include_once ROOT."template/admin/header.ctp";
+			include_once ROOT."template/admin/home.ctp";
+			include_once ROOT."template/admin/footer.ctp";
 		}
 		
-		public function painel(){
+		public function sobre(){
+			$sobre = $this->adm->getSobre();
+			include_once ROOT."template/admin/header.ctp";
+			include_once ROOT."template/admin/sobre.ctp";
+			include_once ROOT."template/admin/footer.ctp";
+		}
+
+		public function config(){
+			$cfg = $this->adm->getConfig();
+			include_once ROOT."template/admin/header.ctp";
+			include_once ROOT."template/admin/config.ctp";
+			include_once ROOT."template/admin/footer.ctp";
+		}
+
+
+		public function solicitacoes(){
+			$array_solicitacoes = $this->adm->getSolicitacoes();
+
+			$solicitacoes = "
+				<div class=\"form-header with-border-bottom\">
+					<h3 class=\"form-title\">Solicitações</h3>
+				</div>
+				
+				<div class=\"form-container\">
+					<div class=\"box box-primary\">
+						<div class=\"box-body\">
+							<table id=\"example2\" class=\"table table-bordered table-hover \">
+								<thead>
+								<tr>
+									<th>#</th>
+									<th>Solicitação</th>
+									<th>Usuário</th>
+									<th>Data</th>
+								</tr>
+								</thead>
+								<tbody>";
+
+								if(!empty($array_solicitacoes)){
+									foreach ($array_solicitacoes as $index=>$solicitacao) {
+										$data = $this->formataData($solicitacao['data_solicitacao']);
+										
+										$solicitacoes .=  
+										"<tr>
+										<th width=\"30\">".($index+1)."</th>
+										<td><a href=\"admin/solicitacao/".$solicitacao['idsolicitacao']."\">".$solicitacao['mensagem']."</a></td>
+										<td>".$solicitacao['nome']."</td>
+										<td>".$data."</td>
+										</tr>";
+									}
+								}
+									
+								$solicitacoes .=  "
+								</tbody>
+								<tfoot>
+								<tr>
+									<th>#</th>
+									<th>Soicitação</th>
+									<th>Usuário</th>
+									<th>Data</th>
+								</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</div>
+			";
+
+			include_once ROOT."template/admin/header.ctp";
+			include_once ROOT."template/admin/solicitacoes.ctp";
+			include_once ROOT."template/admin/footer.ctp";
+		}
+
+		public function solicitacao($idsolicitacao){
+			$solicitacao = $this->adm->getSolicitacoes($idsolicitacao[0])[0];
+
+
+			include_once ROOT."template/admin/header.ctp";
+			include_once ROOT."template/admin/solicitacao.ctp";
+			include_once ROOT."template/admin/footer.ctp";
 		}
 
 	}
