@@ -3,16 +3,20 @@
     class Admin extends Main implements interfaceController{
 
 		private $adm,
+				$instrutor,
+				$curso,
 				$action,
 				$param;
 
 		function __construct(){
 			parent::__construct();
-			$get	      = func_num_args()>=1?func_get_args():array();
-			$this->action = empty($get[0])?'home':$get[0];
-			$this->param  = empty($get[1])?NULL:$get[1];
-			$this->title  = SYS_NAME." - Administração";
-			$this->adm	  = new Adm;
+			$get	      	 = func_num_args()>=1?func_get_args():array();
+			$this->action 	 = empty($get[0])?'home':$get[0];
+			$this->param  	 = empty($get[1])?NULL:$get[1];
+			$this->title  	 = SYS_NAME." - Administração";
+			$this->adm	  	 = new Adm;
+			$this->instrutor = new Instructor;
+			$this->curso 	 = new CursoModel;
 			session_name('adm');
 			session_start();
 		}
@@ -104,9 +108,41 @@
 			include_once ROOT."template/admin/footer.ctp";
 		}
 
-		public function solicitacao($idsolicitacao){
-			$solicitacao = $this->adm->getSolicitacoes($idsolicitacao[0])[0];
 
+		private function getInfoCandidato($idusuario){
+			$info = $this->instrutor->perfil($idusuario)[0];
+			return $info;
+		}
+		
+		private function getInfoCurso($idcurso){
+
+			$info = $this->curso->getCursoId($idcurso);
+			return $info;
+		}
+		
+		private function getInfoFinanceiras($idusuario){
+
+			$instrutor = self::getInfoCandidato($idusuario);
+			$financeiro = $this->instrutor->getSaldo($instrutor['idinstrutor'])[0];
+			$info = $instrutor+$financeiro;
+			return $info;
+		}
+
+		public function solicitacao($idsolicitacao){
+			$solicitacao_data = $this->adm->getSolicitacoes($idsolicitacao[0])[0];
+
+			switch ($solicitacao_data['tipo']) {
+				case 1:
+					$solicitacao = self::getInfoCandidato($solicitacao_data['usuario_idusuario']);
+				break;
+
+				case 2:
+					$solicitacao = self::getInfoCurso($solicitacao_data['curso_idcurso']);
+				break;
+				case 3:
+					$solicitacao = self::getInfoFinanceiras($solicitacao_data['usuario_idusuario']);
+				break;
+			}
 
 			include_once ROOT."template/admin/header.ctp";
 			include_once ROOT."template/admin/solicitacao.ctp";

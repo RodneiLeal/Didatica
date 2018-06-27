@@ -74,7 +74,7 @@
                               <font color="#fff">
                                   <?php 
                                       if($tipo){
-                                        extract($this->instrutor->getInstrutor($idusuario)[0]);
+                                        extract($this->instrutor->perfil($idusuario)[0]);
                                         echo $username.' - '.substr_replace($formacao, (strlen($formacao) > 10 ? '...' : ''), 10);
                                       }else{
                                         echo $username;

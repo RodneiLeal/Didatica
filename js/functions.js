@@ -819,7 +819,7 @@ jQuery(function ($){
   // EDITOR DE TEXTO
     $('.editor').each(function(){
       CKEDITOR.replace($(this).attr('id'), {
-        height: '165',
+        height: '165'
       })
     });
   // FIM

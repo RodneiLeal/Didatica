@@ -133,7 +133,7 @@
 
 		private function editar_perfil(){
             extract($_SESSION);
-			$instrutor = $this->instrutor->getInstrutor($idusuario)[0];
+			$instrutor = $this->instrutor->perfil($idusuario)[0];
             @extract($instrutor);
             
 			$bancos = Main::getBancos();
@@ -148,7 +148,7 @@
         
 		private function meus_cursos(){
 			extract($_SESSION);
-			$instrutor = $this->instrutor->getInstrutor($idusuario)[0];
+			$instrutor = $this->instrutor->perfil($idusuario)[0];
             $meusCursos = $this->cursos->getCursosInstrutor($instrutor['idinstrutor']);
 			include_once ROOT."template/dashboard/meus-cursos.ctp";
 		}
@@ -708,7 +708,7 @@
 			extract($_SESSION);
 			$foto = empty($foto)?"img/users/sem-foto.png":$foto;
 			
-			$instrutor = $this->instrutor->getInstrutor($idusuario)[0];
+			$instrutor = $this->instrutor->perfil($idusuario)[0];
 			if(!empty($instrutor)){
 				extract($instrutor);
 			}

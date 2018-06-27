@@ -130,7 +130,7 @@
                 @mkdir(ROOT.$path, 0777, true);
             }
 
-            $instrutor = $instrutor->getInstrutor($_SESSION['idusuario'])[0];
+            $instrutor = $instrutor->perfil($_SESSION['idusuario'])[0];
             $src = $data['imagem'];
             $data['imagem'] = str_replace('bucket/', $path, $data['imagem']);
             $data = array_merge($data, ['instrutor_idinstrutor'=>$instrutor['idinstrutor']]);

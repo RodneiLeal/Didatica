@@ -19,17 +19,6 @@
             return $this->result;
         }
         
-        public function getInstrutor($idusuario){
-            $data   = array($idusuario);
-            $sql    = "SELECT * FROM view_instrutor WHERE usuario_idusuario = ?";
-            $stmt   = $this->db->query($sql, $data);
-            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            if(empty($result)){
-                return false;
-            }
-            return $result;
-        }
-
         public function getSolicitacaoInstrutor($idusuario){
             $data   = array($idusuario);
             $sql    = "SELECT * FROM solicitacao WHERE usuario_idusuario = ? ";
@@ -44,7 +33,7 @@
 
         public function perfil($idusuario){
             $data = array($idusuario);
-            $sql = 'SELECT * FROM usuario AS t1 LEFT JOIN instrutor AS t2 ON t1.idusuario = t2.usuario_idusuario WHERE t1.idusuario = ?';
+            $sql = 'SELECT * FROM usuario AS t1 JOIN view_instrutor AS t2 ON t1.idusuario = t2.usuario_idusuario WHERE t1.idusuario = ?';
             $stmt = $this->db->query($sql, $data);
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             if(empty($result)){
