@@ -145,6 +145,10 @@
         public function nMensagens(){
             $user = new User;
 			return count($user->readerMessages(null, true));
-		}
+        }
+        
+        public function crypt_verify($input, $hash){
+            return (crypt($input, $hash)===$hash);
+        }
     }
     

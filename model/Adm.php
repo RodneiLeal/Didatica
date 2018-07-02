@@ -186,4 +186,46 @@
             $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
             return $result;
         }
+        
+        public function autorizarCurso($aut){
+            $this->db->delete('solicitacao', @array_shift(array_keys($aut)), @array_shift($aut));
+            if($aut['locked']){
+                if($this->db->update('curso', @array_shift(array_keys($aut)), @array_shift($aut), $aut)){
+                    $this->msg = array('type'=>'success', 'title'=>'Autorizado', 'msg'=>'Curso Autorizado');
+                    $this->result = true;
+                    return;
+                }
+            }
+            $this->msg = array('type'=>'error', 'title'=>'Autorizacao', 'msg'=>'Curso não foi autorizado');
+            $this->result = false;
+            return;
+        }
+
+        public function autorizarInstrutor($aut){
+            $this->db->delete('solicitacao', @array_shift(array_keys($aut)), @array_shift($aut));
+            if($aut['tipo']){
+                if($this->db->update('usuario', @array_shift(array_keys($aut)), @array_shift($aut), $aut)){
+                    $this->msg = array('type'=>'success', 'title'=>'Autorizado', 'msg'=>'Usuário autorizado a publicar cursos.');
+                    $this->result = true;
+                    return;
+                }
+            }
+            $this->msg = array('type'=>'error', 'title'=>'Autorizacao', 'msg'=>'Usuário não autorizado a publicar cursos.');
+            $this->result = false;
+            return;
+        }
+
+        public function resgatarCreditos($aut){
+            if($this->crypt_verify($aut['debito'], $aut['referencia'])){
+             $this->db->delete('solicitacao', @array_shift(array_keys($aut)), @array_shift($aut));
+                if( $this->db->insert('carteira', $aut)&&($this->db->insert('debitos', ['valor'=>$aut['debito'], 'carteira_idcarteira'=>$this->db->last_id]))){
+                    $this->msg = array('type'=>'success', 'title'=>'Transferência', 'msg'=>'Transferência registrada.');
+                    $this->result = true;
+                    return;
+                }
+            }
+            $this->msg = array('type'=>'error', 'title'=>'Transferência', 'msg'=>'Transferência não registrada.');
+            $this->result = false;
+            return;
+        }
     }

@@ -109,40 +109,149 @@
 		}
 
 
-		private function getInfoCandidato($idusuario){
-			$info = $this->instrutor->perfil($idusuario)[0];
-			return $info;
-		}
-		
-		private function getInfoCurso($idcurso){
+		private function getInfoInstrutor($solicitacao){
+			$instrutor = $this->instrutor->perfil($solicitacao['usuario_idusuario'])[0];
+			$instrutor['foto'] = empty($instrutor['foto'])?'img/users/sem-foto.png':$instrutor['foto'];
 
-			$info = $this->curso->getCursoId($idcurso);
-			return $info;
-		}
-		
-		private function getInfoFinanceiras($idusuario){
+			if($solicitacao['tipo']==1){
+				return "<div>
+							<strong>Nome: </strong>".$instrutor['nome'].' '.$instrutor['sobrenome']."<br>
+							<strong>E-mail: </strong>".$instrutor['email']."<br>
+							<strong>Data de cadastro: </strong>".$instrutor['dataCadastro']."<br>
+							<strong>Telefone: </strong>".$instrutor['telefone']."<br>
+							<strong>Resumo: </strong>".$instrutor['resumo']."<br>
+							<strong>Titulacao: </strong>".$instrutor['titulacao']."<br>
+							<strong>Foto: </strong><img src=\"".$instrutor['foto']."\"><br>
+							
+							<strong>Formacao: </strong>".$instrutor['formacao']."<br>
+							<strong>Instituicao: </strong>".$instrutor['instituicao']."<br>
+							<strong>Lattes: </strong>".$instrutor['lattes']."<br>
 
-			$instrutor = self::getInfoCandidato($idusuario);
-			$financeiro = $this->instrutor->getSaldo($instrutor['idinstrutor'])[0];
-			$info = $instrutor+$financeiro;
-			return $info;
-		}
+							<strong>Banco conveniado: </strong>".$instrutor['banco_idbanco']."<br>
+							
+							<strong>Agencia: </strong>".$instrutor['agencia']."<br>
+							<strong>Conta: </strong>".$instrutor['conta']."<br>
+							<strong>Operacao: </strong>".$instrutor['operacao']."<br>
+							<strong>CPF: </strong>".$instrutor['cpf']."<br>
+						</div>
+						
+						<form action=\"controllers/adm/autorizarInstrutor.php\" method=\"POST\">
+							<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
+							<input type=\"hidden\" name=\"idusuario\" value=\"".$solicitacao['usuario_idusuario']."\">
+							<label> Não, 
+								<input type=\"radio\" name=\"tipo\" checked value=\"0\">
+							</label>
+							<label>Sim, 
+								<input type=\"radio\" name=\"tipo\" value=\"1\">
+							</label>
+							<button class=\"btn btn-success btn-lg\" type=\"submit\">Autorizado</button>
+						</form>
+					   ";
+			}else if($solicitacao['tipo']==3){
+				$financeiro = $this->instrutor->getSaldo($instrutor['idinstrutor'])[0];
+				$instrutor = $instrutor+$financeiro;
 
-		public function solicitacao($idsolicitacao){
-			$solicitacao_data = $this->adm->getSolicitacoes($idsolicitacao[0])[0];
+				$ref_0 = @crypt(0);
+				$ref_1 = @crypt($instrutor['saldo']);
 
-			switch ($solicitacao_data['tipo']) {
-				case 1:
-					$solicitacao = self::getInfoCandidato($solicitacao_data['usuario_idusuario']);
-				break;
+				return "<div>
+							<strong>Nome: </strong>".$instrutor['nome'].' '.$instrutor['sobrenome']."<br>
+							<strong>E-mail: </strong>".$instrutor['email']."<br>
+							<strong>Data de cadastro: </strong>".$instrutor['dataCadastro']."<br>
+							<strong>Telefone: </strong>".$instrutor['telefone']."<br>
+							<strong>Resumo: </strong>".$instrutor['resumo']."<br>
+							<strong>Titulacao: </strong>".$instrutor['titulacao']."<br>
+							<strong>Foto: </strong><img src=\"".$instrutor['foto']."\"><br>
+							
+							<strong>Formacao: </strong>".$instrutor['formacao']."<br>
+							<strong>Instituicao: </strong>".$instrutor['instituicao']."<br>
+							<strong>Lattes: </strong>".$instrutor['lattes']."<br>
 
-				case 2:
-					$solicitacao = self::getInfoCurso($solicitacao_data['curso_idcurso']);
-				break;
-				case 3:
-					$solicitacao = self::getInfoFinanceiras($solicitacao_data['usuario_idusuario']);
-				break;
+							<strong>Banco conveniado: </strong>".$instrutor['banco_idbanco']."<br>
+							
+							<strong>Agencia: </strong>".$instrutor['agencia']."<br>
+							<strong>Conta: </strong>".$instrutor['conta']."<br>
+							<strong>Operacao: </strong>".$instrutor['operacao']."<br>
+							<strong>CPF: </strong>".$instrutor['cpf']."<br><br><br>
+							<strong>Créditos disponíveis: </strong>".$instrutor['saldo']."<br>
+						</div>
+						
+						<form action=\"controllers/adm/resgateDeCreditos.php\" method=\"POST\">
+							<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
+							<input type=\"hidden\" name=\"instrutor_idinstrutor\" value=\"".$instrutor['idinstrutor']."\">
+							<h2>
+								Confirmar transferência de créditos
+							</h2>
+							<label>Saldo
+								<input type=\"text\" name=\"debito\" readonly value=\"".$instrutor['saldo']."\">
+							</label>
+							<label> Não, 
+								<input type=\"radio\" name=\"referencia\" checked value=\"".$ref_0."\">
+							</label>
+							<label>Sim, 
+								<input type=\"radio\" name=\"referencia\" value=\"".$ref_1."\">
+							</label>
+							<button class=\"btn btn-success btn-lg\" type=\"submit\">Autorizado</button>
+						</form>
+					   ";
 			}
+		}
+		
+		private function getInfoCurso($solicitacao){
+			$info = $this->curso->getCursoId($solicitacao['curso_idcurso'])[0];
+			$info += $this->curso->getAulas($solicitacao['curso_idcurso'])[0];
+			return "
+					<div>
+						<strong>Curso: </strong>".$info['titulo']."<br>
+						<strong>Intrutor: </strong>".$info['instrutor']."<br>
+						<strong>Categoria: </strong>".$info['categoria']."<br>
+						<strong>Resumo: </strong>".$info['resumo']."<br>
+						<strong>Tópicos: </strong>".$info['ementa']."<br>
+						<strong>Quetões registradas: </strong>".$info['n_questoes']."<br>
+						<strong>Imagem de capa: </strong><img src=\"".$info['imagem']."\"><br>
+
+						<strong>Resumo da aula: </strong>".$info['objetivos']."<br>
+						<label> Material:</label>
+						<iframe src=\"".$info['arquivo']."\" frameborder=\"0\"></iframe>
+					</div>
+
+					<form action=\"controllers/adm/autorizarCurso.php\" method=\"POST\">
+						<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
+						<input type=\"hidden\" name=\"idcurso\" value=\"".$solicitacao['curso_idcurso']."\">
+						<label> Não, 
+							<input type=\"radio\" name=\"locked\" checked value=\"0\">
+						</label>
+						<label>Sim, 
+							<input type=\"radio\" name=\"locked\" value=\"1\">
+						</label>
+						<button class=\"btn btn-success btn-lg\" type=\"submit\">Liberado</button>
+					</form>
+					";
+		}
+		
+		public function solicitacao($idsolicitacao){
+
+			@$solicitacao_data = $this->adm->getSolicitacoes($idsolicitacao[0])[0];
+
+			if(sizeof($solicitacao_data)){
+				switch ($solicitacao_data['tipo']) {
+					case 1:
+						$solicitacao = self::getInfoInstrutor($solicitacao_data);
+					break;
+	
+					case 2:
+						$solicitacao = self::getInfoCurso($solicitacao_data);
+					break;
+					case 3:
+						$solicitacao = self::getInfoInstrutor($solicitacao_data);
+					break;
+				}
+			}else{
+				$solicitacao = "
+								<h3>Solicitação inexistente</h3>
+							   ";
+			}
+
 
 			include_once ROOT."template/admin/header.ctp";
 			include_once ROOT."template/admin/solicitacao.ctp";
