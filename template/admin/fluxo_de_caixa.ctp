@@ -1,5 +1,5 @@
 <div class="form-header with-border-bottom">
-    <h3 class="form-title">Solicitações</h3>
+    <h3 class="form-title">Fluxo de caixa</h3>
 </div>
 
 <div class="form-container">
@@ -9,25 +9,24 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Solicitação</th>
-                    <th>Usuário</th>
-                    <th>Data</th>
+                    <th>Instrutor</th>
+                    <th>valor R$</th>
                 </tr>
                 </thead>
                 <tbody>
 
-                <?=$solicitacoes?>
+                <?=$table?>
 
                 </tbody>
                 <tfoot>
                 <tr>
                     <th>#</th>
-                    <th>Soicitação</th>
-                    <th>Usuário</th>
-                    <th>Data</th>
+                    <th>Instrutor</th>
+                    <th>valor R$</th>
                 </tr>
                 </tfoot>
             </table>
         </div>
+
     </div>
-</div>
+    <?=$total?>

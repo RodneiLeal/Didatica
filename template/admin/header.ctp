@@ -35,4 +35,96 @@
   </head>
 
 
-  <body class="hold-transition skin-black-light sidebar-mini">  
+  <body class="hold-transition skin-black-light sidebar-mini">
+    <div class="wrapper">
+
+      <header class="main-header">
+        <a href="" class="logo">
+          <span class="logo-mini"><img src="img/logo-mini.png" width="20px"></span>
+          <span class="logo-lg"><img src="img/logo.png" width="100px"></span>
+        </a>
+
+        <input id="idusuario" type="hidden" value="">
+        
+        <nav class="navbar navbar-static-top" role="navigation">
+          <a class="sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <div class="navbar-custom-menu">
+
+            <ul class="nav navbar-nav">
+
+             
+
+              <!-- User Account: style can be found in dropdown.less -->
+              <li class="dropdown user user-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                    <img src="" class="user-image" alt="<?=$username?>">
+                    <span class="hidden-xs"> <?=$username?></span>
+                </a>
+                <ul class="dropdown-menu">
+                    <li class="user-header">
+
+                        <img src="" class="img-circle" alt="<?=$username?>">
+                        <p>
+                            <a href="Dashboard" class="profile">
+                              <font color="#fff">
+                                  <?php 
+                                      // if($tipo){
+                                      //   extract($this->instrutor->perfil($idusuario)[0]);
+                                      //   echo $username.' - '.substr_replace($formacao, (strlen($formacao) > 10 ? '...' : ''), 10);
+                                      // }else{
+                                      //   echo $username;
+                                      // }
+                                  ?>
+                              </font>
+                            </a>
+                            <small>Usuario desde </small>
+                            <!-- <small>Ultimo acesso: <span>31/12/1999 23:59</span></small> -->
+                        </p>
+                    </li>
+                    <li class="user-footer">
+                        <div class="pull-left">
+                            <a href="Dashboard/editar perfil" class="btn btn-default btn-flat">Editar</a>
+                        </div>
+                        <div class="pull-right">
+                            <a class="logoff btn btn-default btn-flat" name="<?=session_name()?>">Sair</a>
+                        </div>
+                    </li>
+                </ul>
+              </li> <!-- User Account -->
+
+            </ul>
+          </div>
+        </nav>
+      </header>
+
+      <aside class="main-sidebar">
+        <section class="sidebar">
+          <ul class="sidebar-menu">
+            <li class="header">MENU</li>
+
+            <?=$menu_navegacao?>
+            
+          </ul>
+        </section>
+      </aside><!-- /.sidebar -->
+      
+
+      <!-- Content Wrapper. Contains page content -->
+      <div class="content-wrapper">
+
+      <!-- este cabeçalho(mapa) é dinamico e representa a página em que o usuario está -->
+      
+        <!-- <section class="content-header">
+          <h1>Configurações do curso</h1>
+          <ol class="breadcrumb">
+            <li><a href="Dashboard"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="Dashboard/meus cursos">Cursos</a></li>
+            <li class="active">Gerenciar Curso</li>
+          </ol>
+        </section> -->
+

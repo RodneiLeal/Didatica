@@ -38,6 +38,24 @@
 			self::$action($this->parameters);
 			include_once ROOT."template/dashboard/footer.ctp";
         }
+
+		private function home(){
+            extract($_SESSION);
+            $resumoFinanceiro = NULL;
+			$foto = empty($foto)?"img/users/sem-foto.png":$foto;
+			
+			$instrutor = $this->instrutor->perfil($idusuario)[0];
+			if(!empty($instrutor)){
+				extract($instrutor);
+			}
+
+			if($tipo){
+                $publicacoes       = count($this->cursos->getCursosInstrutor($idinstrutor));
+                $inscritos         = count($this->inscricoes->getInscricaoPorinstrutor($idinstrutor));
+                $resumoFinanceiro  = self::resumoFinanceiro($idinstrutor);
+            }
+            include_once ROOT."template/dashboard/perfil.ctp";
+		}
         
         private function menu_navegacao($tipo, $idusuario){
             if($tipo){
@@ -704,23 +722,6 @@
             include_once ROOT."template/dashboard/gerenciar-curso.ctp";
         }
 
-		private function home(){
-			extract($_SESSION);
-			$foto = empty($foto)?"img/users/sem-foto.png":$foto;
-			
-			$instrutor = $this->instrutor->perfil($idusuario)[0];
-			if(!empty($instrutor)){
-				extract($instrutor);
-			}
-
-			if($tipo){
-                $publicacoes       = count($this->cursos->getCursosInstrutor($idinstrutor));
-                $inscritos         = count($this->inscricoes->getInscricaoPorinstrutor($idinstrutor));
-                $resumoFinanceiro  = self::resumoFinanceiro($idinstrutor);
-            }
-            include_once ROOT."template/dashboard/perfil.ctp";
-		}
-
 		private function certificado($inscricao){
 			extract($_SESSION);
 			$inscr          = $this->inscricoes->getInscricaoId($inscricao[0])[0];
@@ -839,9 +840,9 @@
             extract($_SESSION);
             if($saldo >= MIN_SAQUE){
                 if(!$this->instrutor->getConsultaResgateCredito($idusuario)){
-                    return "<form action=\"controllers/instrutor/resgatarCreditos.php\" method=\"POST\">
+                    return "<form action=\"controllers/instrutor/resgatarCreditos.php\" method=\"POST\" id=\"resgatarCreditos\">
                                 <input type=\"hidden\" name=\"usuario_idusuario\" value=\"{$idusuario}\">
-                                <button class=\"btn btn-block btn-lg btn-primary \">Resgatar créditos</button>
+                                <button class=\"btn btn-block btn-lg btn-primary resgatarCreditos\">Resgatar créditos</button>
                             </form>";
                 }else{
                     return "<span class=\"form-btn form-btn-review\" style=\"padding:10px\">Solicitação em andamento</span>";

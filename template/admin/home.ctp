@@ -1,26 +1,8 @@
-  
-    
-    <h2>
-        Good job, it's working !!!
-    </h2>
+<div class="form-header with-border-bottom">
+    <h3 class="form-title">Gráficos</h3>
+</div>
 
-    <p>
-        
-        <button type="button" class="logoff btn btn-lg btn-danger" name="<?=session_name()?>">Sair</button>
-        
-    </p>
+<div class="form-container">
 
-    <p>
-        <a class="logoff btn btn-lg btn-primary" href="admin/sobre">Textos</a>
-    </p>
-
-    <p>
-        <a class="logoff btn btn-lg btn-primary" href="admin/config">Configurações</a>
-    </p>
-
-    <p>
-        <a class="logoff btn btn-lg btn-primary" href="admin/solicitacoes">Solicitações</a>
-    </p>
-
-
+</div>
     

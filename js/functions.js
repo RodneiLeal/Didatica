@@ -16,7 +16,37 @@ jQuery(function ($){
     location.reload();
   });
 
-  // SE EXISTIR TABELA ENTÃO APLICAR O DATATABLE
+  // RESGATE DE CREDITOS
+  $('.resgatarCreditos').on('click', function(event){
+      event.preventDefault();
+      this.$form = $(document).find('#resgatarCreditos');
+      this.$url = this.$form.attr('action');
+      this.$formdata = new FormData($('#resgatarCreditos')[0]);
+
+      function redeemCreditsCallback(response) {
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if (this.$result) {
+          setTimeout(function(){
+            location.reload();
+          }, 4000);
+        }
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false,
+      }).done(redeemCreditsCallback);
+    });
+  // FIM
+
+
+  // DATATABLE
     if ($(document).find('#example2').length) {
       $('#example2').DataTable({
         "paging": true,
@@ -82,8 +112,6 @@ jQuery(function ($){
         processData: false,
         contentType: false,
       }).done(sendMessageAulaCallback);
-
-
     });
   // FIM
 
@@ -440,7 +468,7 @@ jQuery(function ($){
           }
           $('.respostas').html('Você acertou <strong>'+acertos+'</strong> questões');
           setInterval(function(){
-            redireciona('Dashboard?p=curso&inscr=' + prova[2].value);
+            redireciona('Dashboard/inscricao/' + prova[2].value);  /***************problema com link******************/
           },600000);
         }
         

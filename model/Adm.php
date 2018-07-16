@@ -228,4 +228,16 @@
             $this->result = false;
             return;
         }
+
+        public function getCreditosApagar(){
+            $sql  = "SELECT nome, ";
+            $sql .= "(SELECT (SUM(credito) - SUM(debito)) ";
+            $sql .= "FROM didatica_db.carteira ";
+            $sql .= "WHERE carteira.instrutor_idinstrutor = view_instrutor.idinstrutor) ";
+            $sql .= "AS saldo FROM view_instrutor";
+            
+            $stmt =  $this->db->query($sql);
+            $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+        }
     }

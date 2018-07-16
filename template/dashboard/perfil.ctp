@@ -1,8 +1,6 @@
 <section class="content">
 
-        <?php if($tipo): /* este trecho de codigo deve ser reduzino para uma função */
-             echo $resumoFinanceiro;
-        endif;?>
+        <?=$resumoFinanceiro?>
 
     <div class="row">
         <div class="col-md-3">
