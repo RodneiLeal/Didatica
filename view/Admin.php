@@ -42,36 +42,38 @@
 
 		private function menu_navegacao(){
             
-			return '
+			return "
 				<li>
-					<a href="Admin">
-						<i class="fa fa-home"></i><span>Home</span>
+					<a href=\"Admin\">
+						<i class=\"fa fa-home\"></i><span>Home</span>
 					</a>
 				</li>
 
-				<li class="treeview">
-					<a><i class="fa fa-gear"></i><span>Configurações</span><i class="fa fa-angle-left pull-right"></i></a>
-					<ul class="treeview-menu">
-						<li><a title="Politica de privacidade" href="Admin/sobre">Sobre Nós</a></li>
-						<li><a title="Politica de privacidade" href="Admin/sobre">Politica de privacidade</a></li>
-						<li><a title="Politica de privacidade" href="Admin/sobre">Termos do uso</a></li>
-						<li><a title="finaceiro" href="Admin/config" title="Editar Perfil">Financeiro</a></li>
+				<li class=\"treeview\">
+					<a><i class=\"fa fa-gear\"></i><span>Configurações</span><i class=\"fa fa-angle-left pull-right\"></i></a>
+					<ul class=\"treeview-menu\">
+						<li><a title=\"Politica de privacidade\" href=\"Admin/sobre\">Sobre Nós</a></li>
+						<li><a title=\"Politica de privacidade\" href=\"Admin/politica de privacidade\">Politica de privacidade</a></li>
+						<li><a title=\"Politica de privacidade\" href=\"Admin/termos de uso\">Termos de uso</a></li>
+						<li><a title=\"Configurações Financeiras\"href=\"Admin/config/financeira\">Finaceira</a></li>
+						<li><a title=\"Configurações Provas\"href=\"Admin/config/provas\">Provas</a></li>
+						<li><a title=\"Configurações Certificado\"href=\"Admin/config/certificado\">Certificado</a></li>
 					</ul>
 				</li>
 				
-				<li class="treeview">
-					<a><i class="fa fa-bell"></i><span>Solicitações</span><i class="fa fa-angle-left pull-right"></i></a>
-					<ul class="treeview-menu">
-						<li><a title="Candidatos a instrutores" href="Admin/solicitacoes" title="Minhas Inscrições">Instrutores</a></li>
-						<li><a title="Solicitações para resgate de créditos" href="Admin/solicitacoes" title="Minhas Inscrições">Resgate de creditos</a></li>
-						<li><a title="Solicitações para apovação de cursos" href="Admin/solicitacoes" title="Minhas Inscrições">Cursos</a></li>
+				<li class=\"treeview\">
+					<a><i class=\"fa fa-bell\"></i><span>Solicitações</span><i class=\"fa fa-angle-left pull-right\"></i></a>
+					<ul class=\"treeview-menu\">
+						<li><a title=\"Candidatos a instrutores\" href=\"Admin/solicitacoes\" title=\"Minhas Inscrições\">Instrutores</a></li>
+						<li><a title=\"Solicitações para resgate de créditos\" href=\"Admin/solicitacoes\" title=\"Minhas Inscrições\">Resgate de creditos</a></li>
+						<li><a title=\"Solicitações para apovação de cursos\" href=\"Admin/solicitacoes\" title=\"Minhas Inscrições\">Cursos</a></li>
 					</ul>
 				</li>
 
 				<li>
-					<a href="Admin/Fluxo de caixa" title="Minhas Inscrições"><i class="fa fa-money"></i>Financeiro<span class="label label-success label-dsh-menu"></span></a>
+					<a href=\"Admin/Fluxo de caixa\" title=\"Minhas Inscrições\"><i class=\"fa fa-money\"></i><span>Financeiro</span></a>
 				</li>
-				';
+				";
         }
 		
 		public function home(){
@@ -83,8 +85,79 @@
 			include_once ROOT."template/admin/sobre.ctp";
 		}
 
-		public function config(){
+		public function politica_de_privacidade(){
+			$sobre = $this->adm->getSobre();
+			include_once ROOT."template/admin/politica_de_privacidade.ctp";
+		}
+
+		public function termos_de_uso(){
+			$sobre = $this->adm->getSobre();
+			include_once ROOT."template/admin/termos_de_uso.ctp";
+		}
+
+		public function config($sessao){
 			$cfg = $this->adm->getConfig();
+			$titulo = ucfirst(empty($sessao[0])?'financeira':$sessao[0]);
+			switch ($sessao[0]) {
+				default:
+					$sessao = "
+							<input type=\"hidden\" name=\"idconfig\" value=\"".$cfg['idconfig']."\">
+
+							<p>
+								<label for=\"\">Unidade monetária</label>
+								<select name=\"unid_monet\">
+									<option value=\"BRL\">BRL</option>
+								</select>
+								<span>".$cfg['unid_monet']."</span>
+							</p>
+
+							<p>
+								<label for=\"\">Valor do certificado</label>
+								<input type=\"text\" name=\"certificado_valor\" value=\"".$cfg['certificado_valor']."\">
+							</p>
+
+							<p>
+								<label for=\"\">Comissão</label>
+								<input type=\"text\" name=\"comissao\" value=\"".$cfg['comissao']."\">
+							</p>
+
+							<p>
+								<label for=\"\">Crédito mínimo para saque</label>
+								<input type=\"text\" name=\"min_saque\" value=\"".$cfg['min_saque']."\">
+							</p>
+                            ";
+				break;
+
+				case 'provas':
+					$sessao = "
+							<input type=\"hidden\" name=\"idconfig\" value=\"".$cfg['idconfig']."\">
+
+							<p>
+								<label for=\"\">número de questões</label>
+								<input type=\"text\" name=\"n_questoes\" value=\"".$cfg['n_questoes']."\">
+							</p>
+							<p>
+								<label for=\"\">Nota de corte</label>
+								<input type=\"text\" name=\"nota_corte\" value=\"".$cfg['nota_corte']."\">
+							</p>
+                            ";
+				break;
+
+				case 'certificado':
+					$sessao = "
+							<input type=\"hidden\" name=\"idconfig\" value=\"".$cfg['idconfig']."\">
+
+							<p>
+								<label for=\"\">CEO</label>
+								<input type=\"text\" name=\"ceo\" value=\"".$cfg['ceo']."\">
+							</p>
+							<p>
+								<label for=\"\">CET</label>
+								<input type=\"text\" name=\"cet\" value=\"".$cfg['cet']."\">
+							</p>
+							  ";
+				break;
+			}
 			include_once ROOT."template/admin/config.ctp";
 		}
 
