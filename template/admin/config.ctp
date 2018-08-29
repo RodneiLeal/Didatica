@@ -20,10 +20,10 @@
           </div>
 
           <div class="col-md-9 with-border-left no-padding">
-            <form action="controllers/adm/config.php" method="POST" enctype="multipart/form-data">
+            <form action="controllers/adm/config.php" method="POST" enctype="multipart/form-data" id="configs">
               <div class="form-header with-border-bottom">
                 <h3 class="form-title"><?=$titulo?></h3>
-                  <button class="form-btn">Salvar</button>
+                  <button class="form-btn salvar_configs">Salvar</button>
               </div>
 
               <div class="form-container "><?=$sessao?></div>
@@ -31,7 +31,7 @@
               <div class="form-tools with-border-bottom"></div>
               <div class="form-header">
                 <h3 class="form-title"></h3>
-                <button class="form-btn">Salvar</button>
+                <button class="form-btn salvar_configs">Salvar</button>
               </div>
             </form>
           </div>

@@ -62,12 +62,7 @@
 				</li>
 				
 				<li class=\"treeview\">
-					<a><i class=\"fa fa-bell\"></i><span>Solicitações</span><i class=\"fa fa-angle-left pull-right\"></i></a>
-					<ul class=\"treeview-menu\">
-						<li><a title=\"Candidatos a instrutores\" href=\"Admin/solicitacoes\" title=\"Minhas Inscrições\">Instrutores</a></li>
-						<li><a title=\"Solicitações para resgate de créditos\" href=\"Admin/solicitacoes\" title=\"Minhas Inscrições\">Resgate de creditos</a></li>
-						<li><a title=\"Solicitações para apovação de cursos\" href=\"Admin/solicitacoes\" title=\"Minhas Inscrições\">Cursos</a></li>
-					</ul>
+					<a href=\"Admin/solicitacoes\" ><i class=\"fa fa-bell\"></i><span>Solicitações</span></a>
 				</li>
 
 				<li>
@@ -186,39 +181,88 @@
 			$instrutor['foto'] = empty($instrutor['foto'])?'img/users/sem-foto.png':$instrutor['foto'];
 
 			if($solicitacao['tipo']==1){
-				return "<div>
-							<strong>Nome: </strong>".$instrutor['nome'].' '.$instrutor['sobrenome']."<br>
-							<strong>E-mail: </strong>".$instrutor['email']."<br>
-							<strong>Data de cadastro: </strong>".$instrutor['dataCadastro']."<br>
-							<strong>Telefone: </strong>".$instrutor['telefone']."<br>
-							<strong>Resumo: </strong>".$instrutor['resumo']."<br>
-							<strong>Titulacao: </strong>".$instrutor['titulacao']."<br>
-							<strong>Foto: </strong><img src=\"".$instrutor['foto']."\"><br>
-							
-							<strong>Formacao: </strong>".$instrutor['formacao']."<br>
-							<strong>Instituicao: </strong>".$instrutor['instituicao']."<br>
-							<strong>Lattes: </strong>".$instrutor['lattes']."<br>
-
-							<strong>Banco conveniado: </strong>".$instrutor['banco_idbanco']."<br>
-							
-							<strong>Agencia: </strong>".$instrutor['agencia']."<br>
-							<strong>Conta: </strong>".$instrutor['conta']."<br>
-							<strong>Operacao: </strong>".$instrutor['operacao']."<br>
-							<strong>CPF: </strong>".$instrutor['cpf']."<br>
+				return "<div class=\"form-header with-border-bottom\">
+							<h3 class=\"form-title\">Novo Instrutor</h3>
 						</div>
-						
-						<form action=\"controllers/adm/autorizarInstrutor.php\" method=\"POST\">
-							<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
-							<input type=\"hidden\" name=\"idusuario\" value=\"".$solicitacao['usuario_idusuario']."\">
-							<label> Não, 
-								<input type=\"radio\" name=\"tipo\" checked value=\"0\">
-							</label>
-							<label>Sim, 
-								<input type=\"radio\" name=\"tipo\" value=\"1\">
-							</label>
-							<button class=\"btn btn-success btn-lg\" type=\"submit\">Autorizado</button>
-						</form>
-					   ";
+
+						<section class=\"content\">
+							<div class=\"row\">
+								<div class=\"col-md-12\">
+								<div class=\"box box-widget widget-user\">
+									<div class=\"widget-user-header bg-blue\">
+										<h3 class=\"widget-user-name\" style=\"margin-top: 0;\">".$instrutor['nome'].' '.$instrutor['sobrenome']."</h3>
+										<div class=\"widget-user-image\">
+											<img src=\"".$instrutor['foto']."\" class=\"img-circle\" alt=\" ".$instrutor['nome'].' '.$instrutor['sobrenome']."\" />
+										</div>
+									</div>
+
+									<div class=\"box-footer\"></div>
+
+									<div class=\"box-body\">
+										<div class=\"col-md-8\">
+											<div class=\"box box-primary\">
+												<div class=\"box-header\">
+													<h3 class=\"box-title\">Dados Pessoais</h3>
+												</div>
+												<div class=\"box-body\">
+													<div id=\"course-content\">
+
+														<strong>E-mail: </strong>".$instrutor['email']."<br>
+														<strong>Data de cadastro: </strong>".$instrutor['dataCadastro']."<br>
+														<strong>Telefone: </strong>".$instrutor['telefone']."<br>
+														<strong>Resumo: </strong>".$instrutor['resumo']."<br>
+													
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+										<div class=\"col-md-4\">
+											<div class=\"box box-primary\">
+												<div class=\"box-header text-center\">
+													<h3 class=\"box-title title-course\">Dados Bancário</h3>
+												</div>
+												<div class=\"box-body\">
+													<strong>Banco conveniado: </strong>".$instrutor['banco_idbanco']."<br>
+													<strong>Agencia: </strong>".$instrutor['agencia']."<br>
+													<strong>Conta: </strong>".$instrutor['conta']."<br>
+													<strong>Operacao: </strong>".$instrutor['operacao']."<br>
+													<strong>CPF: </strong>".$instrutor['cpf']."<br>
+												</div>
+											</div>
+										</div>
+
+										<div class=\"col-md-12\">
+											<div class=\"box box-primary\">
+												<div class=\"box-header text-center\">
+													<h3 class=\"box-title title-course\">Currículo</h3>
+												</div>
+												<div class=\"box-body\">
+													<strong>Titulacao: </strong>".$instrutor['titulacao']."<br>
+													<strong>Formacao: </strong>".$instrutor['formacao']."<br>
+													<strong>Instituicao: </strong>".$instrutor['instituicao']."<br>
+													<strong>Lattes: </strong>".$instrutor['lattes']."<br>
+												</div>
+											</div>
+										</div>
+									</div>
+
+									<div class=\"box-footer\">
+										<form action=\"controllers/adm/autorizarInstrutor.php\" method=\"POST\" id=\"auth\">
+											<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
+											<input type=\"hidden\" name=\"idusuario\" value=\"".$solicitacao['usuario_idusuario']."\">
+
+											<button class=\"btn btn-danger btn-lg autorizar-instrutor\" type=\"submit\" value=\"0\">Instrutor não autorizado</button>
+											<button class=\"btn btn-success btn-lg autorizar-instrutor pull-right\" type=\"submit\" value=\"1\">Instrutor autorizado</button>
+										</form>
+									</div>
+
+								</div>
+								</div>
+							</div>
+						</section>";
+
 			}else if($solicitacao['tipo']==3){
 				$financeiro = $this->instrutor->getSaldo($instrutor['idinstrutor'])[0];
 				$instrutor = $instrutor+$financeiro;
@@ -247,8 +291,7 @@
 						</div>
 						
 						<form action=\"controllers/adm/resgateDeCreditos.php\" method=\"POST\">
-							<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
-							<input type=\"hidden\" name=\"instrutor_idinstrutor\" value=\"".$instrutor['idinstrutor']."\">
+							
 							<h2>
 								Confirmar transferência de créditos
 							</h2>
@@ -269,34 +312,102 @@
 		
 		private function getInfoCurso($solicitacao){
 			$info = $this->curso->getCursoId($solicitacao['curso_idcurso'])[0];
-			$info += $this->curso->getAulas($solicitacao['curso_idcurso'])[0];
-			return "
-					<div>
-						<strong>Curso: </strong>".$info['titulo']."<br>
-						<strong>Intrutor: </strong>".$info['instrutor']."<br>
-						<strong>Categoria: </strong>".$info['categoria']."<br>
-						<strong>Resumo: </strong>".$info['resumo']."<br>
-						<strong>Tópicos: </strong>".$info['ementa']."<br>
-						<strong>Quetões registradas: </strong>".$info['n_questoes']."<br>
-						<strong>Imagem de capa: </strong><img src=\"".$info['imagem']."\"><br>
+			$aulas = $this->curso->getAulas($solicitacao['curso_idcurso']);
+			$instrutor_foto     = empty($info['instrutor_foto'])?'img/users/sem-foto.png':$info['instrutor_foto'];
 
-						<strong>Resumo da aula: </strong>".$info['objetivos']."<br>
-						<label> Material:</label>
-						<iframe src=\"".$info['arquivo']."\" frameborder=\"0\"></iframe>
+			if(!is_array($aulas)){
+				$aulas_content = "<strong>Este curso ainda não tem aulas definida</strong>";
+				$frame = "";
+			}
+			else{
+				$frame = $aulas[0]['arquivo'];
+
+				$aulas_content = "<strong>Resumo da aula: </strong>".$aulas[0]['objetivos']."<br>";
+						  
+			}
+
+			return "
+			
+			<div class=\"form-header with-border-bottom\">
+				<h3 class=\"form-title\">Novo Curso</h3>
+			</div>
+
+			<section class=\"content\">
+			<div class=\"row\">
+				<div class=\"col-md-12\">
+				<div class=\"box box-widget widget-user\">
+					<div class=\"widget-user-header bg-blue\">
+						<h3 class=\"widget-user-name\" style=\"margin-top: 0;\">".$info['titulo']."</h3>
+						<h6 class=\"widget-user-desc\">Por <a href=\"//\" class=\"b white\">".$info['instrutor']."</a></h6>
+						<div class=\"row\">
+							<div class=\"col-md-3\">
+								<span>".$info['categoria']."</span>
+							</div>
+						</div>
+						<div class=\"widget-user-image\">
+							<img src=\"".$instrutor_foto."\" class=\"img-circle\" alt=\" ".$info['instrutor']."\" />
+						</div>
 					</div>
 
-					<form action=\"controllers/adm/autorizarCurso.php\" method=\"POST\">
-						<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
-						<input type=\"hidden\" name=\"idcurso\" value=\"".$solicitacao['curso_idcurso']."\">
-						<label> Não, 
-							<input type=\"radio\" name=\"locked\" checked value=\"0\">
-						</label>
-						<label>Sim, 
-							<input type=\"radio\" name=\"locked\" value=\"1\">
-						</label>
-						<button class=\"btn btn-success btn-lg\" type=\"submit\">Liberado</button>
-					</form>
-					";
+					<div class=\"box-footer\"></div>
+
+					<div class=\"box-body\">
+						<div class=\"col-md-8\">
+							<div class=\"box box-primary\">
+								<div class=\"box-header\">
+									<h3 class=\"box-title\">Conteudo do curso</h3>
+								</div>
+								<div class=\"box-body\">
+									<div id=\"course-content\">
+
+
+										<strong>Resumo: </strong>".$info['resumo']."<br>
+										<strong>Tópicos: </strong>".$info['ementa']."<br>
+										<strong>Numero de quetões registradas: </strong>".$info['n_questoes']."<br>
+										$aulas_content
+									
+									
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class=\"col-md-4\">
+							<div class=\"box box-primary\">
+								<div class=\"box-header text-center\">
+									<h3 class=\"box-title title-course\">Capa do curso</h3>
+								</div>
+								<div class=\"box-body\">
+									<img src=\"".$info['imagem']."\" class=\"img-responsive\" alt=\"Image\">
+								</div>
+							</div>
+						</div>
+
+						<div class=\"col-md-4 pull-right\">
+							<div class=\"box box-primary\">
+								<div class=\"box-header text-center\">
+									<h3 class=\"box-title title-course\">Material do curso</h3>
+								</div>
+								<div class=\"box-body\">
+									<iframe src=\"".$frame."\" frameborder=\"0\"></iframe>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class=\"box-footer\">
+						<form action=\"controllers/adm/autorizarCurso.php\" method=\"POST\" id=\"auth\">
+							<input type=\"hidden\" name=\"idsolicitacao\" value=\"".$solicitacao['idsolicitacao']."\">
+							<input type=\"hidden\" name=\"idcurso\" value=\"".$solicitacao['curso_idcurso']."\">
+							<button class=\"btn btn-danger btn-lg autorizar-curso\" type=\"submit\" value=\"0\">Publicação não autorizada</button>
+							<button class=\"btn btn-success btn-lg autorizar-curso pull-right\" type=\"submit\" value=\"1\">Publicação autorizada</button>
+						</form>
+					</div>
+
+				</div>
+				</div>
+			</div>
+			</section>
+			";
 		}
 		
 		public function solicitacao($idsolicitacao){

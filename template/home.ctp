@@ -22,7 +22,7 @@
                                         <div class="col-md-6 col-sm-6 col-xs-12 right-col">
                                             <p>
 												Mude de vida. Comece a estudar agora!
-												Cadastre-se no Didática Online e tenha acesso a centenas de cursos gratuitos
+												Cadastre-se na Didática Online e tenha acesso a centenas de cursos gratuitos
 										
 											</p>
                                             <button class="cd-signup btn btn-primary">Cadastrar</button>

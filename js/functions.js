@@ -16,6 +16,98 @@ jQuery(function ($){
     location.reload();
   });
 
+
+  // AUTORIZAÇÃO DE INSTRUTOR
+    $('.autorizar-instrutor').on('click', function(event){
+      event.preventDefault();
+      this.$form = $(document).find('#auth');
+      this.$url = this.$form.attr('action');
+      this.$formdata = new FormData($('#auth')[0]);
+
+      this.$formdata.set('tipo', $(this).val());
+
+      function autorizacaoInstrutorCallback(response) {
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if (this.$result) {
+          setTimeout(function () {
+            location.reload();
+          }, 4000);
+        }
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false,
+      }).done(autorizacaoInstrutorCallback);
+    });
+
+  // AUTORIZAÇÃO DE CURSO
+    $('.autorizar-curso').on('click', function(event){
+      event.preventDefault();
+      this.$form = $(document).find('#auth');
+      this.$url = this.$form.attr('action');
+      this.$formdata = new FormData($('#auth')[0]);
+
+      this.$formdata.set('locked', $(this).val());
+
+      function autorizacaoCursoCallback(response) {
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if (this.$result) {
+          setTimeout(function () {
+            location.reload();
+          }, 4000);
+        }
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false,
+      }).done(autorizacaoCursoCallback);
+    });
+
+  // CONFIGURAÇÕES
+  $('.salvar_configs').on('click', function(event){
+      event.preventDefault();
+      this.$form = $(document).find('#configs');
+      this.$url = this.$form.attr('action');
+      this.$formdata = new FormData($('#configs')[0]);
+
+      function configsCallback(response) {
+        
+        this.$response = JSON.parse(response);
+        this.$message = this.$response.message;
+        this.$result = this.$response.result;
+
+        Notificacao(this.$message.type, this.$message.title, this.$message.msg);
+        if (this.$result) {
+          setTimeout(function(){
+            location.reload();
+          }, 4000);
+        }
+      }
+
+      $.ajax({
+        type: 'POST',
+        url: this.$url,
+        data: this.$formdata,
+        processData: false,
+        contentType: false,
+      }).done(configsCallback);
+    });
+  // FIM
+
   // RESGATE DE CREDITOS
   $('.resgatarCreditos').on('click', function(event){
       event.preventDefault();
@@ -23,7 +115,7 @@ jQuery(function ($){
       this.$url = this.$form.attr('action');
       this.$formdata = new FormData($('#resgatarCreditos')[0]);
 
-      function redeemCreditsCallback(response) {
+      function resgatarCreditosCallback(response) {
         this.$response = JSON.parse(response);
         this.$message = this.$response.message;
         this.$result = this.$response.result;
@@ -41,7 +133,7 @@ jQuery(function ($){
         data: this.$formdata,
         processData: false,
         contentType: false,
-      }).done(redeemCreditsCallback);
+      }).done(resgatarCreditosCallback);
     });
   // FIM
 

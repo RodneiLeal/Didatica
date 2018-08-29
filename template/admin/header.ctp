@@ -17,6 +17,9 @@
     <link rel="stylesheet" href="css/vendor/crop/cropper.min.css">
     <link rel="stylesheet" href="css/vendor/loading/jquery.loading.min.css">
     <link rel="stylesheet" href="css/complementar.css">
+
+    <link rel="stylesheet" href="js/vendor/plugins/iCheck/square/blue.css">
+
     
 
     <link rel="shortcut icon" href="img/favicon.png">

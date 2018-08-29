@@ -173,6 +173,7 @@
                     'title' =>'Ok!.',
                     'msg'   =>'Informações atualizadas"'
                 );
+                $this->result = true;
                 return;
             }
         }

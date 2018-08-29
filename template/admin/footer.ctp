@@ -31,9 +31,8 @@
     <script src="js/vendor/plugins/datatables/dataTables.bootstrap.min.js"></script>
     <script src="js/vendor/plugins/notification/toastr.min.js"></script>
     <script src="js/vendor/countdown/jquery.countdown.min.js"></script>
+    <script src="js/vendor/plugins/iCheck/icheck.min.js"></script>
     <script src="js/vendor/star-rating/star-rating.js"></script>
-    <script src="js/vendor/crop/cropper.min.js"></script>
-    <script src="js/vendor/crop/crop-main.js"></script>
     <script src="js/vendor/loading/jquery.loading.min.js"></script>
     <script src="js/vendor/menu/jquery.dlmenu.js"></script>
     <script src="js/vendor/menu/modernizr.custom.js"></script>
@@ -43,6 +42,13 @@
 </html>
 
 <script>
+  $(function () {
+      $('input').iCheck({
+      checkboxClass: 'icheckbox_square-blue',
+      radioClass: 'iradio_square-blue',
+      increaseArea: '20%' // optional
+      });
+  });
 </script>
 
 
